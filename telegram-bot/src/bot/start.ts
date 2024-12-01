@@ -24,8 +24,17 @@ feature.command('start', async (ctx) => {
   const authCode = await adminAccount.signMessage({
     message,
   });
-  const keyboard = new InlineKeyboard().webApp('thirdweb App', `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}`);
-  return ctx.reply('Pick an app to launch.', { reply_markup: keyboard })
+  const keyboard = new InlineKeyboard().webApp(
+    'thirdweb App',
+    `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}`
+  );
+  
+  
+  return ctx.reply(
+    'Pick an app to launch.',
+    { reply_markup: keyboard }
+  )
+
 })
 
 export { composer as startFeature }
