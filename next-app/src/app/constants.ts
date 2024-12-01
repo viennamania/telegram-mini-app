@@ -40,15 +40,22 @@ export const tokenDropAddress = "0x4035Aae05709C690023D29a0acFd904b5dEe7c23";
 
 export const editionDropAddress = "0x5F5388f6c76BF521bf4E70F1A11589EB88F38ba0";
 
-
 export const editionDropTokenId = 0n;
 
 
-export const oeNFTAddress = "0xC28202BF7076B8C18BDE211AE371Ff674DadD7BE";
+
+//export const oeNFTAddress = "0xC28202BF7076B8C18BDE211AE371Ff674DadD7BE";
+export const oeNFTAddress = "0x6F8eA79f04517F40609DA844Fa756D3Aa8bed3cd";
+
+
 
 export const oeNFTContract = getContract({
 	address: oeNFTAddress,
-	chain: defineChain(8333),
+	
+	//chain: defineChain(8333),
+	chain,
+
+
 	client,
 });
 
