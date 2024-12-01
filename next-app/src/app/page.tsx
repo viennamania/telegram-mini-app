@@ -53,13 +53,6 @@ function Header() {
         <span className="inline-block text-blue-500"> Telegram </span>
       </h1>
 
-      <p className="text-zinc-300 text-base">
-        Read the{" "}
-        <code className="bg-zinc-800 text-zinc-300 px-2 rounded py-1 text-sm mx-1">
-          README.md
-        </code>{" "}
-        file to get started.
-      </p>
     </header>
   );
 }
