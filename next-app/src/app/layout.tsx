@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Shine My Winter",
   description:
-    "Shine My Winter is a decentralized application that allows users to create and share their own NFTs.",
+    "Shine My Winter is a decentralized application that allows users to create and share NFTs.",
 };
 
 export default function RootLayout({
