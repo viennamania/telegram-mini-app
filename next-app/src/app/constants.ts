@@ -23,7 +23,12 @@ export const wallet = inAppWallet({
 	}
 });
 
-export const tokenDropAddress = "0xd64A548A82c190083707CBEFD26958E5e6551D18";
+
+///export const tokenDropAddress = "0xd64A548A82c190083707CBEFD26958E5e6551D18";
+
+export const tokenDropAddress = "0x4035Aae05709C690023D29a0acFd904b5dEe7c23";
+
+
 export const editionDropAddress = "0x638263e3eAa3917a53630e61B1fBa685308024fa";
 export const editionDropTokenId = 0n;
 export const oeNFTAddress = "0xC28202BF7076B8C18BDE211AE371Ff674DadD7BE";
