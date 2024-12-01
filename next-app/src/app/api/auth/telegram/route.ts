@@ -16,6 +16,8 @@ export async function POST(req: NextRequest) {
 
     const userId = await verifyTelegram(signature, message);
 
+    console.log('/api/auth/telegram userId', userId);
+
     if (!userId) {
         return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }
