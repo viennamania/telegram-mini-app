@@ -41,7 +41,7 @@ const GaslessHome: React.FC = () => {
 							<MediaRenderer
 								client={client}
 								src={nft.metadata.image}
-								style={{ width: "100%", marginTop: "10px" }}
+								style={{ width: "50%", marginTop: "10px" }}
 							/>
 						) : null}
 						{smartAccount ? (
