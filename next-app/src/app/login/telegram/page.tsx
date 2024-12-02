@@ -10,8 +10,12 @@ import { Loader2 } from "lucide-react";
 
 function TelegramLoginContent() {
     const searchParams = useSearchParams();
+
+
+
     const { connect } = useConnect();
     const router = useRouter();
+
     const [params, setParams] = useState({ signature: '', message: '' });
 
     useEffect(() => {
@@ -20,6 +24,13 @@ function TelegramLoginContent() {
         setParams({ signature, message });
         console.log('SearchParams:', { signature, message });
     }, [searchParams]);
+
+    console.log('Params:', params);
+    
+
+
+
+
 
     useQuery({
         queryKey: ["telegram-login", params.signature, params.message],

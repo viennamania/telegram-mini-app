@@ -3,6 +3,7 @@ import type { Context } from './context.js'
 import { privateKeyToAccount } from 'thirdweb/wallets'
 import { createThirdwebClient } from 'thirdweb'
 import { config } from 'dotenv' 
+import { set } from 'valibot'
 config()
 
 const composer = new Composer<Context>()
@@ -15,15 +16,24 @@ const adminAccount = privateKeyToAccount({
 })
 
 feature.command('start', async (ctx) => {
+
+  console.log('start command')
+
   const username = ctx.from?.id+"";
+
+  console.log('username', username)
+
+
   const expiration = Date.now() + 600_000; // valid for 10 minutes
   const message = JSON.stringify({
     username,
     expiration,
   });
+
   const authCode = await adminAccount.signMessage({
     message,
   });
+
   const keyboard = new InlineKeyboard().webApp(
     'Songpa App',
     `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}`
@@ -34,6 +44,8 @@ feature.command('start', async (ctx) => {
     'Pick an app to launch.',
     { reply_markup: keyboard }
   )
+
+
 
 })
 
