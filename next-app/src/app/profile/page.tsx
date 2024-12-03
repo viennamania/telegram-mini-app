@@ -408,7 +408,7 @@ export default function SettingsPage({ params }: any) {
         }
 
         if (loadingDeployErc721Contract) {
-            toast.error('이미 실행중입니다');
+            //toast.error('이미 실행중입니다');
             return;
         }
         
@@ -481,7 +481,7 @@ export default function SettingsPage({ params }: any) {
 
                 setErc721ContractAddress(erc721ContractAddress);
                 
-                toast.success('AI 에이전트 계약주소 생성 완료');
+                ///toast.success('AI 에이전트 계약주소 생성 완료');
 
             } catch (error) {
                 console.error("deployErc721Contract error", error);
@@ -666,9 +666,7 @@ export default function SettingsPage({ params }: any) {
 
             const dataGenerateImage = await responseGenerateImage.json();
 
-
             const imageUrl = dataGenerateImage?.result?.imageUrl;
-
         
             if (!imageUrl) {
 
@@ -1375,7 +1373,7 @@ export default function SettingsPage({ params }: any) {
                                                                 'https://pumpwallet.vercel.app/kr/polygon/tbot/?agent=' +
                                                                 nft.contract.address + '&tokenId=' + nft.tokenId
                                                             );
-                                                            toast.success('레퍼럴 URL 복사 완료');
+                                                            //toast.success('레퍼럴 URL 복사 완료');
                                                         }}
                                                         className="p-2 bg-blue-500 text-zinc-100 rounded
                                                         hover:bg-blue-600 text-xs xl:text-lg font-semibold"
