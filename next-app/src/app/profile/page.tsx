@@ -602,37 +602,37 @@ export default function SettingsPage({ params }: any) {
     const mintAgentNft = async () => {
 
         if (mintingAgentNft) {
-            toast.error('이미 실행중입니다');
+            //toast.error('이미 실행중입니다');
             setMessageMintingAgentNft('이미 실행중입니다');
             return;
         }
 
         if (!address) {
-            toast.error('지갑을 먼저 연결해주세요');
+            //toast.error('지갑을 먼저 연결해주세요');
             setMessageMintingAgentNft('지갑을 먼저 연결해주세요');
             return;
         }
 
         if (!erc721ContractAddress) {
-            toast.error('AI 에이전트 계약주소를 먼저 생성해주세요');
+            //toast.error('AI 에이전트 계약주소를 먼저 생성해주세요');
             setMessageMintingAgentNft('AI 에이전트 계약주소를 먼저 생성해주세요');
             return;
         }
 
         if (agentName.length < 5 || agentName.length > 15) {
-            toast.error('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
+            //toast.error('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
             setMessageMintingAgentNft('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
             return;
         }
 
         if (agentDescription.length < 5 || agentDescription.length > 100) {
-            toast.error('에이전트 설명은 5자 이상 100자 이하로 입력해주세요');
+            //toast.error('에이전트 설명은 5자 이상 100자 이하로 입력해주세요');
             setMessageMintingAgentNft('에이전트 설명은 5자 이상 100자 이하로 입력해주세요');
             return;
         }
 
         if (!agentImage) {
-            toast.error('에이전트 이미지를 선택해주세요');
+            //toast.error('에이전트 이미지를 선택해주세요');
             setMessageMintingAgentNft('에이전트 이미지를 선택해주세요');
             return;
         }
@@ -928,6 +928,7 @@ export default function SettingsPage({ params }: any) {
                                 */}
 
                                 {/* wallet address and copy button */}
+                                {/*
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                         입금용 지갑주소(Polygon)
@@ -949,6 +950,7 @@ export default function SettingsPage({ params }: any) {
                                         </button>
                                     </div>
                                 </div>
+                                */}
 
 
                             </div>

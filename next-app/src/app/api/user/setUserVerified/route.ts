@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
     telegramId,
   } = body;
 
+  
 
 
   const result = await insertOneVerified({

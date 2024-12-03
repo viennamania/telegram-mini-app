@@ -129,7 +129,7 @@ export async function insertOne(data: any) {
 export async function insertOneVerified(data: any) {
 
 
-  if (!data.walletAddress || !data.nickname || !data.userType) {
+  if (!data.walletAddress || !data.nickname ) {
     return null;
   }
 
