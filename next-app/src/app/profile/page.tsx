@@ -1570,7 +1570,7 @@ function Header(
                 </button>
                 <button
                 onClick={() => {
-                    router.push('/profile-settings?agent=' + agent + '&tokenId=' + tokenId);
+                    router.push('/profile?agent=' + agent + '&tokenId=' + tokenId);
                 }}
                 className="text-gray-600 hover:underline text-xs xl:text-lg"
                 >
