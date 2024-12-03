@@ -68,7 +68,7 @@ function TelegramLoginContent() {
     return (
         <div className="w-screen h-screen flex flex-col gap-2 items-center justify-center">
             <Loader2 className="h-12 w-12 animate-spin text-white" />
-            Generating wallet...
+            지갑 연결 중...
         </div>
     );
 }
