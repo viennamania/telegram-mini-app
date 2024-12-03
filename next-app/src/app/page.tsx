@@ -92,9 +92,9 @@ function Menu() {
         description="프로필을 확인하고 수정합니다."
       />
 			<MenuItem
-				title="Sponsored transactions"
+				title="NFT 생성"
 				href="/gasless"
-				description="Execute transactions without requiring users to hold ETH."
+				description="가스비 없이 NFT를 생성합니다."
 			/>
       <MenuItem
 				title="Pay"
