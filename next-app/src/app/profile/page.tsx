@@ -38,6 +38,11 @@ import {
 
 } from "thirdweb/react";
 
+import { shortenAddress } from "thirdweb/utils";
+import { Button } from "@headlessui/react";
+import { AutoConnect } from "thirdweb/react";
+import Link from "next/link";
+
 import { smartWallet, inAppWallet } from "thirdweb/wallets";
 
 
@@ -51,6 +56,7 @@ import { balanceOf, transfer } from "thirdweb/extensions/erc20";
 import {
 	accountAbstraction,
 	client,
+    wallet,
 	editionDropContract,
 	editionDropTokenId,
 } from "../constants";
@@ -800,6 +806,31 @@ export default function SettingsPage({ params }: any) {
                     </div>
 
 
+                    <AutoConnect
+                        client={client}
+                        wallets={[wallet]}
+                    />
+
+                    
+                    <div className="flex justify-center mb-20">
+                        {smartAccount ? (
+                            <> 
+                                <Button
+                                onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${smartAccount.address}`)}
+                                className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                                >
+                                내 지갑주소: {shortenAddress(smartAccount.address)}
+                                </Button>  
+                            </>
+                        ) : (
+                            <p className="text-sm text-zinc-400">
+                                연결된 지갑이 없습니다.
+                            </p>
+                        )}      
+                    </div>
+
+
+
                 
                     <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
@@ -1509,7 +1540,7 @@ function Header(
             {/* logo */}
             <button
                 onClick={() => {
-                    router.push('/kr/polygon/?agent=' + agent + '&tokenId=' + tokenId);
+                    router.push('/?agent=' + agent + '&tokenId=' + tokenId);
                 }}
             >            
                 <div className="flex flex-row gap-2 items-center">
@@ -1530,7 +1561,7 @@ function Header(
                 <button
                 onClick={() => {
                     router.push(
-                        "/kr/polygon/tbot?agent=" + agent + "&tokenId=" + tokenId
+                        "/tbot?agent=" + agent + "&tokenId=" + tokenId
                     );
                 }}
                 className="text-gray-600 hover:underline text-xs xl:text-lg"
@@ -1539,7 +1570,7 @@ function Header(
                 </button>
                 <button
                 onClick={() => {
-                    router.push('/kr/polygon/profile-settings?agent=' + agent + '&tokenId=' + tokenId);
+                    router.push('/profile-settings?agent=' + agent + '&tokenId=' + tokenId);
                 }}
                 className="text-gray-600 hover:underline text-xs xl:text-lg"
                 >
