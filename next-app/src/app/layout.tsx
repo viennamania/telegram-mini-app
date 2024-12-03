@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import Providers from "./Providers";
 import Script from "next/script";
 
+import { ToastContainer } from 'react-toastify';
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
+          <ToastContainer />
           {children}
         </Providers>
         <Script src="https://telegram.org/js/telegram-web-app.js" />

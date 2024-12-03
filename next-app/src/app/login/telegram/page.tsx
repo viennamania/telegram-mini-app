@@ -11,23 +11,24 @@ import { Loader2 } from "lucide-react";
 function TelegramLoginContent() {
     const searchParams = useSearchParams();
 
+    //console.log('Search params:', searchParams);
+
 
 
     const { connect } = useConnect();
     const router = useRouter();
 
+    
     const [params, setParams] = useState({ signature: '', message: '' });
 
+    
     useEffect(() => {
         const signature = searchParams.get('signature') || '';
         const message = searchParams.get('message') || '';
         setParams({ signature, message });
         console.log('SearchParams:', { signature, message });
     }, [searchParams]);
-
-    console.log('Params:', params);
-    
-
+ 
 
 
 
@@ -40,6 +41,7 @@ function TelegramLoginContent() {
                 return false;
             }
             try {
+
                 await connect(async () => {
                     await wallet.connect({
                         client,
@@ -54,6 +56,7 @@ function TelegramLoginContent() {
                 });
                 router.replace("/");
                 return true;
+
             } catch (error) {
                 console.error('Connection error:', error);
                 return false;

@@ -7,11 +7,20 @@ import { Button } from "@headlessui/react";
 import { client, wallet } from "./constants";
 import { AutoConnect } from "thirdweb/react";
 import Link from "next/link";
+import { useEffect } from "react";
 
 
 export default function Home() {
 
+  
   const account = useActiveAccount();
+
+  useEffect(() => {
+    console.log('account', account);
+  }, [account]);
+
+
+
   
   return (
     <main className="p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-lg mx-auto">
@@ -77,6 +86,11 @@ function Header() {
 function Menu() {
 	return (
 		<div className="grid gap-4 lg:grid-cols-3 justify-center">
+      <MenuItem
+        title="프로필"
+        href="/profile"
+        description="프로필을 확인하고 수정합니다."
+      />
 			<MenuItem
 				title="Sponsored transactions"
 				href="/gasless"
@@ -95,7 +109,7 @@ function MenuItem(props: { title: string; href: string; description: string }) {
 	return (
 		<Link
 			href={props.href}
-			className="flex flex-col border border-zinc-800 p-4 rounded-lg hover:bg-zinc-900 transition-colors hover:border-zinc-700"
+			className="flex flex-col border border-zinc-800 p-4 rounded-lg hover:bg-zinc-200 hover:bg-opacity-10"
 		>
 			<article>
 				<h2 className="text-lg font-semibold mb-2">{props.title}</h2>

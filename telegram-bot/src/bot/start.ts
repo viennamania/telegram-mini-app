@@ -34,14 +34,19 @@ feature.command('start', async (ctx) => {
     message,
   });
 
+  const url = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}`
+
+  //console.log('url', url)
+
+
   const keyboard = new InlineKeyboard().webApp(
-    'Songpa App',
-    `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}`
+    'OKX AI 에이전트 봇',
+    url
   );
   
   
   return ctx.reply(
-    'Pick an app to launch.',
+    '시작하기',
     { reply_markup: keyboard }
   )
 

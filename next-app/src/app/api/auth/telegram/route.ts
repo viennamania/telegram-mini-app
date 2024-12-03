@@ -11,7 +11,9 @@ const adminAccount = privateKeyToAccount({
 export async function POST(req: NextRequest) {
     
     const { payload } = await req.json();
-    console.log('payload', payload);
+    
+    //console.log('payload', payload);
+
     const { signature, message } = JSON.parse(payload);
 
     const userId = await verifyTelegram(signature, message);
@@ -28,7 +30,7 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
     // Logic for GET method
 
-    console.log('/api/auth/telegram GET');
+    //console.log('/api/auth/telegram GET');
     
 }
 
