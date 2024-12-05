@@ -160,8 +160,18 @@ function HomeContent() {
             )}      
         </div>
 
+
+        {account && !userCenter && (
+          <MenuItem
+            title="나의 프로필 설정"
+            href={`/profile?center=${params.center}`}
+            description="나의 프로필을 설정합니다."
+          />
+        )}
+
+
         {/* 나의 소속 센터 */}
-        {account && (
+        {account && userCenter && (
           <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
               <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                   나의 소속 센터
@@ -175,7 +185,7 @@ function HomeContent() {
         )}
 
 
-        {params.center !== userCenter ? (
+        {userCenter && params.center !== userCenter ? (
           <div className="flex flex-col items-center justify-center">
             <p className="text-lg text-zinc-800">
               접근 권한이 없습니다.
