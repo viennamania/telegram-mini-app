@@ -175,9 +175,27 @@ function HomeContent() {
         )}
 
 
-        <Menu
-          center={params.center}
-        />
+        {params.center !== userCenter ? (
+          <div className="flex flex-col items-center justify-center">
+            <p className="text-lg text-zinc-800">
+              접근 권한이 없습니다.
+            </p>
+            {/* goto "https://t.me/" + userCenter */}
+            <Button
+              onClick={() => (window as any).Telegram.WebApp.openLink(`https://t.me/${userCenter}`)}
+              className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+            >
+              {userCenter} 센터로 이동
+            </Button>
+          </div>
+
+        ) : (
+
+          <Menu
+            center={params.center}
+          />
+
+        )}
 
       </div>
     </main>
