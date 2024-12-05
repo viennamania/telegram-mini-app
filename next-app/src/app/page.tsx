@@ -186,7 +186,7 @@ function HomeContent() {
         )}
 
 
-        {userCenter && params.center !== userCenter ? (
+        {account && userCenter && params.center !== userCenter && (
           <div className="flex flex-col items-center justify-center">
             <p className="text-lg text-zinc-800">
               접근 권한이 없습니다.
@@ -200,7 +200,9 @@ function HomeContent() {
             </Button>
           </div>
 
-        ) : (
+        )}
+
+        {account && userCenter && params.center === userCenter && (
 
           <Menu
             center={params.center}
