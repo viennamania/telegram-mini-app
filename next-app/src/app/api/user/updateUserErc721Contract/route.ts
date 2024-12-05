@@ -16,15 +16,7 @@ export async function POST(request: NextRequest) {
     center,
   } = body;
 
-  console.log("walletAddress", walletAddress);
-  console.log("erc721ContractAddress", erc721ContractAddress);
 
-  /*
-  const result = await setErc721ContractAddressByWalletAddress(
-    walletAddress,
-    erc721ContractAddress,
-  );
-  */
 
   let apiURL = "https://owinwallet.com/api/user/updateUserErc721Contract";
 
@@ -60,5 +52,5 @@ export async function POST(request: NextRequest) {
     
   });
   
-  
+
 }

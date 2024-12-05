@@ -258,7 +258,7 @@ function AgentPage() {
 
         account && params.center &&
         fetchData();
-        
+
     }, [account, address, params.center]);
     
 
@@ -482,6 +482,7 @@ function AgentPage() {
                     body: JSON.stringify({
                         walletAddress: address,
                         erc721ContractAddress: erc721ContractAddress,
+                        center: params.center,
                     }),
                 });
 
