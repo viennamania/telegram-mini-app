@@ -141,7 +141,7 @@ function HomeContent() {
         </div>
 
         
-        <div className="flex justify-center mb-20">
+        <div className="flex justify-center mb-5">
           {account ? 
             (
               <> 
@@ -162,7 +162,7 @@ function HomeContent() {
 
         {/* 사용자 소속 센터 */}
         {account && (
-          <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+          <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
               <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                   사용자 소속 센터
               </div>
