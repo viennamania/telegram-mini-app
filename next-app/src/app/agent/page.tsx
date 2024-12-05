@@ -784,6 +784,23 @@ function AgentPage() {
     }
 
 
+    const [referralUrl, setReferralUrl] = useState("");
+    // https://aiagentbot.vercel.app/kr/polygon/tbot
+    // https://owinwallet.com/kr/polygon/tbot
+
+    // if center is "ppump_orry_bot" then referral url is "https://aiagentbot.vercel.app/kr/polygon/tbot"
+    // else referral url is "https://owinwallet.com/kr/polygon/tbot"
+
+    useEffect(() => {
+
+        if (userCenter === "ppump_orry_bot") {
+            setReferralUrl("https://aiagentbot.vercel.app/kr/polygon/tbot");
+        } else {
+            setReferralUrl("https://owinwallet.com/kr/polygon/tbot");
+        }
+
+    }, [userCenter]);
+
 
 
     return (
@@ -1227,6 +1244,7 @@ function AgentPage() {
 
                                                 <div className='w-full flex flex-row gap-2 items-center justify-between'>
                                                     {/* goto button for detail page */}
+                                                    {/*
                                                     <button
                                                         onClick={() => {
 
@@ -1249,12 +1267,13 @@ function AgentPage() {
                                                             상세보기
                                                         </span>
                                                     </button>
+                                                    */}
 
                                                     {/* referral link button */}
                                                     <button
                                                         onClick={() => {
                                                             navigator.clipboard.writeText(
-                                                                'https://aiagentbot.vercel.app/kr/polygon/tbot/?center=' + params.center +
+                                                                referralUrl + '/?center=' + params.center +
                                                                 '&agent=' + nft.contract.address + 
                                                                 '&tokenId=' + nft.tokenId
                                                             );
