@@ -758,7 +758,7 @@ function ProfilePage() {
             setAgentName("");
             setAgentDescription("");
 
-            toast.success('AI 에이전트 NFT 발행 완료');
+            ///toast.success('AI 에이전트 NFT 발행 완료');
 
 
 
@@ -766,7 +766,7 @@ function ProfilePage() {
         } catch (error) {
             console.error("mintAgentNft error", error);
 
-            toast.error('AI 에이전트 NFT 발행 실패');
+            ///toast.error('AI 에이전트 NFT 발행 실패');
 
             setMessageMintingAgentNft('AI 에이전트 NFT 발행 실패');
         }
