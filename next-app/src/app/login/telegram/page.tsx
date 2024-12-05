@@ -57,6 +57,8 @@ function TelegramLoginContent() {
                     });
                     return wallet;
                 });
+
+                //const telegramId = params.message?.username;
                 
                 router.replace("/?center=" + params.center);
 
