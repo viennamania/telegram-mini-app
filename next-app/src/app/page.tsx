@@ -7,21 +7,34 @@ import { Button } from "@headlessui/react";
 import { client, wallet } from "./constants";
 import { AutoConnect } from "thirdweb/react";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import { useSearchParams } from "next/navigation";
 
 
-export default function Home({ params }: any) {
+export default function Home() {
 
-  const center = params.center;
+  const searchParams = useSearchParams();
+
+  
+  const [params, setParams] = useState({ center: '' });
+
+  
+  useEffect(() => {
+      const center = searchParams.get('center') || '';
+      setParams({ center });
+  }, [searchParams]);
+
+
 
   
   const account = useActiveAccount();
 
+  /*
   useEffect(() => {
     console.log('account', account);
   }, [account]);
-
-
+  */
 
   
   return (
@@ -39,7 +52,7 @@ export default function Home({ params }: any) {
         {/* center */}
         <div className="flex justify-center mb-20">
           <p className="text-sm text-zinc-400">
-            Center: {center}
+            Center: {params.center}
           </p>
         </div>
 
