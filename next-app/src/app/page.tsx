@@ -7,12 +7,12 @@ import { Button } from "@headlessui/react";
 import { client, wallet } from "./constants";
 import { AutoConnect } from "thirdweb/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
 import { useSearchParams } from "next/navigation";
 
 
-export default function Home() {
+function HomeContent() {
 
   const searchParams = useSearchParams();
 
@@ -24,7 +24,6 @@ export default function Home() {
       const center = searchParams.get('center') || '';
       setParams({ center });
   }, [searchParams]);
-
 
 
   
@@ -77,7 +76,7 @@ export default function Home() {
         </div>
 
         <Menu
-          center={center}
+          center={params.center}
         />
 
       </div>
@@ -144,3 +143,13 @@ function MenuItem(props: { title: string; href: string; description: string }) {
 	);
 }
 
+
+
+
+export default function Home() {
+  return (
+      <Suspense fallback={<div>Loading...</div>}>
+          <HomeContent />
+      </Suspense>
+  );
+}

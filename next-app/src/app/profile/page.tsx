@@ -803,10 +803,12 @@ export default function SettingsPage({ params }: any) {
                         <div className="text-2xl font-semibold">
                             프로필설정
                         </div>
-
-
                     </div>
 
+                    {/* center */}
+                    <div className="flex justify-center mb-20">
+                        Center: {center}
+                    </div>
 
                     <AutoConnect
                         client={client}
