@@ -1212,11 +1212,16 @@ function AgentPage() {
                                                     {/* goto button for detail page */}
                                                     <button
                                                         onClick={() => {
-                                                            router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
+
+                                                            //router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
 
                                                             // open new window
 
-                                                            //window.open('https://owinwallet.com/' + params.lang + '/' + params.chain + '/agent/' + nft.contract.address + '/' + nft.tokenId);
+                                                            window.open(
+                                                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?center=' + params.center +
+                                                                '&agent=' + nft.contract.address + 
+                                                                '&tokenId=' + nft.tokenId
+                                                            );
 
 
                                                         }}
