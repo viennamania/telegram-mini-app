@@ -217,9 +217,9 @@ function Menu({ center }: { center: any }) {
       />
 
       <MenuItem
-        title="나의 AI 에이전트"
+        title="나의 AI 에이전트 NFT"
         href={`/agent?center=${center}`}
-        description="나의 AI 에이전트를 확인합니다."
+        description="나의 AI 에이전트 NFT를 확인합니다."
       />
 
       {/*
