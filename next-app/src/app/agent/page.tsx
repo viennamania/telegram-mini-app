@@ -256,8 +256,10 @@ function AgentPage() {
 
         };
 
+        account && params.center &&
         fetchData();
-    }, [address]);
+        
+    }, [account, address, params.center]);
     
 
 
