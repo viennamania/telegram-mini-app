@@ -197,6 +197,7 @@ function AgentPage() {
 
     const [erc721ContractAddress, setErc721ContractAddress] = useState("");
 
+    const [userCenter, setUserCenter] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -229,6 +230,8 @@ function AgentPage() {
                 ///setReferralCode(data.result.erc721ContractAddress);
                 setErc721ContractAddress(data.result.erc721ContractAddress);
 
+                setUserCenter(data.result.center);
+
             } else {
                 setNickname('');
                 setAvatar('/profile-default.png');
@@ -244,6 +247,10 @@ function AgentPage() {
                 setIsAgent(false);
 
                 setReferralCode('');
+
+                setErc721ContractAddress('');
+
+                setUserCenter('');
             }
 
         };
@@ -837,7 +844,17 @@ function AgentPage() {
                         )}      
                     </div>
 
-
+                    {/* 사용자 소속 센터 */}
+                    <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                        <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                            사용자 소속 센터
+                        </div>
+                        <div className='flex flex-row gap-2 items-center justify-between'>
+                            <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                                {userCenter}
+                            </div>
+                        </div>
+                    </div>
                 
                     <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
