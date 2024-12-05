@@ -805,7 +805,7 @@ function ProfilePage() {
                             className="rounded-full"  
                         />
                         <div className="text-2xl font-semibold">
-                            프로필설정
+                            나의 프로필
                         </div>
                     </div>
 

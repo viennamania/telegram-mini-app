@@ -805,7 +805,7 @@ function AgentPage() {
                             className="rounded-full"  
                         />
                         <div className="text-2xl font-semibold">
-                            프로필설정
+                            나의 AI 에이전트 NFT
                         </div>
                     </div>
 
