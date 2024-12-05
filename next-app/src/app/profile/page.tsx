@@ -846,6 +846,7 @@ function ProfilePage() {
                     </div>
 
                     {/* 나의 소속 센터 */}
+                    {account && userCenter && (
                     <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                         <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                             나의 소속 센터
@@ -856,6 +857,18 @@ function ProfilePage() {
                             </div>
                         </div>
                     </div>
+                    )}
+
+                    {/* 닉네임을 저장하면 나의 소속 센터가 설정됩니다 */}
+                    {address && !userCenter && (
+                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                닉네임을 저장하면 나의 소속 센터가 설정됩니다
+                            </div>
+                        </div>
+                    )}
+
+                    
 
 
                 
