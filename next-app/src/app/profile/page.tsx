@@ -1,8 +1,6 @@
 // nickname settings
 'use client';
-import React, { useEffect, useState } from 'react';
-
-
+import React, { useEffect, useState, Suspense } from "react";
 
 import { toast } from 'react-toastify';
 
@@ -73,20 +71,28 @@ import Uploader from '../components/uploader';
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
 
 
-export default function SettingsPage({ params }: any) {
+function ProfilePage() {
 
-    /*
     const searchParams = useSearchParams();
 
+    const [params, setParams] = useState({ center: '' });
+
+  
+    useEffect(() => {
+        const center = searchParams.get('center') || '';
+        setParams({ center });
+    }, [searchParams]);
+    /*
     const agent = searchParams.get('agent');
 
     const agentNumber = searchParams.get('tokenId');
     */
 
-    const center = params.center;
+    //const center = params.center;
 
-    const agent = params.agent;
-    const agentNumber = params.tokenId;
+    
+    const agent = '';
+    const agentNumber = '';
 
 
 
@@ -781,7 +787,7 @@ export default function SettingsPage({ params }: any) {
         
 
                 <Header
-                    center={center}
+                    center={params.center}
                     agent={agent ? agent : ""}
                     tokenId={agentNumber ? agentNumber : ""}
                 />
@@ -805,7 +811,7 @@ export default function SettingsPage({ params }: any) {
 
                     {/* center */}
                     <div className="flex justify-center mb-20">
-                        Center: {center}
+                        Center: {params.center}
                     </div>
 
                     <AutoConnect
@@ -1117,7 +1123,7 @@ export default function SettingsPage({ params }: any) {
 
                                 <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
                                     <Uploader
-                                        lang={params.lang}
+                                        lang='kr'
                                         walletAddress={address as string}
                                     />
                                 </div>
@@ -1354,7 +1360,7 @@ export default function SettingsPage({ params }: any) {
                                                     {/* goto button for detail page */}
                                                     <button
                                                         onClick={() => {
-                                                            router.push('/' + params.lang + '/' + params.chain + '/agent/' + nft.contract.address + '/' + nft.tokenId);
+                                                            router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
 
                                                             // open new window
 
@@ -1374,7 +1380,7 @@ export default function SettingsPage({ params }: any) {
                                                     <button
                                                         onClick={() => {
                                                             navigator.clipboard.writeText(
-                                                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?center' + center + 
+                                                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?center' + params.center +
                                                                 '&agent=' + nft.contract.address + 
                                                                 '&tokenId=' + nft.tokenId
                                                             );
@@ -1564,11 +1570,12 @@ function Header(
                 </div>
             </button>
 
+            {/*}
             <div className="flex flex-row gap-2 items-center">
                 <button
                 onClick={() => {
                     router.push(
-                        "/tbot?agent=" + agent + "&tokenId=" + tokenId
+                        "/tbot?center=" + center + "agent=" + agent + "&tokenId=" + tokenId
                     );
                 }}
                 className="text-gray-600 hover:underline text-xs xl:text-lg"
@@ -1577,17 +1584,28 @@ function Header(
                 </button>
                 <button
                 onClick={() => {
-                    router.push('/profile?agent=' + agent + '&tokenId=' + tokenId);
+                    router.push('/profile?center=' + center + 'agent=' + agent + '&tokenId=' + tokenId);
                 }}
                 className="text-gray-600 hover:underline text-xs xl:text-lg"
                 >
                 SETTINGS
                 </button>
             </div>
+            */}
 
 
         </div>
         
       </header>
+    );
+  }
+
+
+
+  export default function Profile() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ProfilePage />
+        </Suspense>
     );
   }

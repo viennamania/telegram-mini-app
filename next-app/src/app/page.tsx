@@ -49,8 +49,8 @@ function HomeContent() {
         />
 
         {/* center */}
-        <div className="flex justify-center mb-20">
-          <p className="text-sm text-zinc-400">
+        <div className="flex justify-center">
+          <p className="text-lg text-zinc-800">
             Center: {params.center}
           </p>
         </div>
