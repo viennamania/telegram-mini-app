@@ -111,10 +111,18 @@ function Menu({ center }: { center: any }) {
 	return (
 		<div className="grid gap-4 lg:grid-cols-3 justify-center">
       <MenuItem
-        title="프로필"
+        title="나의 프로필"
         href={`/profile?center=${center}`}
-        description="프로필을 확인하고 수정합니다."
+        description="나의 프로필을 확인합니다."
       />
+
+      <MenuItem
+        title="나의 AI 에이전트"
+        href={`/agent?center=${center}`}
+        description="나의 AI 에이전트를 확인합니다."
+      />
+
+      {/*
 			<MenuItem
 				title="NFT 생성"
 				href="/gasless"
@@ -125,6 +133,8 @@ function Menu({ center }: { center: any }) {
 				href="/pay"
 				description="Allow users to purchase NFT's using fiat"
 			/>
+      */}
+
 		</div>
 	);
 }

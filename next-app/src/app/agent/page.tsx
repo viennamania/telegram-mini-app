@@ -71,7 +71,7 @@ import Uploader from '../components/uploader';
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
 
 
-function ProfilePage() {
+function AgentPage() {
 
     const searchParams = useSearchParams();
 
@@ -838,7 +838,6 @@ function ProfilePage() {
                     </div>
 
 
-
                 
                     <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
@@ -958,9 +957,7 @@ function ProfilePage() {
                     <div className='w-full  flex flex-col gap-5 '>
 
                         {/* profile picture */}
-                    
-
-
+      
 
                         {address && userCode && (
                             <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
@@ -972,18 +969,6 @@ function ProfilePage() {
                                 <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
                                     {nickname}
                                 </div>
-
-                                
-                                <button
-                                    onClick={() => {
-
-                                        nicknameEdit ? setNicknameEdit(false) : setNicknameEdit(true);
-
-                                    } }
-                                    className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                >
-                                    {nicknameEdit ? "취소" : "수정"}
-                                </button>
 
                                 <Image
                                     src="/verified.png"
@@ -999,127 +984,388 @@ function ProfilePage() {
                         )}
 
 
-                        { (address && (nicknameEdit || !userCode)) && (
-                            <div className=' flex flex-col xl:flex-row gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                    </div>
 
-                                <div
-                                    className="bg-green-500 text-sm text-zinc-100 p-2 rounded"
-                                >
-                                    {!userCode ? "닉네임 설정" :
-                                        nicknameEdit ? "수정할 내 닉네임" : "새로운 닉네임"
-                                    }
-                                </div>
 
-                                <div className='flex flex-col gap-2 items-start justify-between'>
-                                    <input
-                                        disabled={!address}
-                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
-                                        placeholder="닉네임"
-                                        
-                                        //value={nickname}
-                                        value={editedNickname}
+                    {/* 새로고침 버튼 */}
+                    {address && userCode && (
+                        <div className='w-full flex flex-row items-center justify-start gap-2'>
+                            <button
+                                onClick={() => {
+                                    window.location.reload();
+                                }}
+                                className="p-2 bg-blue-500 text-zinc-100 rounded"
+                            >
+                                새로고침
+                            </button>
 
-                                        type='text'
-                                        onChange={(e) => {
-                                            // check if the value is a number
-                                            // check if the value is alphanumeric and lowercase
+                            <span className="text-xs font-semibold text-red-500">
+                                민팅에 되지않을 경우 새로고침 해주세요.
+                            </span>
 
-                                            if (!/^[a-z0-9]*$/.test(e.target.value)) {
-                                                //toast.error('닉네임은 영문 소문자와 숫자만 입력해주세요');
-                                                return;
-                                            }
-                                            if ( e.target.value.length > 10) {
-                                                //toast.error('닉네임은 10자 이하로 입력해주세요');
-                                                return;
-                                            }
+                        </div>
+                    )}
 
-                                            //setNickname(e.target.value);
 
-                                            setEditedNickname(e.target.value);
+                    {address && userCode && !erc721ContractAddress && (
 
-                                            checkNicknameIsDuplicate(e.target.value);
+ 
+                        <button
+                            disabled={loadingDeployErc721Contract}
+                            onClick={deployErc721Contract}
+                            className={`
+                                ${loadingDeployErc721Contract ? 'bg-gray-300 text-gray-400' : 'bg-green-500 text-zinc-100'}
+                                p-2 rounded-lg text-sm font-semibold
+                            `}
+                        >
+                            <div className='flex flex-row gap-2 items-center justify-center'>
+                                {/* rotating icon */}
+                                {address && loadingDeployErc721Contract && (
+                                    <Image
+                                        src="/loading.png"
+                                        alt="loding"
+                                        width={30}
+                                        height={30}
+                                        className='animate-spin'
+                                    />
+                                )}
+                                {address && loadingDeployErc721Contract && 'AI 에이전트 계약주소 생성중...'}
+                                {address && !erc721ContractAddress && !loadingDeployErc721Contract && 'AI 에이전트 계약주소 생성하기'}
+ 
+                            </div>
 
-                                        } }
+                        </button>
+
+                    )}
+
+
+
+                        {/* My Referral Code */}
+                        {/* address */}
+                        {address && erc721ContractAddress && (
+
+                            <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
+
+                                <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                        AI 에이전트 계약주소
+                                    </div>
+
+                                    <span className='text-xs xl:text-lg font-semibold'>
+                                        {erc721ContractAddress.substring(0, 6) + '...' + erc721ContractAddress.substring(erc721ContractAddress.length - 4)}
+                                    </span>
+
+
+
+
+                                    {/* https://opensea.io/assets/matic/0xC1F501331E5d471230189E4A57E5268f10d0072A */}
+                                    {/* open new window */}
+                                    
+                                    <button
+                                        onClick={() => {
+                                            window.open('https://opensea.io/assets/matic/' + erc721ContractAddress);
+                                        }}
+                                        className="p-2 rounded hover:bg-gray-300"
+                                    >
+                                        <Image
+                                            src="/logo-opensea.png"
+                                            alt="OpenSea"
+                                            width={30}
+                                            height={30}
+                                            className="rounded-lg"
+                                        />
+                                    </button>
+                                    
+
+
+                                    {/* verified icon */}
+
+                                    <Image
+                                        src="/verified.png"
+                                        alt="Verified"
+                                        width={20}
+                                        height={20}
+                                        className="rounded-lg"
                                     />
 
-                                    {editedNickname && isNicknameDuplicate && (
-                                        <div className='flex flex-row gap-2 items-center justify-between'>
-                                            <span className='text-xs font-semibold text-red-500'>
-                                                이미 사용중인 닉네임입니다.
-                                            </span>
-                                        </div>
-                                    )}
 
-                                    {editedNickname
-                                    && !isNicknameDuplicate
-                                    && editedNickname.length >= 5
-                                    && (
-                                        <div className='flex flex-row gap-2 items-center justify-between'>
-                                            <span className='text-xs font-semibold text-green-500'>
-                                                사용가능한 닉네임입니다.
-                                            </span>
-                                        </div>
-                                    )}
                                 </div>
-
-
-                                <div className='flex flex-row gap-2 items-center justify-between'>
-                                    <span className='text-xs font-semibold'>
-                                        닉네임은 5자 이상 10자 이하로 입력해주세요
-                                    </span>
-                                </div>
-                                <button
-                                    disabled={
-                                        !address
-                                        || !editedNickname
-                                        || editedNickname.length < 5
-                                        || isNicknameDuplicate
-                                        || loadingSetUserData
-                                    }
-                                    className={`
-                                        ${!address
-                                        || !editedNickname
-                                        || editedNickname.length < 5
-                                        || isNicknameDuplicate
-                                        || loadingSetUserData
-                                        ? 'bg-gray-300 text-gray-400'
-                                        : 'bg-blue-500 text-zinc-100'}
-
-                                        p-2 rounded-lg text-sm font-semibold
-                                    `}
-                                    onClick={() => {
-                                        setUserData();
-                                    }}
-                                >
-                                    {loadingSetUserData ? "저장중..." : "저장"}
-                                    
-                                </button>
 
                                 
 
+                                {/* mint AI Agent NFT */}
+                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                                    
+                                    <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                        AI 에이전트 NFT 발행
+                                    </span>
+
+                                    <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
+                                        <input 
+                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                            placeholder="에이전트 이름"
+                                            type='text'
+                                            onChange={(e) => {
+                                                setAgentName(e.target.value);
+                                            }}
+                                            value={agentName}
+                                        />
+                                        <input 
+                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                            placeholder="에이전트 설명"
+                                            type='text'
+                                            onChange={(e) => {
+                                                setAgentDescription(e.target.value);
+                                            }}
+                                            value={agentDescription}
+                                        />
+                                    </div>
+
+                                    <button
+                                        disabled={mintingAgentNft}
+                                        onClick={mintAgentNft}
+                                        className={`
+                                            ${mintingAgentNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
+                                            p-2 rounded-sm text-sm font-semibold
+                                        `}
+                                    >
+                                        <div className='flex flex-row gap-2 items-center justify-center'>
+                                            {/* rotating icon */}
+                                            {mintingAgentNft && (
+                                                <Image
+                                                    src="/loading.png"
+                                                    alt="loding"
+                                                    width={30}
+                                                    height={30}
+                                                    className='animate-spin'
+                                                />
+                                            )}
+                                            {mintingAgentNft && 'AI 에이전트 NFT 발행중...'}
+                                            {!mintingAgentNft && 'AI 에이전트 NFT 발행하기'}
+                                        </div>
+                                    </button>
+
+                                    {messageMintingAgentNft && (
+                                        <span className='text-lg font-semibold text-red-500
+                                            border border-gray-300 p-4 rounded-lg'>
+                                            {messageMintingAgentNft}
+                                        </span>
+                                    )}
+
+                                    {ganeratingAgentImage && (
+                                        <div className='flex flex-row gap-2 items-center justify-center'>
+                                            <Image
+                                                src="/loading.png"
+                                                alt="loding"
+                                                width={30}
+                                                height={30}
+                                                className='animate-spin'
+                                            />
+                                            <span className='text-xs font-semibold'>
+                                                AI 에이전트 이미지 생성중...
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    {agentImage && (
+                                        <Image
+                                            src={agentImage}
+                                            alt="AI Agent"
+                                            width={200}
+                                            height={200}
+                                            className="rounded-lg"
+                                        />
+                                    )}
+                               
+
+
+
+
+                                </div>
+
+
                             </div>
+
                         )}
 
 
-                        {userCode && (
-                            <div className='flex flex-row xl:flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
 
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    내 프로필 이미지
-                                </div>
+                        {address && myNfts && myNfts.length > 0 && (
 
-                                <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                    <Uploader
-                                        lang='kr'
-                                        walletAddress={address as string}
-                                    />
-                                </div>
+                            <div className='w-full flex flex-col gap-2 items-start justify-between'>
+
+                                    {/* my NFTs */}
+                                    <div className='mt-10 flex flex-col gap-2 items-start justify-between'>
+                                        <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                            My AI 에이전트 NFT
+                                        </span>
+                                    </div>
+                                    <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2'>
+                                        {myNfts?.map((nft, index) => (
+                                            <div
+                                                key={index}
+                                                className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
+                                                bg-yellow-100'
+                                            >
+
+                                                <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                                    {/* goto button for detail page */}
+                                                    <button
+                                                        onClick={() => {
+                                                            router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
+
+                                                            // open new window
+
+                                                            //window.open('https://owinwallet.com/' + params.lang + '/' + params.chain + '/agent/' + nft.contract.address + '/' + nft.tokenId);
+
+
+                                                        }}
+                                                        className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                        hover:bg-blue-600 text-xs xl:text-lg font-semibold"
+                                                    >
+                                                        <span className='text-xs xl:text-lg font-semibold'>
+                                                            상세보기
+                                                        </span>
+                                                    </button>
+
+                                                    {/* referral link button */}
+                                                    <button
+                                                        onClick={() => {
+                                                            navigator.clipboard.writeText(
+                                                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?center' + params.center +
+                                                                '&agent=' + nft.contract.address + 
+                                                                '&tokenId=' + nft.tokenId
+                                                            );
+                                                            //toast.success('레퍼럴 URL 복사 완료');
+                                                        }}
+                                                        className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                        hover:bg-blue-600 text-xs xl:text-lg font-semibold"
+                                                    >
+                                                        레퍼럴 URL 복사
+                                                    </button>
+
+                                                </div>
+
+
+                                                <div className='w-full grid grid-cols-2 gap-2 items-center justify-between'>
+
+
+                                                    <div className="flex flex-col gap-2 items-center justify-center">
+
+
+                                                        {/*}
+                                                        <button
+                                                            onClick={() => {
+                                                                window.open('https://opensea.io/assets/matic/' + erc721ContractAddress + '/' + nft.tokenId);
+                                                            }}
+                                                            className="p-2 rounded hover:bg-gray-300"
+                                                        >
+                                                            <Image
+                                                                src="/logo-opensea.png"
+                                                                alt="OpenSea"
+                                                                width={30}
+                                                                height={30}
+                                                                className="rounded-lg"
+                                                            />
+                                                        </button>
+                                                        */}
+
+                                                        <Image
+                                                            src={nft.image.thumbnailUrl}
+                                                            alt="NFT"
+                                                            width={200}
+                                                            height={200}
+                                                            className="rounded-lg w-32 xl:w-40 border border-gray-300"
+                                                            
+                                                        />
+
+                                                        {/* 누적 배당수익 */}
+                                                        <div className='flex flex-col gap-2 items-start justify-between
+                                                            border border-gray-300 p-4 rounded-lg'>
+                                                            <span className='text-xs xl:text-lg font-semibold'>
+                                                                Total Dividend
+                                                            </span>
+                                                            <span className='text-xl xl:text-2xl font-semibold text-green-500'>
+                                                                0.00 USDT
+                                                            </span>
+                                                            {/* 배당 수령 */}
+                                                            {/*
+                                                            <button
+                                                                className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                                hover:bg-blue-600"
+                                                            >
+                                                                Claim Dividend
+                                                            </button>
+                                                            */}
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div className='flex flex-col gap-2 items-start justify-between'>
+                                                        {/* contract address */}
+                                                        <div className='text-xs font-semibold'>
+                                                            계약주소: {nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
+                                                        </div>
+                                                        <div className='text-2xl font-semibold text-blue-500'>
+                                                            계약번호: #{nft.tokenId}
+                                                        </div>
+                                                        <div className='text-sm font-semibold text-green-500'>
+                                                            {nft.name}
+                                                        </div>
+                                                        <div className='text-xs font-semibold'>
+                                                            {nft.description}
+                                                        </div>
+
+                                                        <div className='flex flex-col gap-2 items-start justify-between'>
+                                                            {/* // from now to mint in hours minutes seconds
+                                                            // now - mint */}
+                                                            <span className='text-xs xl:text-sm font-semibold'>
+                                                                Start{' '}{(new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24 > 1
+                                                                    ? `${Math.floor((new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24)} days ago`
+                                                                    : `${Math.floor((new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60)} hours ago`
+                                                                }
+                                                            </span>
+                                                            
+                                                            {/* Accounts */}
+                                                            <span className='text-xs xl:text-sm font-semibold'>
+                                                                Accounts: 0
+                                                            </span>
+
+                                                            {/* Funds */}
+                                                            <span className='text-xs xl:text-sm font-semibold'>
+                                                                Funds: 0 USDT
+                                                            </span>
+
+                                                            {/* 수익률 */}
+                                                            <span className='text-xs xl:text-sm font-semibold'>
+                                                                ROI: ??%
+                                                            </span>
+
+ 
+
+                                                        </div>
+
+
+
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        ))}
+                                    </div>
+
 
                             </div>
+
+
                         )}
 
 
-                    </div>
+
+
 
 
                 </div>
@@ -1208,10 +1454,10 @@ function Header(
 
 
 
-  export default function Profile() {
+  export default function Agent() {
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <ProfilePage />
+            <AgentPage />
         </Suspense>
     );
   }
