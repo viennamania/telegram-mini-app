@@ -220,7 +220,7 @@ function HomeContent() {
 
 
 
-        <div className='w-full flex flex-col gap-4 items-start justify-center'>
+        <div className='mb-10 w-full flex flex-col gap-4 items-start justify-center'>
 
 
           {address && (
