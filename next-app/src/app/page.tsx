@@ -172,9 +172,9 @@ function HomeContent() {
 
       };
 
-      fetchData();
+      account && params.center && fetchData();
 
-  }, [account]);
+  }, [account, params.center]);
 
 
 

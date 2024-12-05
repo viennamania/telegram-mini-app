@@ -207,7 +207,8 @@ function ProfilePage() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    walletAddress: address,
+                    walletAddress: account?.address,
+                    center: params.center,
                 }),
             });
 
@@ -255,8 +256,10 @@ function ProfilePage() {
 
         };
 
+        account && params.center &&
         fetchData();
-    }, [address]);
+
+    }, [account, params.center]);
     
 
 
@@ -980,7 +983,7 @@ function ProfilePage() {
                     )}
 
                     {/* 닉네임을 저장하면 나의 소속 센터가 설정됩니다 */}
-                    {address && !userCenter && (
+                    {account && !userCenter && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                 닉네임을 저장하면 나의 소속 센터가 설정됩니다
