@@ -483,6 +483,7 @@ function ProfilePage() {
                     body: JSON.stringify({
                         walletAddress: address,
                         erc721ContractAddress: erc721ContractAddress,
+                        center: params.center,
                     }),
                 });
 

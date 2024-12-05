@@ -1,9 +1,10 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+/*
 import {
 	setErc721ContractAddressByWalletAddress,
 } from '@lib/api/user';
-
+*/
 
 export async function POST(request: NextRequest) {
 
@@ -12,16 +13,45 @@ export async function POST(request: NextRequest) {
   const {
     walletAddress,
     erc721ContractAddress,
+    center,
   } = body;
 
   console.log("walletAddress", walletAddress);
   console.log("erc721ContractAddress", erc721ContractAddress);
 
+  /*
   const result = await setErc721ContractAddressByWalletAddress(
     walletAddress,
     erc721ContractAddress,
   );
+  */
 
+  let apiURL = "https://owinwallet.com/api/user/updateUserErc721Contract";
+
+  if (center === "ppump_orry_bot") {
+    apiURL = "https://aiagentbot.vercel.app/api/user/updateUserErc721Contract";
+  }
+
+  const response = await fetch(apiURL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      walletAddress,
+      erc721ContractAddress,
+    }),
+  });
+
+  if (!response.ok) {
+    return NextResponse.error();
+  }
+
+
+
+  const jsonObj = await response.json();
+
+  const result = jsonObj?.result;
 
  
   return NextResponse.json({
@@ -29,5 +59,6 @@ export async function POST(request: NextRequest) {
     result,
     
   });
+  
   
 }
