@@ -278,6 +278,7 @@ function ProfilePage() {
             },
             body: JSON.stringify({
                 nickname: nickname,
+                center: params.center,
             }),
         });
 
