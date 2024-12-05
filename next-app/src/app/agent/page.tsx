@@ -1232,7 +1232,7 @@ function AgentPage() {
                                                     <button
                                                         onClick={() => {
                                                             navigator.clipboard.writeText(
-                                                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?center' + params.center +
+                                                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?center=' + params.center +
                                                                 '&agent=' + nft.contract.address + 
                                                                 '&tokenId=' + nft.tokenId
                                                             );
