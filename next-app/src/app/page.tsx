@@ -5,7 +5,11 @@ import thirdwebIcon from "@public/thirdweb.svg";
 import { shortenAddress } from "thirdweb/utils";
 import { Button } from "@headlessui/react";
 import { client, wallet } from "./constants";
-import { AutoConnect } from "thirdweb/react";
+
+import {
+  AutoConnect
+} from "thirdweb/react";
+
 import Link from "next/link";
 import { useEffect, useState, Suspense } from "react";
 
