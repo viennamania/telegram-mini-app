@@ -15,6 +15,23 @@ import { useEffect, useState, Suspense } from "react";
 
 import { useSearchParams } from "next/navigation";
 
+import {
+  polygon,
+  arbitrum,
+  ethereum,
+} from "thirdweb/chains";
+
+import {
+  getContract,
+} from "thirdweb";
+
+import { balanceOf, transfer } from "thirdweb/extensions/erc20";
+ 
+
+
+
+const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+
 
 function HomeContent() {
 
@@ -33,13 +50,53 @@ function HomeContent() {
   
   const account = useActiveAccount();
 
-  /*
+  const contract = getContract({
+    client,
+    chain: polygon,
+    address: contractAddress,
+  });
+
+
+
+  const address = account?.address;
+
+
+  const [balance, setBalance] = useState(0);
   useEffect(() => {
-    console.log('account', account);
-  }, [account]);
-  */
 
+    // get the balance
+    const getBalance = async () => {
 
+      if (!address) {
+          return;
+      }
+
+      ///console.log('getBalance address', address);
+
+      
+      const result = await balanceOf({
+        contract,
+        address: address,
+      });
+
+  
+      //console.log(result);
+
+      if (!result) return;
+  
+      setBalance( Number(result) / 10 ** 6 );
+
+    };
+
+    if (address) getBalance();
+
+    const interval = setInterval(() => {
+      if (address) getBalance();
+    } , 1000);
+
+    return () => clearInterval(interval);
+
+  } , [address, contract]);
 
 
 
@@ -160,6 +217,129 @@ function HomeContent() {
               </p>
             )}      
         </div>
+
+
+
+        <div className='w-full flex flex-col gap-4 items-start justify-center'>
+
+
+          {address && (
+
+              <div className='w-full flex flex-col gap-4 items-start justify-center'>
+
+                  <div className='w-full flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
+                  
+                      <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
+                          <Image
+                          src="/icon-wallet-live.gif"
+                          alt="Wallet"
+                          width={65}
+                          height={25}
+                          className="rounded"
+                          />
+
+                      </div>
+                      
+                      <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                          내 자산
+                      </div>
+                      <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                          {
+                              Number(balance).toFixed(2)
+                          } USDT
+                      </div>
+                  </div>
+
+                  {/* send USDT */}
+                  {/*
+                  <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                      <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                          {Send_USDT}
+                      </div>
+                      <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
+                          <input
+                              className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                              placeholder="0.00"
+                              type='number'
+                              onChange={(e) => {
+                                  setAmount(Number(e.target.value));
+                              }}
+                          />
+                          <input
+                              className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                              placeholder="받는 사람 지갑주소"
+                              type='text'
+                              onChange={(e) => {
+                                  setRecipient({
+                                      ...recipient,
+                                      walletAddress: e.target.value,
+                                  });
+                              }}
+                          />
+                          <button
+                              disabled={sending}
+                              onClick={() => {
+                                  sendUsdt();
+                              }}
+                              className={`p-2 bg-blue-500 text-zinc-100 rounded ${sending ? 'opacity-50' : ''}`}
+                          >
+                              <div className='flex flex-row gap-2 items-center justify-between'>
+                                  {sending && (
+                                      <Image
+                                          src="/loading.png"
+                                          alt="Send"
+                                          width={25}
+                                          height={25}
+                                          className="animate-spin"
+                                      />
+                                  )}
+                                  <span className='text-lg font-semibold'>
+                                      {Pay_USDT}
+                                  </span>
+                              </div>
+                          </button>
+                      </div>
+                  </div>
+                  */}
+
+                  {/* wallet address and copy button */}
+                  {/*
+                  <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                      <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                          입금용 지갑주소(Polygon)
+                      </div>
+                      <div className='flex flex-row gap-2 items-center justify-between'>
+                          <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                              {address.substring(0, 6)}...{address.substring(address.length - 4, address.length)}
+                          </div>
+                          <button
+                              onClick={() => {
+                                  navigator.clipboard.writeText(address);
+                                  
+                                  //toast.success('지갑주소가 복사되었습니다');
+
+                              }}
+                              className="p-2 bg-blue-500 text-zinc-100 rounded"
+                          >
+                              Copy
+                          </button>
+                      </div>
+                  </div>
+                  */}
+
+
+              </div>
+
+          )}
+
+        </div>
+
+
+
+
+
+
+
 
 
         {account && !userCenter && (
