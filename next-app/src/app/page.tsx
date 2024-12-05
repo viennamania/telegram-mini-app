@@ -10,7 +10,9 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 
-export default function Home() {
+export default function Home({ params }: any) {
+
+  const center = params.center;
 
   
   const account = useActiveAccount();
@@ -54,7 +56,9 @@ export default function Home() {
             )}      
         </div>
 
-        <Menu />
+        <Menu
+          center={center}
+        />
 
       </div>
     </main>
@@ -83,12 +87,13 @@ function Header() {
   );
 }
 
-function Menu() {
+function Menu({ center }: { center: any }) {
+
 	return (
 		<div className="grid gap-4 lg:grid-cols-3 justify-center">
       <MenuItem
         title="프로필"
-        href="/profile"
+        href={`/profile?center=${center}`}
         description="프로필을 확인하고 수정합니다."
       />
 			<MenuItem

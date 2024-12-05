@@ -85,8 +85,11 @@ export default function SettingsPage({ params }: any) {
     const agentNumber = searchParams.get('tokenId');
     */
 
+    const center = params.center;
+
     const agent = params.agent;
     const agentNumber = params.tokenId;
+
 
 
     const account = useActiveAccount();
@@ -780,6 +783,7 @@ export default function SettingsPage({ params }: any) {
         
 
                 <Header
+                    center={center}
                     agent={agent ? agent : ""}
                     tokenId={agentNumber ? agentNumber : ""}
                 />
@@ -1370,8 +1374,9 @@ export default function SettingsPage({ params }: any) {
                                                     <button
                                                         onClick={() => {
                                                             navigator.clipboard.writeText(
-                                                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?agent=' +
-                                                                nft.contract.address + '&tokenId=' + nft.tokenId
+                                                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?center' + center + 
+                                                                '&agent=' + nft.contract.address + 
+                                                                '&tokenId=' + nft.tokenId
                                                             );
                                                             //toast.success('레퍼럴 URL 복사 완료');
                                                         }}
@@ -1519,9 +1524,11 @@ export default function SettingsPage({ params }: any) {
 
 function Header(
     {
+        center,
         agent,
         tokenId,
     } : {
+        center: string
         agent: string
         tokenId: string
     }
@@ -1540,7 +1547,7 @@ function Header(
             {/* logo */}
             <button
                 onClick={() => {
-                    router.push('/?agent=' + agent + '&tokenId=' + tokenId);
+                    router.push('/?center=' + center + '&agent=' + agent + '&tokenId=' + tokenId);
                 }}
             >            
                 <div className="flex flex-row gap-2 items-center">
