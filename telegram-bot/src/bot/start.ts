@@ -19,6 +19,11 @@ feature.command('start', async (ctx) => {
 
   console.log('start command')
 
+  // bot me
+
+  //const me = await ctx.get
+
+
   const username = ctx.from?.id+"";
 
   console.log('username', username)

@@ -1218,7 +1218,7 @@ function AgentPage() {
                                                             // open new window
 
                                                             window.open(
-                                                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?center=' + params.center +
+                                                                'https://aiagentbot.vercel.app/kr/polygon/tbot/?center=' + params.center +
                                                                 '&agent=' + nft.contract.address + 
                                                                 '&tokenId=' + nft.tokenId
                                                             );
@@ -1237,7 +1237,7 @@ function AgentPage() {
                                                     <button
                                                         onClick={() => {
                                                             navigator.clipboard.writeText(
-                                                                'https://pumpwallet.vercel.app/kr/polygon/tbot/?center=' + params.center +
+                                                                'https://aiagentbot.vercel.app/kr/polygon/tbot/?center=' + params.center +
                                                                 '&agent=' + nft.contract.address + 
                                                                 '&tokenId=' + nft.tokenId
                                                             );
