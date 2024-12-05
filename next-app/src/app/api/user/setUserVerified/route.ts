@@ -35,10 +35,15 @@ export async function POST(request: NextRequest) {
   });
   */
 
+
   let apiURL = "https://owinwallet.com/api/user/setUserVerified";
 
   if (center === "ppump_orry_bot") {
-    apiURL = "https://aiagentbot.vercel.app/api/user/setUserVerified";
+    //apiURL = "https://aiagentbot.vercel.app/api/user/setUserVerified";
+    // https://4a59-59-9-180-66.ngrok-free.app/api/user/setUserVerified
+
+    apiURL = "https://4a59-59-9-180-66.ngrok-free.app/api/user/setUserVerified";
+
   }
 
 
