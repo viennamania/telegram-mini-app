@@ -208,6 +208,7 @@ function AgentPage() {
                 },
                 body: JSON.stringify({
                     walletAddress: address,
+                    center: params.center,
                 }),
             });
 

@@ -72,6 +72,7 @@ function HomeContent() {
               },
               body: JSON.stringify({
                   walletAddress: account?.address,
+                  center: params.center,
               }),
           });
 
