@@ -362,6 +362,7 @@ function ProfilePage() {
                     userType: "",
                     mobile: "",
                     telegramId: "",
+                    center: params.center,
                 }),
             });
 

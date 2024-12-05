@@ -171,6 +171,7 @@ export async function insertOneVerified(data: any) {
       mobile: data.mobile,
       telegramId: data.telegramId,
       email: data.email,
+      center: data.center,
 
 
       walletAddress: data.walletAddress,
