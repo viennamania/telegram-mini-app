@@ -19,14 +19,17 @@ function TelegramLoginContent() {
     const router = useRouter();
 
     
-    const [params, setParams] = useState({ signature: '', message: '' });
+    const [params, setParams] = useState({ signature: '', message: '', center: '' });
 
     
     useEffect(() => {
         const signature = searchParams.get('signature') || '';
         const message = searchParams.get('message') || '';
-        setParams({ signature, message });
-        console.log('SearchParams:', { signature, message });
+        const center = searchParams.get('center') || '';
+        setParams({ signature, message, center });
+
+        //console.log('SearchParams:', { signature, message, center });
+
     }, [searchParams]);
  
 
@@ -54,7 +57,9 @@ function TelegramLoginContent() {
                     });
                     return wallet;
                 });
-                router.replace("/");
+                
+                router.replace("/?center=" + params.center);
+
                 return true;
 
             } catch (error) {

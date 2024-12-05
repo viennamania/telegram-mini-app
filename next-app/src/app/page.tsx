@@ -36,6 +36,13 @@ export default function Home({ params }: any) {
           wallets={[wallet]}
         />
 
+        {/* center */}
+        <div className="flex justify-center mb-20">
+          <p className="text-sm text-zinc-400">
+            Center: {center}
+          </p>
+        </div>
+
         
         <div className="flex justify-center mb-20">
           {account ? 
