@@ -192,32 +192,7 @@ function HomeContent() {
           wallets={[wallet]}
         />
 
-
-        <ConnectButton
-          client={client}
-          wallets={[wallet]}
-          accountAbstraction={{
-            chain: polygon,
-            sponsorGas: true
-          }}
-          theme={"light"}
-          connectButton={{
-            label: "Sign in with Magic Wallet",
-          }}
-          /*
-          connectModal={{
-            size: "wide", 
-            titleIcon: "https://owinwallet.com/icon-tbot.png",                           
-            showThirdwebBranding: false,
-
-          }}
-          */
-          locale={"ko_KR"}
-          //locale={"en_US"}
-        />
-
       
-
 
         {/* center */}
         <div className="flex justify-center">
@@ -225,6 +200,7 @@ function HomeContent() {
             Center: {params.center}
           </p>
         </div>
+        
 
         
         <div className="flex justify-center mb-5">
