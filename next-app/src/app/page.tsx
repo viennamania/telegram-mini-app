@@ -60,6 +60,11 @@ function HomeContent() {
 
 
   const address = account?.address;
+  const center = params.center;
+
+  // debug
+  //const address = '0x542197103Ca1398db86026Be0a85bc8DcE83e440';
+  //const center = 'owin_kingkong_bot';
 
 
   const [balance, setBalance] = useState(0);
@@ -130,7 +135,7 @@ function HomeContent() {
               },
               body: JSON.stringify({
                   walletAddress: address,
-                  center: params.center,
+                  center: center,
               }),
           });
 
@@ -173,15 +178,23 @@ function HomeContent() {
 
       };
 
-      address && params.center && fetchData();
+      address && center && fetchData();
 
-  }, [address, params.center]);
+  }, [address, center]);
+
+  //console.log('center', center);
+  //console.log('userCenter', userCenter);
 
 
-
+  //telegram background color
+  // main color: #0088cc
   
   return (
-    <main className="p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-lg mx-auto">
+
+   
+    <main className="p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-lg mx-auto
+    
+    ">
       <div className="py-20">
         {/*
         <Header />
@@ -204,21 +217,21 @@ function HomeContent() {
         {/* center */}
         <div className="flex justify-center">
           <p className="text-lg text-zinc-800">
-            Center: {params.center}
+            Center: {center}
           </p>
         </div>
         
 
         
         <div className="flex justify-center mb-5">
-          {account ? 
+          {address ? 
             (
               <> 
                 <Button
                   onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${account.address}`)}
                   className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                 >
-                  내 지갑주소: {shortenAddress(account.address)}
+                  내 지갑주소: {shortenAddress(address)}
                 </Button>  
               </>
             ) 
@@ -353,7 +366,7 @@ function HomeContent() {
 
 
 
-        {account && !userCenter && (
+        {address && !userCenter && (
           <MenuItem
             title="나의 프로필 설정"
             href={`/profile?center=${params.center}`}
@@ -362,22 +375,34 @@ function HomeContent() {
         )}
 
 
-        {/* 나의 소속 센터 */}
-        {account && userCenter && (
+        {/* 나의 소속 센터 봇 */}
+        {address && userCenter && (
           <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
               <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                  나의 소속 센터
+                  나의 소속 센터 봇
               </div>
               <div className='flex flex-row gap-2 items-center justify-between'>
-                  <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                  <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-sm font-semibold">
                       {userCenter}
                   </div>
+                  {/* 복사 버튼 */}
+                  <button
+                      onClick={() => {
+                          navigator.clipboard.writeText(
+                            'https://t.me/' + userCenter
+                          );
+                          //toast.success('센터명이 복사되었습니다');
+                      }}
+                      className="p-2 bg-blue-500 text-zinc-100 rounded"
+                  >
+                    복사
+                  </button>
               </div>
           </div>
         )}
 
 
-        {account && userCenter && params.center !== userCenter && (
+        {address && userCenter && center !== userCenter && (
           <div className="flex flex-col items-center justify-center">
             <p className="text-lg text-zinc-800">
               접근 권한이 없습니다.
@@ -393,10 +418,10 @@ function HomeContent() {
 
         )}
 
-        {account && userCenter && params.center === userCenter && (
+        {address && userCenter && center === userCenter && (
 
           <Menu
-            center={params.center}
+            center={center}
           />
 
         )}
@@ -442,6 +467,13 @@ function Menu({ center }: { center: any }) {
         title="나의 AI 에이전트 NFT"
         href={`/agent?center=${center}`}
         description="나의 AI 에이전트 NFT를 확인합니다."
+      />
+
+      {/* 나의 팔로워들 */}
+      <MenuItem
+        title="나의 팔로워들"
+        href={`/followers?center=${center}`}
+        description="나의 팔로워들을 확인합니다."
       />
 
       {/*

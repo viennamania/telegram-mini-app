@@ -866,10 +866,10 @@ function AgentPage() {
                         )}      
                     </div>
 
-                    {/* 나의 소속 센터 */}
+                    {/* 나의 소속 센터 봇 */}
                     <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                         <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                            나의 소속 센터
+                            나의 소속 센터 봇
                         </div>
                         <div className='flex flex-row gap-2 items-center justify-between'>
                             <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">

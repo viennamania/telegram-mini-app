@@ -71,7 +71,7 @@ import Uploader from '../components/uploader';
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
 
 
-function ProfilePage() {
+function FollowersPage() {
 
     const searchParams = useSearchParams();
 
@@ -207,7 +207,7 @@ function ProfilePage() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    walletAddress: account?.address,
+                    walletAddress: address,
                     center: params.center,
                 }),
             });
@@ -259,7 +259,7 @@ function ProfilePage() {
         account && params.center &&
         fetchData();
 
-    }, [account, params.center]);
+    }, [account, address, params.center]);
     
 
 
@@ -278,7 +278,6 @@ function ProfilePage() {
             },
             body: JSON.stringify({
                 nickname: nickname,
-                center: params.center,
             }),
         });
 
@@ -373,7 +372,6 @@ function ProfilePage() {
                     userType: "",
                     mobile: "",
                     telegramId: "",
-                    center: params.center,
                 }),
             });
 
@@ -790,14 +788,28 @@ function ProfilePage() {
     }
 
 
+    const [referralUrl, setReferralUrl] = useState("");
+    // https://aiagentbot.vercel.app/kr/polygon/tbot
+    // https://owinwallet.com/kr/polygon/tbot
+
+    // if center is "ppump_orry_bot" then referral url is "https://aiagentbot.vercel.app/kr/polygon/tbot"
+    // else referral url is "https://owinwallet.com/kr/polygon/tbot"
+
+    useEffect(() => {
+
+        if (userCenter === "ppump_orry_bot") {
+            setReferralUrl("https://aiagentbot.vercel.app/kr/polygon/tbot");
+        } else {
+            setReferralUrl("https://owinwallet.com/kr/polygon/tbot");
+        }
+
+    }, [userCenter]);
+
 
 
     return (
 
         <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
-
-
-
 
             <div className="py-0 w-full">
         
@@ -814,356 +826,11 @@ function ProfilePage() {
                     timeout={15000}
                 />
 
-                <div className="flex flex-col items-start justify-center space-y-4">
-
-                    <div className='flex flex-row items-center space-x-4'>
-                        <Image
-                            src="/logo-tbot.webp"
-                            alt="Profile Picture"
-                            width={50}
-                            height={50}
-                            className="rounded-full"  
-                        />
-                        <div className="text-2xl font-semibold">
-                            나의 프로필
-                        </div>
-                    </div>
-
-                    {/* center */}
-                    <div className="flex justify-center mb-20">
-                        Center: {params.center}
-                    </div>
-
-
-
-                    
-                    <div className="flex justify-center mb-20">
-                        {account ? (
-                            <> 
-                                <Button
-                                onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${account.address}`)}
-                                className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                                >
-                                내 지갑주소: {shortenAddress(account.address)}
-                                </Button>  
-                            </>
-                        ) : (
-                            <p className="text-sm text-zinc-400">
-                                연결된 지갑이 없습니다.
-                            </p>
-                        )}      
-                    </div>
-
-
-
-
-                
-                    <div className='w-full flex flex-col gap-4 items-start justify-center'>
-
-
-                        {address && (
-
-                            <div className='w-full flex flex-col gap-4 items-start justify-center'>
-
-                                <div className='w-full flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
-                                
-                                    <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
-                                        <Image
-                                        src="/icon-wallet-live.gif"
-                                        alt="Wallet"
-                                        width={65}
-                                        height={25}
-                                        className="rounded"
-                                        />
-
-                                    </div>
-                                    
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        내 자산
-                                    </div>
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        {
-                                            Number(balance).toFixed(2)
-                                        } USDT
-                                    </div>
-                                </div>
-
-                                {/* send USDT */}
-                                {/*
-                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        {Send_USDT}
-                                    </div>
-                                    <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
-                                        <input
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                            placeholder="0.00"
-                                            type='number'
-                                            onChange={(e) => {
-                                                setAmount(Number(e.target.value));
-                                            }}
-                                        />
-                                        <input
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                            placeholder="받는 사람 지갑주소"
-                                            type='text'
-                                            onChange={(e) => {
-                                                setRecipient({
-                                                    ...recipient,
-                                                    walletAddress: e.target.value,
-                                                });
-                                            }}
-                                        />
-                                        <button
-                                            disabled={sending}
-                                            onClick={() => {
-                                                sendUsdt();
-                                            }}
-                                            className={`p-2 bg-blue-500 text-zinc-100 rounded ${sending ? 'opacity-50' : ''}`}
-                                        >
-                                            <div className='flex flex-row gap-2 items-center justify-between'>
-                                                {sending && (
-                                                    <Image
-                                                        src="/loading.png"
-                                                        alt="Send"
-                                                        width={25}
-                                                        height={25}
-                                                        className="animate-spin"
-                                                    />
-                                                )}
-                                                <span className='text-lg font-semibold'>
-                                                    {Pay_USDT}
-                                                </span>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div>
-                                */}
-
-                                {/* wallet address and copy button */}
-                                {/*
-                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        입금용 지갑주소(Polygon)
-                                    </div>
-                                    <div className='flex flex-row gap-2 items-center justify-between'>
-                                        <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                            {address.substring(0, 6)}...{address.substring(address.length - 4, address.length)}
-                                        </div>
-                                        <button
-                                            onClick={() => {
-                                                navigator.clipboard.writeText(address);
-                                                
-                                                //toast.success('지갑주소가 복사되었습니다');
-
-                                            }}
-                                            className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                        >
-                                            Copy
-                                        </button>
-                                    </div>
-                                </div>
-                                */}
-
-
-                            </div>
-
-                        )}
-                        
-                    </div>
-
-
-
-                    {/* 나의 소속 센터 봇 */}
-                    {account && userCenter && (
-                    <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                        <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                            나의 소속 센터 봇
-                        </div>
-                        <div className='flex flex-row gap-2 items-center justify-between'>
-                            <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                {userCenter}
-                            </div>
-                        </div>
-                    </div>
-                    )}
-
-                    {/* 닉네임을 저장하면 나의 소속 센터 봇가 설정됩니다 */}
-                    {account && !userCenter && (
-                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                닉네임을 저장하면 나의 소속 센터 봇가 설정됩니다
-                            </div>
-                        </div>
-                    )}
-
-                    
-
-                    <div className='w-full  flex flex-col gap-5 '>
-
-                        {/* profile picture */}
-
-                        {address && userCode && (
-                            <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
-
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    내 닉네임
-                                </div>
-
-                                <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                    {nickname}
-                                </div>
-
-                                
-                                <button
-                                    onClick={() => {
-
-                                        nicknameEdit ? setNicknameEdit(false) : setNicknameEdit(true);
-
-                                    } }
-                                    className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                >
-                                    {nicknameEdit ? "취소" : "수정"}
-                                </button>
-
-                                <Image
-                                    src="/verified.png"
-                                    alt="Verified"
-                                    width={20}
-                                    height={20}
-                                    className="rounded-lg"
-                                />
-
-
-                                
-                            </div>
-                        )}
-
-
-                        { (address && (nicknameEdit || !userCode)) && (
-                            <div className=' flex flex-col xl:flex-row gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-
-                                <div
-                                    className="bg-green-500 text-sm text-zinc-100 p-2 rounded"
-                                >
-                                    {!userCode ? "닉네임 설정" :
-                                        nicknameEdit ? "수정할 내 닉네임" : "새로운 닉네임"
-                                    }
-                                </div>
-
-                                <div className='flex flex-col gap-2 items-start justify-between'>
-                                    <input
-                                        disabled={!address}
-                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
-                                        placeholder="닉네임"
-                                        
-                                        //value={nickname}
-                                        value={editedNickname}
-
-                                        type='text'
-                                        onChange={(e) => {
-                                            // check if the value is a number
-                                            // check if the value is alphanumeric and lowercase
-
-                                            if (!/^[a-z0-9]*$/.test(e.target.value)) {
-                                                //toast.error('닉네임은 영문 소문자와 숫자만 입력해주세요');
-                                                return;
-                                            }
-                                            if ( e.target.value.length > 10) {
-                                                //toast.error('닉네임은 10자 이하로 입력해주세요');
-                                                return;
-                                            }
-
-                                            //setNickname(e.target.value);
-
-                                            setEditedNickname(e.target.value);
-
-                                            checkNicknameIsDuplicate(e.target.value);
-
-                                        } }
-                                    />
-
-                                    {editedNickname && isNicknameDuplicate && (
-                                        <div className='flex flex-row gap-2 items-center justify-between'>
-                                            <span className='text-xs font-semibold text-red-500'>
-                                                이미 사용중인 닉네임입니다.
-                                            </span>
-                                        </div>
-                                    )}
-
-                                    {editedNickname
-                                    && !isNicknameDuplicate
-                                    && editedNickname.length >= 5
-                                    && (
-                                        <div className='flex flex-row gap-2 items-center justify-between'>
-                                            <span className='text-xs font-semibold text-green-500'>
-                                                사용가능한 닉네임입니다.
-                                            </span>
-                                        </div>
-                                    )}
-                                </div>
-
-
-                                <div className='flex flex-row gap-2 items-center justify-between'>
-                                    <span className='text-xs font-semibold'>
-                                        닉네임은 5자 이상 10자 이하로 입력해주세요
-                                    </span>
-                                </div>
-                                <button
-                                    disabled={
-                                        !address
-                                        || !editedNickname
-                                        || editedNickname.length < 5
-                                        || isNicknameDuplicate
-                                        || loadingSetUserData
-                                    }
-                                    className={`
-                                        ${!address
-                                        || !editedNickname
-                                        || editedNickname.length < 5
-                                        || isNicknameDuplicate
-                                        || loadingSetUserData
-                                        ? 'bg-gray-300 text-gray-400'
-                                        : 'bg-blue-500 text-zinc-100'}
-
-                                        p-2 rounded-lg text-sm font-semibold
-                                    `}
-                                    onClick={() => {
-                                        setUserData();
-                                    }}
-                                >
-                                    {loadingSetUserData ? "저장중..." : "저장"}
-                                    
-                                </button>
-
-                                
-
-                            </div>
-                        )}
-
-
-                        {userCode && (
-                            <div className='flex flex-row xl:flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
-
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    내 프로필 이미지
-                                </div>
-
-                                <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                    <Uploader
-                                        lang='kr'
-                                        walletAddress={address as string}
-                                    />
-                                </div>
-
-                            </div>
-                        )}
-
-
-                    </div>
-
-
+                {/* 준비중 */}
+                <div className="flex flex-col items-center gap-4">
+                    <h1 className="text-2xl font-bold text-gray-800">준비중입니다</h1>
                 </div>
+
 
             </div>
 
@@ -1249,10 +916,10 @@ function Header(
 
 
 
-  export default function Profile() {
+  export default function Followers() {
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <ProfilePage />
+            <FollowersPage />
         </Suspense>
     );
   }
