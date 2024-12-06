@@ -796,6 +796,9 @@ function ProfilePage() {
 
         <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
 
+
+
+
             <div className="py-0 w-full">
         
 
@@ -805,7 +808,11 @@ function ProfilePage() {
                     tokenId={agentNumber ? agentNumber : ""}
                 />
         
-
+                <AutoConnect
+                    client={client}
+                    wallets={[wallet]}
+                    timeout={15000}
+                />
 
                 <div className="flex flex-col items-start justify-center space-y-4">
 
@@ -827,11 +834,7 @@ function ProfilePage() {
                         Center: {params.center}
                     </div>
 
-                    <AutoConnect
-                        client={client}
-                        wallets={[wallet]}
-                        timeout={15000}
-                    />
+
 
                     
                     <div className="flex justify-center mb-20">

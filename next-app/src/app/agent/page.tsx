@@ -820,7 +820,11 @@ function AgentPage() {
                     tokenId={agentNumber ? agentNumber : ""}
                 />
         
-
+                <AutoConnect
+                    client={client}
+                    wallets={[wallet]}
+                    timeout={15000}
+                />
 
                 <div className="flex flex-col items-start justify-center space-y-4">
 
@@ -842,11 +846,7 @@ function AgentPage() {
                         Center: {params.center}
                     </div>
 
-                    <AutoConnect
-                        client={client}
-                        wallets={[wallet]}
-                        timeout={15000}
-                    />
+
 
                     
                     <div className="flex justify-center mb-20">
