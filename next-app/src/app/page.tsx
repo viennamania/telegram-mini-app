@@ -76,9 +76,6 @@ function HomeContent() {
       if (!address) {
           return;
       }
-
-      ///console.log('getBalance address', address);
-
       
       const result = await balanceOf({
         contract,
