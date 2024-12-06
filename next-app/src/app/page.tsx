@@ -7,7 +7,8 @@ import { Button } from "@headlessui/react";
 import { client, wallet } from "./constants";
 
 import {
-  AutoConnect
+  AutoConnect,
+  ConnectButton,
 } from "thirdweb/react";
 
 import Link from "next/link";
@@ -128,7 +129,7 @@ function HomeContent() {
                   "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                  walletAddress: account?.address,
+                  walletAddress: address,
                   center: params.center,
               }),
           });
@@ -172,9 +173,9 @@ function HomeContent() {
 
       };
 
-      account && params.center && fetchData();
+      address && params.center && fetchData();
 
-  }, [account, params.center]);
+  }, [address, params.center]);
 
 
 
@@ -190,6 +191,33 @@ function HomeContent() {
           client={client}
           wallets={[wallet]}
         />
+
+
+        <ConnectButton
+          client={client}
+          wallets={[wallet]}
+          accountAbstraction={{
+            chain: polygon,
+            sponsorGas: true
+          }}
+          theme={"light"}
+          connectButton={{
+            label: "Sign in with Magic Wallet",
+          }}
+          /*
+          connectModal={{
+            size: "wide", 
+            titleIcon: "https://owinwallet.com/icon-tbot.png",                           
+            showThirdwebBranding: false,
+
+          }}
+          */
+          locale={"ko_KR"}
+          //locale={"en_US"}
+        />
+
+      
+
 
         {/* center */}
         <div className="flex justify-center">
