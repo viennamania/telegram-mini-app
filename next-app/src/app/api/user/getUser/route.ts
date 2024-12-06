@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
 
   let apiURL = "https://owinwallet.com/api/user/getUser";
 
-  if (center === "ppump_orry_bot") {
+  if (center === "ppump_orry_bot" || center === "ppump_koko_bot") {
     apiURL = "https://aiagentbot.vercel.app/api/user/getUser";
   }
 

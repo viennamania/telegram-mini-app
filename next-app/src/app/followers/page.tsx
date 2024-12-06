@@ -797,7 +797,7 @@ function FollowersPage() {
 
     useEffect(() => {
 
-        if (userCenter === "ppump_orry_bot") {
+        if (userCenter === "ppump_orry_bot" || userCenter === "ppump_koko_bot") {
             setReferralUrl("https://aiagentbot.vercel.app/kr/polygon/tbot");
         } else {
             setReferralUrl("https://owinwallet.com/kr/polygon/tbot");

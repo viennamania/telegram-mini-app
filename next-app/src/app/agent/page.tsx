@@ -799,6 +799,8 @@ function AgentPage() {
 
         if (userCenter === "ppump_orry_bot") {
             setReferralUrl("https://aiagentbot.vercel.app/kr/polygon/tbot");
+        } else if (userCenter === "ppump_koko_bot") {
+            setReferralUrl("https://aiagentbot.vercel.app/kr/polygon/tbot");
         } else {
             setReferralUrl("https://owinwallet.com/kr/polygon/tbot");
         }
