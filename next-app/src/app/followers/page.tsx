@@ -789,16 +789,16 @@ function FollowersPage() {
 
 
     const [referralUrl, setReferralUrl] = useState("");
-    // https://aiagentbot.vercel.app/kr/polygon/tbot
+    // https://ppump.me/kr/polygon/tbot
     // https://owinwallet.com/kr/polygon/tbot
 
-    // if center is "ppump_orry_bot" then referral url is "https://aiagentbot.vercel.app/kr/polygon/tbot"
+    // if center is "ppump_orry_bot" then referral url is "https://ppump.me/kr/polygon/tbot"
     // else referral url is "https://owinwallet.com/kr/polygon/tbot"
 
     useEffect(() => {
 
         if (userCenter === "ppump_orry_bot" || userCenter === "ppump_koko_bot") {
-            setReferralUrl("https://aiagentbot.vercel.app/kr/polygon/tbot");
+            setReferralUrl("https://ppump.me/kr/polygon/tbot");
         } else {
             setReferralUrl("https://owinwallet.com/kr/polygon/tbot");
         }

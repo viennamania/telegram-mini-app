@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
   let apiURL = "https://owinwallet.com/api/user/updateUserErc721Contract";
 
   if (center === "ppump_orry_bot" || center === "ppump_koko_bot") {
-    apiURL = "https://aiagentbot.vercel.app/api/user/updateUserErc721Contract";
+    apiURL = "https://ppump.me/api/user/updateUserErc721Contract";
   }
 
   const response = await fetch(apiURL, {
