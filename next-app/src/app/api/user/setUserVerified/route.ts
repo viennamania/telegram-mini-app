@@ -38,7 +38,11 @@ export async function POST(request: NextRequest) {
 
   let apiURL = "https://owinwallet.com/api/user/setUserVerified";
 
-  if (center === "ppump_orry_bot" || center === "ppump_koko_bot") {
+  if (
+    center === "ppump_orry_bot"
+    || center === "ppump_koko_bot"
+    || center === "ppump_joajoa_bot"
+  ) {
     apiURL = "https://ppump.me/api/user/setUserVerified";
   }
 
