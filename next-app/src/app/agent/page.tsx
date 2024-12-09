@@ -96,7 +96,7 @@ function AgentPage() {
 
 
 
-    const account = useActiveAccount();
+    const account = useActiveAccount() as any;
 
 
     const contract = getContract({
@@ -115,6 +115,8 @@ function AgentPage() {
 
     const address = account?.address;
   
+    // test address
+    ////const address = "0x25F3922F4fE8983EF67981d0C79e738aE0110E43";
   
 
 
@@ -256,10 +258,10 @@ function AgentPage() {
 
         };
 
-        account && params.center &&
+        address && params.center &&
         fetchData();
 
-    }, [account, address, params.center]);
+    }, [address, params.center]);
     
 
 
@@ -855,13 +857,13 @@ function AgentPage() {
 
                     
                     <div className="flex justify-center mb-20">
-                        {account ? (
+                        {address ? (
                             <> 
                                 <Button
-                                onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${account.address}`)}
+                                onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
                                 className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                                 >
-                                내 지갑주소: {shortenAddress(account.address)}
+                                내 지갑주소: {shortenAddress(address)}
                                 </Button>  
                             </>
                         ) : (
