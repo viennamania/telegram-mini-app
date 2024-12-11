@@ -42,6 +42,7 @@ export async function POST(request: NextRequest) {
     center === "ppump_orry_bot"
     || center === "ppump_koko_bot"
     || center === "ppump_joajoa_bot"
+    || center === "ppump_bigrich_bot"
   ) {
     apiURL = "https://ppump.me/api/user/setUserVerified";
   }
