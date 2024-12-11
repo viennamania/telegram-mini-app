@@ -808,6 +808,9 @@ function AgentPage() {
 
         } else if (userCenter === "ppump_bigrich_bot") {
             setReferralUrl("https://ppump.me/kr/polygon/tbot");
+
+        } else if (userCenter === "ppump_5515_bot") {
+            setReferralUrl("https://ppump.me/kr/polygon/tbot");
             
         } else {
             setReferralUrl("https://owinwallet.com/kr/polygon/tbot");

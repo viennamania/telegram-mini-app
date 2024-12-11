@@ -797,6 +797,7 @@ function FollowersPage() {
             || userCenter === "ppump_koko_bot"
             || userCenter === "ppump_joajoa_bot"
             || userCenter === "ppump_bigrich_bot"
+            || userCenter === "ppump_5515_bot"
         ) {
             setReferralUrl("https://ppump.me/kr/polygon/tbot");
         } else {
