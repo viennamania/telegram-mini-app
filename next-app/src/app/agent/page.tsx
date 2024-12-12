@@ -15,7 +15,8 @@ import { deployERC721Contract } from 'thirdweb/deploys';
 
 import {
     getOwnedNFTs,
-    mintTo
+    mintTo,
+    transferFrom,
 } from "thirdweb/extensions/erc721";
 
 
@@ -48,8 +49,8 @@ import Image from 'next/image';
 
 //import Uploader from '@/components/uploader';
 
-import { balanceOf, transfer } from "thirdweb/extensions/erc20";
- 
+import { balanceOf } from "thirdweb/extensions/erc20";
+
 
 import {
 	accountAbstraction,
@@ -116,7 +117,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    ////const address = "0x25F3922F4fE8983EF67981d0C79e738aE0110E43";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -546,6 +547,7 @@ function AgentPage() {
 
                 setMyNfts( nfts );
                 */
+                
 
                 /*
                 setMyNfts([
@@ -559,7 +561,7 @@ function AgentPage() {
 
 
                 // api /api/agent/getAgentNFTByWalletAddress
-
+                
                 const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
                     method: "POST",
                     headers: {
@@ -583,6 +585,7 @@ function AgentPage() {
                 } else {
                     setMyNfts([]);
                 }
+
                 
                    
    
@@ -601,14 +604,8 @@ function AgentPage() {
 
    }
    , [ address ]);
+
    
-
-
-   console.log("myNfts", myNfts);
-
-
-
-
     const [agentName, setAgentName] = useState("");
     const [agentDescription, setAgentDescription] = useState("");
 
@@ -817,6 +814,115 @@ function AgentPage() {
         }
 
     }, [userCenter]);
+
+
+
+
+    // transfer NFT
+    const [transferingNftList, setTransferingNftList] = useState([] as any[]);
+
+    // initailize transferingNftList for myNfts
+    useEffect(() => {
+        if (myNfts) {
+            setTransferingNftList(myNfts.map((nft) => {
+                return {
+                    ...nft,
+                    transferring: false,
+                };
+            }));
+        }
+    }, [myNfts]);
+
+    // toAddress array
+    const [toAddressList, setToAddressList] = useState([] as any[]);
+
+
+
+    const transferNft = async (contractAddress: string, tokenId: string) => {
+
+
+        if (confirm(
+            "AI 에이전트 NFT를 다른 사용자에게 전송하시겠습니까?"
+        ) === false) {
+            return;
+        }
+
+
+
+        setTransferingNftList(transferingNftList.map((item) => {
+            if (item.tokenId === tokenId) {
+                return {
+                    ...item,
+                    transferring: true,
+                };
+            } else {
+                return item;
+            }
+        }));
+
+        const to = toAddressList.find((item) => item.tokenId === tokenId).to;
+
+        try {
+
+            const contract = getContract({
+                client,
+                chain: polygon,
+                address: contractAddress,
+            });
+
+            const transaction = transferFrom({
+                contract: contract,
+                from: address as string,
+                to: to,
+                tokenId: BigInt(tokenId),
+            });
+
+            const transactionResult = await sendAndConfirmTransaction({
+                transaction: transaction,
+                account: account,
+            });
+
+            if (!transactionResult) {
+                throw new Error('Failed to transfer NFT');
+            }
+
+            // fetch the NFTs again
+            const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    walletAddress: address,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.result) {
+                    setMyNfts(data.result.ownedNfts);
+                } else {
+                    setMyNfts([]);
+                }
+            }
+
+        } catch (error) {
+            console.error("transferNft error", error);
+        }
+
+        setTransferingNftList(transferingNftList.map((item) => {
+            if (item.tokenId === tokenId) {
+                return {
+                    ...item,
+                    transferring: false,
+                };
+            } else {
+                return item;
+            }
+        }));
+
+    }
+
 
 
 
@@ -1300,7 +1406,53 @@ function AgentPage() {
                                                         className="p-2 bg-blue-500 text-zinc-100 rounded
                                                         hover:bg-blue-600 text-xs xl:text-lg font-semibold"
                                                     >
-                                                        레퍼럴 URL 복사
+                                                        레퍼럴 URL 복사하기
+                                                    </button>
+
+                                                </div>
+
+                                                {/* transfer NFT */}
+                                                <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                                                    <input
+                                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                                        placeholder="받는 사람 지갑주소"
+                                                        type='text'
+                                                        onChange={(e) => {
+                                                            setToAddressList(toAddressList.map((item) => {
+                                                                if (item.tokenId === nft.tokenId) {
+                                                                    return {
+                                                                        ...item,
+                                                                        to: e.target.value,
+                                                                    };
+                                                                } else {
+                                                                    return item;
+                                                                }
+                                                            }));
+                                                        }}
+                                                    />
+                                                    <button
+                                                        disabled={transferingNftList.find((item) => item.tokenId === nft.tokenId)?.transferring}
+                                                        onClick={() => {
+                                                            transferNft(nft.contract.address, nft.tokenId);
+                                                        }}
+                                                        className={`p-2 bg-blue-500 text-zinc-100 rounded
+                                                        ${transferingNftList.find((item) => item.tokenId === nft.tokenId)?.transferring ? 'opacity-50' : ''}
+                                                        `}
+                                                    >
+                                                        <div className='flex flex-row gap-2 items-center justify-between'>
+                                                            {transferingNftList.find((item) => item.tokenId === nft.tokenId)?.transferring && (
+                                                                <Image
+                                                                    src="/loading.png"
+                                                                    alt="Send"
+                                                                    width={25}
+                                                                    height={25}
+                                                                    className="animate-spin"
+                                                                />
+                                                            )}
+                                                            <span className='text-lg font-semibold'>
+                                                                NFT 전송하기
+                                                            </span>
+                                                        </div>
                                                     </button>
 
                                                 </div>
