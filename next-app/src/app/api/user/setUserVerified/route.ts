@@ -46,6 +46,10 @@ export async function POST(request: NextRequest) {
     || center === "ppump_5515_bot"
   ) {
     apiURL = "https://ppump.me/api/user/setUserVerified";
+  } else if (
+    center === "exms_aaa_bot"
+  ) {
+    apiURL = "https://exms.me/api/user/setUserVerified";
   }
 
 

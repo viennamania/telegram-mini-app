@@ -788,13 +788,12 @@ function AgentPage() {
 
 
     const [referralUrl, setReferralUrl] = useState("");
-    // https://ppump.me/kr/polygon/tbot
-    // https://owinwallet.com/kr/polygon/tbot
-
-    // if center is "ppump_orry_bot" then referral url is "https://ppump.me/kr/polygon/tbot"
-    // else referral url is "https://owinwallet.com/kr/polygon/tbot"
 
     useEffect(() => {
+
+
+
+
 
         if (userCenter === "ppump_orry_bot") {
             setReferralUrl("https://ppump.me/kr/polygon/tbot");
@@ -808,6 +807,12 @@ function AgentPage() {
 
         } else if (userCenter === "ppump_5515_bot") {
             setReferralUrl("https://ppump.me/kr/polygon/tbot");
+
+
+
+        } else if (userCenter === "exms_aaa_bot") {
+
+            setReferralUrl("https://exms.me/kr/polygon/tbot");
             
         } else {
             setReferralUrl("https://owinwallet.com/kr/polygon/tbot");
@@ -1372,6 +1377,8 @@ function AgentPage() {
                         )}
 
 
+                        
+
 
                         {address && myNfts && myNfts.length > 0 && (
 
@@ -1437,6 +1444,7 @@ function AgentPage() {
                                                 </div>
 
                                                 {/* transfer NFT */}
+                                                
                                                 <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                                     <input
                                                         className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
@@ -1504,7 +1512,7 @@ function AgentPage() {
                                                     <div className="flex flex-col gap-2 items-center justify-center">
 
 
-                                                        {/*}
+                                                        {/*
                                                         <button
                                                             onClick={() => {
                                                                 window.open('https://opensea.io/assets/matic/' + erc721ContractAddress + '/' + nft.tokenId);

@@ -36,6 +36,13 @@ export async function POST(request: NextRequest) {
   ) {
     apiURL = "https://ppump.me/api/user/checkUserByNickname";
   }
+  else if (
+    center === "exms_aaa_bot"
+  ) {
+    apiURL = "https://exms.me/api/user/checkUserByNickname";
+  }
+
+  
 
   const response = await fetch(apiURL, {
     method: "POST",
