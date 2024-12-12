@@ -826,7 +826,8 @@ function AgentPage() {
         if (myNfts) {
             setTransferingNftList(myNfts.map((nft) => {
                 return {
-                    ...nft,
+                    contractAddress: nft.contract.address,
+                    tokenId: nft.tokenId,
                     transferring: false,
                 };
             }));
@@ -835,10 +836,29 @@ function AgentPage() {
 
     // toAddress array
     const [toAddressList, setToAddressList] = useState([] as any[]);
+    useEffect(() => {
+        if (myNfts) {
+            setToAddressList(myNfts.map((nft) => {
+                return {
+                    contractAddress: nft.contract.address,
+                    tokenId: nft.tokenId,
+                    to: "",
+                };
+            }));
+        }
+    } , [myNfts]);
 
 
 
     const transferNft = async (contractAddress: string, tokenId: string) => {
+
+        if (transferingNftList.find((item) =>
+            item.contractAddress === contractAddress && item.tokenId === tokenId
+        ).transferring) {
+            return;
+        }
+
+        
 
 
         if (confirm(
@@ -850,17 +870,17 @@ function AgentPage() {
 
 
         setTransferingNftList(transferingNftList.map((item) => {
-            if (item.tokenId === tokenId) {
+            if (item.contractAddress === contractAddress && item.tokenId === tokenId) {
                 return {
                     ...item,
                     transferring: true,
                 };
-            } else {
-                return item;
             }
         }));
 
-        const to = toAddressList.find((item) => item.tokenId === tokenId).to;
+        const to = toAddressList.find((item) => 
+            item.contractAddress === contractAddress && item.tokenId === tokenId
+        ).to;
 
         try {
 
@@ -911,13 +931,11 @@ function AgentPage() {
         }
 
         setTransferingNftList(transferingNftList.map((item) => {
-            if (item.tokenId === tokenId) {
+            if (item.contractAddress === contractAddress && item.tokenId === tokenId) {
                 return {
                     ...item,
                     transferring: false,
                 };
-            } else {
-                return item;
             }
         }));
 
@@ -1431,16 +1449,25 @@ function AgentPage() {
                                                         }}
                                                     />
                                                     <button
-                                                        disabled={transferingNftList.find((item) => item.tokenId === nft.tokenId)?.transferring}
+                                                        
+                                                        disabled={transferingNftList.find((item) => 
+                                                            item.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        ).transferring}
+
                                                         onClick={() => {
                                                             transferNft(nft.contract.address, nft.tokenId);
                                                         }}
                                                         className={`p-2 bg-blue-500 text-zinc-100 rounded
-                                                        ${transferingNftList.find((item) => item.tokenId === nft.tokenId)?.transferring ? 'opacity-50' : ''}
+                                                        ${transferingNftList.find((item) => 
+                                                            item.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        )?.transferring ? 'opacity-50' : ''}
                                                         `}
                                                     >
                                                         <div className='flex flex-row gap-2 items-center justify-between'>
-                                                            {transferingNftList.find((item) => item.tokenId === nft.tokenId)?.transferring && (
+                                                            {transferingNftList.find((item) =>
+                                                                item.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                            ).transferring && (
+
                                                                 <Image
                                                                     src="/loading.png"
                                                                     alt="Send"
