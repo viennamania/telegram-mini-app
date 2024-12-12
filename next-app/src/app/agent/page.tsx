@@ -910,6 +910,16 @@ function AgentPage() {
                 throw new Error('Failed to transfer NFT');
             }
 
+            setTransferingNftList(transferingNftList.map((item) => {
+                if (item.contractAddress === contractAddress && item.tokenId === tokenId) {
+                    return {
+                        ...item,
+                        transferring: false,
+                    };
+                }
+            }));
+
+
             // fetch the NFTs again
             const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
                 method: "POST",
@@ -934,14 +944,7 @@ function AgentPage() {
             console.error("transferNft error", error);
         }
 
-        setTransferingNftList(transferingNftList.map((item) => {
-            if (item.contractAddress === contractAddress && item.tokenId === tokenId) {
-                return {
-                    ...item,
-                    transferring: false,
-                };
-            }
-        }));
+
 
     }
 
@@ -1439,6 +1442,11 @@ function AgentPage() {
                                                         className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
                                                         placeholder="받는 사람 지갑주소"
                                                         type='text'
+
+                                                        value={toAddressList.find((item) =>
+                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        ).to}
+
                                                         onChange={(e) => {
                                                             setToAddressList(toAddressList.map((item) => {
                                                                 if (item.tokenId === nft.tokenId) {
