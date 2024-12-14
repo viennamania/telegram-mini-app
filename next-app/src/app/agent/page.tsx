@@ -807,7 +807,8 @@ function AgentPage() {
 
         } else if (userCenter === "ppump_5515_bot") {
             setReferralUrl("https://ppump.me/kr/polygon/tbot");
-
+        } else if (userCenter === "ppump_jojo_bot") {
+            setReferralUrl("https://ppump.me/kr/polygon/tbot");
 
 
         } else if (userCenter === "exms_aaa_bot") {
