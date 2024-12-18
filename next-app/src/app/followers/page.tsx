@@ -803,6 +803,24 @@ function FollowersPage() {
             setReferralUrl("https://ppump.me/kr/polygon/tbot");
         } else if (
             userCenter === "exms_aaa_bot"
+            || userCenter === "exms_Kyuhongjung_bot"
+            || userCenter === "exms_trj4409_bot"
+            || userCenter === "exms_yun0477_bot"
+            || userCenter === "exms_hyugeso_bot"
+            || userCenter === "exms_csj6588_bot"
+            || userCenter === "exms_kaj7898_bot"
+            || userCenter === "exms_LIM2866_bot"
+            || userCenter === "exms_hmk7529_bot"
+            || userCenter === "exms_Krkr2525_bot"
+            || userCenter === "exms_ksm2465_bot"
+            || userCenter === "exms_nys8364_bot"
+            || userCenter === "exms_yhs0103_bot"
+            || userCenter === "exms_yorke2_bot"
+            || userCenter === "exms_jin3968_bot"
+            || userCenter === "exms_hays7895_bot"
+            || userCenter === "exms_bybb88_bot"
+            || userCenter === "exms_prolife41_bot"
+            || userCenter === "exms_QUAN2388_bot"
         ) {
             setReferralUrl("https://exms.me/kr/polygon/tbot");
         } else {
