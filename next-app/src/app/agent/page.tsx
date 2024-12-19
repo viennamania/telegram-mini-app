@@ -1001,16 +1001,47 @@ function AgentPage() {
 
     return (
 
-        <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
+        <main
+            className="p-4 pb-28 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto"
+            style={{
+                backgroundImage: "url('/mobile-background-nft.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+        >
 
             <div className="py-0 w-full">
         
-
+                {/*
                 <Header
                     center={params.center}
                     agent={agent ? agent : ""}
                     tokenId={agentNumber ? agentNumber : ""}
                 />
+                */}
+                <div className="w-full flex flex-col items-start justify-center space-y-4">
+                    {/* 돌아가기 버튼 */}
+                    <button
+                        onClick={() => {
+                            router.back();
+                        }}
+                        className="p-2 bg-gray-500 text-white rounded"
+                    >
+                        <div className='flex flex-row gap-2 items-center justify-center'>
+                            <Image
+                                src="/icon-back.png"
+                                alt="Back"
+                                width={20}
+                                height={20}
+                                className="rounded-lg"
+                            />
+                            <span className='text-lg font-semibold'>
+                                돌아가기
+                            </span>
+                        </div>
+                    </button>
+                </div>
         
                 <AutoConnect
                     client={client}
@@ -1018,12 +1049,12 @@ function AgentPage() {
                     timeout={15000}
                 />
 
-                <div className="flex flex-col items-start justify-center space-y-4">
+                <div className="mt-5 flex flex-col items-start justify-center space-y-4">
 
                     <div className='flex flex-row items-center space-x-4'>
                         <Image
-                            src="/logo-tbot.webp"
-                            alt="Profile Picture"
+                            src="/logo-aiagent.png"
+                            alt="AI Agent"
                             width={50}
                             height={50}
                             className="rounded-full"  
@@ -1033,14 +1064,6 @@ function AgentPage() {
                         </div>
                     </div>
 
-                    {/* center */}
-                    <div className="flex justify-center mb-20">
-                        Center: {params.center}
-                    </div>
-
-
-
-                    
                     <div className="flex justify-center mb-20">
                         {address ? (
                             <> 
@@ -1058,17 +1081,6 @@ function AgentPage() {
                         )}      
                     </div>
 
-                    {/* 나의 소속 센터 봇 */}
-                    <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                        <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                            나의 소속 센터 봇
-                        </div>
-                        <div className='flex flex-row gap-2 items-center justify-between'>
-                            <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                {userCenter}
-                            </div>
-                        </div>
-                    </div>
                 
                     <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
@@ -1077,7 +1089,9 @@ function AgentPage() {
 
                             <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
-                                <div className='w-full flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
+                                <div className='w-full flex flex-row gap-2 items-center justify-between
+                                    border border-gray-800
+                                    p-4 rounded-lg'>
                                 
                                     <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
                                         <Image
@@ -1191,7 +1205,9 @@ function AgentPage() {
       
 
                         {address && userCode && (
-                            <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
+                            <div className='flex flex-row gap-2 items-center justify-between
+                            border border-gray-800
+                            p-4 rounded-lg'>
 
                                 <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                     내 닉네임
@@ -1218,24 +1234,7 @@ function AgentPage() {
                     </div>
 
 
-                    {/* 새로고침 버튼 */}
-                    {address && userCode && (
-                        <div className='w-full flex flex-row items-center justify-start gap-2'>
-                            <button
-                                onClick={() => {
-                                    window.location.reload();
-                                }}
-                                className="p-2 bg-blue-500 text-zinc-100 rounded"
-                            >
-                                새로고침
-                            </button>
 
-                            <span className="text-xs font-semibold text-red-500">
-                                민팅에 되지않을 경우 새로고침 해주세요.
-                            </span>
-
-                        </div>
-                    )}
 
 
                     {address && userCode && !erc721ContractAddress && (
@@ -1275,7 +1274,9 @@ function AgentPage() {
                         {/* address */}
                         {address && erc721ContractAddress && (
 
-                            <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
+                            <div className='w-full flex flex-col gap-2 items-center justify-between
+                                border border-gray-800
+                                p-4 rounded-lg'>
 
                                 <div className='w-full flex flex-row gap-2 items-center justify-between'>
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
@@ -1325,7 +1326,9 @@ function AgentPage() {
                                 
 
                                 {/* mint AI Agent NFT */}
-                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                                <div className='w-full flex flex-col gap-2 items-start justify-between
+                                    bg-yellow-100 border border-gray-300
+                                    p-4 rounded-lg'>
                                     
                                     <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                         AI 에이전트 NFT 발행
@@ -1428,10 +1431,49 @@ function AgentPage() {
                             <div className='w-full flex flex-col gap-2 items-start justify-between'>
 
                                     {/* my NFTs */}
-                                    <div className='mt-10 flex flex-col gap-2 items-start justify-between'>
-                                        <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                    <div className='mt-10 flex flex-row gap-2 items-start justify-between'>
+                                        <span className="flex bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                             My AI 에이전트 NFT
                                         </span>
+
+                                        <div className='flex flex-row items-center justify-start gap-2'>
+                                            <button
+                                                onClick={() => {
+                                                    // fetch the NFTs again
+                                                    const getMyNFTs = async () => {
+                                                        try {
+                                                            const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
+                                                                method: "POST",
+                                                                headers: {
+                                                                    "Content-Type": "application/json",
+                                                                },
+                                                                body: JSON.stringify({
+                                                                    walletAddress: address,
+                                                                }),
+                                                            });
+
+                                                            if (response.ok) {
+                                                                const data = await response.json();
+                                                                if (data.result) {
+                                                                    setMyNfts(data.result.ownedNfts);
+                                                                } else {
+                                                                    setMyNfts([]);
+                                                                }
+                                                            }
+
+                                                        } catch (error) {
+                                                            console.error("Error getting NFTs", error);
+                                                        }
+                                                    };
+
+                                                    getMyNFTs();
+                                                }}
+                                                className="p-2 bg-blue-500 text-sm text-zinc-100 rounded"
+                                            >
+                                                새로고침
+                                            </button>
+                                        </div>
+                                    
                                     </div>
                                     <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2'>
                                         {myNfts?.map((nft, index) => (
@@ -1486,67 +1528,7 @@ function AgentPage() {
 
                                                 </div>
 
-                                                {/* transfer NFT */}
-                                                
-                                                <div className='w-full flex flex-col gap-2 items-start justify-between'>
-                                                    <input
-                                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                                        placeholder="받는 사람 지갑주소"
-                                                        type='text'
 
-                                                        value={toAddressList.find((item) =>
-                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.to}
-
-                                                        onChange={(e) => {
-                                                            setToAddressList(toAddressList.map((item) => {
-
-                                                                if (item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId) {
-                                                                    return {
-                                                                        ...item,
-                                                                        to: e.target.value,
-                                                                    };
-                                                                } else {
-                                                                    return item;
-                                                                }
-                                                            }));
-                                                        }}
-                                                    />
-                                                    <button
-                                                        
-                                                        disabled={transferingNftList.find((item) => 
-                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.transferring}
-
-                                                        onClick={() => {
-                                                            transferNft(nft.contract.address, nft.tokenId);
-                                                        }}
-                                                        className={`p-2 bg-blue-500 text-zinc-100 rounded
-                                                        ${transferingNftList.find((item) => 
-                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.transferring ? 'opacity-50' : ''}
-                                                        `}
-                                                    >
-                                                        <div className='flex flex-row gap-2 items-center justify-between'>
-                                                            {transferingNftList.find((item) =>
-                                                                item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                            )?.transferring && (
-
-                                                                <Image
-                                                                    src="/loading.png"
-                                                                    alt="Send"
-                                                                    width={25}
-                                                                    height={25}
-                                                                    className="animate-spin"
-                                                                />
-                                                            )}
-                                                            <span className='text-lg font-semibold'>
-                                                                NFT 전송하기
-                                                            </span>
-                                                        </div>
-                                                    </button>
-
-                                                </div>
 
 
                                                 <div className='w-full grid grid-cols-2 gap-2 items-center justify-between'>
@@ -1653,6 +1635,73 @@ function AgentPage() {
                                                     </div>
 
                                                 </div>
+
+
+
+                                                {/* transfer NFT */}
+                                                <div className='w-full flex flex-col gap-2 items-end justify-between'>
+                                                    <input
+                                                        className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                                        placeholder="받는 사람 지갑주소"
+                                                        type='text'
+
+                                                        value={toAddressList.find((item) =>
+                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        )?.to}
+
+                                                        onChange={(e) => {
+                                                            setToAddressList(toAddressList.map((item) => {
+
+                                                                if (item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId) {
+                                                                    return {
+                                                                        ...item,
+                                                                        to: e.target.value,
+                                                                    };
+                                                                } else {
+                                                                    return item;
+                                                                }
+                                                            }));
+                                                        }}
+                                                    />
+                                                    <button
+                                                        
+                                                        disabled={transferingNftList.find((item) => 
+                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        )?.transferring}
+
+                                                        onClick={() => {
+                                                            confirm('AI 에이전트 NFT를 다른 사용자에게 전송하시겠습니까?') &&
+                                                            transferNft(nft.contract.address, nft.tokenId);
+                                                        }}
+                                                        className={`p-2 bg-blue-500 text-zinc-100 rounded
+                                                        ${transferingNftList.find((item) => 
+                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        )?.transferring ? 'opacity-50' : ''}
+                                                        `}
+                                                    >
+                                                        <div className='flex flex-row gap-2 items-center justify-between'>
+                                                            {transferingNftList.find((item) =>
+                                                                item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                            )?.transferring && (
+
+                                                                <Image
+                                                                    src="/loading.png"
+                                                                    alt="Send"
+                                                                    width={25}
+                                                                    height={25}
+                                                                    className="animate-spin"
+                                                                />
+                                                            )}
+                                                            <span className='text-lg font-semibold'>
+                                                                NFT 전송하기
+                                                            </span>
+                                                        </div>
+                                                    </button>
+
+                                                </div>
+
+
+
 
 
                                             </div>
