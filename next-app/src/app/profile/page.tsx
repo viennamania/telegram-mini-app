@@ -116,6 +116,9 @@ function ProfilePage() {
     const address = account?.address;
   
   
+    // test address
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+  
 
 
 
@@ -207,7 +210,7 @@ function ProfilePage() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    walletAddress: account?.address,
+                    walletAddress: address,
                     center: params.center,
                 }),
             });
@@ -256,10 +259,10 @@ function ProfilePage() {
 
         };
 
-        account && params.center &&
+        address && params.center &&
         fetchData();
 
-    }, [account, params.center]);
+    }, [address, params.center]);
     
 
 
@@ -794,19 +797,52 @@ function ProfilePage() {
 
     return (
 
-        <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
+        <main
+            className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto"
+            style={{
+                backgroundImage: "url('/mobile-background-profile.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+        >
 
 
 
 
             <div className="py-0 w-full">
         
-
+                {/*}
                 <Header
                     center={params.center}
                     agent={agent ? agent : ""}
                     tokenId={agentNumber ? agentNumber : ""}
                 />
+                */}
+
+                <div className="w-full flex flex-col items-start justify-center space-y-4">
+                    {/* 돌아가기 버튼 */}
+                    <button
+                        onClick={() => {
+                            router.back();
+                        }}
+                        className="p-2 bg-gray-500 text-white rounded"
+                    >
+                        <div className='flex flex-row gap-2 items-center justify-center'>
+                            <Image
+                                src="/icon-back.png"
+                                alt="Back"
+                                width={20}
+                                height={20}
+                                className="rounded-lg"
+                            />
+                            <span className='text-lg font-semibold'>
+                                돌아가기
+                            </span>
+                        </div>
+                    </button>
+                </div>
+
         
                 <AutoConnect
                     client={client}
@@ -814,7 +850,7 @@ function ProfilePage() {
                     timeout={15000}
                 />
 
-                <div className="flex flex-col items-start justify-center space-y-4">
+                <div className="mt-5 flex flex-col items-start justify-center space-y-4">
 
                     <div className='flex flex-row items-center space-x-4'>
                         <Image
@@ -829,22 +865,14 @@ function ProfilePage() {
                         </div>
                     </div>
 
-                    {/* center */}
                     <div className="flex justify-center mb-20">
-                        Center: {params.center}
-                    </div>
-
-
-
-                    
-                    <div className="flex justify-center mb-20">
-                        {account ? (
+                        {address ? (
                             <> 
                                 <Button
                                 onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${account.address}`)}
                                 className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                                 >
-                                내 지갑주소: {shortenAddress(account.address)}
+                                내 지갑주소: {shortenAddress(address)}
                                 </Button>  
                             </>
                         ) : (
@@ -865,28 +893,6 @@ function ProfilePage() {
 
                             <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
-                                <div className='w-full flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
-                                
-                                    <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
-                                        <Image
-                                        src="/icon-wallet-live.gif"
-                                        alt="Wallet"
-                                        width={65}
-                                        height={25}
-                                        className="rounded"
-                                        />
-
-                                    </div>
-                                    
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        내 자산
-                                    </div>
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        {
-                                            Number(balance).toFixed(2)
-                                        } USDT
-                                    </div>
-                                </div>
 
                                 {/* send USDT */}
                                 {/*
@@ -974,22 +980,10 @@ function ProfilePage() {
 
 
 
-                    {/* 나의 소속 센터 봇 */}
-                    {account && userCenter && (
-                    <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                        <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                            나의 소속 센터 봇
-                        </div>
-                        <div className='flex flex-row gap-2 items-center justify-between'>
-                            <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                {userCenter}
-                            </div>
-                        </div>
-                    </div>
-                    )}
+
 
                     {/* 닉네임을 저장하면 나의 소속 센터 봇가 설정됩니다 */}
-                    {account && !userCenter && (
+                    {address && !userCenter && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                 닉네임을 저장하면 나의 소속 센터 봇가 설정됩니다

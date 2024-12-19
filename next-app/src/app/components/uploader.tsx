@@ -247,7 +247,7 @@ export default function Uploader(
           <div
             className={`${
               dragActive ? 'border-2 border-black' : ''
-            } absolute z-[3] flex h-full w-full flex-col items-center justify-center rounded-md px-10 transition-all ${
+            } absolute z-[3] flex h-full w-full flex-col items-center justify-center rounded-md px-2 transition-all ${
               data.image
                 ? 'bg-white/80 opacity-0 hover:opacity-100 hover:backdrop-blur-md'
                 : 'bg-white opacity-100 hover:bg-gray-50'
