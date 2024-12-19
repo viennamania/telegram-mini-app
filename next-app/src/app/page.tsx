@@ -59,12 +59,12 @@ function HomeContent() {
 
 
 
-  const address = account?.address;
-  const center = params.center;
+  //const address = account?.address;
+  //const center = params.center;
 
   // debug
-  //const address = '0x542197103Ca1398db86026Be0a85bc8DcE83e440';
-  //const center = 'owin_kingkong_bot';
+  const address = '0x542197103Ca1398db86026Be0a85bc8DcE83e440';
+  const center = 'ppump_jojo_bot';
 
 
   const [balance, setBalance] = useState(0);
@@ -185,13 +185,27 @@ function HomeContent() {
 
   //telegram background color
   // main color: #0088cc
+
+  {/* background image
+    mobile-background.jpg
+  */}
   
   return (
 
-   
-    <main className="p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-lg mx-auto
     
-    ">
+   
+    <main
+      className="
+        p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-lg mx-auto
+      "
+
+      style={{
+        backgroundImage: "url('/mobile-background.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <div className="py-20">
         {/*
         <Header />
@@ -498,7 +512,9 @@ function MenuItem(props: { title: string; href: string; description: string }) {
 		>
 			<article>
 				<h2 className="text-lg font-semibold mb-2">{props.title}</h2>
-				<p className="text-sm text-zinc-400">{props.description}</p>
+				<p className="text-sm text-zinc-100">
+          {props.description}
+        </p>
 			</article>
 		</Link>
 	);
