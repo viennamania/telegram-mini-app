@@ -59,12 +59,12 @@ function HomeContent() {
 
 
 
-  //const address = account?.address;
-  //const center = params.center;
+  const address = account?.address;
+  const center = params.center;
 
   // debug
-  const address = '0x542197103Ca1398db86026Be0a85bc8DcE83e440';
-  const center = 'ppump_jojo_bot';
+  //const address = '0x542197103Ca1398db86026Be0a85bc8DcE83e440';
+  //const center = 'ppump_jojo_bot';
 
 
   const [balance, setBalance] = useState(0);
