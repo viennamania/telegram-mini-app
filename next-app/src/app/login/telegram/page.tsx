@@ -8,6 +8,9 @@ import { useRouter } from "next/navigation";
 import { client, wallet } from "../../constants";
 import { Loader2 } from "lucide-react";
 
+import Image from 'next/image';
+
+
 function TelegramLoginContent() {
     const searchParams = useSearchParams();
 
@@ -74,8 +77,20 @@ function TelegramLoginContent() {
 
     return (
         <div className="w-screen h-screen flex flex-col gap-2 items-center justify-center">
+            
             <Loader2 className="h-12 w-12 animate-spin text-white" />
-            지갑 연결 중...
+
+            <div className="flex flex-col gap-2 items-center justify-center">
+                <div className="text-white text-lg font-semibold">
+                    텔레그램 지갑 연결 중...
+                </div>
+                <Image
+                    src="/connecting.gif"
+                    width={100}
+                    height={100}
+                    alt="Connecting..."
+                />
+            </div>
         </div>
     );
 }
