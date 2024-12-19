@@ -218,21 +218,6 @@ function HomeContent() {
         />
 
         
-
-
-
-
-
-      
-
-        {/* center */}
-        <div className="flex justify-center">
-          <p className="text-lg text-zinc-800">
-            Center: {center}
-          </p>
-        </div>
-        
-
         
         <div className="flex justify-center mb-5">
           {address ? 
