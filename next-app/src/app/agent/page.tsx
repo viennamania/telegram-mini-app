@@ -1670,7 +1670,6 @@ function AgentPage() {
                                                         )?.transferring}
 
                                                         onClick={() => {
-                                                            confirm('AI 에이전트 NFT를 다른 사용자에게 전송하시겠습니까?') &&
                                                             transferNft(nft.contract.address, nft.tokenId);
                                                         }}
                                                         className={`p-2 bg-blue-500 text-zinc-100 rounded
