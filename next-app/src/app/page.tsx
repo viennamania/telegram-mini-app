@@ -463,16 +463,16 @@ function Menu({ center }: { center: any }) {
       />
 
       <MenuItem
-        title="나의 AI 에이전트 NFT"
+        title="AI 에이전트 NFT 발행"
         href={`/agent?center=${center}`}
-        description="나의 AI 에이전트 NFT를 확인합니다."
+        description="나의 AI 에이전트 NFT를 발행합니다."
       />
 
       {/* 나의 팔로워들 */}
       <MenuItem
-        title="나의 팔로워들"
+        title="마스터봇 목록"
         href={`/applications?center=${center}`}
-        description="나의 팔로워들을 확인합니다."
+        description="소속 센터의 마스터봇 목록을 확인합니다."
       />
 
       {/*

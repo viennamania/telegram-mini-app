@@ -1059,7 +1059,7 @@ function AgentPage() {
                             className="rounded-full"  
                         />
                         <div className="text-2xl font-semibold">
-                            나의 AI 에이전트 NFT
+                            AI 에이전트 NFT 발행
                         </div>
                     </div>
 
