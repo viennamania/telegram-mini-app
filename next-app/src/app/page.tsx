@@ -38,16 +38,8 @@ function HomeContent() {
 
   const searchParams = useSearchParams();
 
-  
-  const [params, setParams] = useState({ center: '' });
+  const center = searchParams.get('center');
 
-  
-  useEffect(() => {
-      const center = searchParams.get('center') || '';
-      setParams({ center });
-  }, [searchParams]);
-
-  const center = params.center;
 
   
   const account = useActiveAccount();
@@ -65,9 +57,10 @@ function HomeContent() {
   const address = account?.address;
 
 
-  // debug
-  //const address = '0x542197103Ca1398db86026Be0a85bc8DcE83e440';
-  //const center = 'ppump_jojo_bot';
+  // test address
+  //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+
+
 
 
   const [balance, setBalance] = useState(0);
@@ -368,7 +361,7 @@ function HomeContent() {
         {address && !userCenter && (
           <MenuItem
             title="나의 프로필 설정"
-            href={`/profile?center=${params.center}`}
+            href={`/profile?center=${center}`}
             description="나의 프로필을 설정합니다."
           />
         )}
