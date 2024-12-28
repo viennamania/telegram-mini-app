@@ -33,12 +33,13 @@ import {
     useConnectedWallets,
     useSetActiveWallet,
 
+    AutoConnect,
 
 } from "thirdweb/react";
 
 import { shortenAddress } from "thirdweb/utils";
 import { Button } from "@headlessui/react";
-import { AutoConnect } from "thirdweb/react";
+
 import Link from "next/link";
 
 import { smartWallet, inAppWallet } from "thirdweb/wallets";
@@ -65,9 +66,6 @@ import {
 } from "next//navigation";
 
 
-import Uploader from '../components/uploader';
-
-
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
 
 
@@ -75,6 +73,9 @@ function AgentPage() {
 
     const searchParams = useSearchParams();
 
+    const center = searchParams.get('center');
+
+    /*
     const [params, setParams] = useState({ center: '' });
 
   
@@ -82,19 +83,8 @@ function AgentPage() {
         const center = searchParams.get('center') || '';
         setParams({ center });
     }, [searchParams]);
-    /*
-    const agent = searchParams.get('agent');
-
-    const agentNumber = searchParams.get('tokenId');
     */
-
-    //const center = params.center;
-
-    
-    const agent = '';
-    const agentNumber = '';
-
-
+ 
 
     const account = useActiveAccount() as any;
 
@@ -116,7 +106,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    //const address = "0x59C0d2BED6A59E5099EFdFB60c3172B1acA51027";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -210,7 +200,7 @@ function AgentPage() {
                 },
                 body: JSON.stringify({
                     walletAddress: address,
-                    center: params.center,
+                    center: center,
                 }),
             });
 
@@ -258,10 +248,10 @@ function AgentPage() {
 
         };
 
-        address && params.center &&
+        address && center &&
         fetchData();
 
-    }, [address, params.center]);
+    }, [address, center]);
     
 
 
@@ -484,7 +474,7 @@ function AgentPage() {
                     body: JSON.stringify({
                         walletAddress: address,
                         erc721ContractAddress: erc721ContractAddress,
-                        center: params.center,
+                        center: center,
                     }),
                 });
 
@@ -1009,17 +999,23 @@ function AgentPage() {
                 backgroundRepeat: "no-repeat",
               }}
         >
+            <AutoConnect
+                client={client}
+                wallets={[wallet]}
+                timeout={15000}
+            />
+
 
             <div className="py-0 w-full">
-        
-                {/*
-                <Header
-                    center={params.center}
-                    agent={agent ? agent : ""}
-                    tokenId={agentNumber ? agentNumber : ""}
-                />
-                */}
-                <div className="w-full flex flex-col items-start justify-center space-y-4">
+
+                {/* sticky header */}
+                <div className="sticky top-0 z-50
+                    bg-zinc-800 bg-opacity-90
+                    backdrop-blur-md
+                    p-4 rounded-lg
+                    w-full flex flex-row items-center justify-between">
+
+                    {/* title */}
                     {/* 돌아가기 버튼 */}
                     <button
                         onClick={() => {
@@ -1042,11 +1038,6 @@ function AgentPage() {
                     </button>
                 </div>
         
-                <AutoConnect
-                    client={client}
-                    wallets={[wallet]}
-                    timeout={15000}
-                />
 
                 <div className="mt-5 flex flex-col items-start justify-center space-y-4">
 
@@ -1484,7 +1475,7 @@ function AgentPage() {
 
                                             <div className='w-full flex flex-row gap-2 items-center justify-between'>
                                                 {/* goto button for detail page */}
-                                                
+                                                {/*
                                                 <button
                                                     onClick={() => {
                                                         router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
@@ -1496,13 +1487,14 @@ function AgentPage() {
                                                         상세보기
                                                     </span>
                                                 </button>
+                                                */}
                                                 
 
                                                 {/* referral link button */}
                                                 <button
                                                     onClick={() => {
                                                         navigator.clipboard.writeText(
-                                                            referralUrl + '/?center=' + params.center +
+                                                            referralUrl + '/?center=' + center +
                                                             '&agent=' + nft.contract.address + 
                                                             '&tokenId=' + nft.tokenId
                                                         );

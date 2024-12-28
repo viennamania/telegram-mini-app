@@ -4,9 +4,6 @@ import React, { useEffect, useState, Suspense } from "react";
 
 import { toast } from 'react-hot-toast';
 
-import {
-    client,
-} from "../client";
 
 import {
     getContract,
@@ -29,10 +26,13 @@ import {
     useActiveAccount,
     useActiveWallet,
     useConnectModal,
+    AutoConnect,
 } from "thirdweb/react";
 
-import { inAppWallet } from "thirdweb/wallets";
-
+import {
+	client,
+    wallet,
+} from "../constants";
 
 import Image from 'next/image';
 
@@ -85,21 +85,8 @@ function ApplicationsPage({ params }: any) {
     const address = account?.address;
   
     // test address
-    //const address = "0x59C0d2BED6A59E5099EFdFB60c3172B1acA51027";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
-
-
-
-
-
-    
-
-
-
-
-
-
-
 
 
     const [balance, setBalance] = useState(0);
@@ -352,22 +339,6 @@ function ApplicationsPage({ params }: any) {
                 }
             }
         ));
-
-        /*
-        const contract = getContract({
-            client,
-            chain: polygon,
-            address: agentBot,
-        });
-
-        const nft721 = await getNFT721({
-            contract: contract,
-            tokenId: BigInt(agentBotNumber),
-        });
-
-        ///console.log("nft721", nft721);
-        */
-        
         
 
         // updateApplicationAgentBotNft
@@ -997,26 +968,44 @@ function ApplicationsPage({ params }: any) {
 
         <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
 
+
+            <AutoConnect
+                client={client}
+                wallets={[wallet]}
+                timeout={15000}
+            />
+
+
             <div className="py-0 w-full">
 
-                {/* history back */}
-                <div className='mt-5 flex flex-row items-center gap-2'>
-                <button
-                    onClick={() => router.back()}
-                    className="flex flex-row items-center gap-2 bg-gray-500 text-white p-2 rounded-lg
-                    hover:bg-gray-600
-                    "
-                >
-                    <Image
-                    src="/icon-back.png"
-                    width={24}
-                    height={24}
-                    alt="Back"
-                    />
-                    <span className='text-sm text-white'>
-                    뒤로가기
-                    </span>
-                </button>
+                {/* sticky header */}
+                <div className="sticky top-0 z-50
+                    bg-zinc-800 bg-opacity-90
+                    backdrop-blur-md
+                    p-4 rounded-lg
+                    w-full flex flex-row items-center justify-between">
+
+                    {/* title */}
+                    {/* 돌아가기 버튼 */}
+                    <button
+                        onClick={() => {
+                            router.back();
+                        }}
+                        className="p-2 bg-gray-500 text-white rounded"
+                    >
+                        <div className='flex flex-row gap-2 items-center justify-center'>
+                            <Image
+                                src="/icon-back.png"
+                                alt="Back"
+                                width={20}
+                                height={20}
+                                className="rounded-lg"
+                            />
+                            <span className='text-lg font-semibold'>
+                                돌아가기
+                            </span>
+                        </div>
+                    </button>
                 </div>
 
 
@@ -1171,22 +1160,33 @@ function ApplicationsPage({ params }: any) {
 
                                 {/* totalTradingAccountBalance */}
                                 {totalTradingAccountBalance > 0 && (
-                                    <div className='w-full flex flex-row gap-2'>
+                                    <div className='w-full flex flex-col gap-2'>
                                         {/* startTrading is exist count */}
-                                        <span className='text-2xl text-gray-800 font-semibold'>
-                                            시작된 Bot: {
+                                        <div className="w-full flex flex-row items-center gap-2">
+                                            <span className='text-sm text-gray-800 font-semibold'>
+                                                시작된 Bot: 
+                                            </span>
+                                            <span className='text-2xl text-green-500 font-semibold'>
+                                            {
                                                 applications.filter((item) => item.accountConfig?.data.roleType === "2").length
-                                            }개
-                                        </span>
-                                        {' '}/{' '}
-                                        <span className='text-2xl font-semibold text-gray-800'>
-                                            총 거래 계정 잔고: {
-                                            Number(totalTradingAccountBalance).toLocaleString('en-US', {
-                                                style: 'currency',
-                                                currency: 'USD'
-                                            })
                                             }
-                                        </span>
+                                            </span>
+                                        </div>
+
+                                        {/* totalTradingAccountBalance */}
+                                        <div className="w-full flex flex-row items-center gap-2">
+                                            <span className='text-sm font-semibold text-gray-800'>
+                                                총 거래 계정 잔고: 
+                                            </span>
+                                            <span className='text-2xl text-green-500 font-semibold'>
+                                                {
+                                                    Number(totalTradingAccountBalance).toLocaleString('en-US', {
+                                                        style: 'currency',
+                                                        currency: 'USD'
+                                                    })
+                                                }
+                                            </span>
+                                        </div>
                                     </div>
                                 )}
 

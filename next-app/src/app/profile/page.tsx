@@ -75,25 +75,7 @@ function ProfilePage() {
 
     const searchParams = useSearchParams();
 
-    const [params, setParams] = useState({ center: '' });
-
-  
-    useEffect(() => {
-        const center = searchParams.get('center') || '';
-        setParams({ center });
-    }, [searchParams]);
-    /*
-    const agent = searchParams.get('agent');
-
-    const agentNumber = searchParams.get('tokenId');
-    */
-
-    //const center = params.center;
-
-    
-    const agent = '';
-    const agentNumber = '';
-
+    const center = searchParams.get("center");
 
 
     const account = useActiveAccount();
@@ -117,7 +99,7 @@ function ProfilePage() {
   
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ////const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -211,7 +193,7 @@ function ProfilePage() {
                 },
                 body: JSON.stringify({
                     walletAddress: address,
-                    center: params.center,
+                    center: center,
                 }),
             });
 
@@ -259,10 +241,10 @@ function ProfilePage() {
 
         };
 
-        address && params.center &&
+        address && center &&
         fetchData();
 
-    }, [address, params.center]);
+    }, [address, center]);
     
 
 
@@ -281,7 +263,7 @@ function ProfilePage() {
             },
             body: JSON.stringify({
                 nickname: nickname,
-                center: params.center,
+                center: center,
             }),
         });
 
@@ -376,7 +358,7 @@ function ProfilePage() {
                     userType: "",
                     mobile: "",
                     telegramId: "",
-                    center: params.center,
+                    center: center,
                 }),
             });
 
@@ -487,7 +469,7 @@ function ProfilePage() {
                     body: JSON.stringify({
                         walletAddress: address,
                         erc721ContractAddress: erc721ContractAddress,
-                        center: params.center,
+                        center: center,
                     }),
                 });
 
@@ -807,20 +789,23 @@ function ProfilePage() {
               }}
         >
 
-
+            <AutoConnect
+                client={client}
+                wallets={[wallet]}
+                timeout={15000}
+            />
 
 
             <div className="py-0 w-full">
-        
-                {/*}
-                <Header
-                    center={params.center}
-                    agent={agent ? agent : ""}
-                    tokenId={agentNumber ? agentNumber : ""}
-                />
-                */}
 
-                <div className="w-full flex flex-col items-start justify-center space-y-4">
+                {/* sticky header */}
+                <div className="sticky top-0 z-50
+                    bg-zinc-800 bg-opacity-90
+                    backdrop-blur-md
+                    p-4 rounded-lg
+                    w-full flex flex-row items-center justify-between">
+
+                    {/* title */}
                     {/* 돌아가기 버튼 */}
                     <button
                         onClick={() => {
@@ -844,11 +829,7 @@ function ProfilePage() {
                 </div>
 
         
-                <AutoConnect
-                    client={client}
-                    wallets={[wallet]}
-                    timeout={15000}
-                />
+ 
 
                 <div className="mt-5 flex flex-col items-start justify-center space-y-4">
 
