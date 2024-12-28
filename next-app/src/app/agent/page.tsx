@@ -1,4 +1,3 @@
-// nickname settings
 'use client';
 import React, { useEffect, useState, Suspense } from "react";
 
@@ -117,7 +116,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    ///const address = "0x59C0d2BED6A59E5099EFdFB60c3172B1acA51027";
+    //const address = "0x59C0d2BED6A59E5099EFdFB60c3172B1acA51027";
   
 
 

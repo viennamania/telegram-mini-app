@@ -47,6 +47,7 @@ function HomeContent() {
       setParams({ center });
   }, [searchParams]);
 
+  const center = params.center;
 
   
   const account = useActiveAccount();
@@ -59,8 +60,10 @@ function HomeContent() {
 
 
 
+
+
   const address = account?.address;
-  const center = params.center;
+
 
   // debug
   //const address = '0x542197103Ca1398db86026Be0a85bc8DcE83e440';
@@ -224,7 +227,7 @@ function HomeContent() {
             (
               <> 
                 <Button
-                  onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${account.address}`)}
+                  onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
                   className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                 >
                   내 지갑주소: {shortenAddress(address)}
@@ -468,7 +471,7 @@ function Menu({ center }: { center: any }) {
       {/* 나의 팔로워들 */}
       <MenuItem
         title="나의 팔로워들"
-        href={`/followers?center=${center}`}
+        href={`/applications?center=${center}`}
         description="나의 팔로워들을 확인합니다."
       />
 
