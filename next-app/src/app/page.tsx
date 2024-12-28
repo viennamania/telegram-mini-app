@@ -58,7 +58,57 @@ function HomeContent() {
 
 
   // test address
-  //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+  ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+
+
+
+
+    const [totalTradingAccountBalance, setTotalTradingAccountBalance] = useState(0);
+  
+
+    const [applications, setApplications] = useState([] as any[]);
+    const [loadingApplications, setLoadingApplications] = useState(false);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoadingApplications(true);
+            const response = await fetch("/api/agent/getApplicationsForCenter", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    walletAddress: address,
+                    center: center,
+                }),
+            });
+
+            if (!response.ok) {
+                console.error("Error fetching agents");
+                setLoadingApplications(false);
+                return;
+            }
+
+            const data = await response.json();
+
+            console.log("getApplicationsForCenter data", data);
+            //setAgentBotSummaryList(data.resultSummany);
+
+
+            setApplications(data.result.applications);
+
+            setTotalTradingAccountBalance( data.result.totalTradingAccountBalance );
+
+            setLoadingApplications(false);
+
+
+        };
+
+        if (address && center) {
+            fetchData();
+        }
+    }, [address, center]);
+
+
 
 
 
@@ -265,6 +315,46 @@ function HomeContent() {
                           } USDT
                       </div>
                   </div>
+
+
+                  {totalTradingAccountBalance > 0 && (
+                  <div className='w-full flex flex-col gap-2
+                  items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                      {/* startTrading is exist count */}
+                      <div className="w-full flex flex-row items-center gap-2">
+                          <span className='w-1/2 text-sm text-gray-800 font-semibold'>
+                              시작된 Bot: 
+                          </span>
+                          <span className='
+                            w-1/2 text-right
+                            text-xl text-green-500 font-semibold bg-green-100 p-2 rounded'>
+                          
+                          {
+                              applications.filter((item) => item.accountConfig?.data.roleType === "2").length
+                          }
+                          </span>
+                      </div>
+
+                      {/* totalTradingAccountBalance */}
+                      <div className="w-full flex flex-row items-center gap-2">
+                          <span className='w-1/2 text-sm font-semibold text-gray-800'>
+                              총 거래 계정 잔고: 
+                          </span>
+                          <span className='
+                            w-1/2 text-right
+                            text-xl text-green-500 font-semibold bg-green-100 p-2 rounded'>
+                              {
+                                  Number(totalTradingAccountBalance).toLocaleString('en-US', {
+                                      style: 'currency',
+                                      currency: 'USD'
+                                  })
+                              }
+                          </span>
+                      </div>
+                    </div>
+                  )}
+
+
 
                   {/* send USDT */}
                   {/*
