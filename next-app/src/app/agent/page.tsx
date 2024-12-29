@@ -1475,7 +1475,7 @@ function AgentPage() {
 
                                             <div className='w-full flex flex-row gap-2 items-center justify-between'>
                                                 {/* goto button for detail page */}
-                                                {/*
+                                                
                                                 <button
                                                     onClick={() => {
                                                         router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
@@ -1487,7 +1487,7 @@ function AgentPage() {
                                                         상세보기
                                                     </span>
                                                 </button>
-                                                */}
+                                                
                                                 
 
                                                 {/* referral link button */}
