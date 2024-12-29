@@ -6,8 +6,6 @@ import React, { useEffect, useState } from 'react';
 
 import { toast } from 'react-hot-toast';
 
-import { client } from '../../../client';
-
 
 import {
     //ThirdwebProvider,
@@ -25,6 +23,8 @@ import {
     useConnectedWallets,
 
     useSetActiveWallet,
+
+    AutoConnect,
     
 } from "thirdweb/react";
 
@@ -40,6 +40,17 @@ import {
     sendAndConfirmTransaction,
 } from "thirdweb";
 
+
+import {
+	accountAbstraction,
+	client,
+    wallet,
+	editionDropContract,
+	editionDropTokenId,
+} from "../../../constants";
+
+
+
 import { balanceOf, transfer } from "thirdweb/extensions/erc20";
  
 
@@ -50,23 +61,9 @@ import {
 } from "thirdweb/extensions/erc721";
 
 
-import {
-  createWallet,
-  inAppWallet,
-} from "thirdweb/wallets";
 
 import Image from 'next/image';
 
-
-
-
-const wallets = [
-  inAppWallet({
-    auth: {
-      options: ["phone"],
-    },
-  }),
-];
 
 
 
@@ -925,29 +922,52 @@ export default function AgentPage({ params }: any) {
 
   return (
 
-    <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
+    <main
+    className="p-4 pb-28 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto"
+    style={{
+        backgroundImage: "url('/mobile-background-nft.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+
+        <AutoConnect
+            client={client}
+            wallets={[wallet]}
+            timeout={15000}
+        />
 
       <div className="py-0 w-full ">
 
+        {/* sticky header */}
+        <div className="sticky top-0 z-50
+            bg-zinc-800 bg-opacity-90
+            backdrop-blur-md
+            p-4 rounded-lg
+            w-full flex flex-row items-center justify-between">
 
-        {/* history back */}
-        <div className='mt-5 flex flex-row items-center gap-2'>
-          <button
-            onClick={() => router.back()}
-            className="flex flex-row items-center gap-2 bg-gray-500 text-white p-2 rounded-lg
-              hover:bg-gray-600
-            "
-          >
-            <Image
-              src="/icon-back.png"
-              width={24}
-              height={24}
-              alt="Back"
-            />
-            <span className='text-sm text-white'>
-              뒤로가기
-            </span>
-          </button>
+            {/* title */}
+            {/* 돌아가기 버튼 */}
+            <button
+                onClick={() => {
+                    router.back();
+                }}
+                className="p-2 bg-gray-500 text-white rounded"
+            >
+                <div className='flex flex-row gap-2 items-center justify-center'>
+                    <Image
+                        src="/icon-back.png"
+                        alt="Back"
+                        width={20}
+                        height={20}
+                        className="rounded-lg"
+                    />
+                    <span className='text-lg font-semibold'>
+                        돌아가기
+                    </span>
+                </div>
+            </button>
         </div>
 
 
