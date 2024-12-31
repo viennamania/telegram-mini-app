@@ -66,6 +66,7 @@ import {
 
 
 import Uploader from '../components/uploader';
+import { updateUser } from "@/lib/api/user";
 
 
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
@@ -76,6 +77,7 @@ function ProfilePage() {
     const searchParams = useSearchParams();
 
     const center = searchParams.get("center");
+    const telegramId = searchParams.get("telegramId");
 
 
     const account = useActiveAccount();
@@ -95,11 +97,11 @@ function ProfilePage() {
 
 
 
-    const address = account?.address;
+    //const address = account?.address;
   
   
     // test address
-    ////const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -184,6 +186,9 @@ function ProfilePage() {
 
     const [userCenter, setUserCenter] = useState("");
 
+    const [isValideTelegramId, setIsValideTelegramId] = useState(false);
+
+
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch("/api/user/getUser", {
@@ -217,6 +222,12 @@ function ProfilePage() {
                 setErc721ContractAddress(data.result.erc721ContractAddress);
 
                 setUserCenter(data.result.center);
+
+                if (data.result.telegramId) {
+                    setIsValideTelegramId(true);
+                }
+
+
 
             } else {
                 setNickname('');
@@ -336,6 +347,9 @@ function ProfilePage() {
                 setNicknameEdit(false);
                 setEditedNickname('');
 
+                setIsValideTelegramId(true);
+                
+
                 //toast.success('Nickname saved');
 
             } else {
@@ -357,7 +371,7 @@ function ProfilePage() {
                     nickname: editedNickname,
                     userType: "",
                     mobile: "",
-                    telegramId: "",
+                    telegramId: telegramId,
                     center: center,
                 }),
             });
@@ -387,6 +401,37 @@ function ProfilePage() {
     }
 
 
+    // update User telegramId
+    const [loadingSetUserTelegramId, setLoadingSetUserTelegramId] = useState(false);
+    const setUserTelegramId = async () => {
+        
+        setLoadingSetUserTelegramId(true);
+
+        const response = await fetch("/api/user/updateUserTelegramId", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                walletAddress: address,
+                telegramId: telegramId,
+            }),
+        });
+
+        const data = await response.json();
+
+        //console.log("data", data);
+
+        if (data.result) {
+            setIsValideTelegramId(true);
+            //toast.success('Telegram ID saved');
+        } else {
+            //toast.error('Error saving Telegram ID');
+        }
+
+        setLoadingSetUserTelegramId(false);
+
+    }
 
 
     const [loadingDeployErc721Contract, setLoadingDeployErc721Contract] = useState(false);
@@ -429,7 +474,7 @@ function ProfilePage() {
                 const erc721ContractAddress = await deployERC721Contract({
                     chain: polygon,
                     client: client,
-                    account: account,
+                    account: account as any,
             
                     /*  type ERC721ContractType =
                     | "DropERC721"
@@ -716,7 +761,7 @@ function ProfilePage() {
 
             const transactionResult = await sendAndConfirmTransaction({
                 transaction: transaction,
-                account: account,
+                account: account as any,
 
                 ///////account: smartConnectWallet as any,
             });
@@ -850,7 +895,7 @@ function ProfilePage() {
                         {address ? (
                             <> 
                                 <Button
-                                onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${account.address}`)}
+                                onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
                                 className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                                 >
                                 내 지갑주소: {shortenAddress(address)}
@@ -960,6 +1005,46 @@ function ProfilePage() {
                     </div>
 
 
+                    {userCode && isValideTelegramId && (
+                        <div className='w-full flex flex-row gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                텔레그램 ID
+                            </div>
+                            <div className='flex flex-row gap-2 items-center justify-between'>
+                                <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                                    {telegramId}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {userCode && !isValideTelegramId && (
+                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                            <div className="flex flex-row gap-2 items-center justify-between">
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    텔레그램 ID
+                                </span>
+                                <span className='text-lg font-semibold text-blue-500'>
+                                    {telegramId}
+                                </span>
+                            </div>
+
+                            <button
+                                onClick={() => {
+                                    setUserTelegramId();
+                                }}
+                                disabled={loadingSetUserTelegramId}
+                                className={`
+                                    ${loadingSetUserTelegramId ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
+                                    p-2 rounded-lg text-sm font-semibold
+                                    w-64 mt-5
+                                `}
+                            >
+                                {loadingSetUserTelegramId ? "텔레그램 ID 저장중..." : "텔레그램 ID 저장하기"}
+                            </button>
+    
+                        </div>
+                    )}
 
 
 
@@ -967,8 +1052,19 @@ function ProfilePage() {
                     {address && !userCenter && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                닉네임을 저장하면 나의 소속 센터 봇가 설정됩니다
+                                닉네임을 저장하면 나의 소속 센터 봇이 설정됩니다
                             </div>
+
+                            {/* center */}
+                            <div className="flex flex-row gap-2 items-center justify-between">
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    나의 소속 센터 봇:
+                                </span>
+                                <span className='text-lg font-semibold text-blue-500'>
+                                    {center}
+                                </span>
+                            </div>
+
                         </div>
                     )}
 
@@ -976,7 +1072,6 @@ function ProfilePage() {
 
                     <div className='w-full  flex flex-col gap-5 '>
 
-                        {/* profile picture */}
 
                         {address && userCode && (
                             <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
@@ -1102,6 +1197,7 @@ function ProfilePage() {
                                         : 'bg-blue-500 text-zinc-100'}
 
                                         p-2 rounded-lg text-sm font-semibold
+                                        w-64 mt-5
                                     `}
                                     onClick={() => {
                                         setUserData();

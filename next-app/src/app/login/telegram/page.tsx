@@ -61,9 +61,17 @@ function TelegramLoginContent() {
                     return wallet;
                 });
 
-                //const telegramId = params.message?.username;
-                
-                router.replace("/?center=" + params.center);
+                /*
+                  const message = JSON.stringify({
+                        username,
+                        expiration,
+                    });
+                */
+                // username form message
+
+                const { username } = JSON.parse(params.message);
+
+                router.replace("/?center=" + params.center + "&telegramId=" + username);
 
                 return true;
 

@@ -10,12 +10,41 @@ import { createConfig } from './config.js'
 import { createServer, createServerManager } from './server/index.js'
 import type { Bot } from './bot/index.js'
 
+
+// Handler for serverless environments
+let botInstance: Bot | null = null;
+
+
+
 async function startPolling(config: PollingConfig) {
   const logger = createLogger(config)
+  
   const bot = createBot(config.botToken, {
     config,
     logger,
   })
+
+  bot.api.setMyCommands([
+    { command: "start", description: "Start the bot" },
+    { command: "help", description: "Get help" },
+    { command: "balance", description: "Get balance" },
+    { command: "leaderboard", description: "Get leaderboard" },
+    { command: "deposit", description: "Deposit" },
+    { command: "withdraw", description: "Withdraw" },
+    { command: "transfer", description: "Transfer" },
+    { command: "transactions", description: "Transactions" },
+    { command: "settings", description: "Settings" },
+    { command: "about", description: "About" },
+  ])
+
+
+
+
+  botInstance = bot
+
+
+  
+
   let runner: undefined | RunnerHandle
 
   // graceful shutdown
@@ -36,10 +65,13 @@ async function startPolling(config: PollingConfig) {
   })
 
   logger.info({
-    msg: 'Bot running...',
+    msg: 'Bot running.......',
     username: bot.botInfo.username,
+
   })
 }
+
+
 
 async function startWebhook(config: WebhookConfig) {
   const logger = createLogger(config)
@@ -98,6 +130,7 @@ function onShutdown(cleanUp: () => Promise<void>) {
   process.on('SIGTERM', handleShutdown)
 }
 
+
 type CamelCase<S extends string> = S extends `${infer P1}_${infer P2}${infer P3}`
   ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
   : Lowercase<S>
@@ -121,8 +154,12 @@ function convertKeysToCamelCase<T>(obj: T): KeysToCamelCase<T> {
   return result
 }
 
+
+
+
 async function startBot() {
   try {
+
     try {
       process.loadEnvFile()
     }
@@ -137,6 +174,7 @@ async function startBot() {
       await startWebhook(config)
     else if (config.isPollingMode)
       await startPolling(config)
+
   }
   catch (error) {
     if (error instanceof ValiError) {
@@ -149,8 +187,9 @@ async function startBot() {
   }
 }
 
-// Handler for serverless environments
-let botInstance: Bot | null = null;
+
+
+
 
 export default async function handler(req: any, res: any) {
   try {
@@ -171,6 +210,7 @@ export default async function handler(req: any, res: any) {
     await server.fetch(req)
     
     res.status(200).send('OK')
+
   } else if (config.isPollingMode) {
     if (!botInstance) {
       const logger = createLogger(config)
@@ -182,6 +222,7 @@ export default async function handler(req: any, res: any) {
       })
     }
     res.status(200).send('Bot is running in polling mode')
+
   } else {
     res.status(400).send('Invalid bot configuration')
   }
@@ -194,3 +235,94 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 
 
 console.log('Hello, world!')
+
+
+
+
+
+// fetch account data from the server
+
+async function fetchAccountData() {
+
+  if (botInstance) {
+
+    const center = botInstance.botInfo.username;
+
+    const response = await fetch("https://owinwallet.com/api/agent/getApplicationsForCenter", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        walletAddress: '0x',
+        center,
+      }),
+    });
+    
+    if (response.status !== 200) {
+      ///return ctx.reply("Failed to get leaderboard");
+    } else {
+
+      const data = await response.json();
+
+
+      const totalAccountCount = data.result.totalCount;
+        
+      const totalTradingAccountBalance = '$' + Number(data.result.totalTradingAccountBalance).toFixed(2);
+
+      ///const applications = data.result.applications;
+
+
+ 
+
+      /*
+      botInstance.api.sendMessage(
+        441516803,
+        `Total Account Count: ${totalAccountCount}`
+        + '\n'
+        + `Total Trading Account Balance: ${totalTradingAccountBalance}`
+      )
+      .then(() => {
+        //console.log('Message sent!')
+      } )
+      .catch(error => {
+        console.error('Error sending message:', error)
+      } )
+      */
+
+
+      botInstance.api.sendAnimation(
+        441516803,
+        'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExODl5bmpja2oxa2pobDRobHlyencyYWQ3Y3R1aDZjYnE3dGkxNDRjYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/otTstjtpHBpZN4znHa/giphy.gif',
+        {
+          caption: 'Total Account Count: ' + totalAccountCount + '\n' + 'Total Trading Account Balance: ' + totalTradingAccountBalance
+        }
+      )
+
+    }
+
+  }
+  
+}
+
+
+// sleep for 5 seconds
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// fetch account data after 5 seconds
+
+sleep(5000).then(() => {
+  fetchAccountData()
+})
+
+
+
+// fetch account data every 3600 seconds
+setInterval(() => {
+
+    fetchAccountData()
+    
+
+}, 3600*1000)

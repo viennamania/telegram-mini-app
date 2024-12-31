@@ -40,6 +40,11 @@ function HomeContent() {
 
   const center = searchParams.get('center');
 
+  const telegramId = searchParams.get('telegramId');
+
+  console.log('center', center);
+  console.log('telegramId', telegramId);
+
 
   
   const account = useActiveAccount();
@@ -451,7 +456,7 @@ function HomeContent() {
         {address && !userCenter && (
           <MenuItem
             title="나의 프로필 설정"
-            href={`/profile?center=${center}`}
+            href={`/profile?center=${center}&telegramId=${telegramId}`}
             description="나의 프로필을 설정합니다."
           />
         )}
@@ -504,6 +509,7 @@ function HomeContent() {
 
           <Menu
             center={center}
+            telegramId={telegramId}
           />
 
         )}
@@ -535,26 +541,34 @@ function Header() {
   );
 }
 
-function Menu({ center }: { center: any }) {
+function Menu(
+  {
+    center,
+    telegramId,
+  }:{
+    center: any
+    telegramId: any
+  }
+) {
 
 	return (
 		<div className="grid gap-4 lg:grid-cols-3 justify-center">
       <MenuItem
         title="나의 프로필"
-        href={`/profile?center=${center}`}
+        href={`/profile?center=${center}&telegramId=${telegramId}`}
         description="나의 프로필을 확인합니다."
       />
 
       <MenuItem
         title="AI 에이전트 NFT 발행"
-        href={`/agent?center=${center}`}
+        href={`/agent?center=${center}&telegramId=${telegramId}`}
         description="나의 AI 에이전트 NFT를 발행합니다."
       />
 
       {/* 나의 팔로워들 */}
       <MenuItem
         title="마스터봇 목록"
-        href={`/applications?center=${center}`}
+        href={`/applications?center=${center}&telegramId=${telegramId}`}
         description="소속 센터의 마스터봇 목록을 확인합니다."
       />
 

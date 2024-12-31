@@ -336,6 +336,22 @@ export async function updateSellerStatus(data: any) {
 
 
 
+
+export async function updateTelegramId(data: any) {
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('users');
+
+  const result = await collection.updateOne(
+    { walletAddress: data.walletAddress },
+    { $set: { telegramId: data.telegramId } }
+  );
+
+  return result;
+}
+
+
+
+
 export async function getOneByWalletAddress(
   walletAddress: string,
 ): Promise<UserProps | null> {
