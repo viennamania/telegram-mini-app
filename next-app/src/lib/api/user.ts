@@ -45,6 +45,10 @@ export interface UserProps {
   tronWalletPrivateKey: string,
 
   erc721ContractAddress: string,
+
+  center: string,
+  centerOwner: boolean,
+  telegramId: string,
 }
 
 export interface ResultProps {

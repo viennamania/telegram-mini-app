@@ -98,7 +98,7 @@ function ProfilePage() {
   
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -177,6 +177,8 @@ function ProfilePage() {
 
     const [userCenter, setUserCenter] = useState("");
 
+    const [isCenterOwner, setIsCenterOwner] = useState(false);
+
     const [isValideTelegramId, setIsValideTelegramId] = useState(false);
 
 
@@ -189,7 +191,6 @@ function ProfilePage() {
                 },
                 body: JSON.stringify({
                     walletAddress: address,
-                    center: center,
                 }),
             });
 
@@ -213,6 +214,11 @@ function ProfilePage() {
                 setErc721ContractAddress(data.result.erc721ContractAddress);
 
                 setUserCenter(data.result.center);
+
+                if (data.result?.centerOwner) {
+                    setIsCenterOwner(true);
+                }
+            
 
                 if (data.result.telegramId) {
                     setIsValideTelegramId(true);
@@ -375,6 +381,7 @@ function ProfilePage() {
 
                 setUserCode(data.result.id);
                 setNickname(data.result.nickname);
+                setIsValideTelegramId(true);
 
                 setNicknameEdit(false);
                 setEditedNickname('');
@@ -1006,6 +1013,12 @@ function ProfilePage() {
                                     {telegramId}
                                 </div>
                             </div>
+
+                            {isCenterOwner && (
+                                <span className='text-xs font-semibold text-green-500'>
+                                    센터 소유자 입니다.
+                                </span>
+                            )}
                         </div>
                     )}
 

@@ -23,6 +23,8 @@ feature.command('start', async (ctx) => {
 
   const center = ctx.me.username;
 
+  const telegramId = ctx.from?.id+"";
+
 
   const username = ctx.from?.id+"";
 
@@ -39,7 +41,7 @@ feature.command('start', async (ctx) => {
     message,
   });
 
-  const url = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}`
+  const url = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}`;
 
   //console.log('url', url)
 

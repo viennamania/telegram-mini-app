@@ -63,7 +63,7 @@ function HomeContent() {
 
 
   // test address
-  ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+  //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
 
 
 
@@ -173,6 +173,7 @@ function HomeContent() {
   const [erc721ContractAddress, setErc721ContractAddress] = useState("");
 
   const [userCenter, setUserCenter] = useState("");
+  const [isCenterOwner, setIsCenterOwner] = useState(false);
 
   useEffect(() => {
       const fetchData = async () => {
@@ -207,6 +208,9 @@ function HomeContent() {
               setErc721ContractAddress(data.result.erc721ContractAddress);
 
               setUserCenter(data.result.center);
+              if (data.result.centerOwner) {
+                  setIsCenterOwner(true);
+              }
 
           } else {
               setNickname('');
@@ -472,6 +476,7 @@ function HomeContent() {
                   <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-sm font-semibold">
                       {userCenter}
                   </div>
+                
                   {/* 복사 버튼 */}
                   <button
                       onClick={() => {
@@ -484,7 +489,14 @@ function HomeContent() {
                   >
                     복사
                   </button>
+
               </div>
+
+              {isCenterOwner && (
+                <span className="p-2 text-sm bg-green-500 text-zinc-100 rounded">
+                  센터 소유자 입니다.
+                </span>
+              )}
           </div>
         )}
 
