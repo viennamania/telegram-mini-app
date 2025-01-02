@@ -554,6 +554,55 @@ export async function getAllUsers(
 }
 
 
+// get all users telegram id by center
+export async function getAllUsersTelegramIdByCenter(
+  {
+    limit,
+    page,
+    center,
+  }: {
+    limit: number;
+    page: number;
+    center: string;
+  }
+): Promise<any> {
+
+  if (!center) {
+    return null;
+  }
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('users');
+
+
+  //console.log('limit: ' + limit);
+
+
+  const users = await collection
+    .find<UserProps>(
+      {
+        center: center,
+        telegramId: { $exists: true, $ne: null },
+      },
+      {
+        limit: limit,
+        skip: (page - 1) * limit,
+      }, 
+    ).toArray();
+
+    return users;
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 export async function getBestSellers(
