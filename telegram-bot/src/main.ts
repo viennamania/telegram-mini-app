@@ -291,13 +291,33 @@ async function fetchAccountData() {
       */
 
 
+      // api getAllUsersTelegramIdByCenter
+      const url = `${process.env.FRONTEND_APP_ORIGIN}/api/uer/getAllUsersTelegramIdByCenter`;
+
+      const responseUsers = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          center,
+        }),
+      });
+
+      console.log('responseUsers', responseUsers)
+
+
+      const telegramId = 441516803;
+
+
       botInstance.api.sendAnimation(
-        441516803,
+        telegramId,
         'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExODl5bmpja2oxa2pobDRobHlyencyYWQ3Y3R1aDZjYnE3dGkxNDRjYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/otTstjtpHBpZN4znHa/giphy.gif',
         {
           caption: 'Total Account Count: ' + totalAccountCount + '\n' + 'Total Trading Account Balance: ' + totalTradingAccountBalance
         }
       )
+
 
     }
 
