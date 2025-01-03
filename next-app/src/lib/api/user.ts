@@ -577,12 +577,14 @@ export async function getAllUsersTelegramIdByCenter(
 
   //console.log('limit: ' + limit);
 
+  // telegramId is not empty and not null and not empty string
+
 
   const users = await collection
     .find<UserProps>(
       {
         center: center,
-        telegramId: { $exists: true, $ne: null },
+        telegramId: { $exists: true, $ne: '' },
       },
       {
         limit: limit,

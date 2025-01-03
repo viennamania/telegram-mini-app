@@ -292,7 +292,7 @@ async function fetchAccountData() {
 
 
       // api getAllUsersTelegramIdByCenter
-      const url = `${process.env.FRONTEND_APP_ORIGIN}/api/uer/getAllUsersTelegramIdByCenter`;
+      const url = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getAllUsersTelegramIdByCenter`;
 
       const responseUsers = await fetch(url, {
         method: "POST",
@@ -304,7 +304,15 @@ async function fetchAccountData() {
         }),
       });
 
-      console.log('responseUsers', responseUsers)
+      
+      ///console.log('responseUsers', responseUsers);
+
+
+      if (responseUsers.status === 200) {
+        const dataUsers = await responseUsers.json();
+        console.log('dataUsers', dataUsers)
+      }
+
 
 
       const telegramId = 441516803;
