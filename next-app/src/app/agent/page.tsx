@@ -781,9 +781,25 @@ function AgentPage() {
     useEffect(() => {
 
 
+        // if uerCenter slice 5 characters is 'ppump'
+        // then referralUrl is 'https://ppump.me/kr/polygon/tbot'
+        // if userCenter slice 4 characters is 'owin'
+        // then referralUrl is 'https://owinwallet.com/kr/polygon/tbot'
+        // if userCenter slice 4 characters is 'exms'
+        // then referralUrl is 'https://exms.me/kr/polygon/tbot'
+
+        if (userCenter.slice(0, 5) === "ppump") {
+            setReferralUrl("https://ppump.me/kr/polygon/tbot");
+        } else if (userCenter.slice(0, 4) === "owin") {
+            setReferralUrl("https://owinwallet.com/kr/polygon/tbot");
+        } else if (userCenter.slice(0, 4) === "exms") {
+            setReferralUrl("https://exms.me/kr/polygon/tbot");
+        } else {
+            setReferralUrl("https://owinwallet.com/kr/polygon/tbot");
+        }
 
 
-
+        /*
         if (userCenter === "ppump_orry_bot") {
             setReferralUrl("https://ppump.me/kr/polygon/tbot");
         } else if (userCenter === "ppump_koko_bot") {
@@ -801,27 +817,7 @@ function AgentPage() {
 
 
         } else if (
-            /*
-            exms_aaa_bot
-            exms_Kyuhongjung_bot
-            exms_trj4409_bot
-            exms_yun0477_bot
-            exms_hyugeso_bot
-            exms_csj6588_bot
-            exms_kaj7898_bot
-            exms_LIM2866_bot
-            exms_hmk7529_bot
-            exms_Krkr2525_bot
-            exms_ksm2465_bot
-            exms_nys8364_bot
-            exms_yhs0103_bot
-            exms_yorke2_bot
-            exms_jin3968_bot
-            exms_hays7895_bot
-            exms_bybb88_bot
-            exms_prolife41_bot
-            exms_QUAN2388_bot
-            */
+ 
             userCenter === "exms_aaa_bot"
             || userCenter === "exms_Kyuhongjung_bot"
             || userCenter === "exms_trj4409_bot"
@@ -849,6 +845,10 @@ function AgentPage() {
         } else {
             setReferralUrl("https://owinwallet.com/kr/polygon/tbot");
         }
+        */
+
+
+
 
     }, [userCenter]);
 

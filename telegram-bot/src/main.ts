@@ -261,26 +261,42 @@ async function fetchAccountData() {
     
     if (response.status !== 200) {
       ///return ctx.reply("Failed to get leaderboard");
-    } else {
-
-      const data = await response.json();
-
-
-      const totalAccountCount = data.result.totalCount;
-        
-      const totalTradingAccountBalance = '$' + Number(data.result.totalTradingAccountBalance).toFixed(2);
-
-      ///const applications = data.result.applications;
+      return;
+    }
 
 
- 
+    const data = await response.json();
 
-      /*
+    const totalAccountCount = data.result.totalCount;
+      
+    const totalTradingAccountBalance = '$' + Number(data.result.totalTradingAccountBalance).toFixed(2);
+
+
+    const url = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getAllUsersTelegramIdByCenter`;
+
+    const responseUsers = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        center,
+      }),
+    });
+
+    if (responseUsers.status !== 200) {
+      ///return ctx.reply("Failed to get leaderboard");
+      return;
+    }
+
+    const dataUsers = await responseUsers.json();
+    
+    for (const user of dataUsers.result) {
+      const telegramId = user.telegramId;
+
       botInstance.api.sendMessage(
-        441516803,
-        `Total Account Count: ${totalAccountCount}`
-        + '\n'
-        + `Total Trading Account Balance: ${totalTradingAccountBalance}`
+        telegramId,
+        'Total Account Count: ' + totalAccountCount + '\n' + 'Total Trading Account Balance: ' + totalTradingAccountBalance
       )
       .then(() => {
         //console.log('Message sent!')
@@ -288,46 +304,11 @@ async function fetchAccountData() {
       .catch(error => {
         console.error('Error sending message:', error)
       } )
-      */
-
-
-      // api getAllUsersTelegramIdByCenter
-      const url = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getAllUsersTelegramIdByCenter`;
-
-      const responseUsers = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          center,
-        }),
-      });
-
-      
-      ///console.log('responseUsers', responseUsers);
-
-
-      if (responseUsers.status === 200) {
-        const dataUsers = await responseUsers.json();
-        console.log('dataUsers', dataUsers)
-      }
-
-
-
-      const telegramId = 441516803;
-
-
-      botInstance.api.sendAnimation(
-        telegramId,
-        'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExODl5bmpja2oxa2pobDRobHlyencyYWQ3Y3R1aDZjYnE3dGkxNDRjYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/otTstjtpHBpZN4znHa/giphy.gif',
-        {
-          caption: 'Total Account Count: ' + totalAccountCount + '\n' + 'Total Trading Account Balance: ' + totalTradingAccountBalance
-        }
-      )
-
 
     }
+
+
+    
 
   }
   
