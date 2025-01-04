@@ -177,56 +177,72 @@ function HomeContent() {
 
   useEffect(() => {
       const fetchData = async () => {
-          const response = await fetch("/api/user/getUser", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                  walletAddress: address,
-                  center: center,
-              }),
-          });
-
-          const data = await response.json();
-
-          ///console.log("data", data);
-
-          if (data.result) {
-              setNickname(data.result.nickname);
-              
-              data.result.avatar && setAvatar(data.result.avatar);
-              
-
-              setUserCode(data.result.id);
-
-              setSeller(data.result.seller);
-
-              setIsAgent(data.result.agent);
-
-              ///setReferralCode(data.result.erc721ContractAddress);
-              setErc721ContractAddress(data.result.erc721ContractAddress);
-
-              setUserCenter(data.result.center);
-              if (data.result.centerOwner) {
-                  setIsCenterOwner(true);
-              }
-
-          } else {
-              setNickname('');
-              setAvatar('/profile-default.png');
-              setUserCode('');
-              setSeller(null);
 
 
-              setIsAgent(false);
+        await fetch("/api/user/updateUserTelegramId", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              walletAddress: address,
+              telegramId: telegramId,
+          }),
+        });
 
-              setReferralCode('');
 
-              setErc721ContractAddress('');
 
-              setUserCenter('');
-          }
+
+        const response = await fetch("/api/user/getUser", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                walletAddress: address,
+                center: center,
+            }),
+        });
+
+        const data = await response.json();
+
+        ///console.log("data", data);
+
+        if (data.result) {
+            setNickname(data.result.nickname);
+            
+            data.result.avatar && setAvatar(data.result.avatar);
+            
+
+            setUserCode(data.result.id);
+
+            setSeller(data.result.seller);
+
+            setIsAgent(data.result.agent);
+
+            ///setReferralCode(data.result.erc721ContractAddress);
+            setErc721ContractAddress(data.result.erc721ContractAddress);
+
+            setUserCenter(data.result.center);
+            if (data.result.centerOwner) {
+                setIsCenterOwner(true);
+            }
+
+        } else {
+            setNickname('');
+            setAvatar('/profile-default.png');
+            setUserCode('');
+            setSeller(null);
+
+
+            setIsAgent(false);
+
+            setReferralCode('');
+
+            setErc721ContractAddress('');
+
+            setUserCenter('');
+        }
 
       };
 

@@ -294,6 +294,8 @@ async function fetchAccountData() {
     for (const user of dataUsers.result) {
       const telegramId = user.telegramId;
 
+
+
       botInstance.api.sendMessage(
         telegramId,
         'Total Account Count: ' + totalAccountCount + '\n' + 'Total Trading Account Balance: ' + totalTradingAccountBalance
