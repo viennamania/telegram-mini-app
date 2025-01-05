@@ -690,7 +690,7 @@ function Menu(
       <MenuItem
         title="나의 OKX 트레이딩 봇"
         href={`/tbot?center=${center}&telegramId=${telegramId}`}
-        description="소속 센터의 내 봇 목록을 확인합니다."
+        description="나의 OKX 트레이딩 봇을 확인합니다."
       />
 
       {/*
