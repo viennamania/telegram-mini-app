@@ -27,6 +27,7 @@ import {
 } from "thirdweb";
 
 import { balanceOf, transfer } from "thirdweb/extensions/erc20";
+import { add } from "thirdweb/extensions/thirdweb";
  
 
 
@@ -59,11 +60,11 @@ function HomeContent() {
 
 
 
-  const address = account?.address;
+  //const address = account?.address;
 
 
   // test address
-  //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+  const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
 
 
 
@@ -95,7 +96,7 @@ function HomeContent() {
 
             const data = await response.json();
 
-            console.log("getApplicationsForCenter data", data);
+            ////console.log("getApplicationsForCenter data", data);
             //setAgentBotSummaryList(data.resultSummany);
 
 
@@ -260,6 +261,51 @@ function HomeContent() {
   {/* background image
     mobile-background.jpg
   */}
+
+
+
+  // getAllUsersTelegramIdByCenter
+
+  const [users, setUsers] = useState([] as any[]);
+  const [loadingUsers, setLoadingUsers] = useState(false);
+  useEffect(() => {
+      const fetchData = async () => {
+          setLoadingUsers(true);
+          const response = await fetch("/api/user/getAllUsersTelegramIdByCenter", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                  center: center,
+              }),
+          });
+
+          if (!response.ok) {
+              console.error("Error fetching users");
+              setLoadingUsers(false);
+              return;
+          }
+
+          const data = await response.json();
+
+          //console.log("getAllUsersTelegramIdByCenter data", data);
+          //setAgentBotSummaryList(data.resultSummany);
+
+          setUsers(data.result);
+
+          setLoadingUsers(false);
+
+      };
+
+      if (center) {
+          fetchData();
+      }
+  }, [center]);
+
+
+
+
   
   return (
 
@@ -480,6 +526,50 @@ function HomeContent() {
             description="나의 프로필을 설정합니다."
           />
         )}
+
+
+        {/* user list */}
+        {/* table */}
+        <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+          
+            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                소속 센터 사용자 목록
+            </div>
+          {address && (
+            <>          
+              {loadingUsers ? (
+                <div className="w-full flex flex-col items-center justify-center">
+                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
+                </div>
+              ) : (
+                <table className="w-full">
+                    <thead>
+                        <tr className="bg-zinc-800 text-zinc-100">
+                            <th className="p-2">닉네임</th>
+                            <th className="p-2">지갑주소</th>
+                            <th className="p-2">센터장</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users.map((user, index) => (
+                            <tr key={index} className="bg-zinc-800 text-zinc-100">
+                                <td className="p-2">{user.nickname}</td>
+                                <td className="p-2">
+                                  {user.walletAddress.substring(0, 6)}...{user.walletAddress.substring(user.walletAddress.length - 4, user.walletAddress.length)}
+                                </td>
+                                <td className="p-2 text-center">
+                                  {user.centerOwner && (
+                                    <span className="text-green-500">O</span>
+                                  )}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+              )}
+            </>
+          )}
+        </div>
 
 
         {/* 나의 소속 센터 봇 */}
