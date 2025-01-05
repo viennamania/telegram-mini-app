@@ -474,7 +474,7 @@ function HomeContent() {
                     contract: contractErc1155,
                     start: 0,
                     count: 10,
-                    address: address,
+                    address: address as string,
                 });
 
                 setMyNfts( nfts );
@@ -531,7 +531,7 @@ function HomeContent() {
 
             const transaction = claimTo({
                 contract: contractErc1155,
-                to: address,
+                to: address as string,
                 tokenId: 0n,
                 quantity: 1n,
             });
@@ -552,7 +552,7 @@ function HomeContent() {
                     contract: contractErc1155,
                     start: 0,
                     count: 10,
-                    address: address,
+                    address: address as string,
                 });
 
                 setMyNfts( nfts );
