@@ -89,8 +89,7 @@ function TelegramLoginContent() {
             <Loader2 className="h-12 w-12 animate-spin text-white" />
 
             <div className="flex flex-col gap-2 items-center justify-center">
-                <div className="text-gray-500
-                text-lg font-semibold">
+                <div className="text-gray-500 text-lg font-semibold">
                     텔레그램 지갑 연결 중...
                 </div>
                 <Image

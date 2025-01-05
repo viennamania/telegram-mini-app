@@ -680,11 +680,17 @@ function Menu(
         description="나의 AI 에이전트 NFT를 발행합니다."
       />
 
-      {/* 나의 팔로워들 */}
       <MenuItem
         title="마스터봇 목록"
         href={`/applications?center=${center}&telegramId=${telegramId}`}
         description="소속 센터의 마스터봇 목록을 확인합니다."
+      />
+
+      {/* 나의 OKX 트레이딩 봇 */}
+      <MenuItem
+        title="나의 OKX 트레이딩 봇"
+        href={`/tbot?center=${center}&telegramId=${telegramId}`}
+        description="소속 센터의 내 봇 목록을 확인합니다."
       />
 
       {/*
