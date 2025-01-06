@@ -49,6 +49,7 @@ export interface UserProps {
   center: string,
   centerOwner: boolean,
   telegramId: string,
+  referralCode: string,
 }
 
 export interface ResultProps {
@@ -359,7 +360,7 @@ export async function getOneByWalletAddress(
 export async function getOneByTelegramId(
   telegramId: string,
 ): Promise<UserProps | null> {
-
+  
   //console.log('getOneByWalletAddress walletAddress: ' + walletAddress);
 
   const client = await clientPromise;
@@ -373,6 +374,7 @@ export async function getOneByTelegramId(
   return results;
 
 }
+
 
 
 

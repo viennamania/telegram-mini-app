@@ -28,16 +28,18 @@ feature.command('start', async (ctx) => {
 
 
 
+  let referralCode = "";
+
   // get parameters from the context
 
   const params = ctx.message?.text?.split(' ');
 
   console.log('params', params); // params [ '/start', '34' ]
 
-  const referralCode = params[1];
+  const paramReferralCode = params[1];
 
-  if (referralCode) {
-    console.log('referralCode', referralCode);
+  if (paramReferralCode) {
+    //console.log('paramReferralCode', paramReferralCode);
 
     const urlApplyReferralCode = `${process.env.FRONTEND_APP_ORIGIN}/api/referral/applyReferralCode`;
 
@@ -48,7 +50,7 @@ feature.command('start', async (ctx) => {
       },
       body: JSON.stringify({
         telegramId,
-        referralCode,
+        referralCode: paramReferralCode,
       }),
     });
 
@@ -58,6 +60,33 @@ feature.command('start', async (ctx) => {
       const data = await responseApplyReferralCode.json();
       console.log("data", data);
     }
+
+  } else {
+
+    const urlGetReferralCode = `${process.env.FRONTEND_APP_ORIGIN}/api/referral/getReferralCode`;
+
+    const responseGetReferralCode = await fetch(urlGetReferralCode, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        telegramId,
+      }),
+    });
+
+    if (responseGetReferralCode.status !== 200) {
+      return ctx.reply("Failed to get referral code");
+    } else {
+      const data = await responseGetReferralCode.json();
+      console.log("data", data);
+
+      referralCode = data.result.referralCode;
+    }
+
+  }
+
+  console.log('referralCode', referralCode);
 
 
 
