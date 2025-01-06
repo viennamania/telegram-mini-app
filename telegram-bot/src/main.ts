@@ -24,6 +24,10 @@ async function startPolling(config: PollingConfig) {
     logger,
   })
 
+  const me = await bot.api.getMe();
+
+
+
   bot.api.setMyCommands([
     { command: "start", description: "Start the bot" },
     { command: "help", description: "Get help" },

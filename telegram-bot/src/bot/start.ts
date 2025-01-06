@@ -17,9 +17,7 @@ const adminAccount = privateKeyToAccount({
 
 feature.command('start', async (ctx) => {
 
-  console.log('start command')
-
-  ///ctx.getAuthor 
+  console.log('start command');
 
   const center = ctx.me.username;
 
@@ -28,7 +26,48 @@ feature.command('start', async (ctx) => {
 
   const username = ctx.from?.id+"";
 
-  console.log('username', username)
+
+
+  // get parameters from the context
+
+  const params = ctx.message?.text?.split(' ');
+
+  console.log('params', params); // params [ '/start', '34' ]
+
+  const referralCode = params[1];
+
+  if (referralCode) {
+    console.log('referralCode', referralCode);
+
+    const urlApplyReferralCode = `${process.env.FRONTEND_APP_ORIGIN}/api/referral/applyReferralCode`;
+
+    const responseApplyReferralCode = await fetch(urlApplyReferralCode, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        telegramId,
+        referralCode,
+      }),
+    });
+
+    if (responseApplyReferralCode.status !== 200) {
+      return ctx.reply("Failed to apply referral code");
+    } else {
+      const data = await responseApplyReferralCode.json();
+      console.log("data", data);
+    }
+
+
+
+
+
+
+
+
+
+
 
 
   const expiration = Date.now() + 6000_000; // valid for 100 minutes
