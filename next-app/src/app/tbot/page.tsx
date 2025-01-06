@@ -271,7 +271,7 @@ function HomeContent() {
 
         // check center substring 5 characters is ppump
         // then invalid referral
-
+        /*
         if (!center) {
             setIsValidReferral(false);
         } else if (center.length < 5) {
@@ -281,8 +281,10 @@ function HomeContent() {
         } else {
             checkReferral();
         }
+        */
+       checkReferral();
 
-    } , [agent, agentNumber, center]);
+    } , [agent, agentNumber]);
 
     //console.log("isValidReferralLoading", isValidReferralLoading);
     //console.log("isValidReferral", isValidReferral);

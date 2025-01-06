@@ -27,10 +27,8 @@ feature.command('start', async (ctx) => {
   const username = ctx.from?.id+"";
 
 
-
+  let nickname = "";
   let referralCode = "";
-
-
   let isCenterOwner = false;
 
   const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
@@ -53,6 +51,10 @@ feature.command('start', async (ctx) => {
 
     if (data.result && data.result.centerOwner) {
       isCenterOwner = data.result.centerOwner;
+    }
+
+    if (data.result && data.result.nickname) {
+      nickname = data.result.nickname;
     }
   }
 
@@ -204,7 +206,10 @@ feature.command('start', async (ctx) => {
     referralCodeText = '당신은 센터장입니다.';
   }
 
-  const keyboard = new InlineKeyboard()
+  let keyboard = null;
+  
+  if (referralCode) {
+    keyboard = new InlineKeyboard()
     .text(referralCodeText)
     .row()
     .webApp('나의 프로필 보러가기', urlMyProfile)
@@ -214,6 +219,19 @@ feature.command('start', async (ctx) => {
     .webApp('나의 AI 에이전트 보러가기', urlReferral)
     .row()
     .webApp('나의 OKX 트레이딩 봇 보러가기', urlTbot)
+  } else {
+    keyboard = new InlineKeyboard()
+    .text('레퍼럴코드를 발급받으세요.')
+    .row()
+    .webApp('나의 프로필 설정하기', urlMyProfile)
+  }
+
+
+
+
+
+
+
 
     /*
     .row()
@@ -221,9 +239,12 @@ feature.command('start', async (ctx) => {
     .row()
     .text("총 거래 잔고: " + "$" + Number(totalTradingAccountBalance).toFixed(2))
     */
+
+    const title = 'OKX AI 봇 센터에 오신것을 환영합니다.'
+    + (nickname ? '\n닉네임: ' + nickname : '');
   
   return ctx.reply(
-    'OKX AI 센터 봇을 시작합니다.',
+    title,
     { reply_markup: keyboard}
   )
 
