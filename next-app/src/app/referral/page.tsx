@@ -1017,25 +1017,12 @@ function AgentPage() {
 
                     {/* title */}
                     <div className="text-2xl font-semibold text-zinc-100">
-                        AI 에이전트
+                        나의 AI 에이전트 NFT
                     </div>
                 </div>
         
 
                 <div className="mt-5 flex flex-col items-start justify-center space-y-4">
-
-                    <div className='flex flex-row items-center space-x-4'>
-                        <Image
-                            src="/logo-aiagent.png"
-                            alt="AI Agent"
-                            width={50}
-                            height={50}
-                            className="rounded-full"  
-                        />
-                        <div className="text-2xl font-semibold">
-                            AI 에이전트 NFT 발행
-                        </div>
-                    </div>
 
                     <div className="flex justify-center mb-20">
                         {address ? (
