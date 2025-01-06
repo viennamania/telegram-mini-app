@@ -22,14 +22,15 @@ function TelegramLoginContent() {
     const router = useRouter();
 
     
-    const [params, setParams] = useState({ signature: '', message: '', center: '' });
+    const [params, setParams] = useState({ signature: '', message: '', center: '', path: '' });
 
     
     useEffect(() => {
         const signature = searchParams.get('signature') || '';
         const message = searchParams.get('message') || '';
         const center = searchParams.get('center') || '';
-        setParams({ signature, message, center });
+        const path = searchParams.get('path') || '';
+        setParams({ signature, message, center, path });
 
         //console.log('SearchParams:', { signature, message, center });
 
@@ -71,7 +72,9 @@ function TelegramLoginContent() {
 
                 const { username } = JSON.parse(params.message);
 
-                router.replace("/?center=" + params.center + "&telegramId=" + username);
+                //router.replace("/?center=" + params.center + "&telegramId=" + username);
+
+                router.replace(params.path + "?center=" + params.center + "&telegramId=" + username);
 
                 return true;
 

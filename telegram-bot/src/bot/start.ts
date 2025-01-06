@@ -58,7 +58,9 @@ feature.command('start', async (ctx) => {
       return ctx.reply("Failed to apply referral code");
     } else {
       const data = await responseApplyReferralCode.json();
-      console.log("data", data);
+      //console.log("data", data);
+
+      referralCode = paramReferralCode;
     }
 
   } else {
@@ -79,14 +81,14 @@ feature.command('start', async (ctx) => {
       return ctx.reply("Failed to get referral code");
     } else {
       const data = await responseGetReferralCode.json();
-      console.log("data", data);
+      ///console.log("data", data);
 
       referralCode = data.result.referralCode;
     }
 
   }
 
-  console.log('referralCode', referralCode);
+  ///console.log('referralCode', referralCode);
 
 
 
@@ -109,9 +111,11 @@ feature.command('start', async (ctx) => {
     message,
   });
 
-  const url = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}`;
+  const url = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/`;
 
-  //console.log('url', url)
+
+  const urlTbot = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/tbot`;
+
 
 
 
@@ -153,6 +157,8 @@ feature.command('start', async (ctx) => {
 
 
   const keyboard = new InlineKeyboard()
+    .text('레퍼럴코드: ' + referralCode)
+    .row()
     .webApp('마이 페이지', url)
     .row()
     .text("총 계정 수: " + totalAccountCount)
