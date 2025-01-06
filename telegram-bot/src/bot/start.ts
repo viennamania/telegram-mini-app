@@ -93,9 +93,11 @@ feature.command('start', async (ctx) => {
 
   const params = ctx.message?.text?.split(' ');
 
-  console.log('params', params); // params [ '/start', '34' ]
+  console.log('params', params); // params [ '/start', '0x1680535B95Fc2b5b18E7c201b41Ff0327f7b54fb_0' ]
 
   const paramReferralCode = params[1];
+
+  //console.log('paramReferralCode', paramReferralCode);
 
   
 
@@ -153,7 +155,7 @@ feature.command('start', async (ctx) => {
   const url = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/`;
 
 
-  const urlTbot = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/tbot`;
+  const urlTbot = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&referralCode=${referralCode}&path=/tbot`;
 
 
   const urlReferral = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/referral`;
@@ -194,7 +196,8 @@ feature.command('start', async (ctx) => {
 
 
 
-  let referralCodeText = referralCode ? '나의 레퍼럴코드: ' + referralCode : '레퍼럴코드가 없습니다.';
+  let referralCodeText = referralCode ? '나의 레퍼럴코드: ' + referralCode.slice(0, 6) + '...' + referralCode.slice(-6)
+   : '레퍼럴코드가 없습니다.';
 
   if (isCenterOwner) {
     referralCodeText = '당신은 센터장입니다.';

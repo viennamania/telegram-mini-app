@@ -117,9 +117,16 @@ function HomeContent() {
     const center = searchParams.get('center');
 
     
-    const agent = searchParams.get('agent') || "0xD146c66F924C8A1F533ddFFFD63abff11921DdcF";
-    const agentNumber = searchParams.get('tokenId') || "0";
+    //const agent = searchParams.get('agent') || "0xD146c66F924C8A1F533ddFFFD63abff11921DdcF";
+    //const agentNumber = searchParams.get('tokenId') || "0";
 
+    // 0x1680535B95Fc2b5b18E7c201b41Ff0327f7b54fb_0
+    const referralCode = searchParams.get('referralCode');
+
+    const agent = referralCode?.split("_")[0] || "";
+
+    const agentNumber = referralCode?.split("_")[1] || "0";
+    
     
     const telegramId = searchParams.get('telegramId');
     
