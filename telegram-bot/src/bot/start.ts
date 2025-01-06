@@ -194,8 +194,11 @@ feature.command('start', async (ctx) => {
 
 
 
-  const referralCodeText = referralCode ? '나의 레퍼럴코드: ' + referralCode : '레퍼럴코드가 없습니다.';
+  let referralCodeText = referralCode ? '나의 레퍼럴코드: ' + referralCode : '레퍼럴코드가 없습니다.';
 
+  if (isCenterOwner) {
+    referralCodeText = '당신은 센터장입니다.';
+  }
 
   const keyboard = new InlineKeyboard()
     .text(referralCodeText)
