@@ -30,15 +30,6 @@ async function startPolling(config: PollingConfig) {
 
   bot.api.setMyCommands([
     { command: "start", description: "Start the bot" },
-    { command: "help", description: "Get help" },
-    { command: "balance", description: "Get balance" },
-    { command: "leaderboard", description: "Get leaderboard" },
-    { command: "deposit", description: "Deposit" },
-    { command: "withdraw", description: "Withdraw" },
-    { command: "transfer", description: "Transfer" },
-    { command: "transactions", description: "Transactions" },
-    { command: "settings", description: "Settings" },
-    { command: "about", description: "About" },
   ])
 
 

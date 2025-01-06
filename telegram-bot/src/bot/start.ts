@@ -176,7 +176,7 @@ feature.command('start', async (ctx) => {
     }),
   });
   if (response.status !== 200) {
-    return ctx.reply("Failed to get leaderboard");
+    ///return ctx.reply("Failed to get leaderboard");
   } else {
 
     const data = await response.json();
