@@ -1543,6 +1543,9 @@ function HomeContent() {
                     </span>
                     <div className="flex flex-col gap-2">
                         <span className="text-sm text-gray-500">
+                            referralCode: {referralCode}
+                        </span>
+                        <span className="text-sm text-gray-500">
                             Agent: {agent}
                         </span>
                         <span className="text-sm text-gray-500">
