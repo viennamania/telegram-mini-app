@@ -711,6 +711,22 @@ export async function getUserByEmail(
 
 }
 
+// get user by telegramId
+export async function getUserByTelegramId(
+  telegramId: string,
+): Promise<UserProps | null> {
+
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('users');
+
+
+  return await collection.findOne<UserProps>(
+    { telegramId },
+  );
+
+}
+
 
 export async function checkUserByEmail(
   email: string,

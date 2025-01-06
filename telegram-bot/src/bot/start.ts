@@ -31,6 +31,35 @@ feature.command('start', async (ctx) => {
   let referralCode = "";
 
 
+  let isCenterOwner = false;
+
+  const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
+
+  const responseGetUser = await fetch(urlGetUser, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      telegramId,
+    }),
+  });
+
+  if (responseGetUser.status !== 200) {
+    return ctx.reply("Failed to get user");
+  } else {
+    const data = await responseGetUser.json();
+    //console.log("data", data);
+
+    if (data.result && data.result.centerOwner) {
+      isCenterOwner = data.result.centerOwner;
+    }
+  }
+
+  console.log('isCenterOwner', isCenterOwner);
+
+
+
 
   const urlGetReferralCode = `${process.env.FRONTEND_APP_ORIGIN}/api/referral/getReferralCode`;
 
