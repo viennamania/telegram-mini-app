@@ -1482,7 +1482,9 @@ function AgentPage() {
                                                             '&agent=' + nft.contract.address + 
                                                             '&tokenId=' + nft.tokenId
                                                             */
-                                                            't.me/ppump_orry_bot?start=' + nft.contract.address + '_' + nft.tokenId
+                                                            //'t.me/ppump_orry_bot?start=' + nft.contract.address + '_' + nft.tokenId
+
+                                                            't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
                                                         );
                                                         //toast.success('레퍼럴 URL 복사 완료');
                                                     }}
