@@ -117,6 +117,7 @@ feature.command('start', async (ctx) => {
   const urlTbot = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/tbot`;
 
 
+  const urlReferral = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/referral`;
 
 
   let totalAccountCount = "";
@@ -157,9 +158,13 @@ feature.command('start', async (ctx) => {
 
 
   const keyboard = new InlineKeyboard()
-    .text('레퍼럴코드: ' + referralCode)
+    .text('나의 레퍼럴코드: ' + referralCode)
     .row()
-    .webApp('마이 페이지', url)
+    .webApp('마이 페이지 보러가기', url)
+    .row()
+    .webApp('나의 AI 에이전트 보러가기', urlReferral)
+    .row()
+    .webApp('나의 OKX 트레이딩 봇 보러가기', urlTbot)
     .row()
     .text("총 계정 수: " + totalAccountCount)
     .row()
