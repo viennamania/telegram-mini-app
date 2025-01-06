@@ -859,19 +859,6 @@ function ProfilePage() {
 
                 <div className="mt-5 flex flex-col items-start justify-center space-y-4">
 
-                    <div className='flex flex-row items-center space-x-4'>
-                        <Image
-                            src="/logo-tbot.webp"
-                            alt="Profile Picture"
-                            width={50}
-                            height={50}
-                            className="rounded-full"  
-                        />
-                        <div className="text-2xl font-semibold">
-                            나의 프로필
-                        </div>
-                    </div>
-
                     <div className="flex justify-center mb-20">
                         {address ? (
                             <> 

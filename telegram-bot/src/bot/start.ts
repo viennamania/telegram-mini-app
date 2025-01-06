@@ -207,6 +207,8 @@ feature.command('start', async (ctx) => {
   const keyboard = new InlineKeyboard()
     .text(referralCodeText)
     .row()
+    .webApp('나의 프로필 보러가기', urlMyProfile)
+    .row()
     .webApp('마이 페이지 보러가기', url)
     .row()
     .webApp('나의 AI 에이전트 보러가기', urlReferral)
