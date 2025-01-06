@@ -1602,6 +1602,7 @@ function AgentPage() {
 
 
                                             {/* transfer NFT */}
+                                            {/*
                                             <div className='w-full flex flex-col gap-2 items-end justify-between'>
                                                 <input
                                                     className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
@@ -1661,6 +1662,7 @@ function AgentPage() {
                                                 </button>
 
                                             </div>
+                                            */}
 
 
 

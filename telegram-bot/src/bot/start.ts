@@ -30,6 +30,36 @@ feature.command('start', async (ctx) => {
 
   let referralCode = "";
 
+
+
+  const urlGetReferralCode = `${process.env.FRONTEND_APP_ORIGIN}/api/referral/getReferralCode`;
+
+  const responseGetReferralCode = await fetch(urlGetReferralCode, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      telegramId,
+    }),
+  });
+
+  if (responseGetReferralCode.status !== 200) {
+    return ctx.reply("Failed to get referral code");
+  } else {
+    const data = await responseGetReferralCode.json();
+    ///console.log("data", data);
+
+    if (data.result) {
+      referralCode = data.result.referralCode;
+    }
+  }
+
+
+
+
+
+
   // get parameters from the context
 
   const params = ctx.message?.text?.split(' ');
@@ -38,8 +68,11 @@ feature.command('start', async (ctx) => {
 
   const paramReferralCode = params[1];
 
-  if (paramReferralCode) {
-    //console.log('paramReferralCode', paramReferralCode);
+  
+
+
+  if (!referralCode && paramReferralCode) {
+
 
     const urlApplyReferralCode = `${process.env.FRONTEND_APP_ORIGIN}/api/referral/applyReferralCode`;
 
@@ -63,32 +96,9 @@ feature.command('start', async (ctx) => {
       referralCode = paramReferralCode;
     }
 
-  } else {
-
-    const urlGetReferralCode = `${process.env.FRONTEND_APP_ORIGIN}/api/referral/getReferralCode`;
-
-    const responseGetReferralCode = await fetch(urlGetReferralCode, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        telegramId,
-      }),
-    });
-
-    if (responseGetReferralCode.status !== 200) {
-      return ctx.reply("Failed to get referral code");
-    } else {
-      const data = await responseGetReferralCode.json();
-      ///console.log("data", data);
-
-      referralCode = data.result.referralCode;
-    }
-
   }
 
-  ///console.log('referralCode', referralCode);
+  //console.log('referralCode', referralCode);
 
 
 
@@ -155,20 +165,24 @@ feature.command('start', async (ctx) => {
 
 
 
+  const referralCodeText = referralCode ? '나의 레퍼럴코드: ' + referralCode : '레퍼럴코드가 없습니다.';
 
 
   const keyboard = new InlineKeyboard()
-    .text('나의 레퍼럴코드: ' + referralCode)
+    .text(referralCodeText)
     .row()
     .webApp('마이 페이지 보러가기', url)
     .row()
     .webApp('나의 AI 에이전트 보러가기', urlReferral)
     .row()
     .webApp('나의 OKX 트레이딩 봇 보러가기', urlTbot)
+
+    /*
     .row()
     .text("총 계정 수: " + totalAccountCount)
     .row()
     .text("총 거래 잔고: " + "$" + Number(totalTradingAccountBalance).toFixed(2))
+    */
   
   return ctx.reply(
     'OKX AI 센터 봇을 시작합니다.',
