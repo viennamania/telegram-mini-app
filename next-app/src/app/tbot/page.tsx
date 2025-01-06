@@ -123,6 +123,8 @@ function HomeContent() {
     // 0x1680535B95Fc2b5b18E7c201b41Ff0327f7b54fb_0
     const referralCode = searchParams.get('referralCode');
 
+    
+
     const agent = referralCode?.split("_")[0] || "";
 
     const agentNumber = referralCode?.split("_")[1] || "0";
