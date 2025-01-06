@@ -126,7 +126,7 @@ function HomeContent() {
     const agent = referralCode?.split("_")[0] || "";
 
     const agentNumber = referralCode?.split("_")[1] || "0";
-    
+
     
     const telegramId = searchParams.get('telegramId');
     
@@ -1536,6 +1536,20 @@ function HomeContent() {
 
             <div className="py-0 w-full">
         
+                {/* agent, agentNumber */}
+                <div className="flex flex-col gap-4">
+                    <span className="text-lg font-semibold text-gray-800">
+                        Agent 정보
+                    </span>
+                    <div className="flex flex-col gap-2">
+                        <span className="text-sm text-gray-500">
+                            Agent: {agent}
+                        </span>
+                        <span className="text-sm text-gray-500">
+                            Agent Number: {agentNumber}
+                        </span>
+                    </div>
+                </div>
                 
 
 
