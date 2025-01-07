@@ -1474,6 +1474,7 @@ function AgentPage() {
                                                             't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
                                                         );
                                                         //toast.success('레퍼럴 URL 복사 완료');
+                                                        alert('레퍼럴 URL 복사 완료');
                                                     }}
                                                     className="p-2 bg-blue-500 text-zinc-100 rounded
                                                     hover:bg-blue-600 text-xs xl:text-lg font-semibold"
