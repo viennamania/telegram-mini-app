@@ -22,7 +22,7 @@ function TelegramLoginContent() {
     const router = useRouter();
 
     
-    const [params, setParams] = useState({ signature: '', message: '', center: '', path: '' });
+    const [params, setParams] = useState({ signature: '', message: '', center: '', referralCode: '', path: '' });
 
     
     useEffect(() => {
@@ -30,7 +30,8 @@ function TelegramLoginContent() {
         const message = searchParams.get('message') || '';
         const center = searchParams.get('center') || '';
         const path = searchParams.get('path') || '';
-        setParams({ signature, message, center, path });
+        const referralCode = searchParams.get('referralCode') || '';
+        setParams({ signature, message, center, referralCode, path });
 
         //console.log('SearchParams:', { signature, message, center });
 
@@ -74,7 +75,7 @@ function TelegramLoginContent() {
 
                 //router.replace("/?center=" + params.center + "&telegramId=" + username);
 
-                router.replace(params.path + "?center=" + params.center + "&telegramId=" + username);
+                router.replace(params.path + "?center=" + params.center + "&telegramId=" + username + "&referralCode=" + params.referralCode);
 
                 return true;
 
