@@ -712,7 +712,15 @@ function HomeContent() {
 
         //let marketingCenter = "owin";
 
-        let marketingCenter = "ppump";
+        let marketingCenter = "";
+
+        if (center?.slice(0, 4) === "owin") {
+            marketingCenter = center;
+        } else if (center?.slice(0, 5) === "ppump") {
+            marketingCenter = center;
+        } else if (center?.slice(0, 4) === "exms") {
+            marketingCenter = center;
+        }
 
 
         const response = await fetch("/api/agent/applyMintNFT", {
