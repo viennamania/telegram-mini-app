@@ -710,7 +710,9 @@ function HomeContent() {
 
         // api call
 
-        let marketingCenter = "owin";
+        //let marketingCenter = "owin";
+
+        let marketingCenter = "ppump";
 
 
         const response = await fetch("/api/agent/applyMintNFT", {
@@ -738,7 +740,8 @@ function HomeContent() {
 
         if (!response.ok) {
             setApplyingMintNFT(false);
-            toast.error("NFT Mint 신청에 실패했습니다.");
+            //toast.error("NFT Mint 신청에 실패했습니다.");
+            alert("NFT Mint 신청에 실패했습니다.");
             return;
         }
 
@@ -748,7 +751,8 @@ function HomeContent() {
 
         if (data.result) {
             setApplyingMintNFT(false);
-            toast.success("NFT Mint 신청이 완료되었습니다.");
+            //toast.success("NFT Mint 신청이 완료되었습니다.");
+            alert("NFT Mint 신청이 완료되었습니다.");
 
 
             setMyAgent(data.result);
@@ -778,10 +782,16 @@ function HomeContent() {
 
         } else {
             setApplyingMintNFT(false);
-            toast.error("NFT Mint 신청에 실패했습니다.");
+            
+            //toast.error("NFT Mint 신청에 실패했습니다.");
+
+            alert("NFT Mint 신청에 실패했습니다.");
+
         }
 
     }
+
+
 
 
 

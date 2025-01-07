@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
 
 
 
-
+  /*
   // send sms to agent holder
   // get user phone number by erc721ContractAddress is agentBot
   const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -140,6 +140,7 @@ export async function POST(request: NextRequest) {
     });
 
   }
+  */
 
  
   return NextResponse.json({
