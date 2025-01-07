@@ -163,6 +163,7 @@ feature.command('start', async (ctx) => {
 
   const urlReferral = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/referral`;
 
+  const urlApplications = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/applications`;
 
   let totalAccountCount = "";
   let totalTradingAccountBalance = "";
@@ -208,7 +209,7 @@ feature.command('start', async (ctx) => {
 
   let keyboard = null;
   
-  if (referralCode) {
+  if (referralCode || isCenterOwner) {
     keyboard = new InlineKeyboard()
     .text(referralCodeText)
     .row()
@@ -219,6 +220,14 @@ feature.command('start', async (ctx) => {
     .webApp('나의 AI 에이전트 보러가기', urlReferral)
     .row()
     .webApp('나의 OKX 트레이딩 봇 보러가기', urlTbot)
+
+    //if (isCenterOwner) {
+      keyboard.row()
+      .webApp('전체 가입자 보러가기', urlApplications)
+    //}
+
+
+
   } else {
     keyboard = new InlineKeyboard()
     .text('레퍼럴코드를 발급받으세요.')
