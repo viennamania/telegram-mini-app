@@ -570,6 +570,7 @@ function HomeContent() {
 
 
         {/* 나의 소속 센터 봇 */}
+        {/*
         {address && userCenter && (
           <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
               <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
@@ -580,7 +581,6 @@ function HomeContent() {
                       {userCenter}
                   </div>
                 
-                  {/* 복사 버튼 */}
                   <button
                       onClick={() => {
                           navigator.clipboard.writeText(
@@ -602,6 +602,7 @@ function HomeContent() {
               )}
           </div>
         )}
+        */}
 
 
         {address && userCenter && center !== userCenter && (
