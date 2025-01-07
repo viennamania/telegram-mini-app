@@ -129,9 +129,7 @@ function HomeContent() {
 
     const agentNumber = referralCode?.split("_")[1] || "0";
 
-    
-    const telegramId = searchParams.get('telegramId');
-    
+
       
     const account = useActiveAccount();
     
@@ -1546,6 +1544,9 @@ function HomeContent() {
                         Agent 정보
                     </span>
                     <div className="flex flex-col gap-2">
+                        <span className="text-sm text-gray-500">
+                            center: {center}
+                        </span>
                         <span className="text-sm text-gray-500">
                             referralCode: {referralCode}
                         </span>
