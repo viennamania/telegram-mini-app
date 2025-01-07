@@ -2054,7 +2054,7 @@ function HomeContent() {
 
                                         {/* got to install htx */}
                                         {/* https://www.htx.com.pk/en-us/v/register/double-invite/web/?inviter_id=11343840&invite_code=z73y9223 */}
-                                        {!myAgent?.startTrading?.status && (
+                                        {!myAgent?.okxUid && (
                                             <div className='flex flex-col gap-2'>
                                                 <span className='text-sm font-semibold text-gray-500'>
                                                     OKX 계정이 없으신가요?
