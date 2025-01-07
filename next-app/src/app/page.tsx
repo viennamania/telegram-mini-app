@@ -515,7 +515,7 @@ function HomeContent() {
 
 
 
-
+        
         {address && !userCenter && (
           <MenuItem
             title="나의 프로필 설정"
@@ -523,6 +523,7 @@ function HomeContent() {
             description="나의 프로필을 설정합니다."
           />
         )}
+        
 
 
         {/* user list */}
@@ -621,6 +622,8 @@ function HomeContent() {
 
         )}
 
+
+        {/*
         {address && userCenter && center === userCenter && (
 
           <Menu
@@ -629,6 +632,8 @@ function HomeContent() {
           />
 
         )}
+        */}
+        
 
       </div>
     </main>
