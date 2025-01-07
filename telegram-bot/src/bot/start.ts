@@ -163,7 +163,7 @@ feature.command('start', async (ctx) => {
 
   const urlReferral = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/referral`;
 
-  const urlApplications = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/applications`;
+  const urlMasterbot = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/masterbot`;
 
   let totalAccountCount = "";
   let totalTradingAccountBalance = "";
@@ -223,7 +223,7 @@ feature.command('start', async (ctx) => {
 
     //if (isCenterOwner) {
       keyboard.row()
-      .webApp('전체 가입자 보러가기', urlApplications)
+      .webApp('전체 가입자 보러가기', urlMasterbot)
     //}
 
 

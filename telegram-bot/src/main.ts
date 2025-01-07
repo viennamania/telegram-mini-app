@@ -262,6 +262,8 @@ async function fetchAccountData() {
 
     const data = await response.json();
 
+    const applications = data.result.applications;
+
     const totalAccountCount = data.result.totalCount;
       
     const totalTradingAccountBalance = '$' + Number(data.result.totalTradingAccountBalance).toFixed(2);
@@ -289,18 +291,41 @@ async function fetchAccountData() {
     for (const user of dataUsers.result) {
       const telegramId = user.telegramId;
 
+      // find application for the user by wallet address
+
+      const application = applications.find((application: any) => application.walletAddress === user.walletAddress);
 
 
-      botInstance.api.sendMessage(
-        telegramId,
-        'Total Account Count: ' + totalAccountCount + '\n' + 'Total Trading Account Balance: ' + totalTradingAccountBalance
-      )
-      .then(() => {
-        //console.log('Message sent!')
-      } )
-      .catch(error => {
-        console.error('Error sending message:', error)
-      } )
+      const masterBotImageUrl = application ? application?.masterBotInfo?.imageUrl : '';
+
+      const tradingAccountBalance = application ? '$' + Number(application.tradingAccountBalance.balance).toFixed(2) : 'N/A';
+
+
+      if (masterBotImageUrl) {
+
+        botInstance.api.sendPhoto(
+          telegramId,
+          masterBotImageUrl,
+          {
+            caption: '🔥 My Trading Account Balance: ' + tradingAccountBalance + '\n'
+            + '💪 Total Account Count: ' + totalAccountCount + '\n'
+            + '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
+          }
+        )
+
+      } else {
+      
+        botInstance.api.sendMessage(
+          telegramId,
+          // emoji: https://emojipedia.org/
+          '🔥 My Trading Account Balance: ' + tradingAccountBalance + '\n'
+          + '💪 Total Account Count: ' + totalAccountCount + '\n'
+          + '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
+        )
+
+      }
+      
+      
 
     }
 

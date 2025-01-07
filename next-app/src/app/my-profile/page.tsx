@@ -46,7 +46,6 @@ import { smartWallet, inAppWallet } from "thirdweb/wallets";
 
 import Image from 'next/image';
 
-//import Uploader from '@/components/uploader';
 
 import { balanceOf, transfer } from "thirdweb/extensions/erc20";
  
