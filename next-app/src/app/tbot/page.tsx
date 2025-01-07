@@ -1539,22 +1539,17 @@ function HomeContent() {
             <div className="py-0 w-full">
         
                 {/* agent, agentNumber */}
+                
                 <div className="flex flex-col gap-4">
                     <span className="text-lg font-semibold text-gray-800">
-                        Agent 정보
+                        레퍼럴 정보
                     </span>
                     <div className="flex flex-col gap-2">
                         <span className="text-sm text-gray-500">
-                            center: {center}
+                            에전트봇: {center}
                         </span>
                         <span className="text-sm text-gray-500">
-                            referralCode: {referralCode}
-                        </span>
-                        <span className="text-sm text-gray-500">
-                            Agent: {agent}
-                        </span>
-                        <span className="text-sm text-gray-500">
-                            Agent Number: {agentNumber}
+                            레퍼럴코드: {referralCode}
                         </span>
                     </div>
                 </div>
