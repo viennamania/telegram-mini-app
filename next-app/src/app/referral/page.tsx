@@ -1520,6 +1520,7 @@ function AgentPage() {
                                                     />
 
                                                     {/* 누적 배당수익 */}
+                                                    {/*
                                                     <div className='flex flex-col gap-2 items-start justify-between
                                                         border border-gray-300 p-4 rounded-lg'>
                                                         <span className='text-xs xl:text-lg font-semibold'>
@@ -1528,16 +1529,16 @@ function AgentPage() {
                                                         <span className='text-xl xl:text-2xl font-semibold text-green-500'>
                                                             0.00 USDT
                                                         </span>
-                                                        {/* 배당 수령 */}
-                                                        {/*
+
                                                         <button
                                                             className="p-2 bg-blue-500 text-zinc-100 rounded
                                                             hover:bg-blue-600"
                                                         >
                                                             Claim Dividend
                                                         </button>
-                                                        */}
+                                                        
                                                     </div>
+                                                    */}
 
 
                                                 </div>
@@ -1568,19 +1569,19 @@ function AgentPage() {
                                                         </span>
                                                         
                                                         {/* Accounts */}
+                                                        {/*
                                                         <span className='text-xs xl:text-sm font-semibold'>
                                                             Accounts: 0
                                                         </span>
 
-                                                        {/* Funds */}
                                                         <span className='text-xs xl:text-sm font-semibold'>
                                                             Funds: 0 USDT
                                                         </span>
 
-                                                        {/* 수익률 */}
                                                         <span className='text-xs xl:text-sm font-semibold'>
                                                             ROI: ??%
                                                         </span>
+                                                        */}
 
 
 
