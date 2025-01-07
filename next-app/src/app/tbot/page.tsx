@@ -1546,7 +1546,7 @@ function HomeContent() {
                     </span>
                     <div className="flex flex-col gap-2">
                         <span className="text-sm text-gray-500">
-                            에전트봇: {center}
+                            에이전트봇: {center}
                         </span>
                         <span className="text-sm text-gray-500">
                             레퍼럴코드: {referralCode}
