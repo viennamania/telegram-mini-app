@@ -715,11 +715,11 @@ function HomeContent() {
         let marketingCenter = "";
 
         if (center?.slice(0, 4) === "owin") {
-            marketingCenter = center;
+            marketingCenter = "owin";
         } else if (center?.slice(0, 5) === "ppump") {
-            marketingCenter = center;
+            marketingCenter = "ppump";
         } else if (center?.slice(0, 4) === "exms") {
-            marketingCenter = center;
+            marketingCenter = "exms";
         }
 
 
