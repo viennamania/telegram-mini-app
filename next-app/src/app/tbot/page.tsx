@@ -1414,6 +1414,7 @@ function HomeContent() {
         
                 {/* agent, agentNumber */}
                 
+                {/*
                 <div className="flex flex-col gap-4">
                     <span className="text-lg font-semibold text-gray-800">
                         레퍼럴 정보
@@ -1427,6 +1428,7 @@ function HomeContent() {
                         </span>
                     </div>
                 </div>
+                */}
                 
 
 
