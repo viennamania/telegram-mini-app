@@ -858,10 +858,10 @@ function ProfilePage() {
 
                 <div className="flex flex-col items-start justify-center space-y-4">
 
-                    <div className="flex justify-center mb-20">
+                    <div className="flex justify-center mb-5">
                         {address ? (
                             <div className="flex flex-row gap-2 items-center justify-between">
-                                {/*}
+                                
                                 <Button
                                     onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
                                     className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
@@ -877,7 +877,7 @@ function ProfilePage() {
                                 >
                                     복사
                                 </Button>
-                                */}
+                                
                             </div>
                         ) : (
                             <p className="text-sm text-zinc-400">

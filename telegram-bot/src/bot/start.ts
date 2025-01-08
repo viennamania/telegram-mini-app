@@ -164,7 +164,7 @@ feature.command('start', async (ctx) => {
 
   const urlReferral = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/referral`;
 
-  const urlMasterbot = `${process.env.FRONTEND_APP_ORIGIN}/masterbot&center=${center}`;
+  const urlMasterbot = `${process.env.FRONTEND_APP_ORIGIN}/masterbot?center=${center}`;
 
   let totalAccountCount = "";
   let totalTradingAccountBalance = "";
