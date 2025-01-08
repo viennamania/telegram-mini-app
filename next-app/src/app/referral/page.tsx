@@ -1489,13 +1489,13 @@ function AgentPage() {
 
 
 
-                                            <div className='w-full grid grid-cols-2 gap-2 items-center justify-between'>
+                                            <div className='w-full flex flex-col gap-2 items-center justify-between'>
 
 
-                                                <div className="flex flex-col gap-2 items-center justify-center">
+                                                <div className="w-full flex flex-col gap-2 items-center justify-center">
 
 
-                                                    {/*
+                                                    
                                                     <button
                                                         onClick={() => {
                                                             window.open('https://opensea.io/assets/matic/' + erc721ContractAddress + '/' + nft.tokenId);
@@ -1510,14 +1510,14 @@ function AgentPage() {
                                                             className="rounded-lg"
                                                         />
                                                     </button>
-                                                    */}
+                                                    
 
                                                     <Image
-                                                        src={nft.image.thumbnailUrl}
+                                                        src={nft.image.pngUrl}
                                                         alt="NFT"
-                                                        width={200}
-                                                        height={200}
-                                                        className="rounded-lg w-32 xl:w-40 border border-gray-300"
+                                                        width={500}
+                                                        height={500}
+                                                        className="w-full rounded-lg border border-gray-300"
                                                         
                                                     />
 
