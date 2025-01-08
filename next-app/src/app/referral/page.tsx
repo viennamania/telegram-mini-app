@@ -1024,6 +1024,7 @@ function AgentPage() {
 
                 <div className="mt-5 flex flex-col items-start justify-center space-y-4">
 
+                    {/*}
                     <div className="flex justify-center mb-20">
                         {address ? (
                             <> 
@@ -1040,6 +1041,7 @@ function AgentPage() {
                             </p>
                         )}      
                     </div>
+                    */}
 
                 
                     <div className='w-full flex flex-col gap-4 items-start justify-center'>

@@ -218,7 +218,7 @@ feature.command('start', async (ctx) => {
     .row()
     
     //.webApp('마이 페이지 보러가기', url)
-    .webApp('리더보드 보러가기', urlLeaderBoard)
+    .webApp('회원 보러가기', urlLeaderBoard)
 
     .row()
     .webApp('나의 AI 에이전트 보러가기', urlReferral)
@@ -238,7 +238,7 @@ feature.command('start', async (ctx) => {
     .row()
     .webApp('나의 프로필 설정하기', urlMyProfile)
     .row()
-    .webApp('리더보드 보러가기', urlLeaderBoard)
+    .webApp('회원 보러가기', urlLeaderBoard)
   }
 
 
@@ -256,7 +256,7 @@ feature.command('start', async (ctx) => {
     */
 
     const title = 'OKX AI 봇 센터에 오신것을 환영합니다.'
-    + (nickname ? '\n닉네임: ' + nickname : '');
+    + (nickname ? '\n회원아이디: ' + nickname : '');
   
   return ctx.reply(
     title,
