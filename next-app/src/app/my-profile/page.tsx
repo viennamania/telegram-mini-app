@@ -301,13 +301,13 @@ function ProfilePage() {
 
         if (editedNickname.length < 5 || editedNickname.length > 10) {
 
-            //toast.error("닉네임은 5자 이상 10자 이하로 입력해주세요");
+            //toast.error("회원아이디은 5자 이상 10자 이하로 입력해주세요");
             return;
         }
         
         ///if (!/^[a-z0-9]*$/.test(nickname)) {
         if (!/^[a-z0-9]*$/.test(editedNickname)) {
-            //toast.error("닉네임은 영문 소문자와 숫자만 입력해주세요");
+            //toast.error("회원아이디은 영문 소문자와 숫자만 입력해주세요");
             return;
         }
 
@@ -449,7 +449,7 @@ function ProfilePage() {
 
         if (!userCode) {
             //console.log("userCode=====", userCode);
-            //toast.error('닉네임을 먼저 설정해주세요');
+            //toast.error('회원아이디을 먼저 설정해주세요');
             return;
         }
 
@@ -985,13 +985,23 @@ function ProfilePage() {
                     {userCode && isValideTelegramId && (
                         <div className='w-full flex flex-row gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                텔레그램 ID
+                                매직아이디(MID)
                             </div>
                             <div className='flex flex-row gap-2 items-center justify-between'>
                                 <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
                                     {telegramId}
                                 </div>
                             </div>
+                            {/* 복사 버튼 */}
+                            <button
+                                onClick={() => {
+                                    navigator.clipboard.writeText(telegramId as string);
+                                    alert('매직아이디가 복사되었습니다.');
+                                }}
+                                className="p-2 bg-blue-500 text-zinc-100 rounded"
+                            >
+                                복사
+                            </button>
 
                             {isCenterOwner && (
                                 <span className='text-xs font-semibold text-green-500'>
@@ -1005,7 +1015,7 @@ function ProfilePage() {
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                             <div className="flex flex-row gap-2 items-center justify-between">
                                 <span className='text-sm font-semibold text-gray-500'>
-                                    텔레그램 ID
+                                    매직아이디(MID)
                                 </span>
                                 <span className='text-lg font-semibold text-blue-500'>
                                     {telegramId}
@@ -1031,11 +1041,11 @@ function ProfilePage() {
 
 
 
-                    {/* 닉네임을 저장하면 나의 소속 센터 봇가 설정됩니다 */}
+                    {/* 회원아이디을 저장하면 나의 소속 센터 봇가 설정됩니다 */}
                     {address && !userCenter && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                닉네임을 저장하면 나의 소속 센터 봇이 설정됩니다
+                                회원아이디을 저장하면 나의 소속 센터 봇이 설정됩니다
                             </div>
 
                             {/* center */}
@@ -1060,12 +1070,23 @@ function ProfilePage() {
                             <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
 
                                 <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    내 닉네임
+                                    내 회원아이디
                                 </div>
 
                                 <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
                                     {nickname}
                                 </div>
+
+                                {/* 복사 버튼 */}
+                                <button
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(nickname);
+                                        alert('회원아이디가 복사되었습니다.');
+                                    }}
+                                    className="p-2 bg-blue-500 text-zinc-100 rounded"
+                                >
+                                    복사
+                                </button>
 
                                 
                                 <button
@@ -1099,8 +1120,8 @@ function ProfilePage() {
                                 <div
                                     className="bg-green-500 text-sm text-zinc-100 p-2 rounded"
                                 >
-                                    {!userCode ? "닉네임 설정" :
-                                        nicknameEdit ? "수정할 내 닉네임" : "새로운 닉네임"
+                                    {!userCode ? "회원아이디 설정" :
+                                        nicknameEdit ? "수정할 내 회원아이디" : "새로운 회원아이디"
                                     }
                                 </div>
 
@@ -1108,7 +1129,7 @@ function ProfilePage() {
                                     <input
                                         disabled={!address}
                                         className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
-                                        placeholder="닉네임"
+                                        placeholder="회원아이디"
                                         
                                         //value={nickname}
                                         value={editedNickname}
@@ -1119,11 +1140,11 @@ function ProfilePage() {
                                             // check if the value is alphanumeric and lowercase
 
                                             if (!/^[a-z0-9]*$/.test(e.target.value)) {
-                                                //toast.error('닉네임은 영문 소문자와 숫자만 입력해주세요');
+                                                //toast.error('회원아이디은 영문 소문자와 숫자만 입력해주세요');
                                                 return;
                                             }
                                             if ( e.target.value.length > 10) {
-                                                //toast.error('닉네임은 10자 이하로 입력해주세요');
+                                                //toast.error('회원아이디은 10자 이하로 입력해주세요');
                                                 return;
                                             }
 
@@ -1139,7 +1160,7 @@ function ProfilePage() {
                                     {editedNickname && isNicknameDuplicate && (
                                         <div className='flex flex-row gap-2 items-center justify-between'>
                                             <span className='text-xs font-semibold text-red-500'>
-                                                이미 사용중인 닉네임입니다.
+                                                이미 사용중인 회원아이디입니다.
                                             </span>
                                         </div>
                                     )}
@@ -1150,7 +1171,7 @@ function ProfilePage() {
                                     && (
                                         <div className='flex flex-row gap-2 items-center justify-between'>
                                             <span className='text-xs font-semibold text-green-500'>
-                                                사용가능한 닉네임입니다.
+                                                사용가능한 회원아이디입니다.
                                             </span>
                                         </div>
                                     )}
@@ -1159,7 +1180,7 @@ function ProfilePage() {
 
                                 <div className='flex flex-row gap-2 items-center justify-between'>
                                     <span className='text-xs font-semibold'>
-                                        닉네임은 5자 이상 10자 이하로 입력해주세요
+                                        회원아이디은 5자 이상 10자 이하로 입력해주세요
                                     </span>
                                 </div>
                                 <button

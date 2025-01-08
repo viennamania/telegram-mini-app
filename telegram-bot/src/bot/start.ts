@@ -154,7 +154,8 @@ feature.command('start', async (ctx) => {
     message,
   });
 
-  const url = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/`;
+  //const url = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/`;
+  const urlLeaderBoard = `${process.env.FRONTEND_APP_ORIGIN}/leaderboard?center=${center}`;
 
   const urlMyProfile = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/my-profile`;
 
@@ -215,7 +216,10 @@ feature.command('start', async (ctx) => {
     .row()
     .webApp('나의 프로필 보러가기', urlMyProfile)
     .row()
-    .webApp('마이 페이지 보러가기', url)
+    
+    //.webApp('마이 페이지 보러가기', url)
+    .webApp('리더보드 보러가기', urlLeaderBoard)
+
     .row()
     .webApp('나의 AI 에이전트 보러가기', urlReferral)
     .row()
@@ -233,6 +237,8 @@ feature.command('start', async (ctx) => {
     .text('레퍼럴코드를 발급받으세요.')
     .row()
     .webApp('나의 프로필 설정하기', urlMyProfile)
+    .row()
+    .webApp('리더보드 보러가기', urlLeaderBoard)
   }
 
 
