@@ -599,7 +599,7 @@ function AgentPage() {
     const [agentDescription, setAgentDescription] = useState("");
 
 
-    const [agentImage, setAgentImage] = useState("https://owinwallet.com/logo-aiagent.png");
+    const [agentImage, setAgentImage] = useState("");
     const [ganeratingAgentImage, setGeneratingAgentImage] = useState(false);
 
 
@@ -771,86 +771,9 @@ function AgentPage() {
 
         setMintingAgentNft(false);
 
-        setAgentImage("https://owinwallet.com/logo-aiagent.png");
+        setAgentImage("");
 
     }
-
-
-    const [referralUrl, setReferralUrl] = useState("");
-
-    useEffect(() => {
-
-
-        // if uerCenter slice 5 characters is 'ppump'
-        // then referralUrl is 'https://ppump.me/kr/polygon/tbot'
-        // if userCenter slice 4 characters is 'owin'
-        // then referralUrl is 'https://owinwallet.com/kr/polygon/tbot'
-        // if userCenter slice 4 characters is 'exms'
-        // then referralUrl is 'https://exms.me/kr/polygon/tbot'
-
-        if (userCenter.slice(0, 5) === "ppump") {
-            setReferralUrl("https://ppump.me/kr/polygon/tbot");
-        } else if (userCenter.slice(0, 4) === "owin") {
-            setReferralUrl("https://owinwallet.com/kr/polygon/tbot");
-        } else if (userCenter.slice(0, 4) === "exms") {
-            setReferralUrl("https://exms.me/kr/polygon/tbot");
-        } else {
-            setReferralUrl("https://owinwallet.com/kr/polygon/tbot");
-        }
-
-
-        /*
-        if (userCenter === "ppump_orry_bot") {
-            setReferralUrl("https://ppump.me/kr/polygon/tbot");
-        } else if (userCenter === "ppump_koko_bot") {
-            setReferralUrl("https://ppump.me/kr/polygon/tbot");
-        } else if (userCenter === "ppump_joajoa_bot") {
-            setReferralUrl("https://ppump.me/kr/polygon/tbot");
-
-        } else if (userCenter === "ppump_bigrich_bot") {
-            setReferralUrl("https://ppump.me/kr/polygon/tbot");
-
-        } else if (userCenter === "ppump_5515_bot") {
-            setReferralUrl("https://ppump.me/kr/polygon/tbot");
-        } else if (userCenter === "ppump_jojo_bot") {
-            setReferralUrl("https://ppump.me/kr/polygon/tbot");
-
-
-        } else if (
- 
-            userCenter === "exms_aaa_bot"
-            || userCenter === "exms_Kyuhongjung_bot"
-            || userCenter === "exms_trj4409_bot"
-            || userCenter === "exms_yun0477_bot"
-            || userCenter === "exms_hyugeso_bot"
-            || userCenter === "exms_csj6588_bot"
-            || userCenter === "exms_kaj7898_bot"
-            || userCenter === "exms_LIM2866_bot"
-            || userCenter === "exms_hmk7529_bot"
-            || userCenter === "exms_Krkr2525_bot"
-            || userCenter === "exms_ksm2465_bot"
-            || userCenter === "exms_nys8364_bot"
-            || userCenter === "exms_yhs0103_bot"
-            || userCenter === "exms_yorke2_bot"
-            || userCenter === "exms_jin3968_bot"
-            || userCenter === "exms_hays7895_bot"
-            || userCenter === "exms_bybb88_bot"
-            || userCenter === "exms_prolife41_bot"
-            || userCenter === "exms_QUAN2388_bot"
-
-        ) {
-
-            setReferralUrl("https://exms.me/kr/polygon/tbot");
-            
-        } else {
-            setReferralUrl("https://owinwallet.com/kr/polygon/tbot");
-        }
-        */
-
-
-
-
-    }, [userCenter]);
 
 
 
