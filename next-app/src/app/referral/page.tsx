@@ -1172,7 +1172,7 @@ function AgentPage() {
                             p-4 rounded-lg'>
 
                                 <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    내 닉네임
+                                    회원아이디
                                 </div>
 
                                 <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
