@@ -89,9 +89,11 @@ function TelegramLoginContent() {
 
     return (
         <div className="w-screen h-screen flex flex-col gap-2 items-center justify-center
-        bg-black bg-opacity-90 text-white">
+        bg-black text-white">
             
+            {/*
             <Loader2 className="h-12 w-12 animate-spin text-white" />
+            */}
 
             <div className="flex flex-col gap-2 items-center justify-center">
                 <div className="text-lg font-semibold">
