@@ -856,7 +856,7 @@ function ProfilePage() {
         
  
 
-                <div className="mt-5 flex flex-col items-start justify-center space-y-4">
+                <div className="flex flex-col items-start justify-center space-y-4">
 
                     <div className="flex justify-center mb-20">
                         {address ? (
@@ -976,7 +976,7 @@ function ProfilePage() {
                             <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
 
                                 <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    내 회원아이디
+                                    회원아이디
                                 </div>
 
                                 <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
@@ -1127,7 +1127,7 @@ function ProfilePage() {
                             <div className='flex flex-row xl:flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
 
                                 <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    내 프로필 이미지
+                                    프로필 이미지
                                 </div>
 
                                 <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
