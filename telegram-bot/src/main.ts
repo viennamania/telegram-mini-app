@@ -291,6 +291,10 @@ async function fetchAccountData() {
     for (const user of dataUsers.result) {
       const telegramId = user.telegramId;
 
+      if (!telegramId) {
+        continue;
+      }
+
       // find application for the user by wallet address
 
       const application = applications.find((application: any) => application.walletAddress === user.walletAddress);
@@ -303,25 +307,35 @@ async function fetchAccountData() {
 
       if (masterBotImageUrl) {
 
-        botInstance.api.sendPhoto(
-          telegramId,
-          masterBotImageUrl,
-          {
-            caption: '🔥 My Trading Account Balance: ' + tradingAccountBalance + '\n'
-            + '💪 Total Account Count: ' + totalAccountCount + '\n'
-            + '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
-          }
-        )
+        try {
+          botInstance.api.sendPhoto(
+            telegramId,
+            masterBotImageUrl,
+            {
+              caption: '🔥 My Trading Account Balance: ' + tradingAccountBalance + '\n'
+              //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
+              //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
+            }
+          )
+        } catch (error) {
+          console.error('Error sending photo:', error)
+        }
 
       } else {
+
+        try {
       
-        botInstance.api.sendMessage(
-          telegramId,
-          // emoji: https://emojipedia.org/
-          '🔥 My Trading Account Balance: ' + tradingAccountBalance + '\n'
-          + '💪 Total Account Count: ' + totalAccountCount + '\n'
-          + '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
-        )
+          botInstance.api.sendMessage(
+            telegramId,
+            // emoji: https://emojipedia.org/
+            '🔥 My Trading Account Balance: ' + tradingAccountBalance + '\n'
+            //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
+            //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
+          )
+
+        } catch (error) {
+          //console.error('Error sending message:', error)
+        }
 
       }
       

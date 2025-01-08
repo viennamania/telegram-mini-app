@@ -379,7 +379,7 @@ function HomeContent() {
         <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
           
             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                소속 센터 사용자 목록
+                회원 목록
             </div>
           {address && (
             <>          
@@ -391,8 +391,8 @@ function HomeContent() {
                 <table className="w-full">
                     <thead>
                         <tr className="bg-zinc-800 text-zinc-100">
-                            <th className="p-2">닉네임</th>
-                            <th className="p-2">지갑주소</th>
+                            <th className="p-2">회원아이디</th>
+                            <th className="p-2">매직아이디</th>
                             <th className="p-2">센터장</th>
                         </tr>
                     </thead>
@@ -401,7 +401,7 @@ function HomeContent() {
                             <tr key={index} className="bg-zinc-800 text-zinc-100">
                                 <td className="p-2">{user.nickname}</td>
                                 <td className="p-2">
-                                  {user.walletAddress.substring(0, 6)}...{user.walletAddress.substring(user.walletAddress.length - 4, user.walletAddress.length)}
+                                  {user.telegramId}
                                 </td>
                                 <td className="p-2 text-center">
                                   {user.centerOwner && (
