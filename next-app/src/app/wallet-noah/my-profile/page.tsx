@@ -60,7 +60,7 @@ import {
 } from "next//navigation";
 
 
-import Uploader from '../components/uploader';
+import Uploader from '../../components/uploader';
 import { updateUser } from "@/lib/api/user";
 
 

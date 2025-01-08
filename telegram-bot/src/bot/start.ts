@@ -216,19 +216,24 @@ feature.command('start', async (ctx) => {
     .row()
     .webApp('나의 프로필 보러가기', urlMyProfile)
     .row()
-    
-    //.webApp('마이 페이지 보러가기', url)
-    .webApp('회원 보러가기', urlLeaderBoard)
-
-    .row()
     .webApp('나의 AI 에이전트 보러가기', urlReferral)
     .row()
     .webApp('나의 OKX 트레이딩 봇 보러가기', urlTbot)
 
-    //if (isCenterOwner) {
+    if (isCenterOwner) {
+
+      keyboard.row()
+      .webApp('회원 보러가기', urlLeaderBoard)
+
       keyboard.row()
       .webApp('전체 가입자 보러가기', urlMasterbot)
-    //}
+    }
+
+    // 고객센터 @magic_wallet_cs
+    // https://t.me/magic_wallet_cs
+
+    //keyboard.row()
+    //.text('고객센터 @magic_wallet_cs')
 
 
 
@@ -237,8 +242,8 @@ feature.command('start', async (ctx) => {
     .text('레퍼럴코드를 발급받으세요.')
     .row()
     .webApp('나의 프로필 설정하기', urlMyProfile)
-    .row()
-    .webApp('회원 보러가기', urlLeaderBoard)
+    //.row()
+    //.webApp('회원 보러가기', urlLeaderBoard)
   }
 
 
