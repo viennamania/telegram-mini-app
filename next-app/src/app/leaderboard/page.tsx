@@ -41,10 +41,8 @@ function HomeContent() {
 
   const center = searchParams.get('center');
 
-  const telegramId = searchParams.get('telegramId');
 
   console.log('center', center);
-  console.log('telegramId', telegramId);
 
 
   
@@ -173,80 +171,7 @@ function HomeContent() {
   const [userCenter, setUserCenter] = useState("");
   const [isCenterOwner, setIsCenterOwner] = useState(false);
 
-  useEffect(() => {
-      const fetchData = async () => {
 
-
-        await fetch("/api/user/updateUserTelegramId", {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-              walletAddress: address,
-              telegramId: telegramId,
-          }),
-        });
-
-
-
-
-        const response = await fetch("/api/user/getUser", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                walletAddress: address,
-                center: center,
-            }),
-        });
-
-        const data = await response.json();
-
-        ///console.log("data", data);
-
-        if (data.result) {
-            setNickname(data.result.nickname);
-            
-            data.result.avatar && setAvatar(data.result.avatar);
-            
-
-            setUserCode(data.result.id);
-
-            setSeller(data.result.seller);
-
-            setIsAgent(data.result.agent);
-
-            ///setReferralCode(data.result.erc721ContractAddress);
-            setErc721ContractAddress(data.result.erc721ContractAddress);
-
-            setUserCenter(data.result.center);
-            if (data.result.centerOwner) {
-                setIsCenterOwner(true);
-            }
-
-        } else {
-            setNickname('');
-            setAvatar('/profile-default.png');
-            setUserCode('');
-            setSeller(null);
-
-
-            setIsAgent(false);
-
-            setReferralCode('');
-
-            setErc721ContractAddress('');
-
-            setUserCenter('');
-        }
-
-      };
-
-      address && center && fetchData();
-
-  }, [address, center]);
 
   //console.log('center', center);
   //console.log('userCenter', userCenter);
@@ -546,114 +471,12 @@ function HomeContent() {
         )}
 
 
-        {/*
-        {address && userCenter && center === userCenter && (
-
-          <Menu
-            center={center}
-            telegramId={telegramId}
-          />
-
-        )}
-        */}
-        
-
       </div>
     </main>
   );
 }
 
-function Header() {
-  return (
-    <header className="flex flex-col items-center mb-20 md:mb-20">
-      <Image
-        src={thirdwebIcon}
-        alt=""
-        className="size-[150px] md:size-[150px]"
-        style={{
-          filter: "drop-shadow(0px 0px 24px #a726a9a8)",
-        }}
-      />
 
-      <h1 className="text-2xl md:text-6xl font-semibold md:font-bold tracking-tighter mb-6 text-zinc-100">
-        thirdweb SDK
-        <span className="text-zinc-300 inline-block mx-1"> + </span>
-        <span className="inline-block text-blue-500"> Telegram </span>
-      </h1>
-
-    </header>
-  );
-}
-
-function Menu(
-  {
-    center,
-    telegramId,
-  }:{
-    center: any
-    telegramId: any
-  }
-) {
-
-	return (
-		<div className="grid gap-4 lg:grid-cols-3 justify-center">
-      <MenuItem
-        title="나의 프로필"
-        href={`/profile?center=${center}&telegramId=${telegramId}`}
-        description="나의 프로필을 확인합니다."
-      />
-
-      <MenuItem
-        title="AI 에이전트 NFT 발행"
-        href={`/agent?center=${center}&telegramId=${telegramId}`}
-        description="나의 AI 에이전트 NFT를 발행합니다."
-      />
-
-      <MenuItem
-        title="마스터봇 목록"
-        href={`/applications?center=${center}&telegramId=${telegramId}`}
-        description="소속 센터의 마스터봇 목록을 확인합니다."
-      />
-
-      {/* 나의 OKX 트레이딩 봇 */}
-      <MenuItem
-        title="나의 OKX 트레이딩 봇"
-        href={`/tbot?center=${center}&telegramId=${telegramId}`}
-        description="나의 OKX 트레이딩 봇을 확인합니다."
-      />
-
-      {/*
-			<MenuItem
-				title="NFT 생성"
-				href="/gasless"
-				description="가스비 없이 NFT를 생성합니다."
-			/>
-      <MenuItem
-				title="Pay"
-				href="/pay"
-				description="Allow users to purchase NFT's using fiat"
-			/>
-      */}
-
-		</div>
-	);
-}
-
-function MenuItem(props: { title: string; href: string; description: string }) {
-	return (
-		<Link
-			href={props.href}
-			className="flex flex-col border border-zinc-800 p-4 rounded-lg hover:bg-zinc-200 hover:bg-opacity-10"
-		>
-			<article>
-				<h2 className="text-lg font-semibold mb-2">{props.title}</h2>
-				<p className="text-sm text-zinc-100">
-          {props.description}
-        </p>
-			</article>
-		</Link>
-	);
-}
 
 
 
