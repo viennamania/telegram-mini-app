@@ -861,13 +861,13 @@ function ProfilePage() {
                     <div className="flex justify-center mb-20">
                         {address ? (
                             <div className="flex flex-row gap-2 items-center justify-between">
+                                {/*}
                                 <Button
                                     onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
                                     className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                                 >
                                     내 지갑주소: {shortenAddress(address)}
                                 </Button>
-                                {/* 복사 버튼 */}
                                 <Button
                                     onClick={() => {
                                         navigator.clipboard.writeText(address);
@@ -877,6 +877,7 @@ function ProfilePage() {
                                 >
                                     복사
                                 </Button>
+                                */}
                             </div>
                         ) : (
                             <p className="text-sm text-zinc-400">
@@ -885,101 +886,6 @@ function ProfilePage() {
                         )}      
                     </div>
 
-
-
-
-                
-                    <div className='w-full flex flex-col gap-4 items-start justify-center'>
-
-
-                        {address && (
-
-                            <div className='w-full flex flex-col gap-4 items-start justify-center'>
-
-
-                                {/* send USDT */}
-                                {/*
-                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        {Send_USDT}
-                                    </div>
-                                    <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
-                                        <input
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                            placeholder="0.00"
-                                            type='number'
-                                            onChange={(e) => {
-                                                setAmount(Number(e.target.value));
-                                            }}
-                                        />
-                                        <input
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                            placeholder="받는 사람 지갑주소"
-                                            type='text'
-                                            onChange={(e) => {
-                                                setRecipient({
-                                                    ...recipient,
-                                                    walletAddress: e.target.value,
-                                                });
-                                            }}
-                                        />
-                                        <button
-                                            disabled={sending}
-                                            onClick={() => {
-                                                sendUsdt();
-                                            }}
-                                            className={`p-2 bg-blue-500 text-zinc-100 rounded ${sending ? 'opacity-50' : ''}`}
-                                        >
-                                            <div className='flex flex-row gap-2 items-center justify-between'>
-                                                {sending && (
-                                                    <Image
-                                                        src="/loading.png"
-                                                        alt="Send"
-                                                        width={25}
-                                                        height={25}
-                                                        className="animate-spin"
-                                                    />
-                                                )}
-                                                <span className='text-lg font-semibold'>
-                                                    {Pay_USDT}
-                                                </span>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div>
-                                */}
-
-                                {/* wallet address and copy button */}
-                                {/*
-                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        입금용 지갑주소(Polygon)
-                                    </div>
-                                    <div className='flex flex-row gap-2 items-center justify-between'>
-                                        <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                            {address.substring(0, 6)}...{address.substring(address.length - 4, address.length)}
-                                        </div>
-                                        <button
-                                            onClick={() => {
-                                                navigator.clipboard.writeText(address);
-                                                
-                                                //toast.success('지갑주소가 복사되었습니다');
-
-                                            }}
-                                            className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                        >
-                                            Copy
-                                        </button>
-                                    </div>
-                                </div>
-                                */}
-
-
-                            </div>
-
-                        )}
-                        
-                    </div>
 
 
                     {userCode && isValideTelegramId && (
