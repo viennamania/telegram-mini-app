@@ -858,7 +858,7 @@ function ProfilePage() {
 
                 <div className="flex flex-col items-start justify-center space-y-4">
 
-                    <div className="flex justify-center mb-5">
+                    <div className="flex justify-center mt-5">
                         {address ? (
                             <div className="flex flex-row gap-2 items-center justify-between">
                                 
