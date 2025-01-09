@@ -241,6 +241,48 @@ function HomeContent() {
 
 
 
+  // select user by telegramId
+  const [selectUser, setSelectUser] = useState(null);
+
+  // get agnetNft
+  const [agentNft, setAgentNft] = useState(null);
+  const [loadingAgentNft, setLoadingAgentNft] = useState(false);
+  useEffect(() => {
+      const fetchData = async () => {
+          setLoadingAgentNft(true);
+          const response = await fetch("/api/agent/getAgentNft", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                  telegramId: selectUser,
+              }),
+          });
+
+          if (!response.ok) {
+              console.error("Error fetching agentNft");
+              setLoadingAgentNft(false);
+              return;
+          }
+
+          const data = await response.json();
+
+          //console.log("getAgentNft data", data);
+          setAgentNft(data.result);
+
+          setLoadingAgentNft(false);
+
+      };
+
+      if (selectUser) {
+          fetchData();
+      }
+
+  }, [selectUser]);
+
+
+
 
   // getAllUsersTelegramIdByCenter
 
@@ -481,6 +523,7 @@ function HomeContent() {
               <Button
                 onClick={() => {
                   setSelectCenter(null);
+                  setSelectUser(null);
                   setUsers([]);
                   setApplications([]);
                 }}
@@ -598,6 +641,7 @@ function HomeContent() {
                             <th className="p-2">매직아이디</th>
                             <th className="p-2">지갑주소</th>
                             <th className="p-2">센터장</th>
+                            <th className="p-2">에이전트</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -627,6 +671,33 @@ function HomeContent() {
                                   {user.centerOwner && (
                                     <span className="text-green-500">O</span>
                                   )}
+                                </td>
+                                <td className="p-2 text-center">
+                                  <input
+                                    type="radio"
+                                    id={user.telegramId}
+                                    name="user"
+                                    value={user.telegramId}
+                                    checked={selectUser === user.telegramId}
+                                    onChange={() => {
+                                        setSelectUser(user.telegramId);
+                                    }}
+                                    className="w-4 h-4
+                                    text-green-500
+                                    form-radio
+                                    focus:ring-green-500
+                                    focus:ring-2
+                                    focus:outline-none
+                                    checked:bg-green-500
+                                    checked:border-transparent
+                                    checked:ring-2
+                                    checked:ring-offset-2
+                                    checked:ring-green-500
+                                    checked:ring-offset-green-500
+                                    "
+
+                                  
+                                  />
                                 </td>
                             </tr>
                         ))}
