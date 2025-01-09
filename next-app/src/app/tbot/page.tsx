@@ -379,6 +379,9 @@ function HomeContent() {
 
     //console.log("address", address);
 
+    const [isCenterOwner, setIsCenterOwner] = useState(false);
+
+
     useEffect(() => {
         const fetchData = async () => {
 
@@ -413,21 +416,29 @@ function HomeContent() {
                 setMasterBot(data.result.masterBot);
 
                 if (data.result?.centerOwner) {
-                    setIsValidReferral(true);
+
+                    setIsCenterOwner(true);
+
+
                 }
 
             }
         };
 
-        fetchData();
+        address && fetchData();
+
     }, [address]);
 
 
 
 
 
-    console.log("nickname", nickname);
-    console.log("userCode", userCode);
+    // if isCenterOwner then setIsValidReferral(true)
+    useEffect(() => {
+        if (isCenterOwner) {
+            setIsValidReferral(true);
+        }
+    } , [isCenterOwner]);
 
 
   
