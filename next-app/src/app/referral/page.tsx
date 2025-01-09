@@ -888,6 +888,8 @@ function AgentPage() {
                 }
             }));
 
+            alert('AI 에이전트 NFT 전송 완료');
+
 
             // fetch the NFTs again
             const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
@@ -911,6 +913,21 @@ function AgentPage() {
 
         } catch (error) {
             console.error("transferNft error", error);
+
+            setTransferingNftList(transferingNftList.map((item) => {
+                if (item.contractAddress === contractAddress && item.tokenId === tokenId) {
+                    return {
+                        ...item,
+                        transferring: false,
+                    };
+                }
+            }));
+
+            if (error instanceof Error) {
+                alert('Failed to transfer NFT:' + error.message);
+            } else {
+                alert('Failed to transfer NFT: unknown error');
+            }
         }
 
 
