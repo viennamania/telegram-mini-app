@@ -931,14 +931,16 @@ function AgentPage() {
                 backgroundRepeat: "no-repeat",
               }}
         >
-            <AutoConnect
-                client={client}
-                wallets={[wallet]}
-                timeout={15000}
-            />
+
 
 
             <div className="py-0 w-full">
+
+                <AutoConnect
+                    client={client}
+                    wallets={[wallet]}
+                    timeout={15000}
+                />
 
                 {/* sticky header */}
                 <div className="sticky top-0 z-50
