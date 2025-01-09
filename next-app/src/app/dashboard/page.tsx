@@ -326,6 +326,7 @@ function HomeContent() {
           //console.log("getAllUsersTelegramIdByCenter data", data);
           //setAgentBotSummaryList(data.resultSummany);
 
+
           setUsers(data.result);
 
           setLoadingUsers(false);
@@ -581,6 +582,9 @@ function HomeContent() {
                                   checked={selectCenter === center._id}
                                   onChange={() => {
                                       setSelectCenter(center._id);
+                                      setSelectUser(null);
+                                      setUsers([]);
+                                      
                                   }}
                               />
                               <div className="flex flex-row gap-2 items-center justify-between">
@@ -776,19 +780,19 @@ function HomeContent() {
                                 <Button
                                   onClick={() => {
                                     navigator.clipboard.writeText(
-                                      "https://t.me/?start=" + nft.contract.address + "_" + nft.tokenId
+                                      "https://t.me/" + selectCenter + "/?start=" + nft.contract.address + "_" + nft.tokenId
                                     );
-                                    alert(`${nft.tokenUri} 복사되었습니다.`);
+                                    alert(`레퍼럴 링크 복사되었습니다.`);
                                   }}
                                   className="
                                     inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
                                   "
                                 >
-                                  레퍼럴 복사
+                                  레퍼럴 링크 복사
                                 </Button>
                             </div>
                         ))}
-                        
+
                     </div>
                 </div>
               )}
