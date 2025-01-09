@@ -134,10 +134,12 @@ function HomeContent() {
     const account = useActiveAccount();
     
 
+    
+    
     const address = account?.address;
 
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ////const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
 
 
 
@@ -2319,7 +2321,9 @@ function HomeContent() {
                                         </div>
 
 
-                                        {!isValidReferralLoading && isValidReferral && (
+                                        {!isValidReferralLoading && isValidReferral &&
+                                            !isCenterOwner && (
+                                         
                                             <div className='mt-10 w-full flex flex-col items-center gap-2
                                                 border border-gray-300 p-4 rounded-lg bg-green-100
                                             '>
@@ -2346,7 +2350,6 @@ function HomeContent() {
                                                         </span>
                                                     </div>
 
-                                                    {/* referralAgentNFT */}
                                                     <div className='flex flex-col gap-2 border border-gray-300 p-4 rounded-lg'>
                                                         <Image
                                                             src={referralAgentNFT?.image?.thumbnailUrl || "/logo-masterbot100.png"}
@@ -2360,19 +2363,6 @@ function HomeContent() {
                                                         </span>
                                                         <span className='text-lg font-semibold text-yellow-500'>
                                                             {referralAgentNFT?.description}
-                                                        </span>
-
-                                                        {/* running 2 hours */}
-                                                        {/* runngin 2 days */}
-                                                        <span className='text-sm font-semibold text-gray-500'>
-                                                            Running{' '}{(new Date().getTime() - new Date(referralAgentNFT.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24 > 1
-                                                                        ? `${Math.floor((new Date().getTime() - new Date(referralAgentNFT.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24)} days`
-                                                                        : `${Math.floor((new Date().getTime() - new Date(referralAgentNFT.mint.timestamp).getTime()) / 1000 / 60 / 60)} hours`
-                                                                    }
-                                                        </span>
-                                                        {/* accounts */}
-                                                        <span className='text-sm font-semibold text-gray-500'>
-                                                            Accounts: ???
                                                         </span>
 
                                                         {/* goto opensea */}
@@ -2404,6 +2394,9 @@ function HomeContent() {
 
                                             </div>
                                         )}
+
+
+
 
                                         {!isValidReferralLoading && !isValidReferral && (
                                             <div className='mt-10 w-full flex flex-col items-center gap-2
