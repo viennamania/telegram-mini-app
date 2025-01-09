@@ -39,6 +39,8 @@ function HomeContent() {
 
   const searchParams = useSearchParams();
 
+  const marketingCenter = searchParams.get('marketingCenter');
+
   const center = searchParams.get('center');
 
 
@@ -199,6 +201,7 @@ function HomeContent() {
               body: JSON.stringify({
                   limit: 100,
                   page: 1,
+                  marketingCenter: marketingCenter,
               }),
           });
 
@@ -231,8 +234,9 @@ function HomeContent() {
 
       };
 
-      fetchData();
-  }, []);
+      marketingCenter && fetchData();
+
+  }, [marketingCenter]);
 
 
 
@@ -409,23 +413,94 @@ function HomeContent() {
 
 
 
-
-        {/*
-        {address && !userCenter && (
-          <MenuItem
-            title="나의 프로필 설정"
-            href={`/profile?center=${center}&telegramId=${telegramId}`}
-            description="나의 프로필을 설정합니다."
-          />
+        {/* if marketingCenter is "owin", link to @magic_wallet_cs */}
+        {marketingCenter === "owin" && (
+          <div className=" w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg">
+            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+              {marketingCenter}{' '}마케팅 센터 텔레그램
+            </div>
+            <div className="flex flex-row gap-2 items-center justify-between">
+              <Button
+                onClick={() => (window as any).Telegram.WebApp.openLink(`https://t.me/magic_wallet_cs`)}
+                className="
+                  inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                "
+              >
+                @magic_wallet_cs 텔레그램
+              </Button>
+              {/* copy telegram link */}
+              <Button
+                onClick={() => {
+                  navigator.clipboard.writeText(`https://t.me/magic_wallet_cs`);
+                  alert(`https://t.me/magic_wallet_cs 복사되었습니다.`);
+                }}
+                className="
+                  inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                "
+              >
+                복사
+              </Button>
+            </div>
+          </div>
         )}
-        */}
+
+        {/* if marketingCenter is "exms", link to @exms_cs */}
+        {marketingCenter === "exms" && (
+          <div className=" w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg">
+            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+              {marketingCenter}{' '}마케팅 센터 텔레그램
+            </div>
+            <div className="flex flex-row gap-2 items-center justify-between">
+              <Button
+                onClick={() => (window as any).Telegram.WebApp.openLink(`https://t.me/exms_cs`)}
+                className="
+                  inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                "
+              >
+                @exms_cs 텔레그램
+              </Button>
+              {/* copy telegram link */}
+              <Button
+                onClick={() => {
+                  navigator.clipboard.writeText(`https://t.me/exms_cs`);
+                  alert(`https://t.me/exms_cs 복사되었습니다.`);
+                }}
+                className="
+                  inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                "
+              >
+                복사
+              </Button>
+            </div>
+          </div>
+        )}
         
+
+              {/* refresh button */}
+              
+              <Button
+                onClick={() => {
+                  setSelectCenter(null);
+                  setUsers([]);
+                  setApplications([]);
+                }}
+                className="
+                  inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                "
+              >
+                새로고침
+              </Button>
+              
+
 
         {/* center list and select center */}
         {/* radio checkboxes */}
         <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                텔레그램 센터 선택
+            <div className="flex flex-row gap-2 items-center justify-between">
+              <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                  텔레그램 센터 선택
+              </div>
+
             </div>
             <div className='w-full flex flex-col gap-2 items-start justify-between'>
                 {loadingCenters ? (
@@ -449,14 +524,37 @@ function HomeContent() {
                                       setSelectCenter(center._id);
                                   }}
                               />
-                              <div className="w-full flex flex-row gap-2 items-center justify-between">
-                                <span className="w-full text-sm text-gray-800 font-semibold">
-                                    {center._id}
+                              <div className="flex flex-row gap-2 items-center justify-between">
+                                <span className="bg-gray-800 text-zinc-100 p-2 rounded">
+                                    @{center._id}
                                 </span>
                                 <span className="text-sm text-gray-800 font-semibold bg-gray-100 p-2 rounded">
                                     {center.count}
                                 </span>
                               </div>
+
+                              {/* link to telegram */}
+                              <Button
+                                onClick={() => (window as any).Telegram.WebApp.openLink(`https://t.me/${center._id}`)}
+                                className="
+                                  inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                "
+                              >
+                                텔레그램
+                              </Button>
+
+                              {/* copy telegram link */}
+                              <Button
+                                onClick={() => {
+                                  navigator.clipboard.writeText(`https://t.me/${center._id}`);
+                                  alert(`https://t.me/${center._id} 복사되었습니다.`);
+                                }}
+                                className="
+                                  inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                "
+                              >
+                                복사
+                              </Button>
 
                           </div>
                       ))}
@@ -491,6 +589,7 @@ function HomeContent() {
                         <tr className="bg-zinc-800 text-zinc-100">
                             <th className="p-2">회원아이디</th>
                             <th className="p-2">매직아이디</th>
+                            <th className="p-2">지갑주소</th>
                             <th className="p-2">센터장</th>
                         </tr>
                     </thead>
@@ -500,6 +599,9 @@ function HomeContent() {
                                 <td className="p-2">{user.nickname}</td>
                                 <td className="p-2">
                                   {user.telegramId}
+                                </td>
+                                <td className="p-2">
+                                  {user.walletAddress}
                                 </td>
                                 <td className="p-2 text-center">
                                   {user.centerOwner && (
@@ -521,7 +623,7 @@ function HomeContent() {
         <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
           
             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                신청 목록
+                OKX 신청 목록
             </div>
 
             {/* total trading account count and balance */}
@@ -568,7 +670,10 @@ function HomeContent() {
                 <table className="w-full">
                     <thead>
                         <tr className="bg-zinc-800 text-zinc-100">
-                            <th className="p-2">회원아이디</th>
+                            <th className="p-2">신청번호</th>
+                            <th className="p-2">OKX UID</th>
+                            <th className="p-2">닉네임</th>
+                            <th className="p-2">전화번호</th>
                             <th className="p-2">NFT</th>
                             <th className="p-2">거래계정 잔고</th>
                         </tr>
@@ -576,7 +681,14 @@ function HomeContent() {
                     <tbody>
                         {applications.map((application, index) => (
                             <tr key={index} className="bg-zinc-800 text-zinc-100">
+                                <td className="p-2">#{application?.id}</td>
+                                <td className="p-2">
+                                  {application?.okxUid}
+                                </td>
                                 <td className="p-2">{application?.userName}</td>
+                                <td className="p-2">
+                                  {application?.userPhoneNumber}
+                                </td>
                                 <td className="p-2">
                                   <div className="flex flex-row gap-2 items-center justify-start">
                                     <Image
@@ -591,7 +703,7 @@ function HomeContent() {
                                     </span>
                                   </div>
                                 </td>
-                                <td className="p-2 w-1/3 text-right">
+                                <td className="p-2 w-1/5 text-right">
                                   {Number(application?.tradingAccountBalance?.balance).toLocaleString('en-US', {
                                       style: 'currency',
                                       currency: 'USD'

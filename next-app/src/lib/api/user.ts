@@ -1337,18 +1337,28 @@ export async function getAllErc721ContractAddresses(): Promise<string[]> {
 
 // getAllCenters
 // group by center
+// 
 export async function getAllCenters(
   {
     limit = 100,
     page = 1,
+    marketingCenter = null,
   }: {
     limit: number;
     page: number;
+    marketingCenter: string | null;
   }
 ): Promise<any> {
 
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('users');
+
+
+  // if marketingCenter is not null,
+  // marketingCenter is "ppump", "owin", "exms"
+  // then center is "ppump_xxxx", "owin_xxxx", "exms_xxxx"
+
+  
 
   // select center, count(*) as count from users group by center
   // check center is not empty and not null and telegramId is not empty and not null
@@ -1379,7 +1389,13 @@ export async function getAllCenters(
     ])
     .toArray();
 
-  return centers;
+    // filter by marketingCenter
+
+    if (marketingCenter) {
+      return centers.filter((center) => center._id.startsWith(marketingCenter));
+    } else {
+      return centers;
+    }
 
 }
 

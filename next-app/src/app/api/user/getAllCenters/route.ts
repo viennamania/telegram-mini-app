@@ -11,9 +11,12 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
+  const { limit, page, marketingCenter } = body;
+
   const result = await getAllCenters({
-    limit: 100,
-    page: 1,
+    limit: limit || 100,
+    page: page || 1,
+    marketingCenter: marketingCenter || null
   });
 
  
