@@ -11,6 +11,15 @@ import { createServer, createServerManager } from './server/index.js'
 import type { Bot } from './bot/index.js'
 
 
+
+import { privateKeyToAccount } from 'thirdweb/wallets'
+import { createThirdwebClient } from 'thirdweb'
+import { config } from 'dotenv' 
+import { Composer, InlineKeyboard } from 'grammy'
+config()
+
+
+
 // Handler for serverless environments
 let botInstance: Bot | null = null;
 
@@ -351,6 +360,106 @@ async function fetchAccountData() {
 }
 
 
+
+const adminAccount = privateKeyToAccount({
+  privateKey: process.env.ADMIN_SECRET_KEY as string,
+  client: createThirdwebClient({ clientId: process.env.THIRDWEB_CLIENT_ID as string }),
+})
+
+
+
+// send message to all users start command
+async function sendStartMessageToAllUsers() {
+  
+  if (botInstance) {
+
+
+
+
+
+
+
+    const center = botInstance.botInfo.username;
+
+    const url = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getAllUsersTelegramIdByCenter`;
+
+    const responseUsers = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        center,
+      }),
+    });
+
+    if (responseUsers.status !== 200) {
+      ///return ctx.reply("Failed to get leaderboard");
+      return;
+    }
+
+    const dataUsers = await responseUsers.json();
+    
+    for (const user of dataUsers.result) {
+      const telegramId = user.telegramId;
+
+      if (!telegramId) {
+        continue;
+      }
+
+      if (user?.avatar) {
+        continue;
+      }
+
+
+
+      const username = telegramId;
+
+      const expiration = Date.now() + 6000_000; // valid for 100 minutes
+      const message = JSON.stringify({
+        username,
+        expiration,
+      });
+      
+      const authCode = await adminAccount.signMessage({
+        message,
+      });
+      
+      const urlMyProfile = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-profile`;
+      
+
+      try {
+
+        // 프로필 이미지를 설정해주세요.
+
+        const keyboard = new InlineKeyboard()
+          .webApp('나의 프로필 설정하기', urlMyProfile)
+        
+        
+      
+        botInstance.api.sendMessage(
+          telegramId,
+          '🚀 프로필 이미지를 설정해주세요.\n',
+          {
+            reply_markup: keyboard,
+          }
+        )
+
+
+      } catch (error) {
+        //console.error('Error sending message:', error)
+      }
+
+
+
+    }
+
+  }
+
+}
+
+
+
 // sleep for 5 seconds
 function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -360,6 +469,11 @@ function sleep(ms: number) {
 
 sleep(5000).then(() => {
   fetchAccountData()
+
+  // send start message to all users
+
+  sendStartMessageToAllUsers()
+
 })
 
 
@@ -368,6 +482,9 @@ sleep(5000).then(() => {
 setInterval(() => {
 
     fetchAccountData()
+
+    sendStartMessageToAllUsers()
     
 
 }, 3600*1000)
+

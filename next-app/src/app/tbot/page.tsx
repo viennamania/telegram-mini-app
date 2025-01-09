@@ -1375,7 +1375,7 @@ function HomeContent() {
 
 
     // usd / krw exchange rate
-    const [usdKrwExchangeRate, setUsdKrwExchangeRate] = useState(1470);
+    const [usdKrwExchangeRate, setUsdKrwExchangeRate] = useState(1462);
 
 
 
