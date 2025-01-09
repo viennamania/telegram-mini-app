@@ -954,6 +954,20 @@ function AgentPage() {
                         나의 AI 에이전트 NFT
                     </div>
                 </div>
+
+                {/* window refresh button */}
+                <div className="w-full flex flex-row items-center justify-end gap-2 mt-4">
+                    <button
+                        onClick={() => {
+                            window.location.reload();
+                        }}
+                        className="p-2 bg-zinc-800 text-zinc-100 rounded-lg"
+                    >
+                        <span className="text-lg font-semibold">
+                            새로고침
+                        </span>
+                    </button>
+                </div>
         
 
                 <div className="mt-5 flex flex-col items-start justify-center space-y-4">
