@@ -603,7 +603,20 @@ function HomeContent() {
                     <tbody>
                         {users.map((user, index) => (
                             <tr key={index} className="bg-zinc-800 text-zinc-100">
-                                <td className="p-2">{user.nickname}</td>
+                                <td className="p-2">
+                                  <div className="flex flex-row gap-2 items-center justify-start">
+                                    <Image
+                                      src={user.avatar || "/icon-anonymous.png"}
+                                      alt={user.nickname}
+                                      width={50}
+                                      height={50}
+                                      className="rounded"
+                                    />
+                                    <span className="text-sm">
+                                      {user.nickname}
+                                    </span>
+                                  </div>
+                                </td>
                                 <td className="p-2">
                                   {user.telegramId}
                                 </td>
