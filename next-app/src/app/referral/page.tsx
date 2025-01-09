@@ -495,6 +495,14 @@ function AgentPage() {
 
             } catch (error) {
                 console.error("deployErc721Contract error", error);
+
+                if (error instanceof Error) {
+                    alert('AI 에이전트 계약주소 생성 실패.' + error.message);
+                } else {
+                    alert('AI 에이전트 계약주소 생성 실패: 알 수 없는 오류');
+                }
+
+
             }
 
             setLoadingDeployErc721Contract(false);
