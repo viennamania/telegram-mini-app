@@ -103,10 +103,10 @@ function AgentPage() {
 
 
 
-    const address = account?.address;
+    //const address = account?.address;
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -1508,37 +1508,6 @@ function AgentPage() {
                                                         {nft.description}
                                                     </div>
 
-                                                    <div className='flex flex-col gap-2 items-start justify-between'>
-                                                        {/* // from now to mint in hours minutes seconds
-                                                        // now - mint */}
-                                                        <span className='text-xs xl:text-sm font-semibold'>
-                                                            Start{' '}{(new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24 > 1
-                                                                ? `${Math.floor((new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60 / 24)} days ago`
-                                                                : `${Math.floor((new Date().getTime() - new Date(nft.mint.timestamp).getTime()) / 1000 / 60 / 60)} hours ago`
-                                                            }
-                                                        </span>
-                                                        
-                                                        {/* Accounts */}
-                                                        {/*
-                                                        <span className='text-xs xl:text-sm font-semibold'>
-                                                            Accounts: 0
-                                                        </span>
-
-                                                        <span className='text-xs xl:text-sm font-semibold'>
-                                                            Funds: 0 USDT
-                                                        </span>
-
-                                                        <span className='text-xs xl:text-sm font-semibold'>
-                                                            ROI: ??%
-                                                        </span>
-                                                        */}
-
-
-
-                                                    </div>
-
-
-
                                                 </div>
 
                                             </div>
@@ -1546,8 +1515,22 @@ function AgentPage() {
 
 
                                             {/* transfer NFT */}
-                                            {/*
+                                            
                                             <div className='w-full flex flex-col gap-2 items-end justify-between'>
+                                                
+                                                <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                                                    <span className='text-sm text-red-500 font-semibold'>
+                                                        소유권 이전하기
+                                                    </span>
+                                                    <div className='flex flex-row items-center justify-start gap-2'>
+                                                        <div className='w-3 h-3 bg-red-500 rounded-full'></div>
+                                                        <span className='text-xs text-gray-800'>
+                                                            소유권을 이전하면 소유자 권리를 모두 이전하는 것에 동의하는 것입니다.
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                         
+                                                
                                                 <input
                                                     className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
                                                     placeholder="받는 사람 지갑주소"
@@ -1603,10 +1586,11 @@ function AgentPage() {
                                                             NFT 전송하기
                                                         </span>
                                                     </div>
+
                                                 </button>
 
                                             </div>
-                                            */}
+                                            
 
 
 
