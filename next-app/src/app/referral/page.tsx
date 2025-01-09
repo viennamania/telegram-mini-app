@@ -758,11 +758,15 @@ function AgentPage() {
 
 
         } catch (error) {
-            console.error("mintAgentNft error", error);
+            //console.error("mintAgentNft error", error);
 
             ///toast.error('AI 에이전트 NFT 발행 실패');
 
-            setMessageMintingAgentNft('AI 에이전트 NFT 발행 실패');
+            if (error instanceof Error) {
+                setMessageMintingAgentNft('AI 에이전트 NFT 발행 실패:' + error.message);
+            } else {
+                setMessageMintingAgentNft('AI 에이전트 NFT 발행 실패: 알 수 없는 오류');
+            }
         }
 
         setMintingAgentNft(false);
