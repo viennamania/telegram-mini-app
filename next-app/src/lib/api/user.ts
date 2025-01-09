@@ -1335,3 +1335,54 @@ export async function getAllErc721ContractAddresses(): Promise<string[]> {
 
 
 
+// getAllCenters
+// group by center
+export async function getAllCenters(
+  {
+    limit = 100,
+    page = 1,
+  }: {
+    limit: number;
+    page: number;
+  }
+): Promise<any> {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('users');
+
+  // select center, count(*) as count from users group by center
+  // check center is not empty and not null and telegramId is not empty and not null
+
+  const centers = await collection
+    .aggregate([
+      {
+        $match: {
+          center: { $exists: true, $ne: null },
+          telegramId: { $exists: true, $ne: '' },
+        }
+      },
+      {
+        $group: {
+          _id: '$center',
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      },
+      {
+        $limit: limit,
+      },
+      {
+        $skip: (page - 1) * limit,
+      }
+    ])
+    .toArray();
+
+  return centers;
+
+}
+
+
+
+
