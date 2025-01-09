@@ -241,22 +241,22 @@ function HomeContent() {
 
 
 
-  // select user by telegramId
+  // select user by walletAddress
   const [selectUser, setSelectUser] = useState(null);
 
   // get agnetNft
-  const [agentNft, setAgentNft] = useState(null);
+  const [agentNft, setAgentNft] = useState<any[]>([]);
   const [loadingAgentNft, setLoadingAgentNft] = useState(false);
   useEffect(() => {
       const fetchData = async () => {
           setLoadingAgentNft(true);
-          const response = await fetch("/api/agent/getAgentNft", {
+          const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
               method: "POST",
               headers: {
                   "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                  telegramId: selectUser,
+                  walletAddress: selectUser,
               }),
           });
 
@@ -269,7 +269,21 @@ function HomeContent() {
           const data = await response.json();
 
           //console.log("getAgentNft data", data);
-          setAgentNft(data.result);
+          /*
+          [
+            {
+
+                "name": "미자부자다",
+                "tokenUri": "https://alchemy.mypinata.cloud/ipfs/QmPdQJ5HjqvVSbqqsMno5HrAatopNw8UEBRSdg7cqEPdGu/0",
+                "image": {
+                    "thumbnailUrl": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/matic-mainnet/c0dfa75257307f42ad3d6467ba13563a",
+                },
+            },
+
+        ]
+          */
+
+          setAgentNft(data.result.ownedNfts);
 
           setLoadingAgentNft(false);
 
@@ -539,12 +553,14 @@ function HomeContent() {
         {/* center list and select center */}
         {/* radio checkboxes */}
         <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+            
             <div className="flex flex-row gap-2 items-center justify-between">
               <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                   텔레그램 센터 선택
               </div>
 
             </div>
+            
             <div className='w-full flex flex-col gap-2 items-start justify-between'>
                 {loadingCenters ? (
                   <div className="w-full flex flex-col items-center justify-center">
@@ -604,6 +620,8 @@ function HomeContent() {
                   </div>
                 )}
             </div>
+
+
         </div>
       
 
@@ -627,6 +645,7 @@ function HomeContent() {
                 텔레그램 회원 목록
             </div>
           </div>
+          
           {address && (
             <>          
               {loadingUsers ? (
@@ -675,12 +694,12 @@ function HomeContent() {
                                 <td className="p-2 text-center">
                                   <input
                                     type="radio"
-                                    id={user.telegramId}
+                                    id={user.walletAddress}
                                     name="user"
                                     value={user.telegramId}
-                                    checked={selectUser === user.telegramId}
+                                    checked={selectUser === user.walletAddress}
                                     onChange={() => {
-                                        setSelectUser(user.telegramId);
+                                        setSelectUser(user.walletAddress);
                                     }}
                                     className="w-4 h-4
                                     text-green-500
@@ -706,6 +725,77 @@ function HomeContent() {
               )}
             </>
           )}
+
+
+         
+          {selectUser && (
+            <>
+              {loadingAgentNft ? (
+                <div className="w-full flex flex-col items-center justify-center">
+                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
+                </div>
+              ) : (
+                <div className="w-full flex flex-col gap-2 items-start justify-between">
+                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                        에이전트 NFT 목록
+                    </div>
+                    <div className="w-full flex flex-col gap-2 items-start justify-between">
+                        {agentNft && agentNft.map((nft : any, index : number) => (
+                            <div
+                                key={index}
+                                className="flex flex-row gap-2 items-center justify-between"
+                            >
+                                <div className="flex flex-row gap-2 items-center justify-start">
+                                    <Image
+                                    src={nft.image?.thumbnailUrl || "/icon-nft.png"}
+                                    alt={nft.name}
+                                    width={50}
+                                    height={50}
+                                    className="rounded"
+                                    />
+                                    <span className="text-sm">
+                                    {nft.name}
+                                    </span>
+                                    <span className="text-sm text-gray-400">
+                                      {nft.description}
+                                    </span>
+                                </div>
+                                <Button
+                                    onClick={() => {
+                                        (window as any).Telegram.WebApp.openLink(
+                                          "https://opensea.io/assets/matic/" + nft.contract.address + "/" + nft.tokenId
+                                        );
+                                    }}
+                                    className="
+                                    inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                    "
+                                >
+                                    NFT 정보
+                                </Button>
+                                {/* copy telegram link */}
+                                <Button
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(
+                                      "https://t.me/?start=" + nft.contract.address + "_" + nft.tokenId
+                                    );
+                                    alert(`${nft.tokenUri} 복사되었습니다.`);
+                                  }}
+                                  className="
+                                    inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                  "
+                                >
+                                  레퍼럴 복사
+                                </Button>
+                            </div>
+                        ))}
+                        
+                    </div>
+                </div>
+              )}
+            </>
+          )}
+
+
         </div>
 
 
