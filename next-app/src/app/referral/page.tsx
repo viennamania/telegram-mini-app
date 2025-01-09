@@ -637,11 +637,7 @@ function AgentPage() {
             return;
         }
 
-        if (!agentImage) {
-            //toast.error('에이전트 이미지를 선택해주세요');
-            setMessageMintingAgentNft('에이전트 이미지를 선택해주세요');
-            return;
-        }
+
 
 
         setMessageMintingAgentNft('AI 에이전트 NFT 발행중입니다');
