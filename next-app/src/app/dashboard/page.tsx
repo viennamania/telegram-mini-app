@@ -584,7 +584,7 @@ function HomeContent() {
                                       setSelectCenter(center._id);
                                       setSelectUser(null);
                                       setUsers([]);
-                                      
+
                                   }}
                               />
                               <div className="flex flex-row gap-2 items-center justify-between">
@@ -688,7 +688,7 @@ function HomeContent() {
                                   {user.telegramId}
                                 </td>
                                 <td className="p-2">
-                                  {user.walletAddress}
+                                  {user.walletAddress.slice(0, 6) + "..." + user.walletAddress.slice(-4)}
                                 </td>
                                 <td className="p-2 text-center">
                                   {user.centerOwner && (
