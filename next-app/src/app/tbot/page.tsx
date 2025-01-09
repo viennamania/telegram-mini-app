@@ -178,19 +178,6 @@ function HomeContent() {
             let agentTokenId = agentNumber as string || "";
 
 
-            console.log("agentContractAddress", agentContractAddress);
-            console.log("agentTokenId", agentTokenId);
-
-            // 0x50985B6974bFE7bFCCE313dfB59abd58EF4310fA 0 default
-            if (agentContractAddress === "" || agentTokenId === "") {
-                agentContractAddress = "0x50985B6974bFE7bFCCE313dfB59abd58EF4310fA";
-                agentTokenId = "0";
-            }
-
-
-
-
-
 
             setIsValidReferralLoading(true);
 
@@ -266,21 +253,10 @@ function HomeContent() {
         }
 
 
-
-        // check center substring 5 characters is ppump
-        // then invalid referral
-        /*
-        if (!center) {
-            setIsValidReferral(false);
-        } else if (center.length < 5) {
-            setIsValidReferral(false);
-        } else if (center.substring(0, 4) !== "owin") {
-            setIsValidReferral(false);
-        } else {
+        if (agent && agentNumber) {
             checkReferral();
         }
-        */
-       checkReferral();
+
 
     } , [agent, agentNumber]);
 
@@ -288,8 +264,6 @@ function HomeContent() {
     //console.log("isValidReferral", isValidReferral);
 
     
-
-
 
 
 
@@ -438,6 +412,10 @@ function HomeContent() {
 
                 setMasterBot(data.result.masterBot);
 
+                if (data.result?.centerOwner) {
+                    setIsValidReferral(true);
+                }
+
             }
         };
 
@@ -453,9 +431,6 @@ function HomeContent() {
 
 
   
-
-
-
 
 
 
