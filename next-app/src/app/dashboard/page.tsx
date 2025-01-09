@@ -574,9 +574,16 @@ function HomeContent() {
         {/* table */}
         <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
           
+          <div className="flex flex-row gap-2 items-center justify-between">
+            {selectCenter && (
+              <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                  {"@"+selectCenter}
+              </span>
+            )}
             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                 텔레그램 회원 목록
             </div>
+          </div>
           {address && (
             <>          
               {loadingUsers ? (
@@ -622,8 +629,15 @@ function HomeContent() {
         {/* table */}
         <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
           
-            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                OKX 신청 목록
+            <div className="flex flex-row gap-2 items-center justify-between">
+              {selectCenter && (
+                <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                    {"@"+selectCenter}
+                </span>
+              )}
+              <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                  OKX 신청 목록
+              </div>
             </div>
 
             {/* total trading account count and balance */}
