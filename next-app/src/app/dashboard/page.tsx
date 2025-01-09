@@ -580,7 +580,7 @@ function HomeContent() {
                                 <td className="p-2">
                                   <div className="flex flex-row gap-2 items-center justify-start">
                                     <Image
-                                      src={application?.agentBotNft?.image?.thumbnailUrl}
+                                      src={application?.agentBotNft?.image?.thumbnailUrl || "/icon-nft.png"}
                                       alt={application?.agentBotNft?.name}
                                       width={50}
                                       height={50}
