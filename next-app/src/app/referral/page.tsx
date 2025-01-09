@@ -86,7 +86,7 @@ function AgentPage() {
     */
  
 
-    const account = useActiveAccount() as any;
+    const account = useActiveAccount();
 
 
     const contract = getContract({
@@ -720,8 +720,8 @@ function AgentPage() {
             //setActiveAccount(smartConnectWallet);
 
             const transactionResult = await sendAndConfirmTransaction({
+                account: account as any,
                 transaction: transaction,
-                account: account,
 
                 ///////account: smartConnectWallet as any,
             });
@@ -870,8 +870,9 @@ function AgentPage() {
             });
 
             const transactionResult = await sendAndConfirmTransaction({
+                account: account as any,
                 transaction: transaction,
-                account: account,
+
             });
 
             if (!transactionResult) {
