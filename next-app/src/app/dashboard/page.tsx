@@ -664,281 +664,281 @@ function HomeContent() {
 
 
 
-        
-
-        {/* user list */}
-        {/* table */}
         <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-          
-          <div className="flex flex-row gap-2 items-center justify-between">
-            {selectCenter && (
-              <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                  {"@"+selectCenter}
-              </span>
-            )}
-            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                텔레그램 회원 목록
-            </div>
-          </div>
-          
-          {address && (
-            <>          
-              {loadingUsers ? (
-                <div className="w-full flex flex-col items-center justify-center">
-                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
-                </div>
-              ) : (
-                <table className="w-full">
-                    <thead>
-                        <tr className="bg-zinc-800 text-zinc-100">
-                            <th className="p-2">회원아이디</th>
-                            <th className="p-2">매직아이디</th>
-                            <th className="p-2">지갑주소</th>
-                            <th className="p-2">센터장</th>
-                            <th className="p-2">에이전트</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map((user, index) => (
-                            <tr key={index} className="bg-zinc-800 text-zinc-100">
-                                <td className="p-2">
-                                  <div className="flex flex-row gap-2 items-center justify-start">
-                                    <Image
-                                      src={user.avatar || "/icon-anonymous.png"}
-                                      alt={user.nickname}
-                                      width={50}
-                                      height={50}
-                                      className="rounded w-10 h-10"
-                                    />
-                                    <span className="text-sm">
-                                      {user.nickname}
-                                    </span>
-                                  </div>
-                                </td>
-                                <td className="p-2">
-                                  {user.telegramId}
-                                </td>
-                                <td className="p-2">
-                                  {user.walletAddress.slice(0, 6) + "..." + user.walletAddress.slice(-4)}
-                                </td>
-                                <td className="p-2 text-center">
-                                  {user.centerOwner && (
-                                    <span className="text-green-500">O</span>
-                                  )}
-                                </td>
-                                <td className="p-2 text-center">
-                                  <input
-                                    type="radio"
-                                    id={user.walletAddress}
-                                    name="user"
-                                    value={user.telegramId}
-                                    checked={selectUser === user.walletAddress}
-                                    onChange={() => {
-                                        setSelectUser(user.walletAddress);
-                                    }}
-                                    className="w-4 h-4
-                                    text-green-500
-                                    form-radio
-                                    focus:ring-green-500
-                                    focus:ring-2
-                                    focus:outline-none
-                                    checked:bg-green-500
-                                    checked:border-transparent
-                                    checked:ring-2
-                                    checked:ring-offset-2
-                                    checked:ring-green-500
-                                    checked:ring-offset-green-500
-                                    "
 
-                                  
-                                  />
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-              )}
-            </>
+          {selectCenter && (
+            <span className="bg-green-500 text-xl text-zinc-100 p-2 rounded">
+                {"@"+selectCenter}
+            </span>
           )}
 
 
-         
-          {selectUser && (
-            <>
-              {loadingAgentNft ? (
-                <div className="w-full flex flex-col items-center justify-center">
-                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
-                </div>
-              ) : (
-                <div className="w-full flex flex-col gap-2 items-start justify-between">
-                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                        에이전트 NFT 목록
-                    </div>
-                    <div className="w-full flex flex-col gap-2 items-start justify-between">
-                        {agentNft && agentNft.map((nft : any, index : number) => (
-                            <div
-                                key={index}
-                                className="flex flex-row gap-2 items-center justify-between"
-                            >
-                                <div className="flex flex-row gap-2 items-center justify-start">
-                                    <Image
-                                    src={nft.image?.thumbnailUrl || "/icon-nft.png"}
-                                    alt={nft.name}
-                                    width={50}
-                                    height={50}
-                                    className="rounded"
-                                    />
-                                    <span className="text-sm">
-                                    {nft.name}
-                                    </span>
-                                    <span className="text-sm text-gray-400">
-                                      {nft.description}
-                                    </span>
-                                </div>
-                                <Button
-                                    onClick={() => {
-                                        (window as any).Telegram.WebApp.openLink(
-                                          "https://opensea.io/assets/matic/" + nft.contract.address + "/" + nft.tokenId
-                                        );
-                                    }}
-                                    className="
-                                    inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                    "
-                                >
-                                    NFT 정보
-                                </Button>
-                                {/* copy telegram link */}
-                                <Button
-                                  onClick={() => {
-                                    navigator.clipboard.writeText(
-                                      "https://t.me/" + selectCenter + "/?start=" + nft.contract.address + "_" + nft.tokenId
-                                    );
-                                    alert(`레퍼럴 링크 복사되었습니다.`);
-                                  }}
-                                  className="
-                                    inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                  "
-                                >
-                                  레퍼럴 링크 복사하기
-                                </Button>
-                            </div>
-                        ))}
-
-                    </div>
-                </div>
-              )}
-            </>
-          )}
-
-
-        </div>
-
-
-        {/* application list */}
-        {/* table */}
-        <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-          
+          {/* user list */}
+          {/* table */}
+          <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+            
             <div className="flex flex-row gap-2 items-center justify-between">
-              {selectCenter && (
-                <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                    {"@"+selectCenter}
-                </span>
-              )}
+
               <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                  OKX 신청 목록
+                  텔레그램 회원 목록
               </div>
             </div>
+            
+            {address && (
+              <>          
+                {loadingUsers ? (
+                  <div className="w-full flex flex-col items-center justify-center">
+                      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
+                  </div>
+                ) : (
+                  <table className="w-full">
+                      <thead>
+                          <tr className="bg-zinc-800 text-zinc-100">
+                              <th className="p-2">회원아이디</th>
+                              <th className="p-2">매직아이디</th>
+                              <th className="p-2">지갑주소</th>
+                              <th className="p-2">센터장</th>
+                              <th className="p-2">에이전트</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {users.map((user, index) => (
+                              <tr key={index} className="bg-zinc-800 text-zinc-100">
+                                  <td className="p-2">
+                                    <div className="flex flex-row gap-2 items-center justify-start">
+                                      <Image
+                                        src={user.avatar || "/icon-anonymous.png"}
+                                        alt={user.nickname}
+                                        width={50}
+                                        height={50}
+                                        className="rounded w-10 h-10"
+                                      />
+                                      <span className="text-sm">
+                                        {user.nickname}
+                                      </span>
+                                    </div>
+                                  </td>
+                                  <td className="p-2">
+                                    {user.telegramId}
+                                  </td>
+                                  <td className="p-2">
+                                    {user.walletAddress.slice(0, 6) + "..." + user.walletAddress.slice(-4)}
+                                  </td>
+                                  <td className="p-2 text-center">
+                                    {user.centerOwner && (
+                                      <span className="text-green-500">O</span>
+                                    )}
+                                  </td>
+                                  <td className="p-2 text-center">
+                                    <input
+                                      type="radio"
+                                      id={user.walletAddress}
+                                      name="user"
+                                      value={user.telegramId}
+                                      checked={selectUser === user.walletAddress}
+                                      onChange={() => {
+                                          setSelectUser(user.walletAddress);
+                                      }}
+                                      className="w-4 h-4
+                                      text-green-500
+                                      form-radio
+                                      focus:ring-green-500
+                                      focus:ring-2
+                                      focus:outline-none
+                                      checked:bg-green-500
+                                      checked:border-transparent
+                                      checked:ring-2
+                                      checked:ring-offset-2
+                                      checked:ring-green-500
+                                      checked:ring-offset-green-500
+                                      "
 
-            {/* total trading account count and balance */}
-            <div className='w-full flex flex-col gap-2 items-start justify-between'>
-                <div className="w-full flex flex-row items-center gap-2">
-                    <span className='w-1/2 text-sm text-gray-800 font-semibold'>
-                        총 거래 계정 수: 
-                    </span>
-                    <span className='
-                      w-1/2 text-right
-                      text-xl text-green-500 font-semibold bg-green-100 p-2 rounded'>
-                    
-                    {
-                        totalTradingAccountCount ? totalTradingAccountCount : 0
-                    }
-                    </span>
-                </div>
+                                    
+                                    />
+                                  </td>
+                              </tr>
+                          ))}
+                      </tbody>
+                  </table>
+                )}
+              </>
+            )}
 
-                <div className="w-full flex flex-row items-center gap-2">
-                    <span className='w-1/2 text-sm font-semibold text-gray-800'>
-                        총 거래 계정 잔고: 
-                    </span>
-                    <span className='
-                      w-1/2 text-right
-                      text-xl text-green-500 font-semibold bg-green-100 p-2 rounded'>
-                        {
-                          totalTradingAccountBalance &&
-                            Number(totalTradingAccountBalance).toLocaleString('en-US', {
-                                style: 'currency',
-                                currency: 'USD'
-                            })
-                        }
-                    </span>
-                </div>
-            </div>
 
-          {address && (
-            <>          
-              {loadingApplications ? (
-                <div className="w-full flex flex-col items-center justify-center">
-                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
-                </div>
-              ) : (
-                <table className="w-full">
-                    <thead>
-                        <tr className="bg-zinc-800 text-zinc-100">
-                            <th className="p-2">신청번호</th>
-                            <th className="p-2">OKX UID</th>
-                            <th className="p-2">닉네임</th>
-                            <th className="p-2">전화번호</th>
-                            <th className="p-2">NFT</th>
-                            <th className="p-2">거래계정 잔고</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {applications.map((application, index) => (
-                            <tr key={index} className="bg-zinc-800 text-zinc-100">
-                                <td className="p-2">#{application?.id}</td>
-                                <td className="p-2">
-                                  {application?.okxUid}
-                                </td>
-                                <td className="p-2">{application?.userName}</td>
-                                <td className="p-2">
-                                  {application?.userPhoneNumber}
-                                </td>
-                                <td className="p-2">
+          
+            {selectUser && (
+              <>
+                {loadingAgentNft ? (
+                  <div className="w-full flex flex-col items-center justify-center">
+                      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
+                  </div>
+                ) : (
+                  <div className="w-full flex flex-col gap-2 items-start justify-between">
+                      <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                          에이전트 NFT 목록
+                      </div>
+                      <div className="w-full flex flex-col gap-2 items-start justify-between">
+                          {agentNft && agentNft.map((nft : any, index : number) => (
+                              <div
+                                  key={index}
+                                  className="flex flex-row gap-2 items-center justify-between"
+                              >
                                   <div className="flex flex-row gap-2 items-center justify-start">
-                                    <Image
-                                      src={application?.agentBotNft?.image?.thumbnailUrl || "/icon-nft.png"}
-                                      alt={application?.agentBotNft?.name}
+                                      <Image
+                                      src={nft.image?.thumbnailUrl || "/icon-nft.png"}
+                                      alt={nft.name}
                                       width={50}
                                       height={50}
                                       className="rounded"
-                                    />
-                                    <span className="text-sm">
-                                      {application?.agentBotNft?.name}
-                                    </span>
+                                      />
+                                      <span className="text-sm">
+                                      {nft.name}
+                                      </span>
+                                      <span className="text-sm text-gray-400">
+                                        {nft.description}
+                                      </span>
                                   </div>
-                                </td>
-                                <td className="p-2 w-1/5 text-right">
-                                  {Number(application?.tradingAccountBalance?.balance).toLocaleString('en-US', {
-                                      style: 'currency',
-                                      currency: 'USD'
-                                  })}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-              )}
-            </>
-          )}
+                                  <Button
+                                      onClick={() => {
+                                          (window as any).Telegram.WebApp.openLink(
+                                            "https://opensea.io/assets/matic/" + nft.contract.address + "/" + nft.tokenId
+                                          );
+                                      }}
+                                      className="
+                                      inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                      "
+                                  >
+                                      NFT 정보
+                                  </Button>
+                                  {/* copy telegram link */}
+                                  <Button
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(
+                                        "https://t.me/" + selectCenter + "/?start=" + nft.contract.address + "_" + nft.tokenId
+                                      );
+                                      alert(`레퍼럴 링크 복사되었습니다.`);
+                                    }}
+                                    className="
+                                      inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                    "
+                                  >
+                                    레퍼럴 링크 복사하기
+                                  </Button>
+                              </div>
+                          ))}
+
+                      </div>
+                  </div>
+                )}
+              </>
+            )}
+
+
+          </div>
+
+
+          {/* application list */}
+          {/* table */}
+          <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+            
+              <div className="flex flex-row gap-2 items-center justify-between">
+                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                    OKX 신청 목록
+                </div>
+              </div>
+
+              {/* total trading account count and balance */}
+              <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                  <div className="w-full flex flex-row items-center gap-2">
+                      <span className='w-1/2 text-sm text-gray-800 font-semibold'>
+                          총 거래 계정 수: 
+                      </span>
+                      <span className='
+                        w-1/2 text-right
+                        text-xl text-green-500 font-semibold bg-green-100 p-2 rounded'>
+                      
+                      {
+                          totalTradingAccountCount ? totalTradingAccountCount : 0
+                      }
+                      </span>
+                  </div>
+
+                  <div className="w-full flex flex-row items-center gap-2">
+                      <span className='w-1/2 text-sm font-semibold text-gray-800'>
+                          총 거래 계정 잔고: 
+                      </span>
+                      <span className='
+                        w-1/2 text-right
+                        text-xl text-green-500 font-semibold bg-green-100 p-2 rounded'>
+                          {
+                            totalTradingAccountBalance &&
+                              Number(totalTradingAccountBalance).toLocaleString('en-US', {
+                                  style: 'currency',
+                                  currency: 'USD'
+                              })
+                          }
+                      </span>
+                  </div>
+              </div>
+
+            {address && (
+              <>          
+                {loadingApplications ? (
+                  <div className="w-full flex flex-col items-center justify-center">
+                      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
+                  </div>
+                ) : (
+                  <table className="w-full">
+                      <thead>
+                          <tr className="bg-zinc-800 text-zinc-100">
+                              <th className="p-2">신청번호</th>
+                              <th className="p-2">OKX UID</th>
+                              <th className="p-2">닉네임</th>
+                              <th className="p-2">전화번호</th>
+                              <th className="p-2">NFT</th>
+                              <th className="p-2">거래계정 잔고</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {applications.map((application, index) => (
+                              <tr key={index} className="bg-zinc-800 text-zinc-100">
+                                  <td className="p-2">#{application?.id}</td>
+                                  <td className="p-2">
+                                    {application?.okxUid}
+                                  </td>
+                                  <td className="p-2">{application?.userName}</td>
+                                  <td className="p-2">
+                                    {application?.userPhoneNumber}
+                                  </td>
+                                  <td className="p-2">
+                                    <div className="flex flex-row gap-2 items-center justify-start">
+                                      <Image
+                                        src={application?.agentBotNft?.image?.thumbnailUrl || "/icon-nft.png"}
+                                        alt={application?.agentBotNft?.name}
+                                        width={50}
+                                        height={50}
+                                        className="rounded"
+                                      />
+                                      <span className="text-sm">
+                                        {application?.agentBotNft?.name}
+                                      </span>
+                                    </div>
+                                  </td>
+                                  <td className="p-2 w-1/5 text-right">
+                                    {Number(application?.tradingAccountBalance?.balance).toLocaleString('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD'
+                                    })}
+                                  </td>
+                              </tr>
+                          ))}
+                      </tbody>
+                  </table>
+                )}
+              </>
+            )}
+          </div>
+
         </div>
 
 
