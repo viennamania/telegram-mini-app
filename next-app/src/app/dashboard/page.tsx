@@ -732,7 +732,23 @@ function HomeContent() {
                                     {user.telegramId}
                                   </td>
                                   <td className="p-2">
-                                    {user.walletAddress.slice(0, 6) + "..." + user.walletAddress.slice(-4)}
+                                    <div className="flex flex-row gap-2 items-center justify-start">
+                                      <span className="text-sm">
+                                        {user.walletAddress.slice(0, 6) + "..." + user.walletAddress.slice(-4)}
+                                      </span>
+                                      {/* copy wallet address */}
+                                      <Button
+                                        onClick={() => {
+                                          navigator.clipboard.writeText(user.walletAddress);
+                                          alert(`${user.walletAddress} 복사되었습니다.`);
+                                        }}
+                                        className="
+                                          inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                        "
+                                      >
+                                        복사
+                                      </Button>
+                                    </div>
                                   </td>
                                   <td className="p-2 text-center">
                                     {user.centerOwner && (
