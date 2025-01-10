@@ -603,7 +603,14 @@ function HomeContent() {
                       {centerList.map((center, index) => (
                           <div
                             key={index}
-                            className={`${selectCenter === center._id ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}`}
+                            className={`
+                              flex flex-row gap-2 items-center justify-between
+                              p-2 rounded
+                              cursor-pointer
+                              ${selectCenter === center._id ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}
+                            `}
+                              
+                              
                           >
                               <input
                                   type="radio"
