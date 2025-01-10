@@ -708,7 +708,7 @@ function HomeContent() {
                                       alt={user.nickname}
                                       width={50}
                                       height={50}
-                                      className="rounded"
+                                      className="rounded w-10 h-10"
                                     />
                                     <span className="text-sm">
                                       {user.nickname}
