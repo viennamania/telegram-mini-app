@@ -1452,15 +1452,11 @@ function AgentPage() {
                                             </div>
 
 
-
-
                                             <div className='w-full flex flex-col gap-2 items-center justify-between'>
 
 
                                                 <div className="w-full flex flex-col gap-2 items-center justify-center">
 
-
-                                                    
                                                     <button
                                                         onClick={() => {
                                                             window.open('https://opensea.io/assets/matic/' + erc721ContractAddress + '/' + nft.tokenId);
@@ -1475,6 +1471,9 @@ function AgentPage() {
                                                             className="rounded-lg"
                                                         />
                                                     </button>
+                                                    <span className='text-xs font-semibold'>
+                                                        OpenSea에서 보기
+                                                    </span>
                                                     
                                                 </div>
 
