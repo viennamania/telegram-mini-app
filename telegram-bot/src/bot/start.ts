@@ -6,14 +6,101 @@ import { config } from 'dotenv'
 import { set } from 'valibot'
 config()
 
+
+
+
+
+
+
+import {
+  getContract,
+} from "thirdweb";
+
+import {
+  polygon,
+  arbitrum,
+  ethereum,
+} from "thirdweb/chains";
+
+import { balanceOf } from "thirdweb/extensions/erc20";
+
+
+
+
 const composer = new Composer<Context>()
 
 const feature = composer.chatType('private')
+
 
 const adminAccount = privateKeyToAccount({
   privateKey: process.env.ADMIN_SECRET_KEY as string,
   client: createThirdwebClient({ clientId: process.env.THIRDWEB_CLIENT_ID as string }),
 })
+
+
+
+
+
+
+// show wallet address and balance
+feature.command('wallet', async (ctx) => {
+  
+  const telegramId = ctx.from?.id+"";
+
+  const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
+
+  const responseGetUser = await fetch(urlGetUser, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      telegramId,
+    }),
+  });
+
+  if (responseGetUser.status !== 200) {
+    return ctx.reply("Failed to get user");
+  } else {
+    const data = await responseGetUser.json();
+    //console.log("data", data);
+
+    if (data.result && data.result.walletAddress) {
+      const walletAddress = data.result.walletAddress;
+
+
+      // get balance
+      const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+      const clientId = process.env.THIRDWEB_CLIENT_ID;
+      const client = createThirdwebClient({
+        clientId: clientId as string,
+      });
+      const contract = getContract({
+        client,
+        chain: polygon,
+        address: contractAddress,
+      });
+
+      const result = await balanceOf({
+        contract,
+        address: walletAddress,
+      });
+
+      const balance = Number(result) / 10 ** 6;
+
+
+      return ctx.reply(
+        "지갑주소: " + walletAddress
+        + "\n" + "잔고: " + balance + " USDT"
+      );
+
+    }
+  }
+
+  return ctx.reply("Failed to get wallet address");
+
+})
+
 
 feature.command('start', async (ctx) => {
 

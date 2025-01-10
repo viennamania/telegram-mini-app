@@ -844,7 +844,6 @@ function HomeContent() {
                                         height={20}
                                         className="rounded"
                                       />
-                                      <span>OpenSea</span>
                                     </div>
                                   </Button>
                                   

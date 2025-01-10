@@ -39,6 +39,7 @@ async function startPolling(config: PollingConfig) {
 
   bot.api.setMyCommands([
     { command: "start", description: "시작하기" },
+    { command: "wallet", description: "매직월렛"},
   ])
 
 
