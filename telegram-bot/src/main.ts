@@ -468,6 +468,7 @@ function sleep(ms: number) {
 // fetch account data after 5 seconds
 
 sleep(5000).then(() => {
+  
   fetchAccountData()
 
   // send start message to all users

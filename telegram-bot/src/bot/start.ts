@@ -28,6 +28,7 @@ feature.command('start', async (ctx) => {
 
 
   let nickname = "";
+  let walletAddress = "";
   let referralCode = "";
   let isCenterOwner = false;
 
@@ -53,12 +54,19 @@ feature.command('start', async (ctx) => {
       isCenterOwner = data.result.centerOwner;
     }
 
+    if (data.result && data.result.walletAddress) {
+      walletAddress = data.result.walletAddress;
+    }
+
     if (data.result && data.result.nickname) {
       nickname = data.result.nickname;
     }
+
+
   }
 
   console.log('isCenterOwner', isCenterOwner);
+  console.log('walletAddress', walletAddress);
 
 
 
@@ -228,8 +236,8 @@ feature.command('start', async (ctx) => {
       keyboard.row()
       .webApp('OKX 가입자 보러가기', urlMasterbot)
 
-      keyboard.row()
-      .game('게임하기')
+      //keyboard.row()
+      //.game('게임하기')
     }
 
     // 고객센터 @magic_wallet_cs
@@ -264,7 +272,8 @@ feature.command('start', async (ctx) => {
   */
 
   const title = 'OKX AI 봇 센터에 오신것을 환영합니다.'
-  + (nickname ? '\n회원아이디: ' + nickname : '');
+  + (nickname ? '\n회원아이디: ' + nickname : '')
+  + (walletAddress ? '\n' + walletAddress : '');
 
   return ctx.reply(
     title,
