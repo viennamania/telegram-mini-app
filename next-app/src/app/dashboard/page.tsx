@@ -93,6 +93,12 @@ function HomeContent() {
 
             if (!response.ok) {
                 console.error("Error fetching agents");
+
+                setApplications([]);
+                setTotalTradingAccountCount(0);
+                setTotalTradingAccountBalance(0);
+
+
                 setLoadingApplications(false);
                 return;
             }
