@@ -603,7 +603,7 @@ function HomeContent() {
                       {centerList.map((center, index) => (
                           <div
                             key={index}
-                            className="flex flex-row gap-2 items-center justify-between"
+                            className={`${selectCenter === center._id ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}`}
                           >
                               <input
                                   type="radio"
@@ -729,7 +729,9 @@ function HomeContent() {
                                   </td>
                                   <td className="p-2 text-center">
                                     {user.centerOwner && (
-                                      <span className="text-green-500">O</span>
+                                      <span className="text-white font-semibold bg-green-500 p-1 rounded">
+                                        O
+                                      </span>
                                     )}
                                   </td>
                                   <td className="p-2 text-center">
