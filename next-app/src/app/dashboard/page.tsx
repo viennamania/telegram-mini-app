@@ -537,16 +537,47 @@ function HomeContent() {
               
               <Button
                 onClick={() => {
+                  // fetch centers
+
+                  const fetchData = async () => {
+                    setLoadingCenters(true);
+                    const response = await fetch("/api/user/getAllCenters", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            limit: 100,
+                            page: 1,
+                            marketingCenter: marketingCenter,
+                        }),
+                    });
+
+                    if (!response.ok) {
+                        console.error("Error fetching centers");
+                        setLoadingCenters(false);
+                        return;
+                    }
+
+                    const data = await response.json();
+
+                    setCenterList(data.result);
+
+                    setLoadingCenters(false);
+
+                  }
+
+                  fetchData();
+
+
                   setSelectCenter(null);
                   setSelectUser(null);
                   setUsers([]);
                   setApplications([]);
                 }}
-                className="
-                  inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                "
+                className={`${loadingCenters ? "animate-spin" : ""} inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white`}
               >
-                새로고침
+                {loadingCenters ? "로딩중..." : "새로고침"}
               </Button>
               
 

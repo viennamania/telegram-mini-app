@@ -226,7 +226,10 @@ feature.command('start', async (ctx) => {
       .webApp('회원 보러가기', urlLeaderBoard)
 
       keyboard.row()
-      .webApp('전체 가입자 보러가기', urlMasterbot)
+      .webApp('OKX 가입자 보러가기', urlMasterbot)
+
+      keyboard.row()
+      .game('게임하기')
     }
 
     // 고객센터 @magic_wallet_cs
@@ -253,20 +256,22 @@ feature.command('start', async (ctx) => {
 
 
 
-    /*
-    .row()
-    .text("총 계정 수: " + totalAccountCount)
-    .row()
-    .text("총 거래 잔고: " + "$" + Number(totalTradingAccountBalance).toFixed(2))
-    */
+  /*
+  .row()
+  .text("총 계정 수: " + totalAccountCount)
+  .row()
+  .text("총 거래 잔고: " + "$" + Number(totalTradingAccountBalance).toFixed(2))
+  */
 
-    const title = 'OKX AI 봇 센터에 오신것을 환영합니다.'
-    + (nickname ? '\n회원아이디: ' + nickname : '');
-  
+  const title = 'OKX AI 봇 센터에 오신것을 환영합니다.'
+  + (nickname ? '\n회원아이디: ' + nickname : '');
+
   return ctx.reply(
     title,
     { reply_markup: keyboard}
   )
+
+  //return ctx.replyWithGame('tictactoe')
 
 })
 
