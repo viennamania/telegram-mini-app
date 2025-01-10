@@ -103,10 +103,10 @@ function AgentPage() {
 
 
 
-    const address = account?.address;
+    ///const address = account?.address;
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -434,7 +434,7 @@ function AgentPage() {
                 const erc721ContractAddress = await deployERC721Contract({
                     chain: polygon,
                     client: client,
-                    account: account,
+                    account: account as any,
             
                     /*  type ERC721ContractType =
                     | "DropERC721"
@@ -1455,7 +1455,7 @@ function AgentPage() {
                                             <div className='w-full flex flex-col gap-2 items-center justify-between'>
 
 
-                                                <div className="w-full flex flex-col gap-2 items-center justify-center">
+                                                <div className="w-full flex flex-row gap-2 items-center justify-center">
 
                                                     <button
                                                         onClick={() => {
