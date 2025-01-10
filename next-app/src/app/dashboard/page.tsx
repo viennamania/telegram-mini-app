@@ -767,6 +767,14 @@ function HomeContent() {
                           에이전트 NFT 목록
                       </div>
                       <div className="w-full flex flex-col gap-2 items-start justify-between">
+                          {agentNft && agentNft.length === 0 && (
+                              <div className="w-full flex flex-col items-center justify-center">
+                                  <span className="text-sm text-gray-400">
+                                      NFT가 없습니다.
+                                  </span>
+                              </div>
+                          )}
+
                           {agentNft && agentNft.map((nft : any, index : number) => (
                               <div
                                   key={index}
