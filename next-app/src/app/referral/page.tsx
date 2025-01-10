@@ -1441,12 +1441,12 @@ function AgentPage() {
                                                             't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
                                                         );
                                                         //toast.success('레퍼럴 URL 복사 완료');
-                                                        alert('레퍼럴 링크 복사되었습니다.');
+                                                        alert('레퍼럴 복사되었습니다.');
                                                     }}
                                                     className="p-2 bg-blue-500 text-zinc-100 rounded
                                                     hover:bg-blue-600 text-xs xl:text-lg font-semibold"
                                                 >
-                                                    레퍼럴 링크 복사하기
+                                                    레퍼럴 복사하기
                                                 </button>
 
                                             </div>
@@ -1476,41 +1476,9 @@ function AgentPage() {
                                                         />
                                                     </button>
                                                     
-
-                                                    <Image
-                                                        src={nft.image.pngUrl}
-                                                        alt="NFT"
-                                                        width={500}
-                                                        height={500}
-                                                        className="w-full rounded-lg border border-gray-300"
-                                                        
-                                                    />
-
-                                                    {/* 누적 배당수익 */}
-                                                    {/*
-                                                    <div className='flex flex-col gap-2 items-start justify-between
-                                                        border border-gray-300 p-4 rounded-lg'>
-                                                        <span className='text-xs xl:text-lg font-semibold'>
-                                                            Total Dividend
-                                                        </span>
-                                                        <span className='text-xl xl:text-2xl font-semibold text-green-500'>
-                                                            0.00 USDT
-                                                        </span>
-
-                                                        <button
-                                                            className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                            hover:bg-blue-600"
-                                                        >
-                                                            Claim Dividend
-                                                        </button>
-                                                        
-                                                    </div>
-                                                    */}
-
-
                                                 </div>
 
-                                                <div className='flex flex-col gap-2 items-start justify-between'>
+                                                <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                                     {/* contract address */}
                                                     <div className='text-xs font-semibold'>
                                                         계약주소: {nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
@@ -1519,15 +1487,24 @@ function AgentPage() {
                                                         계약번호: #{nft.tokenId}
                                                     </div>
                                                     <div className='text-sm font-semibold text-green-500'>
-                                                        {nft.name}
+                                                        이름: {nft.name}
                                                     </div>
                                                     <div className='text-xs font-semibold'>
-                                                        {nft.description}
+                                                        설명: {nft.description}
                                                     </div>
 
                                                 </div>
 
                                             </div>
+
+                                            
+                                            <Image
+                                                src={nft.image.pngUrl}
+                                                alt="NFT"
+                                                width={500}
+                                                height={500}
+                                                className="w-full rounded-lg border border-gray-300"
+                                            />
 
 
 
