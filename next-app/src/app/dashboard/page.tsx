@@ -703,7 +703,10 @@ function HomeContent() {
                       </thead>
                       <tbody>
                           {users.map((user, index) => (
-                              <tr key={index} className="bg-zinc-800 text-zinc-100">
+                              <tr
+                                key={index}
+                                className={`${selectUser === user.walletAddress ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}`}
+                              >
                                   <td className="p-2">
                                     <div className="flex flex-row gap-2 items-center justify-start">
                                       <Image
@@ -739,21 +742,7 @@ function HomeContent() {
                                       onChange={() => {
                                           setSelectUser(user.walletAddress);
                                       }}
-                                      className="w-4 h-4
-                                      text-green-500
-                                      form-radio
-                                      focus:ring-green-500
-                                      focus:ring-2
-                                      focus:outline-none
-                                      checked:bg-green-500
-                                      checked:border-transparent
-                                      checked:ring-2
-                                      checked:ring-offset-2
-                                      checked:ring-green-500
-                                      checked:ring-offset-green-500
-                                      "
-
-                                    
+                                      className="w-4 h-4"
                                     />
                                   </td>
                               </tr>
