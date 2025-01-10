@@ -826,46 +826,60 @@ function HomeContent() {
                                         {nft.description}
                                       </span>
                                   </div>
-                                  <Button
-                                      onClick={() => {
-                                          (window as any).Telegram.WebApp.openLink(
-                                            "https://opensea.io/assets/matic/" + nft.contract.address + "/" + nft.tokenId
-                                          );
-                                      }}
-                                      className="
-                                      inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                      "
-                                  >
-                                    <div className="flex flex-row gap-2 items-center justify-start">
-                                      <Image
-                                        src="/logo-opensea.png"
-                                        alt="OpenSea"
-                                        width={20}
-                                        height={20}
-                                        className="rounded"
-                                      />
-                                    </div>
-                                  </Button>
-                                  
-                                  {/* copy telegram link */}
-                                  <div className="flex flex-row gap-2 items-center justify-start">
-                                    <span className="text-sm text-gray-400">
-                                      레퍼럴:{"t.me/" + selectCenter + "/?start=" + nft.contract.address + "_" + nft.tokenId}
+
+                                  {nft.name === "MasterBot" ? (
+                                    <span className="text-sm text-green-500 font-semibold bg-green-100 p-2 rounded">
+                                      마스터봇
                                     </span>
+                                  ) : (
+
+                                  <>
                                     <Button
-                                      onClick={() => {
-                                        navigator.clipboard.writeText(
-                                          "https://t.me/" + selectCenter + "/?start=" + nft.contract.address + "_" + nft.tokenId
-                                        );
-                                        alert(`레퍼럴 링크 복사되었습니다.`);
-                                      }}
-                                      className="
+                                        onClick={() => {
+                                            (window as any).Telegram.WebApp.openLink(
+                                              "https://opensea.io/assets/matic/" + nft.contract.address + "/" + nft.tokenId
+                                            );
+                                        }}
+                                        className="
                                         inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                      "
+                                        "
                                     >
-                                      복사하기
+                                      <div className="flex flex-row gap-2 items-center justify-start">
+                                        <Image
+                                          src="/logo-opensea.png"
+                                          alt="OpenSea"
+                                          width={20}
+                                          height={20}
+                                          className="rounded"
+                                        />
+                                      </div>
                                     </Button>
-                                  </div>
+                                    
+                                    
+                                    {/* copy telegram link */}
+                                    <div className="flex flex-row gap-2 items-center justify-start">
+                                      <span className="text-sm text-gray-400">
+                                        레퍼럴:{"t.me/" + selectCenter + "/?start=" + nft.contract.address + "_" + nft.tokenId}
+                                      </span>
+                                      <Button
+                                        onClick={() => {
+                                          navigator.clipboard.writeText(
+                                            "https://t.me/" + selectCenter + "/?start=" + nft.contract.address + "_" + nft.tokenId
+                                          );
+                                          alert(`레퍼럴 링크 복사되었습니다.`);
+                                        }}
+                                        className="
+                                          inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                        "
+                                      >
+                                        복사하기
+                                      </Button>
+                                    </div>
+                                  </>
+
+
+                                  )}
+
 
                               </div>
                           ))}
