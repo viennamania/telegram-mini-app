@@ -816,7 +816,7 @@ function HomeContent() {
                                   >
                                     <div className="flex flex-row gap-2 items-center justify-start">
                                       <Image
-                                        src="/icon-opensea.png"
+                                        src="/logo-opensea.png"
                                         alt="OpenSea"
                                         width={20}
                                         height={20}
@@ -950,7 +950,7 @@ function HomeContent() {
                                       >
                                         <div className="flex flex-row gap-2 items-center justify-start">
                                           <Image
-                                            src="/icon-opensea.png"
+                                            src="/logo-opensea.png"
                                             alt="OpenSea"
                                             width={20}
                                             height={20}
