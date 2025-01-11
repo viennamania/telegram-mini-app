@@ -88,6 +88,13 @@ import { time } from 'console';
 import { client, wallet } from "./../constants";
 
 
+import { shortenAddress } from "thirdweb/utils";
+import { Button } from "@headlessui/react";
+import { AutoConnect } from "thirdweb/react";
+
+
+
+
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
 const contractAddressArbitrum = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"; // USDT on Arbitrum
 
@@ -139,7 +146,7 @@ function HomeContent() {
     const address = account?.address;
 
     // test address
-    ////const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
 
 
 
@@ -1398,6 +1405,13 @@ function HomeContent() {
 
         <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
 
+
+            <AutoConnect
+                client={client}
+                wallets={[wallet]}
+                timeout={15000}
+            />
+
             <div className="py-0 w-full">
         
                 {/* agent, agentNumber */}
@@ -1441,6 +1455,38 @@ function HomeContent() {
                             AI 트레이딩 TBOT 서비스센터 입니다.
                         </span>
                     </div>
+
+
+                    <div className="flex justify-center mt-5">
+                        {address ? (
+                            <div className="flex flex-row gap-2 items-center justify-between">
+                                
+                                <Button
+                                    onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
+                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                                >
+                                    내 지갑주소: {shortenAddress(address)}
+                                </Button>
+                                <Button
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(address);
+                                        alert('지갑주소가 복사되었습니다.');
+                                    }}
+                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                                >
+                                    복사
+                                </Button>
+                                
+                            </div>
+                        ) : (
+                            <p className="text-sm text-zinc-400">
+                                연결된 지갑이 없습니다. 지갑을 연결해 주세요.
+                            </p>
+                        )}      
+                    </div>
+
+
+
 
                     {!myAgent?.okxUid && (
                         <>

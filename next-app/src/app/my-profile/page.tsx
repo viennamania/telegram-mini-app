@@ -877,7 +877,7 @@ function ProfilePage() {
                             </div>
                         ) : (
                             <p className="text-sm text-zinc-400">
-                                연결된 지갑이 없습니다.
+                                연결된 지갑이 없습니다. 지갑을 연결해 주세요.
                             </p>
                         )}      
                     </div>
