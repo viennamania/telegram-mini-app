@@ -42,6 +42,9 @@ export async function insertOne(data: any) {
 
     const collectionUserTransfers = client.db('shinemywinter').collection('userTransfers');
 
+    const collection = client.db('shinemywinter').collection('transfers');
+
+
 
     const userFromAddress = await collectionUsers.findOne({ walletAddress: data.fromAddress });
 
@@ -56,6 +59,10 @@ export async function insertOne(data: any) {
             sendOrReceive: "send",
             transferData: transferData,
         }
+        );
+
+        await collection.insertOne(
+            transferData
         );
 
     }
@@ -73,18 +80,19 @@ export async function insertOne(data: any) {
             transferData: transferData,
         }
         );
+
+        const result = await collection.insertOne(
+            transferData
+        );
         
     }
 
  
 
-    const collection = client.db('shinemywinter').collection('transfers');
 
-    const result = await collection.insertOne(
-        transferData
-    );
 
-    
+
+
     return {
         result: result,
     };
