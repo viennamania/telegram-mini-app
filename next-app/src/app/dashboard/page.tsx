@@ -253,8 +253,13 @@ function HomeContent() {
   // get agnetNft
   const [agentNft, setAgentNft] = useState<any[]>([]);
   const [loadingAgentNft, setLoadingAgentNft] = useState(false);
+
+
+  const [applicationData, setApplicationData] = useState(null);
+
   useEffect(() => {
-      const fetchData = async () => {
+
+      const fetchNfts = async () => {
           setLoadingAgentNft(true);
           const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
               method: "POST",
@@ -295,8 +300,46 @@ function HomeContent() {
 
       };
 
+      // fetch one application by walletAddress
+      const fetchApplication = async () => {
+
+        const response = await fetch("/api/agent/getOneApplication", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                walletAddress: selectUser,
+            }),
+        });
+
+        if (!response.ok) {
+            console.error("Error fetching application");
+            return;
+        }
+
+        const data = await response.json();
+
+        console.log("getOneApplication data", data);
+
+        setApplicationData(data.result);
+
+
+      }
+
+
+
+
+
+
+
+
       if (selectUser) {
-          fetchData();
+
+        fetchNfts();
+
+        fetchApplication();
+
       }
 
   }, [selectUser]);
