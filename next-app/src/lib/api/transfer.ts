@@ -22,23 +22,69 @@ export async function insertOne(data: any) {
         return null;
     }
 
-
-
-
-    const client = await clientPromise;
-    const collection = client.db('shinemywinter').collection('transfers');
-
-    const result = await collection.insertOne(
-    {
+    const transferData = {
         transactionHash: data.transactionHash,
         transactionIndex: data.transactionIndex,
         fromAddress: data.fromAddress,
         toAddress: data.toAddress,
         value: data.value,
         timestamp: data.timestamp,
+    };
+
+
+    const client = await clientPromise;
+
+    // if fromAddress is user wallet address, then insert into userTransfers collection
+    // if toAddress is user wallet address, then insert into userTransfers collection
+
+
+    const collectionUsers = client.db('shinemywinter').collection('users');
+
+    const collectionUserTransfers = client.db('shinemywinter').collection('userTransfers');
+
+
+    const userFromAddress = await collectionUsers.findOne({ walletAddress: data.fromAddress });
+
+    if (userFromAddress) {
+        
+        //console.log("userFromAddress", userFromAddress);
+
+
+        await collectionUserTransfers.insertOne(
+        {
+            user: userFromAddress,
+            sendOrReceive: "send",
+            transferData: transferData,
+        }
+        );
+
     }
+
+    const userToAddress = await collectionUsers.findOne({ walletAddress: data.toAddress });
+
+    if (userToAddress) {
+        
+        //console.log("userToAddress", userToAddress);
+
+        await collectionUserTransfers.insertOne(
+        {
+            user: userToAddress,
+            sendOrReceive: "receive",
+            transferData: transferData,
+        }
+        );
+        
+    }
+
+ 
+
+    const collection = client.db('shinemywinter').collection('transfers');
+
+    const result = await collection.insertOne(
+        transferData
     );
 
+    
     return {
         result: result,
     };
