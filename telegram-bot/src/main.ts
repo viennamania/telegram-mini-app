@@ -293,10 +293,16 @@ async function fetchAccountData() {
 
     if (responseUsers.status !== 200) {
       ///return ctx.reply("Failed to get leaderboard");
+
+      console.log('Failed to get users telegram id by center')
+
       return;
     }
 
     const dataUsers = await responseUsers.json();
+
+    ///console.log('dataUsers:', dataUsers);
+
     
     for (const user of dataUsers.result) {
       const telegramId = user.telegramId;
@@ -308,6 +314,9 @@ async function fetchAccountData() {
       // find application for the user by wallet address
 
       const application = applications.find((application: any) => application.walletAddress === user.walletAddress);
+
+      ///console.log('application:', application);
+
 
 
       const masterBotImageUrl = application ? application?.masterBotInfo?.imageUrl : '';

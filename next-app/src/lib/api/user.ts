@@ -579,6 +579,7 @@ export async function getAllUsersTelegramIdByCenter(
 
   // telegramId is not empty and not null and not empty string
 
+  
 
   const users = await collection
     .find<UserProps>(
