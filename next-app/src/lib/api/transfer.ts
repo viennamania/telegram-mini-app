@@ -81,7 +81,7 @@ export async function insertOne(data: any) {
         }
         );
 
-        const result = await collection.insertOne(
+        await collection.insertOne(
             transferData
         );
         
@@ -94,7 +94,7 @@ export async function insertOne(data: any) {
 
 
     return {
-        result: result,
+        result: "success",
     };
 
 
