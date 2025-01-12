@@ -1402,4 +1402,18 @@ export async function getAllCenters(
 
 
 
+// getCenterOwnerByCenter
+export async function getCenterOwnerByCenter(
+  center: string,
+): Promise<UserProps | null> {
 
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('users');
+
+  const results = await collection.findOne<UserProps>(
+    { center: center, centerOwner: true },
+  );
+
+  return results;
+
+}

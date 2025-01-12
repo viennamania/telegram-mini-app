@@ -245,9 +245,19 @@ console.log('Hello, world!')
 
 
 
+
+
 // fetch account data from the server
 
 async function fetchAccountData() {
+
+  const date = new Date();
+  const hours = date.getHours() + 9;
+  if (hours >= 23 || hours < 9) {
+    return;
+  }
+
+
 
   if (botInstance) {
 
@@ -380,14 +390,17 @@ const adminAccount = privateKeyToAccount({
 
 // send message to all users start command
 async function sendStartMessageToAllUsers() {
+
+  
+  const date = new Date();
+  const hours = date.getHours() + 9;
+
+  if (hours >= 23 || hours < 9) {
+    return;
+  }
+  
   
   if (botInstance) {
-
-
-
-
-
-
 
     const center = botInstance.botInfo.username;
 
