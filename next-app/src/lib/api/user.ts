@@ -1410,10 +1410,8 @@ export async function getCenterOwnerByCenter(
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('users');
 
-  const results = await collection.findOne<UserProps>(
+  return await collection.findOne<UserProps>(
     { center: center, centerOwner: true },
   );
-
-  return results;
 
 }
