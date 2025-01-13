@@ -89,10 +89,10 @@ function ProfilePage() {
 
 
 
-    const address = account?.address;
+    //const address = account?.address;
 
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -634,6 +634,34 @@ function ProfilePage() {
 
     } , [address]);
 
+
+
+    // api /api/teleram/getMessagesByTelegramId
+    useEffect(() => {
+        
+        const getMessages = async () => {
+
+            const response = await fetch("/api/telegram/getMessagesByTelegramId", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    telemgramId: telegramId.toString(),
+                }),
+            });
+
+            const data = await response.json();
+
+            console.log("getMessages data", data);
+
+        };
+
+        if (telegramId) {
+            getMessages();
+        }
+
+    } , [telegramId]);
 
 
     return (
