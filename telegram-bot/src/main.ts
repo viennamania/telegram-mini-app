@@ -498,6 +498,8 @@ async function sendMessages() {
     return;
   }
 
+  const center = botInstance.botInfo.username;
+
   
   const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/getAllMessages`;
 
@@ -507,6 +509,7 @@ async function sendMessages() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      center: center,
       limit: 10,
       page: 1,
     }),

@@ -47,13 +47,8 @@ export async function insertOne(data: any) {
 
 
     
-    const insert = await collection.insertOne(
-        transferData
-    );
 
-    if (!insert) {
-        return null;
-    }
+
 
 
 
@@ -85,6 +80,9 @@ export async function insertOne(data: any) {
         );
 
 
+        await collection.insertOne(
+            transferData
+        );
 
     }
 
@@ -105,6 +103,10 @@ export async function insertOne(data: any) {
             sendOrReceive: "receive",
             transferData: transferData,
         }
+        );
+
+        await collection.insertOne(
+            transferData
         );
 
 
