@@ -96,6 +96,7 @@ export async function insertOne(data: any) {
 
             await collectionTelegramMessages.insertOne(
             {
+                category: "wallet",
                 telegramId: telegramId,
                 message: "You have received " + amount + " USDT",
             }
