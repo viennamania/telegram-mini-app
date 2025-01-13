@@ -175,7 +175,7 @@ export async function getTransferByWalletAddress(data: any) {
 
     // totalTransfers
     const totalTransfers = await collectionUserTransfers
-    .find({ "user._id": user._id })
+    .find({ "user.walletAddress": data.walletAddress })
     .count();
 
 
