@@ -26,7 +26,7 @@ export interface Message {
 // getMessagesByTelegramId
 export async function getMessagesByTelegramId(data: any) {
 
-    console.log("data", data);
+    ///console.log("data", data);
 
 
     if (!data.telegramId) {
@@ -50,7 +50,7 @@ export async function getMessagesByTelegramId(data: any) {
         .toArray();
 
 
-        console.log("messages", messages);
+        ////console.log("messages", messages);
 
 
         // totalTelegramMessages
