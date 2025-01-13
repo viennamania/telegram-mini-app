@@ -105,15 +105,8 @@ export async function insertOne(data: any) {
             );
 
         }
-
-
         
     }
-
- 
-
-
-
 
 
     return {
@@ -122,6 +115,8 @@ export async function insertOne(data: any) {
 
 
 }
+
+
 
 
 // getTransferByWalletAddress
