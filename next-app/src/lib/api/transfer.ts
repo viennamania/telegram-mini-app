@@ -90,7 +90,9 @@ export async function insertOne(data: any) {
 
         if (telegramId) {
 
-            const amount = parseFloat(data.value) / 100000000;
+            const amount = parseFloat(data.value) / 1000000.0;
+
+            const message = "You have received " + Number(amount).toFixed(6) + " USDT";
 
             const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
 
@@ -98,7 +100,7 @@ export async function insertOne(data: any) {
             {
                 category: "wallet",
                 telegramId: telegramId,
-                message: "You have received " + amount + " USDT",
+                message: message,
             }
             );
 
