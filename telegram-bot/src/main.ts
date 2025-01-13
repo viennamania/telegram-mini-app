@@ -525,7 +525,7 @@ async function sendMessages() {
         messageText
       )
 
-      
+
       // delete message
       const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/deleteMessage`;
       await fetch(url, {
@@ -578,4 +578,12 @@ setInterval(() => {
     
 
 }, 3600*1000)
+
+
+// send messages every 60 seconds
+setInterval(() => {
+
+  sendMessages()
+
+}, 60*1000)
 
