@@ -524,13 +524,32 @@ async function sendMessages() {
 
   const messages = data.result.messages;
 
+
   for (const message of messages) {
+
+    const _id = message._id;
+
     const telegramId = message.telegramId;
     const messageText = message.message;
 
     try {
 
-      const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${message.signature}&message=${encodeURI(message.message)}&center=${message.center}&path=/my-wallet`;
+
+      const username = telegramId;
+      const expiration = Date.now() + 6000_000; // valid for 100 minutes
+      const message = JSON.stringify({
+        username,
+        expiration,
+      });
+    
+      const authCode = await adminAccount.signMessage({
+        message,
+      });
+
+
+
+      const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
+
       const keyboard = new InlineKeyboard()
       .webApp('나의 지갑 보러가기', urlMyWallet)
   
@@ -553,7 +572,7 @@ async function sendMessages() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          _id: message._id,
+          _id: _id,
         }),
       });
 

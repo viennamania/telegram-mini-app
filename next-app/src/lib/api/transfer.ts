@@ -50,6 +50,13 @@ export async function insertOne(data: any) {
 
 
 
+    const result = await collection.insertOne(transferData);
+
+
+    // if error, then return
+    if (!result) {
+        return null;
+    }
 
 
     ////const userFromAddress = await collectionUsers.findOne({ walletAddress: data.fromAddress });
@@ -67,10 +74,6 @@ export async function insertOne(data: any) {
 
     if (userFromAddress && userFromAddress.walletAddress) {
         
-        //console.log("userFromAddress", userFromAddress);
-
-
-
         await collectionUserTransfers.insertOne(
         {
             user: userFromAddress,
@@ -79,10 +82,6 @@ export async function insertOne(data: any) {
         }
         );
 
-
-        await collection.insertOne(
-            transferData
-        );
 
     }
 
@@ -94,8 +93,6 @@ export async function insertOne(data: any) {
     )
 
     if (userToAddress && userToAddress.walletAddress) {
-        
-        //console.log("userToAddress", userToAddress);
 
         await collectionUserTransfers.insertOne(
         {
@@ -105,9 +102,7 @@ export async function insertOne(data: any) {
         }
         );
 
-        await collection.insertOne(
-            transferData
-        );
+
 
 
 
