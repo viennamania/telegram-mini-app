@@ -483,6 +483,58 @@ async function sendStartMessageToAllUsers() {
 
 
 
+// send message to all users to notify them to set their profile image
+// get messages from api
+// /api/telegram/getAllMessages
+async function sendMessages() {
+
+  if (!botInstance) {
+    return;
+  }
+  
+  
+  const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/getAllMessages`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      limit: 10,
+      page: 1,
+    }),
+  });
+
+  if (response.status !== 200) {
+    ///return ctx.reply("Failed to get leaderboard");
+    return;
+  }
+
+  const data = await response.json();
+
+  const messages = data.result.messages;
+
+  for (const message of messages) {
+    const telegramId = message.telegramId;
+    const messageText = message.message;
+
+    try {
+      botInstance.api.sendMessage(
+        telegramId,
+        messageText
+      )
+    } catch (error) {
+      console.error('Error sending message:', error)
+    }
+
+  }
+
+}
+
+
+
+
 // sleep for 5 seconds
 function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));

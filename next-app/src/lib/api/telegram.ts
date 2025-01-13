@@ -77,3 +77,29 @@ export async function getMessagesByTelegramId(data: any) {
 }
 
 
+// getAllMessages
+export async function getAllMessages(data: any) {
+
+    const client = await clientPromise;
+
+    const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+
+    const messages = await collectionTelegramMessages
+    .find({})
+    .sort({ _id: -1 })
+    .limit(data.limit)
+    .skip(data.limit * (data.page - 1))
+    .toArray();
+
+    // totalTelegramMessages
+
+    const totalMessages = await collectionTelegramMessages
+    .find({})
+    .count();
+
+    return {
+        messages,
+        totalMessages,
+    }
+
+}
