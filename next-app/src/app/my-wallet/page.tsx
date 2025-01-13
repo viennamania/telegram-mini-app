@@ -89,10 +89,10 @@ function ProfilePage() {
 
 
 
-    //const address = account?.address;
+    const address = account?.address;
 
     // test address
-    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -809,9 +809,7 @@ function ProfilePage() {
                     <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
 
-                        {
-                        !loadingError && !loadingUser
-                        && address && (
+                        {address && (
 
                             <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
