@@ -491,7 +491,7 @@ async function sendMessages() {
   if (!botInstance) {
     return;
   }
-  
+
   
   const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/getAllMessages`;
 
@@ -524,6 +524,21 @@ async function sendMessages() {
         telegramId,
         messageText
       )
+
+      
+      // delete message
+      const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/deleteMessage`;
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: message._id,
+        }),
+      });
+
+
     } catch (error) {
       console.error('Error sending message:', error)
     }

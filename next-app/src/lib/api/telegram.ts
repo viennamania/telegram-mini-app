@@ -103,3 +103,18 @@ export async function getAllMessages(data: any) {
     }
 
 }
+
+// deleteMessage
+export async function deleteMessage(data: any) {
+
+    const client = await clientPromise;
+
+    const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+
+    await collectionTelegramMessages.deleteOne({ _id: data._id });
+
+    return {
+        result: "success",
+    };
+
+}
