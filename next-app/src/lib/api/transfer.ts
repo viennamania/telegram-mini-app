@@ -46,93 +46,91 @@ export async function insertOne(data: any) {
     const collection = client.db('shinemywinter').collection('transfers');
 
 
+    try {
 
-    ////const userFromAddress = await collectionUsers.findOne({ walletAddress: data.fromAddress });
-    /*
-    const userFromAddress = collectionUsers
-    .aggregate([
-        { $match: { walletAddress: data.fromAddress } },
-        { $project: { _id: 1, telegramId: 1, walletAddress: 1 } }
-    ])
-    */
-    const userFromAddress = collectionUsers.findOne(
-        { walletAddress: data.fromAddress },
-        { projection: { telegramId: 1, walletAddress: 1 } }
-    )
+        ////const userFromAddress = await collectionUsers.findOne({ walletAddress: data.fromAddress });
+        /*
+        const userFromAddress = collectionUsers
+        .aggregate([
+            { $match: { walletAddress: data.fromAddress } },
+            { $project: { _id: 1, telegramId: 1, walletAddress: 1 } }
+        ])
+        */
+        const userFromAddress = await collectionUsers.findOne(
+            { walletAddress: data.fromAddress },
+            { projection: { telegramId: 1, walletAddress: 1 } }
+        )
 
-    if (userFromAddress) {
-        
-        //console.log("userFromAddress", userFromAddress);
-
-
-
-        await collectionUserTransfers.insertOne(
-        {
-            user: userFromAddress,
-            sendOrReceive: "send",
-            transferData: transferData,
-        }
-        );
-
-        await collection.insertOne(
-            transferData
-        );
-
-    }
-
-    //const userToAddress = await collectionUsers.findOne({ walletAddress: data.toAddress });
-
-    const userToAddress = await collectionUsers.findOne(
-        { walletAddress: data.toAddress },
-        { projection: { telegramId: 1, walletAddress: 1 } }
-    )
-
-    ///console.log("toAddress=", data.toAddress, ", userToAddress", userToAddress);
-    /*
-    {
-        _id: new ObjectId('677f9b5299d3ad20abe59c15'),
-        telegramId: '441516803',
-        walletAddress: '0x542197103Ca1398db86026Be0a85bc8DcE83e440'
-        }
-    */
-
-    if (userToAddress) {
-        
-        //console.log("userToAddress", userToAddress);
-
-        await collectionUserTransfers.insertOne(
-        {
-            user: userToAddress,
-            sendOrReceive: "receive",
-            transferData: transferData,
-        }
-        );
-
-        await collection.insertOne(
-            transferData
-        );
+        if (userFromAddress && userFromAddress.walletAddress) {
+            
+            //console.log("userFromAddress", userFromAddress);
 
 
-        const telegramId = userToAddress.telegramId;
 
-        if (telegramId) {
-
-            const amount = parseFloat(data.value) / 1000000.0;
-
-            const message = "You have received " + Number(amount).toFixed(6) + " USDT";
-
-            const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
-
-            await collectionTelegramMessages.insertOne(
+            await collectionUserTransfers.insertOne(
             {
-                category: "wallet",
-                telegramId: telegramId,
-                message: message,
+                user: userFromAddress,
+                sendOrReceive: "send",
+                transferData: transferData,
             }
             );
 
+            await collection.insertOne(
+                transferData
+            );
+
         }
-        
+
+
+
+        const userToAddress = await collectionUsers.findOne(
+            { walletAddress: data.toAddress },
+            { projection: { telegramId: 1, walletAddress: 1 } }
+        )
+
+        if (userToAddress && userToAddress.walletAddress) {
+            
+            //console.log("userToAddress", userToAddress);
+
+            await collectionUserTransfers.insertOne(
+            {
+                user: userToAddress,
+                sendOrReceive: "receive",
+                transferData: transferData,
+            }
+            );
+
+            await collection.insertOne(
+                transferData
+            );
+
+
+            const telegramId = userToAddress.telegramId;
+
+            if (telegramId) {
+
+                const amount = parseFloat(data.value) / 1000000.0;
+
+                const message = "You have received " + Number(amount).toFixed(6) + " USDT";
+
+                const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+
+                await collectionTelegramMessages.insertOne(
+                {
+                    category: "wallet",
+                    telegramId: telegramId,
+                    message: message,
+                }
+                );
+
+            }
+            
+        }
+
+    } catch (error) {
+        //console.log("error", error);
+
+        return null;
     }
 
 
