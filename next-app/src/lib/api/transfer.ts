@@ -46,6 +46,15 @@ export async function insertOne(data: any) {
     const collection = client.db('shinemywinter').collection('transfers');
 
 
+    
+    const insert = await collection.insertOne(
+        transferData
+    );
+
+    if (!insert) {
+        return null;
+    }
+
 
 
     ////const userFromAddress = await collectionUsers.findOne({ walletAddress: data.fromAddress });
@@ -75,9 +84,7 @@ export async function insertOne(data: any) {
         }
         );
 
-        await collection.insertOne(
-            transferData
-        );
+
 
     }
 
@@ -100,9 +107,6 @@ export async function insertOne(data: any) {
         }
         );
 
-        await collection.insertOne(
-            transferData
-        );
 
 
         const telegramId = userToAddress.telegramId;
