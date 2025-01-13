@@ -3,8 +3,6 @@ import { NextResponse, type NextRequest } from "next/server";
 import {
 	getTransferByWalletAddress
 } from '@lib/api/transfer';
-import { get } from "http";
-
 
 
 export async function POST(request: NextRequest) {

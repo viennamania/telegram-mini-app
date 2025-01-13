@@ -89,10 +89,10 @@ function ProfilePage() {
 
 
 
-    const address = account?.address;
+    //const address = account?.address;
 
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -564,280 +564,75 @@ function ProfilePage() {
 
 
 
-   /* my NFTs */
-   const [myNfts, setMyNfts] = useState([] as any[]);
 
 
-   
-   useEffect(() => {
+    // api /api/wallet/getTransfersByWalletAddress
+    /*
+    [
+        {
+            "sendOrReceive": "receive",
+            "transferData": {
+                "fromAddress": "0x4EF39b249A165cdA40b9c7b5F64e79bAb78Ff0C2",
+                "toAddress": "0x542197103Ca1398db86026Be0a85bc8DcE83e440",
+                "value": "2330038",
+                "timestamp": 1736735829000
+            }
+        },
+                {
+            "sendOrReceive": "send",
+            "transferData": {
+                "fromAddress": "0x4EF39b249A165cdA40b9c7b5F64e79bAb78Ff0C2",
+                "toAddress": "0x542197103Ca1398db86026Be0a85bc8DcE83e440",
+                "value": "2330038",
+                "timestamp": 1736735829000
+            }
+        },
+    ]
+    */
 
-
-       const getMyNFTs = async () => {
-
-            
-           try {
-
-                /*
-                const contract = getContract({
-                     client,
-                     chain: polygon,
-                     address: erc721ContractAddress,
-                });
-
-
-                
-                const nfts = await getOwnedNFTs({
-                    contract: contract,
-                    owner: address as string,
-                });
-
-                console.log("nfts=======", nfts);
-
-                setMyNfts( nfts );
-                */
-
-                /*
-                setMyNfts([
-                    {
-                         name: "AI Agent",
-                         description: "This is AI Agent",
-                         image: "https://owinwallet.com/logo-aiagent.png",
-                    },
-                ]);
-                */
-
-
-                // api /api/agent/getAgentNFTByWalletAddress
-
-                const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        walletAddress: address,
-                    }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to get NFTs');
-                }
-
-                const data = await response.json();
-
-                ///console.log("myOwnedNfts====", data.result);
-
-                if (data.result) {
-                    setMyNfts(data.result.ownedNfts);
-                } else {
-                    setMyNfts([]);
-                }
-                
-                   
-   
-
-
-           } catch (error) {
-               console.error("Error getting NFTs", error);
-           }
-           
-
-       };
-
-       if (address ) {
-           getMyNFTs();
-       }
-
-   }
-   , [ address ]);
-   
-
-
-   console.log("myNfts", myNfts);
-
-
-
-
-    const [agentName, setAgentName] = useState("");
-    const [agentDescription, setAgentDescription] = useState("");
-
-
-    const [agentImage, setAgentImage] = useState("https://owinwallet.com/logo-aiagent.png");
-    const [ganeratingAgentImage, setGeneratingAgentImage] = useState(false);
-
-
-    const [mintingAgentNft, setMintingAgentNft] = useState(false);
-    const [messageMintingAgentNft, setMessageMintingAgentNft] = useState("");
-    const mintAgentNft = async () => {
-
-        if (mintingAgentNft) {
-            //toast.error('이미 실행중입니다');
-            setMessageMintingAgentNft('이미 실행중입니다');
-            return;
-        }
-
-        if (!address) {
-            //toast.error('지갑을 먼저 연결해주세요');
-            setMessageMintingAgentNft('지갑을 먼저 연결해주세요');
-            return;
-        }
-
-        if (!erc721ContractAddress) {
-            //toast.error('AI 에이전트 계약주소를 먼저 생성해주세요');
-            setMessageMintingAgentNft('AI 에이전트 계약주소를 먼저 생성해주세요');
-            return;
-        }
-
-        if (agentName.length < 5 || agentName.length > 15) {
-            //toast.error('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
-            setMessageMintingAgentNft('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
-            return;
-        }
-
-        if (agentDescription.length < 5 || agentDescription.length > 100) {
-            //toast.error('에이전트 설명은 5자 이상 100자 이하로 입력해주세요');
-            setMessageMintingAgentNft('에이전트 설명은 5자 이상 100자 이하로 입력해주세요');
-            return;
-        }
-
-        if (!agentImage) {
-            //toast.error('에이전트 이미지를 선택해주세요');
-            setMessageMintingAgentNft('에이전트 이미지를 선택해주세요');
-            return;
-        }
-
-
-        setMessageMintingAgentNft('AI 에이전트 NFT 발행중입니다');
-
-
-        setMintingAgentNft(true);
-
-        try {
-
-
-            setGeneratingAgentImage(true);
-
-
-            setMessageMintingAgentNft('AI 에이전트 이미지 생성중입니다');
-
-            // genrate image from api
-            // /api/ai/generateImage
-
-            const responseGenerateImage = await fetch("/api/ai/generateImageAgent", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    englishPrompt: "",
-                }),
-            });
-
-            const dataGenerateImage = await responseGenerateImage.json();
-
-            const imageUrl = dataGenerateImage?.result?.imageUrl;
+    const [loadingTransfers, setLoadingTransfers] = useState(false);
+    const [transfers, setTransfers] = useState([] as any[]);
+    useEffect(() => {
         
-            if (!imageUrl) {
+        const getTransfers = async () => {
 
-                setGeneratingAgentImage(false);
+            setLoadingTransfers(true);
 
-                throw new Error('Failed to generate image');
-            }
-
-
-            setGeneratingAgentImage(false);
-            setAgentImage(imageUrl);
-
-
-            setMessageMintingAgentNft('AI 에이전트 NFT 발행중입니다');
-
-            const contract = getContract({
-                client,
-                chain: polygon,
-                address: erc721ContractAddress,
-
-              });
-
-
-            const transaction = mintTo({
-                contract: contract,
-                to: address as string,
-                nft: {
-                    name: agentName,
-                    description: agentDescription,
-
-                    ////image: agentImage,
-                    image: imageUrl,
-
-                },
-            });
-
-            //await sendTransaction({ transaction, account: activeAccount as any });
-
-
-
-            //setActiveAccount(smartConnectWallet);
-
-            const transactionResult = await sendAndConfirmTransaction({
-                transaction: transaction,
-                account: account as any,
-
-                ///////account: smartConnectWallet as any,
-            });
-
-            //console.log("transactionResult", transactionResult);
-
-
-            if (!transactionResult) {
-                throw new Error('AI 에이전트 NFT 발행 실패. 관리자에게 문의해주세요');
-            }
-
-            setMessageMintingAgentNft('AI 에이전트 NFT 발행 완료');
-
-
-            // fetch the NFTs again
-            const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
+            const response = await fetch("/api/wallet/getTransfersByWalletAddress", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     walletAddress: address,
-                    //erc721ContractAddress: erc721ContractAddress,
                 }),
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data.result) {
-                    setMyNfts(data.result.ownedNfts);
-                } else {
-                    setMyNfts([]);
-                }
+            if (!response.ok) {
+                setLoadingTransfers(false);
+                return;
             }
 
-            setAgentName("");
-            setAgentDescription("");
+            const data = await response.json();
 
-            ///toast.success('AI 에이전트 NFT 발행 완료');
-
+            //console.log("getTransfers data", data);
 
 
+            if (data.result) {
+                setTransfers(data.result.transfers);
+            } else {
+                setTransfers([]);
+            }
 
-        } catch (error) {
-            console.error("mintAgentNft error", error);
+            setLoadingTransfers(false);
 
-            ///toast.error('AI 에이전트 NFT 발행 실패');
+        };
 
-            setMessageMintingAgentNft('AI 에이전트 NFT 발행 실패');
+        if (address) {
+            getTransfers();
         }
 
-        setMintingAgentNft(false);
-
-        setAgentImage("https://owinwallet.com/logo-aiagent.png");
-
-    }
-
+    } , [address]);
 
 
 
@@ -1128,6 +923,83 @@ function ProfilePage() {
                         )}
                         
                     </div>
+
+                    {/*transfers*/}
+                    {/* table view */}
+                    {/* if transfers.sendReceive === send, then display "보내기" */}
+                    {/* if transfers.sendReceive === receive, then display "받기" */}
+                    {loadingTransfers && (
+                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                거래내역 로딩중...
+                            </div>
+                        </div>
+                    )}
+
+                    {transfers?.length > 0 && (
+                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                거래내역
+                            </div>
+
+                            <table className="w-full">
+                                <thead>
+                                    <tr>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
+                                            +/-
+                                        </th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">지갑주소</th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">금액(USDT)</th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">날짜</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {transfers.map((transfer, index) => (
+                                        <tr key={index}>
+                                            <td className="p-2 text-lg text-zinc-800 font-semibold">
+                                                {transfer.sendOrReceive === "send" ? "-" : "+"}
+                                            </td>
+                                            {transfer.sendOrReceive === "send" ? (
+                                                <td className="p-2 text-xs text-zinc-800">
+                                                    {shortenAddress(transfer.transferData.toAddress)}
+                                                </td>
+                                            ) : (
+                                                <td className="p-2 text-xs text-zinc-800">
+                                                    {shortenAddress(transfer.transferData.fromAddress)}
+                                                </td>
+                                            )}
+                                            <td className="p-2 text-sm text-green-500 font-semibold text-right">
+                                                {Number(transfer.transferData.value / 10 ** 6).toFixed(6)}
+                                            </td>
+                                            <td className="p-2 text-xs text-zinc-800 font-semibold">
+                                                {/* time ago */}
+
+                                                {
+
+
+
+                                                    new Date(transfer.transferData.timestamp).toLocaleString('ko-KR', {
+                                                        timeZone: 'Asia/Seoul',
+                                                        hour12: false,
+                                                    })
+
+
+
+                                                }
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    ) }
+
+
+                    
+                   
+
+                    
 
 
 
