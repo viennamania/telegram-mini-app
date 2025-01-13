@@ -84,6 +84,26 @@ export async function insertOne(data: any) {
         await collection.insertOne(
             transferData
         );
+
+
+        const telegramId = userToAddress.telegramId;
+
+        if (telegramId) {
+
+            const amount = parseFloat(data.value) / 100000000;
+
+            const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+
+            await collectionTelegramMessages.insertOne(
+            {
+                telegramId: telegramId,
+                message: "You have received " + amount + " USDT",
+            }
+            );
+
+        }
+
+
         
     }
 
