@@ -956,10 +956,24 @@ function ProfilePage() {
                     {/* polygon scan */}
                     <div className="flex flex-row gap-2 items-center justify-between">
                         <Button
-                            onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}/tokentxns`)}
-                            className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                            onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}/tokentxns#tokentxns`)}
+                            className="bg-green-500 text-zinc-100 p-2 rounded
+                                hover:bg-green-600
+                            "
                         >
-                            거래 내역 보기
+                            <div className="flex flex-row gap-2 items-center justify-between">
+                                <Image
+                                    src="/logo-polygon.png"
+                                    alt="Polygon"
+                                    width={20}
+                                    height={20}
+                                    className="rounded"
+                                />
+                                <span className="text-lg font-semibold">
+                                    폴리스캠에서 거래내역 보기
+                                </span>
+                            </div>
+
                         </Button>
                     </div>
 
