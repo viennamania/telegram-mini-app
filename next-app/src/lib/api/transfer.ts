@@ -17,6 +17,10 @@ export interface TransferProps {
     timestamp: string;
 }
 
+
+const client = await clientPromise;
+
+
 export async function insertOne(data: any) {
 
     if (!data.transactionHash || !data.transactionIndex || !data.fromAddress || !data.toAddress || !data.value || !data.timestamp) {
@@ -33,7 +37,7 @@ export async function insertOne(data: any) {
     };
 
 
-    const client = await clientPromise;
+
 
     // if fromAddress is user wallet address, then insert into userTransfers collection
     // if toAddress is user wallet address, then insert into userTransfers collection
