@@ -15,11 +15,7 @@ export async function POST(request: NextRequest) {
   //console.log("walletAddress", walletAddress);
 
 
-  const result = await deleteMessage({
-    _id: _id,
-    limit: 500,
-    page: 1,
-  });
+  const result = await deleteMessage( _id );
 
  
   return NextResponse.json({
