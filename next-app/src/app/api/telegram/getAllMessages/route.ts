@@ -7,7 +7,12 @@ import {
 
 export async function POST(request: NextRequest) {
 
+  const body = await request.json();
+
+  const { center } = body;
+
   const result = await getAllMessages({
+    center,
     limit: 500,
     page: 1,
   });

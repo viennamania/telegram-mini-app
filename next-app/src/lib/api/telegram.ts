@@ -83,21 +83,31 @@ export async function getMessagesByTelegramId(data: any) {
 // getAllMessages
 export async function getAllMessages(data: any) {
 
+    const {
+        center,
+        limit,
+        page,
+    } = data;
+
     const client = await clientPromise;
 
     const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
 
     const messages = await collectionTelegramMessages
-    .find({})
+    .find({
+        center,
+    })
     .sort({ _id: -1 })
-    .limit(data.limit)
-    .skip(data.limit * (data.page - 1))
+    .limit(limit)
+    .skip(limit * (page - 1))
     .toArray();
 
     // totalTelegramMessages
 
     const totalMessages = await collectionTelegramMessages
-    .find({})
+    .find({
+        center,
+    })
     .count();
 
     return {
@@ -110,13 +120,18 @@ export async function getAllMessages(data: any) {
 // deleteMessage
 export async function deleteMessage(data: any) {
 
+    const {
+        _id,
+    } = data;
+
+
     const client = await clientPromise;
 
     const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
 
     await collectionTelegramMessages.deleteOne
     ({
-        _id: new ObjectId(data._id as string),
+        _id: new ObjectId(_id as string),
     });
 
     return {
