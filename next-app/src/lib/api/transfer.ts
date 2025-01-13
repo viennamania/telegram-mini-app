@@ -122,3 +122,38 @@ export async function insertOne(data: any) {
 
 
 }
+
+
+// getTransferByWalletAddress
+export async function getTransferByWalletAddress(data: any) {
+
+    if (!data.walletAddress) {
+        return null;
+    }
+
+    const client = await clientPromise;
+
+    const collectionUsers = client.db('shinemywinter').collection('users');
+
+    const user = await collectionUsers.findOne({ walletAddress: data.walletAddress });
+
+    if (!user) {
+        return null;
+    }
+
+    // transferData: { transactionHash: string, transactionIndex: string, fromAddress: string, toAddress: string, value: string, timestamp: string }
+    // timestamp desc
+    
+
+    const collectionUserTransfers = client.db('shinemywinter').collection('userTransfers');
+
+    const userTransfers = await collectionUserTransfers
+    .find({ "user._id": user._id })
+    .sort({ "transferData.timestamp": -1 })
+    .toArray();
+
+
+    return userTransfers;
+
+}
+

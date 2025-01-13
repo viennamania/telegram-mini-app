@@ -102,14 +102,25 @@ feature.command('wallet', async (ctx) => {
         message,
       });
 
-      const urlMyProfile = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
+      const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
 
 
+      const text = '지갑주소: ' + walletAddress + '\n' + '잔고: ' + balance + ' USDT';
+      const keyboard = new InlineKeyboard()
+        .webApp('나의 지갑 보러가기', urlMyWallet);
 
+      return ctx.reply(
+        text,
+        { reply_markup: keyboard}
+      );
+
+
+      /*
       return ctx.reply(
         "지갑주소: " + walletAddress
         + "\n" + "잔고: " + balance + " USDT"
       );
+      */
 
     }
   }
