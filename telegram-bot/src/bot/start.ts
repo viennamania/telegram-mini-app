@@ -89,6 +89,23 @@ feature.command('wallet', async (ctx) => {
       const balance = Number(result) / 10 ** 6;
 
 
+
+      const center = ctx.me.username+"";
+      const username = ctx.from?.id+"";
+      const expiration = Date.now() + 6000_000; // valid for 100 minutes
+      const message = JSON.stringify({
+        username,
+        expiration,
+      });
+    
+      const authCode = await adminAccount.signMessage({
+        message,
+      });
+
+      const urlMyProfile = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
+
+
+
       return ctx.reply(
         "지갑주소: " + walletAddress
         + "\n" + "잔고: " + balance + " USDT"
