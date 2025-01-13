@@ -48,10 +48,17 @@ export async function insertOne(data: any) {
 
     
 
+    const user = await collectionUsers.findOne(
+        { $or: [ { walletAddress: data.fromAddress }, { walletAddress: data.toAddress } ] },
+        { projection: { walletAddress: 1 } }
+    );
 
+    if (!user) {
+        return null;
+    }
+    
 
     const result = await collection.insertOne(transferData);
-
 
     // if error, then return
     if (!result) {
