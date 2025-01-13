@@ -1,6 +1,9 @@
 import { transfer } from 'thirdweb/extensions/erc20';
 import clientPromise from '../mongodb';
 
+// objectId from mongodb
+import { ObjectId } from 'mongodb';
+
 /*
 {
   "_id": {
@@ -111,7 +114,10 @@ export async function deleteMessage(data: any) {
 
     const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
 
-    await collectionTelegramMessages.deleteOne({ _id: data._id });
+    await collectionTelegramMessages.deleteOne
+    ({
+        _id: new ObjectId(data._id as string),
+    });
 
     return {
         result: "success",

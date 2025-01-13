@@ -327,9 +327,15 @@ async function fetchAccountData() {
 
       ///console.log('application:', application);
 
+      if (!application) {
+        continue;
+      }
 
 
       const masterBotImageUrl = application ? application?.masterBotInfo?.imageUrl : '';
+
+
+
 
       const tradingAccountBalance = application ? '$' + Number(application.tradingAccountBalance.balance).toFixed(2) : 'N/A';
 
@@ -520,10 +526,20 @@ async function sendMessages() {
     const messageText = message.message;
 
     try {
+
+      const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${message.signature}&message=${encodeURI(message.message)}&center=${message.center}&path=/my-wallet`;
+      const keyboard = new InlineKeyboard()
+      .webApp('나의 지갑 보러가기', urlMyWallet)
+  
       botInstance.api.sendMessage(
         telegramId,
-        messageText
+        '🚀 ' + messageText,
+        {
+          reply_markup: keyboard,
+        }
       )
+
+
 
 
       // delete message
