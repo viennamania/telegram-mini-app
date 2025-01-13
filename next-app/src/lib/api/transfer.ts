@@ -48,16 +48,22 @@ export async function insertOne(data: any) {
 
 
     ////const userFromAddress = await collectionUsers.findOne({ walletAddress: data.fromAddress });
-
+    /*
     const userFromAddress = collectionUsers
     .aggregate([
         { $match: { walletAddress: data.fromAddress } },
         { $project: { _id: 1, telegramId: 1, walletAddress: 1 } }
     ])
+    */
+    const userFromAddress = collectionUsers.findOne(
+        { walletAddress: data.fromAddress },
+        { projection: { _id: 1, telegramId: 1, walletAddress: 1 } }
+    )
 
     if (userFromAddress) {
         
         //console.log("userFromAddress", userFromAddress);
+
 
 
         await collectionUserTransfers.insertOne(
@@ -74,7 +80,12 @@ export async function insertOne(data: any) {
 
     }
 
-    const userToAddress = await collectionUsers.findOne({ walletAddress: data.toAddress });
+    //const userToAddress = await collectionUsers.findOne({ walletAddress: data.toAddress });
+
+    const userToAddress = await collectionUsers.findOne(
+        { walletAddress: data.toAddress },
+        { projection: { _id: 1, telegramId: 1, walletAddress: 1 } }
+    )
 
     if (userToAddress) {
         
