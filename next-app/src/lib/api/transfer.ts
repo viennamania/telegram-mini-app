@@ -57,7 +57,7 @@ export async function insertOne(data: any) {
     */
     const userFromAddress = collectionUsers.findOne(
         { walletAddress: data.fromAddress },
-        { projection: { _id: 1, telegramId: 1, walletAddress: 1 } }
+        { projection: { telegramId: 1, walletAddress: 1 } }
     )
 
     if (userFromAddress) {
@@ -84,8 +84,17 @@ export async function insertOne(data: any) {
 
     const userToAddress = await collectionUsers.findOne(
         { walletAddress: data.toAddress },
-        { projection: { _id: 1, telegramId: 1, walletAddress: 1 } }
+        { projection: { telegramId: 1, walletAddress: 1 } }
     )
+
+    ///console.log("toAddress=", data.toAddress, ", userToAddress", userToAddress);
+    /*
+    {
+        _id: new ObjectId('677f9b5299d3ad20abe59c15'),
+        telegramId: '441516803',
+        walletAddress: '0x542197103Ca1398db86026Be0a85bc8DcE83e440'
+        }
+    */
 
     if (userToAddress) {
         
@@ -148,7 +157,12 @@ export async function getTransferByWalletAddress(data: any) {
 
     const collectionUsers = client.db('shinemywinter').collection('users');
 
-    const user = await collectionUsers.findOne({ walletAddress: data.walletAddress });
+    
+    const user = await collectionUsers.findOne(
+        { walletAddress: data.walletAddress },
+        { projection: { walletAddress: 1 } }
+    );
+
 
     if (!user) {
         return null;
@@ -161,7 +175,7 @@ export async function getTransferByWalletAddress(data: any) {
     const collectionUserTransfers = client.db('shinemywinter').collection('userTransfers');
 
     const userTransfers = await collectionUserTransfers
-    .find({ "user._id": user._id })
+    .find({ "user.walletAddress": data.walletAddress })
     .sort({ "transferData.timestamp": -1 })
     .toArray();
 
