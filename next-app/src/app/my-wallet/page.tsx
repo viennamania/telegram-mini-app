@@ -970,7 +970,7 @@ function ProfilePage() {
                                     className="rounded"
                                 />
                                 <span className="text-lg font-semibold">
-                                    폴리스캠에서 거래내역 보기
+                                    폴리스캔에서 거래내역 보기
                                 </span>
                             </div>
 
