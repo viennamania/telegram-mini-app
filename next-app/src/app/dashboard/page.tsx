@@ -106,6 +106,8 @@ function HomeContent() {
             const data = await response.json();
 
             //console.log("getApplicationsForCenter data", data);
+
+            //console.log("getApplicationsForCenter data", data);
             /*
             {
                 "totalCount": 19,
@@ -862,20 +864,22 @@ function HomeContent() {
 
                                       <div className="flex flex-col gap-2 items-start justify-between">
                                         <span className="text-sm">
-                                          {nft.name}
+                                          {nft.name.slice(0, 10) + "..."}
                                         </span>
                                         <span className="text-sm text-gray-400">
-                                          {nft.description}
+                                          {nft.description.slice(0, 10) + "..."}
                                         </span>
                                       </div>
 
                                       <div className="flex flex-row gap-2 items-center justify-start">
+
+                                        
                                         <Image
                                           src={nft.image?.thumbnailUrl || "/icon-nft.png"}
                                           alt={nft.name}
                                           width={100}
                                           height={100}
-                                          className="rounded w-20 h-20"
+                                          className="rounded w-10 h-10"
                                         />
                                       
                                         <Button
@@ -1012,6 +1016,7 @@ function HomeContent() {
                               <th className="p-2">전화번호</th>
                               <th className="p-2">NFT</th>
                               <th className="p-2">거래계정 잔고</th>
+                              <th className="p-2">정산</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -1019,11 +1024,11 @@ function HomeContent() {
                               <tr key={index} className="bg-zinc-800 text-zinc-100">
                                   <td className="p-2">#{application?.id}</td>
                                   <td className="p-2">
-                                    {application?.okxUid}
+                                    {application?.okxUid.slice(0, 6) + "..."}
                                   </td>
                                   <td className="p-2">{application?.userName}</td>
                                   <td className="p-2">
-                                    {application?.userPhoneNumber}
+                                    {application?.userPhoneNumber.slice(0, 6) + "..."}
                                   </td>
                                   <td className="p-2">
                                     <div className="flex flex-row gap-2 items-center justify-start">
@@ -1060,11 +1065,21 @@ function HomeContent() {
                                       </Button>
                                     </div>
                                   </td>
-                                  <td className="p-2 w-1/5 text-right">
+                                  <td className="p-2 text-right">
                                     {Number(application?.tradingAccountBalance?.balance).toLocaleString('en-US', {
                                         style: 'currency',
                                         currency: 'USD'
                                     })}
+                                  </td>
+                                  {/* affiliateInvitee.data.volMonth */}
+                                  {/* claimedTradingVolume */}
+                                  <td className="p2">
+                                    <span className="text-green-500">
+                                      {application?.claimedTradingVolume}
+                                    </span>{' '}/{' '}
+                                    <span className="text-red-500">
+                                      {Number(application?.affiliateInvitee?.data?.volMonth - application?.claimedTradingVolume).toFixed(0)}
+                                    </span>
                                   </td>
                               </tr>
                           ))}
