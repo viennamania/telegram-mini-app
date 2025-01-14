@@ -107,6 +107,9 @@ function HomeContent() {
 
             //console.log("getApplicationsForCenter data", data);
 
+
+            //console.log("getApplicationsForCenter data", data);
+
             //console.log("getApplicationsForCenter data", data);
             /*
             {
@@ -138,10 +141,12 @@ function HomeContent() {
             */
 
 
-            setApplications(data.result?.applications);
+            setApplications(data?.result?.applications);
 
-            setTotalTradingAccountCount( data.result?.totalCount );
-            setTotalTradingAccountBalance( data.result?.totalTradingAccountBalance );
+
+
+            setTotalTradingAccountCount( data?.result?.totalCount );
+            setTotalTradingAccountBalance( data?.result?.totalTradingAccountBalance );
 
             setLoadingApplications(false);
 
@@ -378,7 +383,7 @@ function HomeContent() {
           //setAgentBotSummaryList(data.resultSummany);
 
 
-          setUsers(data.result);
+          setUsers(data?.result);
 
           setLoadingUsers(false);
 
@@ -742,6 +747,29 @@ function HomeContent() {
               <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                   텔레그램 회원 목록
               </div>
+
+              {/* 에어드롭 USDT */}
+              {/* input amountAirDrop */}
+              <input
+                type="number"
+                id="amountAirDrop"
+                name="amountAirDrop"
+                placeholder="에어드롭 USDT"
+                className="w-32 p-2 rounded border border-gray-300"
+              />
+              {/* button airDrop */}
+              <Button
+                onClick={() => {
+                  // airDrop
+                  console.log("airDrop");
+                }}
+                className="bg-green-500 text-zinc-100 p-2 rounded"
+              >
+                에어드롭
+              </Button>
+                
+
+
             </div>
             
             {address && (
@@ -751,13 +779,13 @@ function HomeContent() {
                       <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
                   </div>
                 ) : (
+
+                  <>
+                  
                   <table className="w-full">
                       <thead>
                           <tr className="bg-zinc-800 text-zinc-100">
                               <th className="p-2">회원아이디</th>
-                              {/*
-                              <th className="p-2">매직아이디</th>
-                              */}
                               <th className="p-2">지갑주소</th>
                               <th className="p-2">센터장</th>
                               <th className="p-2">에이전트</th>
@@ -767,37 +795,31 @@ function HomeContent() {
                           {users.map((user, index) => (
                               <tr
                                 key={index}
-                                className={`${selectUser === user.walletAddress ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}`}
+                                className={`${selectUser === user?.walletAddress ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}`}
                               >
                                   <td className="p-2">
                                     <div className="flex flex-row gap-2 items-center justify-start">
                                       <Image
-                                        src={user.avatar || "/icon-anonymous.png"}
-                                        alt={user.nickname}
+                                        src={user?.avatar || "/icon-anonymous.png"}
+                                        alt={user?.nickname}
                                         width={50}
                                         height={50}
                                         className="rounded w-10 h-10"
                                       />
                                       <span className="text-sm">
-                                        {user.nickname}
+                                        {user?.nickname}
                                       </span>
                                     </div>
                                   </td>
-                                  {/*
-                                  <td className="p-2">
-                                    {user.telegramId}
-                                  </td>
-                                  */}
                                   <td className="p-2">
                                     <div className="flex flex-row gap-2 items-center justify-start">
                                       <span className="text-sm">
-                                        {user.walletAddress.slice(0, 6) + "..."}
+                                        {user?.walletAddress?.slice(0, 6) + "..."}
                                       </span>
-                                      {/* copy wallet address */}
                                       <Button
                                         onClick={() => {
-                                          navigator.clipboard.writeText(user.walletAddress);
-                                          alert(`${user.walletAddress} 복사되었습니다.`);
+                                          navigator.clipboard.writeText(user?.walletAddress);
+                                          alert(`${user?.walletAddress} 복사되었습니다.`);
                                         }}
                                         className="
                                           inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
@@ -808,7 +830,7 @@ function HomeContent() {
                                     </div>
                                   </td>
                                   <td className="p-2 text-center">
-                                    {user.centerOwner && (
+                                    {user?.centerOwner && (
                                       <span className="text-white font-semibold bg-green-500 p-1 rounded">
                                         O
                                       </span>
@@ -817,12 +839,12 @@ function HomeContent() {
                                   <td className="p-2 text-center">
                                     <input
                                       type="radio"
-                                      id={user.walletAddress}
+                                      id={user?.walletAddress}
                                       name="user"
-                                      value={user.telegramId}
-                                      checked={selectUser === user.walletAddress}
+                                      value={user?.telegramId}
+                                      checked={selectUser === user?.walletAddress}
                                       onChange={() => {
-                                          setSelectUser(user.walletAddress);
+                                          setSelectUser(user?.walletAddress);
                                       }}
                                       className="w-4 h-4"
                                     />
@@ -831,6 +853,9 @@ function HomeContent() {
                           ))}
                       </tbody>
                   </table>
+                  
+
+                  </>
                 )}
               </>
             )}
@@ -1036,7 +1061,7 @@ function HomeContent() {
                                   */}
                                   <td className="p-2">{application?.userName}</td>
                                   <td className="p-2">
-                                    {application?.userPhoneNumber.slice(0, 6) + "..."}
+                                    {application?.userPhoneNumber?.slice(0, 6) + "..."}
                                   </td>
                                   <td className="p-2">
                                     
@@ -1051,7 +1076,7 @@ function HomeContent() {
                                           className="rounded"
                                         />
                                         <span className="text-xs">
-                                          {application?.agentBotNft?.name.slice(0, 10) + "..."}
+                                          {application?.agentBotNft?.name?.slice(0, 10) + "..."}
                                         </span>
                                       </div>
                                       {/* open sea link */}
