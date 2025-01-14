@@ -1039,17 +1039,21 @@ function HomeContent() {
                                     {application?.userPhoneNumber.slice(0, 6) + "..."}
                                   </td>
                                   <td className="p-2">
-                                    <div className="flex flex-col gap-2 items-center justify-start">
-                                      <Image
-                                        src={application?.agentBotNft?.image?.thumbnailUrl || "/icon-nft.png"}
-                                        alt={application?.agentBotNft?.name}
-                                        width={50}
-                                        height={50}
-                                        className="rounded"
-                                      />
-                                      <span className="text-sm">
-                                        {application?.agentBotNft?.name}
-                                      </span>
+                                    
+                                    <div className="flex flex-row gap-2 items-start justify-center">
+                                    
+                                      <div className="flex flex-col gap-2 items-center justify-start">
+                                        <Image
+                                          src={application?.agentBotNft?.image?.thumbnailUrl || "/icon-nft.png"}
+                                          alt={application?.agentBotNft?.name}
+                                          width={50}
+                                          height={50}
+                                          className="rounded"
+                                        />
+                                        <span className="text-xs">
+                                          {application?.agentBotNft?.name.slice(0, 10) + "..."}
+                                        </span>
+                                      </div>
                                       {/* open sea link */}
                                       <Button
                                         onClick={() => {
@@ -1071,7 +1075,9 @@ function HomeContent() {
                                           />
                                         </div>
                                       </Button>
+
                                     </div>
+
                                   </td>
                                   <td className="p-2 text-right">
                                     {Number(application?.tradingAccountBalance?.balance).toLocaleString('en-US', {
@@ -1081,13 +1087,43 @@ function HomeContent() {
                                   </td>
                                   {/* affiliateInvitee.data.volMonth */}
                                   {/* claimedTradingVolume */}
-                                  <td className="p2">
+                                  <td className="p2 text-right flex flex-row gap-2 items-center justify-end pr-2">
                                     <span className="text-green-500">
                                       {application?.claimedTradingVolume?.toFixed(0)}
                                     </span>{' '}/{' '}
                                     <span className="text-red-500">
                                       {Number(application?.affiliateInvitee?.data?.volMonth - application?.claimedTradingVolume)?.toFixed(0)}
                                     </span>
+                                    {/* button */}
+                                    <Button
+                                      onClick={async () => {
+                                        const response = await fetch("/api/agent/claimTradingVolume", {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json",
+                                            },
+                                            body: JSON.stringify({
+                                                walletAddress: address,
+                                                applicationId: application?.id,
+                                            }),
+                                        });
+
+                                        if (!response.ok) {
+                                            console.error("Error claiming trading volume");
+                                            return;
+                                        }
+
+                                        const data = await response.json();
+
+                                        console.log("claimTradingVolume data", data);
+
+                                        alert("정산 완료되었습니다.");
+
+                                      }}
+                                      className="bg-green-500 text-zinc-100 p-2 rounded"
+                                    >
+                                      정산
+                                    </Button>
                                   </td>
                               </tr>
                           ))}
