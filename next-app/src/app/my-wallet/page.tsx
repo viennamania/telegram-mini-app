@@ -653,7 +653,7 @@ function ProfilePage() {
 
             const data = await response.json();
 
-            console.log("getMessages data", data);
+            ///console.log("getMessages data", data);
 
         };
 
@@ -662,6 +662,80 @@ function ProfilePage() {
         }
 
     } , [telegramId]);
+
+
+    const [toWalletAddress, setToWalletAddress] = useState("");
+    const [sendAmount, setSendAmount] = useState(0);
+    const [sending, setSending] = useState(false);
+
+    const sendUsdt = async () => {
+        if (sending) {
+            return;
+        }
+
+        if (!address) {
+            alert('Please connect wallet');
+            return;
+        }
+
+        if (!sendAmount) {
+            alert('Please enter amount');
+            return;
+        }
+
+        setSending(true);
+
+        try {
+
+
+            // send USDT
+            // Call the extension function to prepare the transaction
+            const transaction = transfer({
+                contract: contract,
+                to: toWalletAddress,
+                amount: sendAmount,
+            });
+            
+            const { transactionHash } = await sendTransaction({
+                account: account,
+                transaction,
+            });
+
+            
+            if (transactionHash) {
+
+                alert('USDT sent successfully');
+
+                setSendAmount(0);
+
+                const result = await balanceOf({
+                    contract,
+                    address: address,
+                });
+
+                //console.log(result);
+
+                setBalance( Number(result) / 10 ** 6 );
+
+            } else {
+
+                alert('Failed to send USDT');
+
+            }  
+
+
+        } catch (error) {
+            
+            console.error("error", error);
+
+            alert('Failed to send USDT');
+        }
+
+        setSending(false);
+    };
+
+
+
 
 
     return (
@@ -795,6 +869,63 @@ function ProfilePage() {
                                 </div>
 
                                 {/* send USDT */}
+
+                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                        USDT 보내기
+                                    </div>
+                                    <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
+                                        <input
+                                            disabled={sending}
+                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                            placeholder="0.00"
+                                            type='number'
+                                            onChange={(e) => {
+                                                setSendAmount(Number(e.target.value));
+                                            }}
+                                        />
+                                        <input
+                                            disabled={sending}
+                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                            placeholder="받는 사람 지갑주소"
+                                            type='text'
+                                            onChange={(e) => {
+                                                // cheack prefix is "0x"
+                                                
+                                                setToWalletAddress(e.target.value);
+                                            }}
+                                        />
+                                        <button
+                                            disabled={sending}
+                                            onClick={() => {
+                                                sendUsdt();
+                                            }}
+                                            className={`p-2 bg-blue-500 text-zinc-100 rounded ${sending ? 'opacity-50' : ''}`}
+                                        >
+                                            <div className='flex flex-row gap-2 items-center justify-between'>
+                                                {sending && (
+                                                    <Image
+                                                        src="/loading.png"
+                                                        alt="Send"
+                                                        width={25}
+                                                        height={25}
+                                                        className="animate-spin"
+                                                    />
+                                                )}
+                                                <span className='text-lg font-semibold'>
+                                                    보내기
+                                                </span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
                                 {/*
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
