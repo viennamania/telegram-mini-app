@@ -49,6 +49,9 @@ export interface UserProps {
   center: string,
   centerOwner: boolean,
   telegramId: string,
+
+  
+
 }
 
 export interface ResultProps {
