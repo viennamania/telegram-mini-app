@@ -1013,6 +1013,12 @@ function HomeContent() {
         }
         */
 
+        if (!response.ok) {
+            alert("OKX API Key를 확인할 수 없습니다.");
+            setCheckingHtxApiKey(false);
+            return;
+        }
+
         const data = await response.json();
 
         ///console.log("data.result", data.result);
@@ -1024,9 +1030,11 @@ function HomeContent() {
             setOkxUid(data.result?.okxUid);
 
 
-            toast.success("OKX API Key가 확인되었습니다.");
+            //toast.success("OKX API Key가 확인되었습니다.");
+            alert("OKX API Key가 확인되었습니다.");
         } else {
-            toast.error("OKX API Key를 확인할 수 없습니다.");
+            //toast.error("OKX API Key를 확인할 수 없습니다.");
+            alert("OKX API Key를 확인할 수 없습니다.");
         }
 
         setCheckingHtxApiKey(false);
