@@ -157,6 +157,10 @@ function HomeContent() {
 
 
 
+    // check loading success
+    const [isLoadingSuccess, setIsLoadingSuccess] = useState(false);
+
+
     // agentBot
     const [agentBot, setAgentBot] = useState("");
 
@@ -215,7 +219,7 @@ function HomeContent() {
                 return;
             }
 
-            console.log("agentUserInfo", agentUserInfo);
+            ///console.log("agentUserInfo", agentUserInfo);
 
             setReferralUserInfo(agentUserInfo.result);
 
@@ -254,7 +258,7 @@ function HomeContent() {
 
                 setAgentBot(agentContractAddress);
                 setSelectedBotNumber(Number(agentTokenId));
-
+       
             }
 
             setIsValidReferralLoading(false);
@@ -430,6 +434,9 @@ function HomeContent() {
 
 
                 }
+
+
+                setIsLoadingSuccess(true);
 
             }
         };
@@ -1401,6 +1408,7 @@ function HomeContent() {
 
 
 
+
     return (
 
         <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
@@ -1485,6 +1493,24 @@ function HomeContent() {
                         )}      
                     </div>
 
+                  
+
+                    {!isLoadingSuccess ? (
+                        <div className='flex flex-col gap-4'>
+                            {/* 새로고침 button */}
+                            <button
+                                onClick={() => {
+                                    window.location.reload();
+                                }}
+                                className="flex flex-row items-center gap-2 p-2 bg-gray-100 rounded-md"
+                            >
+                                새로고침
+                            </button>
+                            
+                        </div>
+
+                    ) : (
+                        <>
 
 
 
@@ -3331,10 +3357,19 @@ function HomeContent() {
 
 
                         </div>
+
+
+                    
+
                     )}
+
+
+                    </>
+                )}
                            
 
                 </div>
+
 
 
                 {/* select agent */}
