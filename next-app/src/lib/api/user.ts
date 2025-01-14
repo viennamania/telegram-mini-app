@@ -628,11 +628,14 @@ export async function getAllMembersByCenter(
   // when  centerOwner is exist and centerOwner is false
   // or centerOwner is not exist
 
+  // telegramId is not empty and not null and not empty string
 
   const users = await collection
     .find<UserProps>(
       {
         center: center,
+
+        telegramId: { $exists: true, $ne: '' },
         
         $or: [
           { centerOwner: { $exists: false } },
