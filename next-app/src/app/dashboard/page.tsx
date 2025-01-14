@@ -648,7 +648,7 @@ function HomeContent() {
                       <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
                   </div>
                 ) : (
-                  <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                  <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2 items-start justify-between'>
                       {centerList.map((center, index) => (
                           <div
                             key={index}
@@ -675,7 +675,7 @@ function HomeContent() {
                                   }}
                               />
                               <div className="flex flex-row gap-2 items-center justify-between">
-                                <span className="bg-gray-800 text-zinc-100 p-2 rounded">
+                                <span className="text-sm bg-gray-800 text-zinc-100 p-2 rounded">
                                     @{center._id}
                                 </span>
                                 <span className="text-sm text-gray-800 font-semibold bg-gray-100 p-2 rounded">
@@ -683,28 +683,30 @@ function HomeContent() {
                                 </span>
                               </div>
 
-                              {/* link to telegram */}
-                              <Button
-                                onClick={() => (window as any).Telegram.WebApp.openLink(`https://t.me/${center._id}`)}
-                                className="
-                                  inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                "
-                              >
-                                텔레그램
-                              </Button>
+                              <div className="flex flex-col xl:flex-col gap-2 items-start justify-start">
+                                {/* link to telegram */}
+                                <Button
+                                  onClick={() => (window as any).Telegram.WebApp.openLink(`https://t.me/${center._id}`)}
+                                  className="
+                                    inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-xs font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                  "
+                                >
+                                  텔레그램
+                                </Button>
 
-                              {/* copy telegram link */}
-                              <Button
-                                onClick={() => {
-                                  navigator.clipboard.writeText(`https://t.me/${center._id}`);
-                                  alert(`https://t.me/${center._id} 복사되었습니다.`);
-                                }}
-                                className="
-                                  inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                "
-                              >
-                                복사
-                              </Button>
+                                {/* copy telegram link */}
+                                <Button
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(`https://t.me/${center._id}`);
+                                    alert(`https://t.me/${center._id} 복사되었습니다.`);
+                                  }}
+                                  className="
+                                    inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-xs font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                  "
+                                >
+                                  복사
+                                </Button>
+                              </div>
 
                           </div>
                       ))}
