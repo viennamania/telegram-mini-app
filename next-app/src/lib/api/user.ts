@@ -597,6 +597,63 @@ export async function getAllUsersTelegramIdByCenter(
 
 }
 
+// get all members by center excluding center owner
+export async function getAllMembersByCenter(
+  {
+    limit = 100,
+    page = 1,
+    center,
+  }: {
+    limit: number;
+    page: number;
+    center: string;
+  }
+): Promise<any> {
+
+  ///console.log('getAllMembersByCenter center: ' + center);
+
+  if (!center) {
+    return null;
+  }
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('users');
+
+
+
+  // center is not empty and not null
+
+  // exclude center owner ( centerOwner is not exist or centerOwner is false )
+
+  // when  centerOwner is exist and centerOwner is false
+  // or centerOwner is not exist
+
+
+  const users = await collection
+    .find<UserProps>(
+      {
+        center: center,
+        
+        $or: [
+          { centerOwner: { $exists: false } },
+
+          { centerOwner: false }
+        ],
+      },
+      {
+        limit: limit,
+        skip: (page - 1) * limit,
+      }, 
+    ).toArray();
+
+    //console.log('getAllMembersByCenter users: ' + users);
+
+
+
+    return users;
+
+}
+
 
 
 

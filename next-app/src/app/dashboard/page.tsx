@@ -396,6 +396,41 @@ function HomeContent() {
   }, [selectCenter]);
 
 
+  // airDrop
+  const [amountAirDrop, setAmountAirDrop] = useState(0);
+  const [loadingAirDrop, setLoadingAirDrop] = useState(false);
+  const airDrop = async (amountAirDrop: number) => {
+
+      setLoadingAirDrop(true);
+      const response = await fetch("/api/settlement/airdrop", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              amount: amountAirDrop,
+              center: selectCenter,
+          }),
+      });
+
+      if (!response.ok) {
+          console.error("Error airdropping");
+          setLoadingAirDrop(false);
+          return;
+      }
+
+      const data = await response.json();
+
+      //console.log("airdrop data", data);
+
+      if (data?.result) {
+          alert("에어드롭이 완료되었습니다.");
+      }
+
+
+      setLoadingAirDrop(false);
+
+  };
 
 
   
@@ -750,23 +785,38 @@ function HomeContent() {
 
               {/* 에어드롭 USDT */}
               {/* input amountAirDrop */}
-              <input
-                type="number"
-                id="amountAirDrop"
-                name="amountAirDrop"
-                placeholder="에어드롭 USDT"
-                className="w-32 p-2 rounded border border-gray-300"
-              />
-              {/* button airDrop */}
-              <Button
-                onClick={() => {
-                  // airDrop
-                  console.log("airDrop");
-                }}
-                className="bg-green-500 text-zinc-100 p-2 rounded"
-              >
-                에어드롭
-              </Button>
+              {address && !loadingUsers && users.length > 0 && (
+
+                <div className="flex flex-row gap-2 items-center justify-between">
+                  <input
+                    disabled={loadingAirDrop}
+
+                    onChange={(e) => {
+                      setAmountAirDrop(Number(e.target.value));
+                    }}
+                    type="number"
+                    placeholder="에어드롭 USDT"
+                    className="w-32 p-2 rounded border border-gray-300"
+                  />
+                  {/* button airDrop */}
+                  <Button
+                    disabled={loadingAirDrop}
+                    onClick={() => {
+                      // airDrop
+                      confirm("에어드롭을 진행하시겠습니까?") && airDrop(
+                        amountAirDrop
+                      );
+
+
+
+                    }}
+                    className={`${loadingAirDrop ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
+                  >
+                    {loadingAirDrop ? "로딩중..." : "에어드롭"}
+                  </Button>
+                </div>
+              
+              )}
                 
 
 
