@@ -1459,7 +1459,7 @@ function AgentPage() {
 
                                                     <button
                                                         onClick={() => {
-                                                            window.open('https://opensea.io/assets/matic/' + erc721ContractAddress + '/' + nft.tokenId);
+                                                            window.open('https://opensea.io/assets/matic/' + nft.contract.address + '/' + nft.tokenId);
                                                         }}
                                                         className="p-2 rounded hover:bg-gray-300"
                                                     >
