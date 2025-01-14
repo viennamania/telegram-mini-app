@@ -1083,10 +1083,10 @@ function HomeContent() {
                                   {/* claimedTradingVolume */}
                                   <td className="p2">
                                     <span className="text-green-500">
-                                      {application?.claimedTradingVolume.toFixed(0)}
+                                      {application?.claimedTradingVolume?.toFixed(0)}
                                     </span>{' '}/{' '}
                                     <span className="text-red-500">
-                                      {Number(application?.affiliateInvitee?.data?.volMonth - application?.claimedTradingVolume).toFixed(0)}
+                                      {Number(application?.affiliateInvitee?.data?.volMonth - application?.claimedTradingVolume)?.toFixed(0)}
                                     </span>
                                   </td>
                               </tr>
