@@ -195,6 +195,9 @@ function HomeContent() {
             setIsValidReferralLoading(true);
 
 
+            /*  get user info by contract address
+            * test   debug 
+
             const fetchAgentUserInfo = await fetch("/api/user/getUserByContractAddress", {
                 method: "POST",
                 headers: {
@@ -222,6 +225,12 @@ function HomeContent() {
             ///console.log("agentUserInfo", agentUserInfo);
 
             setReferralUserInfo(agentUserInfo.result);
+            */
+
+
+
+
+
 
 
 
@@ -2474,10 +2483,10 @@ function HomeContent() {
                                             <div className='mt-10 w-full flex flex-col items-center gap-2
                                                 border border-gray-300 p-4 rounded-lg
                                             '>
-                                                <span className='text-lg font-semibold text-red-500'>
+                                                <span className='text-xs font-semibold text-red-500'>
                                                     {agent}
                                                 </span>
-                                                <span className='text-lg font-semibold text-red-500'>
+                                                <span className='text-xs font-semibold text-red-500'>
                                                     {agentNumber}
                                                 </span>
                                                 <span className='text-lg font-semibold text-red-500'>
