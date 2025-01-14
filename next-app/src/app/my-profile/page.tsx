@@ -72,7 +72,9 @@ function ProfilePage() {
     const searchParams = useSearchParams();
 
     const center = searchParams.get("center");
-    const telegramId = searchParams.get("telegramId");
+    
+    ///const telegramId = searchParams.get("telegramId");
+
 
 
     const account = useActiveAccount();
@@ -93,7 +95,7 @@ function ProfilePage() {
   
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -176,6 +178,8 @@ function ProfilePage() {
 
     const [isValideTelegramId, setIsValideTelegramId] = useState(false);
 
+    const [telegramId, setTelegramId] = useState("");
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -214,6 +218,7 @@ function ProfilePage() {
                     setIsCenterOwner(true);
                 }
             
+                setTelegramId(data.result.telegramId);
 
                 if (data.result.telegramId) {
                     setIsValideTelegramId(true);
