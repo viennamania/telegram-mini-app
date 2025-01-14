@@ -755,7 +755,9 @@ function HomeContent() {
                       <thead>
                           <tr className="bg-zinc-800 text-zinc-100">
                               <th className="p-2">회원아이디</th>
+                              {/*
                               <th className="p-2">매직아이디</th>
+                              */}
                               <th className="p-2">지갑주소</th>
                               <th className="p-2">센터장</th>
                               <th className="p-2">에이전트</th>
@@ -781,13 +783,15 @@ function HomeContent() {
                                       </span>
                                     </div>
                                   </td>
+                                  {/*
                                   <td className="p-2">
                                     {user.telegramId}
                                   </td>
+                                  */}
                                   <td className="p-2">
                                     <div className="flex flex-row gap-2 items-center justify-start">
                                       <span className="text-sm">
-                                        {user.walletAddress.slice(0, 6) + "..." + user.walletAddress.slice(-4)}
+                                        {user.walletAddress.slice(0, 6) + "..."}
                                       </span>
                                       {/* copy wallet address */}
                                       <Button
@@ -873,7 +877,7 @@ function HomeContent() {
 
                                       <div className="flex flex-row gap-2 items-center justify-start">
 
-                                        
+
                                         <Image
                                           src={nft.image?.thumbnailUrl || "/icon-nft.png"}
                                           alt={nft.name}
@@ -920,7 +924,7 @@ function HomeContent() {
                                     {/* copy telegram link */}
                                     <div className="flex flex-row gap-2 items-center justify-start">
                                       <span className="text-sm text-gray-400">
-                                        레퍼럴:{"t.me/" + selectCenter + "/?start=" + nft.contract.address + "_" + nft.tokenId}
+                                        레퍼럴:{nft.contract.address + "_" + nft.tokenId}
                                       </span>
                                       <Button
                                         onClick={() => {
@@ -1011,7 +1015,9 @@ function HomeContent() {
                       <thead>
                           <tr className="bg-zinc-800 text-zinc-100">
                               <th className="p-2">신청번호</th>
+                              {/*
                               <th className="p-2">OKX UID</th>
+                              */}
                               <th className="p-2">닉네임</th>
                               <th className="p-2">전화번호</th>
                               <th className="p-2">NFT</th>
@@ -1023,15 +1029,17 @@ function HomeContent() {
                           {applications.map((application, index) => (
                               <tr key={index} className="bg-zinc-800 text-zinc-100">
                                   <td className="p-2">#{application?.id}</td>
+                                  {/*
                                   <td className="p-2">
                                     {application?.okxUid.slice(0, 6) + "..."}
                                   </td>
+                                  */}
                                   <td className="p-2">{application?.userName}</td>
                                   <td className="p-2">
                                     {application?.userPhoneNumber.slice(0, 6) + "..."}
                                   </td>
                                   <td className="p-2">
-                                    <div className="flex flex-row gap-2 items-center justify-start">
+                                    <div className="flex flex-col gap-2 items-center justify-start">
                                       <Image
                                         src={application?.agentBotNft?.image?.thumbnailUrl || "/icon-nft.png"}
                                         alt={application?.agentBotNft?.name}
@@ -1075,7 +1083,7 @@ function HomeContent() {
                                   {/* claimedTradingVolume */}
                                   <td className="p2">
                                     <span className="text-green-500">
-                                      {application?.claimedTradingVolume}
+                                      {application?.claimedTradingVolume.toFixed(0)}
                                     </span>{' '}/{' '}
                                     <span className="text-red-500">
                                       {Number(application?.affiliateInvitee?.data?.volMonth - application?.claimedTradingVolume).toFixed(0)}
