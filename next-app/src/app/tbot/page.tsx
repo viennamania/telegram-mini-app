@@ -2475,6 +2475,12 @@ function HomeContent() {
                                                 border border-gray-300 p-4 rounded-lg
                                             '>
                                                 <span className='text-lg font-semibold text-red-500'>
+                                                    {agent}
+                                                </span>
+                                                <span className='text-lg font-semibold text-red-500'>
+                                                    {agentNumber}
+                                                </span>
+                                                <span className='text-lg font-semibold text-red-500'>
                                                     추천인 코드가 확인되지 않았습니다.
                                                 </span>
                                             </div>
