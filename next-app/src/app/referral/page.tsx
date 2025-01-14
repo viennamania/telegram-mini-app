@@ -777,7 +777,27 @@ function AgentPage() {
             if (response.ok) {
                 const data = await response.json();
                 if (data.result) {
-                    setMyNfts(data.result.ownedNfts);
+                    
+
+                    //exclude conatract.isSpam === true
+                    // exclude name is "MasgerBot"
+                    const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
+                        
+                        if (nft.contract.isSpam === true) {
+                            return false;
+                        }
+
+                        if (nft.name === "MasterBot") {
+                            return false;
+                        }
+
+                        return true;
+                    });
+
+                    setMyNfts(filteredNfts);
+
+
+
                 } else {
                     setMyNfts([]);
                 }
@@ -931,7 +951,27 @@ function AgentPage() {
             if (response.ok) {
                 const data = await response.json();
                 if (data.result) {
-                    setMyNfts(data.result.ownedNfts);
+                    
+                    //setMyNfts(data.result.ownedNfts);
+                    //exclude conatract.isSpam === true
+                    // exclude name is "MasgerBot"
+                    const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
+                        
+                        if (nft.contract.isSpam === true) {
+                            return false;
+                        }
+
+                        if (nft.name === "MasterBot") {
+                            return false;
+                        }
+
+                        return true;
+                    });
+
+                    setMyNfts(filteredNfts);
+
+
+
                 } else {
                     setMyNfts([]);
                 }
@@ -1450,7 +1490,25 @@ function AgentPage() {
                                                         if (response.ok) {
                                                             const data = await response.json();
                                                             if (data.result) {
-                                                                setMyNfts(data.result.ownedNfts);
+                                                                ///setMyNfts(data.result.ownedNfts);
+
+                                                                //exclude conatract.isSpam === true
+                                                                // exclude name is "MasgerBot"
+                                                                const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
+                                                                    
+                                                                    if (nft.contract.isSpam === true) {
+                                                                        return false;
+                                                                    }
+
+                                                                    if (nft.name === "MasterBot") {
+                                                                        return false;
+                                                                    }
+
+                                                                    return true;
+                                                                });
+
+                                                                setMyNfts(filteredNfts);
+
                                                             } else {
                                                                 setMyNfts([]);
                                                             }
