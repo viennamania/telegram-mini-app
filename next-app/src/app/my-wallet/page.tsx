@@ -880,6 +880,7 @@ function ProfilePage() {
                                             className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
                                             placeholder="0.00"
                                             type='number'
+                                            value={sendAmount}
                                             onChange={(e) => {
                                                 setSendAmount(Number(e.target.value));
                                             }}
@@ -891,13 +892,14 @@ function ProfilePage() {
                                             type='text'
                                             onChange={(e) => {
                                                 // cheack prefix is "0x"
-                                                
+
                                                 setToWalletAddress(e.target.value);
                                             }}
                                         />
                                         <button
                                             disabled={sending}
                                             onClick={() => {
+                                                confirm('USDT를 보내시겠습니까?') &&
                                                 sendUsdt();
                                             }}
                                             className={`p-2 bg-blue-500 text-zinc-100 rounded ${sending ? 'opacity-50' : ''}`}
