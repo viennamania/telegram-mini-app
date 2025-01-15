@@ -146,7 +146,7 @@ function HomeContent() {
     const address = account?.address;
 
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
 
 
 
@@ -1431,11 +1431,7 @@ function HomeContent() {
         <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
 
 
-            <AutoConnect
-                client={client}
-                wallets={[wallet]}
-                timeout={15000}
-            />
+
 
             <div className="py-0 w-full">
         
@@ -1456,28 +1452,24 @@ function HomeContent() {
                     </div>
                 </div>
                 */}
+
+
+                <AutoConnect
+                    client={client}
+                    wallets={[wallet]}
+                    timeout={15000}
+                />
+
                 
 
 
                 <div className="flex flex-col items-start justify-center space-y-4">
 
                     <div className='flex flex-row items-center gap-4'>
-                        
-                        <Image
-                            src="/tbot.png"
-                            alt="TBOT"
-                            width={100}
-                            height={40}
-                        />
-                        <span className="text-sm font-semibold text-gray-500">
-                            AGENT AI 로봇 트레이딩&아카데미 센터
-                        </span>
-                    </div>
-                    <div className='flex flex-row items-center gap-4'>
                         {/* red dot */}
                         <div className='w-4 h-4 bg-red-500 rounded-full'></div>
                         <span className="text-lg font-semibold text-blue-500">
-                            AI 트레이딩 TBOT 서비스센터 입니다.
+                            Master Bot
                         </span>
                     </div>
 
@@ -1821,6 +1813,15 @@ function HomeContent() {
                                 <span className='text-sm font-semibold text-blue-500'>
                                     Master Bot NFT
                                 </span>
+                                {/* goto opense button */}
+                                <button
+                                    className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
+                                    onClick={() => {
+                                        window.open(myAgent?.masterBotInfo?.openseaLink, "_blank");
+                                    }}
+                                >
+                                    OpenSea 보러 가기
+                                </button>
                             </div>
 
                             <div className='flex flex-row items-center gap-2'>
@@ -1833,6 +1834,31 @@ function HomeContent() {
                                 />
 
                             </div>
+
+                            {/* button for router /claim button */}
+                            {/* 마스트봇 수당 보러 가기 */}
+                            <div className="flex flex-col gap-2">
+                                <button
+                                    className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
+                                    onClick={() => {
+                                        router.push("/claim");
+                                    }}
+                                >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <Image
+                                            src="/icon-incentives.png"
+                                            alt="Claim"
+                                            width={20}
+                                            height={20}
+                                        />
+                                        <span>
+                                            마스트봇 수당 보러 가기
+                                        </span>
+                                    </div>
+                                </button>
+                            </div>
+
+                            
                         </div>
                     ) : (
      
