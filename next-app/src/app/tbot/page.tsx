@@ -1523,7 +1523,9 @@ function HomeContent() {
 
 
 
-                    {!myAgent?.okxUid && (
+                    {address
+                    && !loadingMyAgent 
+                    && !myAgent?.okxUid && (
                         <>
 
                             <div className='flex flex-row items-center gap-2'>
