@@ -584,7 +584,7 @@ function AgentPage() {
                                                         : Number(settlement.settlementClaim.settlementTradingVolume).toFixed(0)
                                                         }
                                                     </td>
-                                                    <td className='border border-gray-300 p-2 text-lg text-right text-green-500 font-semibold'>
+                                                    <td className='border border-gray-300 p-2 text-2xl text-right text-green-500 font-semibold'>
                                                         {
                                                         Number(settlement.settlementClaim.masterInsentive).toFixed(6)
                                                         }
