@@ -531,7 +531,7 @@ async function sendMessages() {
 
     const telegramId = message.telegramId;
     const messageText = message.message;
-    const category = message.category; // "wallet", "settlement"
+    const category = message.category; // "wallet", "settlement", "agent", "center"
 
     try {
 
@@ -548,8 +548,6 @@ async function sendMessages() {
           message,
         });
 
-
-
         const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
 
         const keyboard = new InlineKeyboard()
@@ -564,6 +562,51 @@ async function sendMessages() {
         )
 
       } else if (category === 'settlement') {
+
+        const username = telegramId;
+        const expiration = Date.now() + 6000_000; // valid for 100 minutes
+        const message = JSON.stringify({
+          username,
+          expiration,
+        });
+      
+        const authCode = await adminAccount.signMessage({
+          message,
+        });
+
+        const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/claim`;
+
+        const keyboard = new InlineKeyboard()
+        .webApp('나의 보상 보러가기', urlMySettement)
+
+        botInstance.api.sendMessage(
+          telegramId,
+          '🚀 ' + messageText,
+          {
+            reply_markup: keyboard,
+          }
+        )
+
+      } else if (category === 'agent') {
+
+        const contract = message.contract;
+        const tokenId = message.tokenId;
+
+        const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/agent/${contract}/${tokenId}`;
+
+        const keyboard = new InlineKeyboard()
+        .webApp('나의 보상 보러가기', urlMySettement)
+
+
+        botInstance.api.sendMessage(
+          telegramId,
+          '🚀 ' + messageText,
+          {
+            reply_markup: keyboard,
+          }
+        )
+
+      } else if (category === 'center') {
 
         botInstance.api.sendMessage(
           telegramId,
