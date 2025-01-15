@@ -17,8 +17,8 @@ import { ObjectId } from 'mongodb';
 */
 
 export interface Message {
-    category: string;
     center: string;
+    category: string;
     telegramId: string;
     message: string;
 }
@@ -158,13 +158,28 @@ export async function deleteMessage(_id: string) {
 */
 
 // insertMessage
-export async function insertMessage(data: Message) {
+export async function insertMessage(
+    {
+        center,
+        category,
+        telegramId,
+        message,
+    }
+    : Message
+) {
 
     const client = await clientPromise;
 
     const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
 
-    await collectionTelegramMessages.insertOne(data);
+    await collectionTelegramMessages.insertOne(
+        {
+            center,
+            category,
+            telegramId,
+            message,
+        }
+    );
 
     return {
         result: "success",
