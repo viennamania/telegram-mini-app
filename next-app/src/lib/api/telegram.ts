@@ -17,10 +17,8 @@ import { ObjectId } from 'mongodb';
 */
 
 export interface Message {
-    _id: {
-        $oid: string;
-    };
     category: string;
+    center: string;
     telegramId: string;
     message: string;
 }
@@ -130,6 +128,43 @@ export async function deleteMessage(_id: string) {
             _id: new ObjectId(_id),
         }
     );
+
+    return {
+        result: "success",
+    };
+
+}
+
+
+/*
+        if (telegramId) {
+
+            const amount = parseFloat(data.value) / 1000000.0;
+
+            const message = "You have received " + Number(amount).toFixed(6) + " USDT";
+
+            const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+
+            await collectionTelegramMessages.insertOne(
+            {
+                center: center,
+                category: "wallet",
+                telegramId: telegramId,
+                message: message,
+            }
+            );
+
+        }
+*/
+
+// insertMessage
+export async function insertMessage(data: Message) {
+
+    const client = await clientPromise;
+
+    const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+
+    await collectionTelegramMessages.insertOne(data);
 
     return {
         result: "success",
