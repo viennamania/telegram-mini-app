@@ -428,29 +428,34 @@ function AgentPage() {
                     </div>
 
                     
-                    <div className='mt-10 w-full flex flex-col items-start gap-5'>
-                        {/* live icon */}
+                    <div className="flex justify-center mt-5">
                         {address ? (
-                            <div className='flex flex-row items-center gap-2'>
-                                <Image
-                                    src="/icon-wallet-live.gif"
-                                    alt="Live"
-                                    width={50}
-                                    height={50}
-                                />
-
-                                <span className='text-lg font-semibold text-blue-500'>
-                                    {address.slice(0, 6)}...{address.slice(-4)}
-                                </span>
-
-
-                            </div>
-                        ) : (
-                            <div className='flex flex-col items-start gap-2'>
+                            <div className="flex flex-row gap-2 items-center justify-between">
+                                
+                                <Button
+                                    onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
+                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                                >
+                                    내 지갑주소: {shortenAddress(address)}
+                                </Button>
+                                <Button
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(address);
+                                        alert('지갑주소가 복사되었습니다.');
+                                    }}
+                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                                >
+                                    복사
+                                </Button>
                                 
                             </div>
-                        )}
+                        ) : (
+                            <p className="text-sm text-zinc-400">
+                                연결된 지갑이 없습니다. 지갑을 연결해 주세요.
+                            </p>
+                        )}      
                     </div>
+
 
                     {address && userCode && nickname && (
                         <div className='flex flex-row items-center gap-2'>
@@ -476,7 +481,7 @@ function AgentPage() {
                         </div>
                     )}
 
-                    {!loadingUserData && !myAgent?.masterBotInfo && (
+                    {address && !loadingUserData && !myAgent?.masterBotInfo && (
 
                         <div className='w-full flex flex-col gap-2 items-start justify-between'>
                             <span className='text-lg font-semibold text-gray-500'>
@@ -501,7 +506,7 @@ function AgentPage() {
 
 
                     {/* masterBot */}
-                    {myAgent?.masterBotInfo ? (
+                    {address && myAgent?.masterBotInfo ? (
 
                         <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
                             <div className='flex flex-col gap-2

@@ -608,9 +608,31 @@ async function sendMessages() {
 
       } else if (category === 'center') {
 
+
+        const username = telegramId;
+        const expiration = Date.now() + 6000_000; // valid for 100 minutes
+        const message = JSON.stringify({
+          username,
+          expiration,
+        });
+      
+        const authCode = await adminAccount.signMessage({
+          message,
+        });
+
+        const urlMyCenter = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/center`;
+
+        const keyboard = new InlineKeyboard()
+        .webApp('나의 보상 보러가기', urlMyCenter)
+
+
+
         botInstance.api.sendMessage(
           telegramId,
-          '🚀 ' + messageText
+          '🚀 ' + messageText,
+          {
+            reply_markup: keyboard,
+          }
         )
 
       }
