@@ -103,10 +103,10 @@ function AgentPage() {
 
 
 
-    const address = account?.address;
+    ///const address = account?.address;
   
     // test address
-    ////const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -470,6 +470,10 @@ function AgentPage() {
                 if (!erc721ContractAddress) {
                     throw new Error('Failed to deploy ERC721 contract');
                 }
+
+
+                ///console.log("erc721ContractAddress", erc721ContractAddress);
+
 
 
                 const response = await fetch('/api/user/updateUserErc721Contract', {
