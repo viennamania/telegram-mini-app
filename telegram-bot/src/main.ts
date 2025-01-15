@@ -531,35 +531,46 @@ async function sendMessages() {
 
     const telegramId = message.telegramId;
     const messageText = message.message;
+    const category = message.category; // "wallet", "settlement"
 
     try {
 
+      if (category === 'wallet') {
 
-      const username = telegramId;
-      const expiration = Date.now() + 6000_000; // valid for 100 minutes
-      const message = JSON.stringify({
-        username,
-        expiration,
-      });
+        const username = telegramId;
+        const expiration = Date.now() + 6000_000; // valid for 100 minutes
+        const message = JSON.stringify({
+          username,
+          expiration,
+        });
+      
+        const authCode = await adminAccount.signMessage({
+          message,
+        });
+
+
+
+        const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
+
+        const keyboard = new InlineKeyboard()
+        .webApp('나의 지갑 보러가기', urlMyWallet)
     
-      const authCode = await adminAccount.signMessage({
-        message,
-      });
+        botInstance.api.sendMessage(
+          telegramId,
+          '🚀 ' + messageText,
+          {
+            reply_markup: keyboard,
+          }
+        )
 
+      } else if (category === 'settlement') {
 
+        botInstance.api.sendMessage(
+          telegramId,
+          '🚀 ' + messageText
+        )
 
-      const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
-
-      const keyboard = new InlineKeyboard()
-      .webApp('나의 지갑 보러가기', urlMyWallet)
-  
-      botInstance.api.sendMessage(
-        telegramId,
-        '🚀 ' + messageText,
-        {
-          reply_markup: keyboard,
-        }
-      )
+      }
 
 
 
