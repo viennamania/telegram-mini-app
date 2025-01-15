@@ -11,7 +11,11 @@ import {
 
 import { useEffect, useState, Suspense } from "react";
 
-import { useSearchParams } from "next/navigation";
+
+import {
+  useRouter,
+  useSearchParams,
+} from "next//navigation";
 
 import {
   polygon,
@@ -39,6 +43,7 @@ function HomeContent() {
 
   ///console.log('center', center);
 
+  const router = useRouter();
 
   
   const account = useActiveAccount();
@@ -51,11 +56,14 @@ function HomeContent() {
 
 
 
-  //const address = account?.address;
+  const address = account?.address;
 
 
   // test address
-  const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+  //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+
+
+
 
 
 
@@ -337,12 +345,27 @@ function HomeContent() {
           />
         )}
         */}
+
+        {/* button goto center */}
+        <div className="flex flex-row gap-2 items-center justify-between">
+          <Button
+            onClick={() => {
+              router.push(`/center?center=${center}`);
+            }}
+            className="p-2 bg-blue-500 text-zinc-100 rounded"
+          >
+            센터 보상내역 보러가기
+          </Button>
+        </div>
+
+
+
         
 
 
         {/* user list */}
         {/* table */}
-        <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+        <div className='mt-5 mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
           
             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                 회원 목록

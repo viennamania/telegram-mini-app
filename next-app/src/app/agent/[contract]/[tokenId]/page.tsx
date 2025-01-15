@@ -1291,13 +1291,13 @@ export default function AgentPage({ params }: any) {
                         >
                             <thead>
                                 <tr>
-                                    <th className='border border-gray-300 p-2'>
+                                    <th className='border border-gray-300 p-2 text-sm'>
                                         지급일
                                     </th>
-                                    <th className='border border-gray-300 p-2'>
+                                    <th className='border border-gray-300 p-2 text-sm'>
                                         정산거래량
                                     </th>
-                                    <th className='border border-gray-300 p-2'>
+                                    <th className='border border-gray-300 p-2 text-sm'>
                                         보상금액(USDT)
                                     </th>
                                 </tr>
@@ -1319,7 +1319,12 @@ export default function AgentPage({ params }: any) {
                                             : Number(settlement.settlementClaim.settlementTradingVolume).toFixed(0)
                                             }
                                         </td>
-                                        <td className='border border-gray-300 p-2 text-2xl text-right text-green-500 font-semibold'>
+                                        <td
+                                            className='border border-gray-300 p-2 text-2xl text-right text-green-500 font-semibold'
+                                            style={{
+                                                fontFamily: 'monospace',
+                                            }}
+                                        >
                                             {
                                             Number(settlement.settlementClaim.agentInsentive).toFixed(6)
                                             }

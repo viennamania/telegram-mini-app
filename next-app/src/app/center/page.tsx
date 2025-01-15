@@ -105,6 +105,7 @@ function AgentPage() {
     // test address
     //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
+    ///const address = "0x7071060C66d4f365CdE477436Ca02509912054fF";
 
 
 
@@ -323,7 +324,7 @@ function AgentPage() {
         
         setLoadingSettlementHistory(true);
 
-        const response = await fetch("/api/agent/getSettlementHistoryByMasterWalletAddress", {
+        const response = await fetch("/api/agent/getSettlementHistoryByCenterWalletAddress", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -384,46 +385,18 @@ function AgentPage() {
                     timeout={15000}
                 />
 
-                {/* history back */}
-                {/* sticky top-0 bg-white */}
-                <div className='
-                    sticky top-0 bg-black bg-opacity-50 z-50
-                    flex flex-row items-center justify-between gap-4
-                    p-4
-                    w-full
-                '>
-                    <button
-                        onClick={() => router.back()}
-                        className="flex flex-row items-center gap-2 bg-gray-500 text-white p-2 rounded-lg
-                        hover:bg-gray-600
-                        "
-                    >
-                        <Image
-                        src="/icon-back.png"
-                        width={24}
-                        height={24}
-                        alt="Back"
-                        />
-                        <span className='text-sm text-white'>
-                        뒤로가기
-                        </span>
-                    </button>
-                </div>
-                
-
-
                 <div className="mt-5 flex flex-col items-start justify-center space-y-4">
 
                     <div className='flex flex-row items-center gap-4'>
                         
                         <Image
-                            src="/logo-masterbot.png"
-                            alt="Master Bot"
-                            width={100}
+                            src="/logo-centerbot.png"
+                            alt="Center Bot"
+                            width={40}
                             height={40}
                         />
                         <span className="text-lg font-semibold text-gray-800">
-                            보상내역
+                            센터봇
                         </span>
                     </div>
 
@@ -476,34 +449,13 @@ function AgentPage() {
                         </div>
                     )}
 
-                    {!loadingUserData && !myAgent?.masterBotInfo && (
-
-                        <div className='w-full flex flex-col gap-2 items-start justify-between'>
-                            <span className='text-lg font-semibold text-gray-500'>
-                                마스트봇이 없습니다.
-                            </span>
-                            <span className='text-lg font-semibold text-gray-500'>
-                                마스트봇을 만들어 주세요.
-                            </span>
-                            {/* goto button for /tbot */}
-                            <button
-                                onClick={() => {
-                                    router.push(
-                                        '/tbot'
-                                    );
-                                }}
-                                className='w-full bg-blue-500 text-white p-4 rounded-lg'
-                            >
-                                마스트봇 만들로 가기
-                            </button>
-                        </div>
-                    )}
 
 
-                    {/* masterBot */}
-                    {myAgent?.masterBotInfo ? (
+                
+                    {true ? (
 
-                        <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
+                        <div className='w-full flex flex-col xl:flex-row gap-2 items-center justify-between'>
+                            
                             <div className='flex flex-col gap-2
                                 border border-gray-300 p-4 rounded-lg
                             '>
@@ -515,13 +467,13 @@ function AgentPage() {
                                         height={20}
                                     />
                                     <span className='text-sm font-semibold text-blue-500'>
-                                        Master Bot NFT
+                                        Center Bot NFT
                                     </span>
                                 </div>
 
                                 <div className='flex flex-row items-center gap-2'>
                                     <Image
-                                        src={myAgent?.masterBotInfo?.imageUrl || "/logo-masterbot100.png"}
+                                        src={"/logo-centerbot.png"}
                                         alt="Master Bot"
                                         width={500}
                                         height={500}
@@ -537,8 +489,9 @@ function AgentPage() {
 
                             {/* 거래량: if totalSettlementTradingVolume not exist, then use settlementTradingVolume */}
 
-                            <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                            <div className='mt-5 w-full flex flex-col gap-2 items-start justify-between'>
                                 <div className='w-full flex flex-row items-center gap-2'>
+                                    <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
                                     <span className='text-lg font-semibold text-gray-500'>
                                         보상 내역
                                     </span>
@@ -584,8 +537,10 @@ function AgentPage() {
                                                         : Number(settlement.settlementClaim.settlementTradingVolume).toFixed(0)
                                                         }
                                                     </td>
+                                                    {/* 숫자 간격이 일정한 폰트 사용 */}
                                                     <td
                                                         className='border border-gray-300 p-2 text-2xl text-right text-green-500 font-semibold'
+
                                                         style={{
                                                             fontFamily: 'monospace',
                                                         }}
