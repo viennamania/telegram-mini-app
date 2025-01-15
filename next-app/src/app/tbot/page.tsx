@@ -1840,7 +1840,7 @@ function HomeContent() {
                             </div>
 
                             {/* button for router /claim button */}
-                            {/* 마스트봇 수당 보러 가기 */}
+                            {/* 마스트봇 보상내역 보러 가기 */}
                             <div className="flex flex-col gap-2">
                                 <button
                                     className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold'
@@ -1856,7 +1856,7 @@ function HomeContent() {
                                             height={30}
                                         />
                                         <span>
-                                            마스트봇 수당 보러 가기
+                                            마스트봇 보상내역 보러 가기
                                         </span>
                                     </div>
                                 </button>
