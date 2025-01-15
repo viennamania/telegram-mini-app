@@ -417,12 +417,12 @@ function AgentPage() {
                     <div className='flex flex-row items-center gap-4'>
                         
                         <Image
-                            src="/tbot.png"
-                            alt="TBOT"
+                            src="/logo-masterbot.png"
+                            alt="Master Bot"
                             width={100}
                             height={40}
                         />
-                        <span className="text-sm font-semibold text-gray-500">
+                        <span className="text-lg font-semibold text-gray-800">
                             보상내역
                         </span>
                     </div>
