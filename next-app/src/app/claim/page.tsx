@@ -387,7 +387,7 @@ function AgentPage() {
                 {/* history back */}
                 {/* sticky top-0 bg-white */}
                 <div className='
-                    sticky top-0 bg-white z-50
+                    sticky top-0 bg-black bg-opacity-50 z-50
                     flex flex-row items-center justify-between gap-4
                     p-4
                     w-full

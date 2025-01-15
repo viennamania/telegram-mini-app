@@ -1814,14 +1814,18 @@ function HomeContent() {
                                     Master Bot NFT
                                 </span>
                                 {/* goto opense button */}
+                                {/*
                                 <button
                                     className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
                                     onClick={() => {
-                                        window.open(myAgent?.masterBotInfo?.openseaLink, "_blank");
+                                        
+                                        window.open(`https://opensea.io/assets/${myAgent?.masterBotInfo?.erc721ContractAddress}/${myAgent?.masterBotInfo?.tokenId}`, "_blank");
+
                                     }}
                                 >
                                     OpenSea 보러 가기
                                 </button>
+                                */}
                             </div>
 
                             <div className='flex flex-row items-center gap-2'>
@@ -1839,7 +1843,7 @@ function HomeContent() {
                             {/* 마스트봇 수당 보러 가기 */}
                             <div className="flex flex-col gap-2">
                                 <button
-                                    className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold'
+                                    className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold'
                                     onClick={() => {
                                         router.push("/claim");
                                     }}
@@ -1848,8 +1852,8 @@ function HomeContent() {
                                         <Image
                                             src="/icon-incentives.png"
                                             alt="Claim"
-                                            width={20}
-                                            height={20}
+                                            width={30}
+                                            height={30}
                                         />
                                         <span>
                                             마스트봇 수당 보러 가기
