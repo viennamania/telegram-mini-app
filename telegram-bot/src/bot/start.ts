@@ -333,7 +333,9 @@ feature.command('start', async (ctx) => {
 
     totalAccountCount = data.result.totalCount;
       
-    totalTradingAccountBalance = data.result.totalTradingAccountBalance
+    totalTradingAccountBalance = data.result.totalTradingAccountBalance;
+
+    
 
     ///const applications = data.result.applications;
 
@@ -408,8 +410,8 @@ feature.command('start', async (ctx) => {
   */
 
   const title = 'OKX AI 봇 센터에 오신것을 환영합니다.'
-  + (nickname ? '\n✅ 회원아이디: ' + nickname : '')
-  + (walletAddress ? '\n✅ 지갑주소: ' + walletAddress : '');
+  + (nickname ? '\n\n✅ 회원아이디: ' + nickname : '')
+  + (walletAddress ? '\n\n✅ 지갑주소: ' + walletAddress : '');
 
   //const photoFile = new InputFile(`${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`)
 

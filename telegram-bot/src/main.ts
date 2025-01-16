@@ -339,6 +339,10 @@ async function fetchAccountData() {
 
       const tradingAccountBalance = application ? '$' + Number(application.tradingAccountBalance.balance).toFixed(2) : 'N/A';
 
+      const tradingAccountVolume = Number(application.affiliateInvitee.data.volMonth).toFixed(0);
+      const claimedTradingVolume = Number(application.claimedTradingVolume).toFixed(0);
+      const tradingVolume = Number(tradingAccountVolume) - Number(claimedTradingVolume);
+
 
       if (masterBotImageUrl) {
 
@@ -379,7 +383,9 @@ async function fetchAccountData() {
             telegramId,
             masterBotImageUrl,
             {
-              caption: '🔥 나의 마스트봇 거래잔고: ' + tradingAccountBalance + '\n'
+              caption: '🔥 나의 마스트봇 채굴량: ' + tradingVolume
+              + '\n\n💪 나의 마스트봇 거래잔고: ' + tradingAccountBalance
+              + '\n\n' + '👇 아래 버튼을 눌러 나의 마스트봇 보상으로 이동하세요.'
               //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
               //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
               ,
@@ -400,7 +406,8 @@ async function fetchAccountData() {
           botInstance.api.sendMessage(
             telegramId,
             // emoji: https://emojipedia.org/
-            '🔥 나의 마스트봇 거래잔고: ' + tradingAccountBalance + '\n'
+            '🔥 나의 마스트봇 거래잔고: ' + tradingAccountBalance
+            + '\n\n' + '👇 아래 버튼을 눌러 나의 마스트봇 보상으로 이동하세요.'
             //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
             //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
           )
@@ -606,7 +613,7 @@ async function sendMessages() {
         + '\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
 
 
-        const photo = `${process.env.FRONTEND_APP_ORIGIN}/logo-tether.png`;
+        const photo = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
         botInstance.api.sendPhoto(
           telegramId,
           photo,
@@ -632,12 +639,15 @@ async function sendMessages() {
 
         const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/claim`;
 
+        const caption = '\n\n🚀 ' + messageText
+        + '\n\n' + '👇 아래 버튼을 눌러 나의 보상으로 이동하세요.';
+
         const keyboard = new InlineKeyboard()
         .webApp('나의 보상 보러가기', urlMySettement)
 
         botInstance.api.sendMessage(
           telegramId,
-          '🚀 ' + messageText,
+          caption,
           {
             reply_markup: keyboard,
           }
@@ -653,10 +663,12 @@ async function sendMessages() {
         const keyboard = new InlineKeyboard()
         .webApp('나의 보상 보러가기', urlMySettement)
 
+        const caption = '\n\n🚀 ' + messageText
+        + '\n\n' + '👇 아래 버튼을 눌러 나의 보상으로 이동하세요.';
         
         botInstance.api.sendMessage(
           telegramId,
-          '🚀 ' + messageText,
+          caption,
           {
             reply_markup: keyboard,
           }
@@ -682,10 +694,12 @@ async function sendMessages() {
         .webApp('나의 보상 보러가기', urlMyCenter)
 
 
+        const caption = '\n\n🚀 ' + messageText
+        + '\n\n' + '👇 아래 버튼을 눌러 나의 보상으로 이동하세요.';
 
         botInstance.api.sendMessage(
           telegramId,
-          '🚀 ' + messageText,
+          caption,
           {
             reply_markup: keyboard,
           }
