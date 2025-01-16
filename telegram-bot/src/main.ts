@@ -553,6 +553,7 @@ async function sendMessages() {
         const keyboard = new InlineKeyboard()
         .webApp('나의 지갑 보러가기', urlMyWallet)
     
+        /*
         botInstance.api.sendMessage(
           telegramId,
           '🚀 ' + messageText,
@@ -560,6 +561,16 @@ async function sendMessages() {
             reply_markup: keyboard,
           }
         )
+        */
+        botInstance.api.sendPhoto(
+          telegramId,
+          'https://shinemywinter.vercel.app/logo-tether.png',
+          {
+            caption: '🚀 ' + messageText,
+            reply_markup: keyboard,
+          }
+        )
+
 
       } else if (category === 'settlement') {
 
@@ -597,7 +608,7 @@ async function sendMessages() {
         const keyboard = new InlineKeyboard()
         .webApp('나의 보상 보러가기', urlMySettement)
 
-
+        
         botInstance.api.sendMessage(
           telegramId,
           '🚀 ' + messageText,
