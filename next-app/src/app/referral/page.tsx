@@ -1572,28 +1572,52 @@ function AgentPage() {
                                                 </button>
                                                 
                                                 
+                                                <div className="flex flex-col xl:flex-row items-center justify-start gap-5">
+                                                    {/* referral link button */}
+                                                    <button
+                                                        onClick={() => {
+                                                            navigator.clipboard.writeText(
+                                                                /*
+                                                                referralUrl + '/?center=' + center +
+                                                                '&agent=' + nft.contract.address + 
+                                                                '&tokenId=' + nft.tokenId
+                                                                */
+                                                                //'t.me/ppump_orry_bot?start=' + nft.contract.address + '_' + nft.tokenId
 
-                                                {/* referral link button */}
-                                                <button
-                                                    onClick={() => {
-                                                        navigator.clipboard.writeText(
-                                                            /*
-                                                            referralUrl + '/?center=' + center +
-                                                            '&agent=' + nft.contract.address + 
-                                                            '&tokenId=' + nft.tokenId
-                                                            */
-                                                            //'t.me/ppump_orry_bot?start=' + nft.contract.address + '_' + nft.tokenId
+                                                                't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
+                                                            );
+                                                            //toast.success('레퍼럴 URL 복사 완료');
+                                                            alert('레퍼럴 복사되었습니다.');
+                                                        }}
+                                                        className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                        hover:bg-blue-600 text-lg xl:text-xl font-semibold"
+                                                    >
+                                                        레퍼럴 복사하기
+                                                    </button>
 
-                                                            't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
-                                                        );
-                                                        //toast.success('레퍼럴 URL 복사 완료');
-                                                        alert('레퍼럴 복사되었습니다.');
-                                                    }}
-                                                    className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                    hover:bg-blue-600 text-xs xl:text-lg font-semibold"
-                                                >
-                                                    레퍼럴 복사하기
-                                                </button>
+                                                    <div className="flex flex-row items-center justify-start gap-5">
+                                                        {/* dot */}
+                                                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                                        <span className="text-xs xl:text-lg font-semibold">
+                                                            레러펄로 회원가입을 유치하면 가입보상으로 10 USDT를 받습니다.
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex flex-row items-center justify-start gap-5">
+                                                        {/* dot */}
+                                                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                                        <span className="text-xs xl:text-lg font-semibold">
+                                                            가입한 회원의 채굴보상에서 28%를 채굴보상으로 받습니다.
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex flex-row items-center justify-start gap-5">
+                                                        {/* dot */}
+                                                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                                        <span className="text-xs xl:text-lg font-semibold">
+                                                            NFT 소유권을 이전하면 이전한 이후부터 채굴보상은 이전 받은 소유자에게 지급됩니다.
+                                                        </span>
+                                                    </div>
+
+                                                </div>
 
                                             </div>
 
