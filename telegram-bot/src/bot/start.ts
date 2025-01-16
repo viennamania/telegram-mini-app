@@ -105,15 +105,26 @@ feature.command('wallet', async (ctx) => {
       const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
 
 
-      const text = '지갑주소: ' + walletAddress + '\n' + '잔고: ' + balance + ' USDT';
+      const text = '\n\n✅ 지갑주소: ' + walletAddress + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
       const keyboard = new InlineKeyboard()
         .webApp('나의 지갑 보러가기', urlMyWallet);
 
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
+
+      return ctx.replyWithPhoto(
+        photoUrl,
+        {
+          caption: text,
+          reply_markup: keyboard
+        }
+      )
+
+      /*
       return ctx.reply(
         text,
         { reply_markup: keyboard}
       );
+      */
 
 
       /*
@@ -333,11 +344,11 @@ feature.command('start', async (ctx) => {
 
 
 
-  let referralCodeText = referralCode ? '나의 레퍼럴코드: ' + referralCode.slice(0, 6) + '...' + referralCode.slice(-6)
-   : '레퍼럴코드가 없습니다.';
+  let referralCodeText = referralCode ? '✅ 나의 레퍼럴코드: ' + referralCode.slice(0, 6) + '...' + referralCode.slice(-6)
+   : '🚫 레퍼럴코드가 없습니다.';
 
   if (isCenterOwner) {
-    referralCodeText = '당신은 센터장입니다.';
+    referralCodeText = '✅ 당신은 센터장입니다.';
     welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-centerbot.png`;
   }
 
@@ -375,7 +386,7 @@ feature.command('start', async (ctx) => {
 
   } else {
     keyboard = new InlineKeyboard()
-    .text('봇센터에서 레퍼럴코드를 발급받아야 사용할 수 있습니다.')
+    .text('🚫 봇센터에서 레퍼럴코드를 발급받아야 사용할 수 있습니다.')
     .row()
     .webApp('회원아이디를 설정해주세요.', urlMyProfile)
     //.row()
@@ -397,8 +408,8 @@ feature.command('start', async (ctx) => {
   */
 
   const title = 'OKX AI 봇 센터에 오신것을 환영합니다.'
-  + (nickname ? '\n회원아이디: ' + nickname : '')
-  + (walletAddress ? '\n지갑주소: ' + walletAddress : '');
+  + (nickname ? '\n✅ 회원아이디: ' + nickname : '')
+  + (walletAddress ? '\n✅ 지갑주소: ' + walletAddress : '');
 
   //const photoFile = new InputFile(`${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`)
 

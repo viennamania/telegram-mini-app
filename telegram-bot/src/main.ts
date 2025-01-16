@@ -400,7 +400,7 @@ async function fetchAccountData() {
           botInstance.api.sendMessage(
             telegramId,
             // emoji: https://emojipedia.org/
-            '🔥 My Trading Account Balance: ' + tradingAccountBalance + '\n'
+            '🔥 나의 마스트봇 거래잔고: ' + tradingAccountBalance + '\n'
             //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
             //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
           )
@@ -599,12 +599,19 @@ async function sendMessages() {
           }
         )
         */
+
+        // const text = '\n\n✅ 지갑주소: ' + walletAddress + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
+
+        const caption = '\n\n🚀 ' + messageText
+        + '\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
+
+
         const photo = `${process.env.FRONTEND_APP_ORIGIN}/logo-tether.png`;
         botInstance.api.sendPhoto(
           telegramId,
           photo,
           {
-            caption: '🚀 ' + messageText,
+            caption: caption,
             reply_markup: keyboard,
           }
         )
