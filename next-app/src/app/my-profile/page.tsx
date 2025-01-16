@@ -954,6 +954,9 @@ function ProfilePage() {
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                 회원아이디을 저장하면 나의 소속 센터 봇이 설정됩니다
                             </div>
+                            <span className='text-xs font-semibold text-gray-500'>
+                                회원아이디는 영문 소문자와 숫자로 5자 이상 10자 이하로 입력해주세요.
+                            </span>
 
                             {/* center */}
                             <div className="flex flex-row gap-2 items-center justify-between">
