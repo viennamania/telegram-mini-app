@@ -343,6 +343,10 @@ async function fetchAccountData() {
       if (masterBotImageUrl) {
 
         try {
+
+
+
+          /*
           botInstance.api.sendPhoto(
             telegramId,
             masterBotImageUrl,
@@ -352,6 +356,39 @@ async function fetchAccountData() {
               //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
             }
           )
+          */
+
+
+          const username = telegramId;
+          const expiration = Date.now() + 6000_000; // valid for 100 minutes
+          const message = JSON.stringify({
+            username,
+            expiration,
+          });
+        
+          const authCode = await adminAccount.signMessage({
+            message,
+          });
+  
+          const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/claim`;
+  
+          const keyboard = new InlineKeyboard()
+          .webApp('나의 마스트봇 보상 보러가기', urlMySettement)
+
+          botInstance.api.sendPhoto(
+            telegramId,
+            masterBotImageUrl,
+            {
+              caption: '🔥 나의 마스트봇 거래잔고: ' + tradingAccountBalance + '\n'
+              //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
+              //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
+              ,
+
+              reply_markup: keyboard,
+            }
+          )
+
+
         } catch (error) {
           console.error('Error sending photo:', error)
         }
@@ -562,9 +599,10 @@ async function sendMessages() {
           }
         )
         */
+        const photo = `${process.env.FRONTEND_APP_ORIGIN}/logo-tether.png`;
         botInstance.api.sendPhoto(
           telegramId,
-          'https://shinemywinter.vercel.app/logo-tether.png',
+          photo,
           {
             caption: '🚀 ' + messageText,
             reply_markup: keyboard,
@@ -705,10 +743,10 @@ setInterval(() => {
 }, 3600*1000)
 
 
-// send messages every 60 seconds
+// send messages every 10 seconds
 setInterval(() => {
 
   sendMessages()
 
-}, 60*1000)
+}, 10*1000)
 

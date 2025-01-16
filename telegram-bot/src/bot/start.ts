@@ -1,4 +1,4 @@
-import { Composer, InlineKeyboard } from 'grammy'
+import { Composer, InlineKeyboard, InputFile } from 'grammy'
 import type { Context } from './context.js'
 import { privateKeyToAccount } from 'thirdweb/wallets'
 import { createThirdwebClient } from 'thirdweb'
@@ -109,6 +109,7 @@ feature.command('wallet', async (ctx) => {
       const keyboard = new InlineKeyboard()
         .webApp('나의 지갑 보러가기', urlMyWallet);
 
+      const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
       return ctx.reply(
         text,
         { reply_markup: keyboard}
@@ -130,6 +131,8 @@ feature.command('wallet', async (ctx) => {
 })
 
 
+
+
 feature.command('start', async (ctx) => {
 
   console.log('start command');
@@ -140,6 +143,12 @@ feature.command('start', async (ctx) => {
 
 
   const username = ctx.from?.id+"";
+
+
+
+
+  let welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`;
+
 
 
   let nickname = "";
@@ -329,6 +338,7 @@ feature.command('start', async (ctx) => {
 
   if (isCenterOwner) {
     referralCodeText = '당신은 센터장입니다.';
+    welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-centerbot.png`;
   }
 
   let keyboard = null;
@@ -365,9 +375,9 @@ feature.command('start', async (ctx) => {
 
   } else {
     keyboard = new InlineKeyboard()
-    .text('레퍼럴코드를 발급받으세요.')
+    .text('봇센터에서 레퍼럴코드를 발급받아야 사용할 수 있습니다.')
     .row()
-    .webApp('나의 프로필 설정하기', urlMyProfile)
+    .webApp('회원아이디를 설정해주세요.', urlMyProfile)
     //.row()
     //.webApp('회원 보러가기', urlLeaderBoard)
   }
@@ -388,12 +398,27 @@ feature.command('start', async (ctx) => {
 
   const title = 'OKX AI 봇 센터에 오신것을 환영합니다.'
   + (nickname ? '\n회원아이디: ' + nickname : '')
-  + (walletAddress ? '\n' + walletAddress : '');
+  + (walletAddress ? '\n지갑주소: ' + walletAddress : '');
 
+  //const photoFile = new InputFile(`${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`)
+
+
+  return ctx.replyWithPhoto(
+    //photoFile,
+    //`${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`,
+    welecomePhoto,
+    {
+      caption: title,
+      reply_markup: keyboard
+    }
+  )
+
+  /*
   return ctx.reply(
     title,
     { reply_markup: keyboard}
   )
+  */
 
   //return ctx.replyWithGame('tictactoe')
 
