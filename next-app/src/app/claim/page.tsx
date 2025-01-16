@@ -538,7 +538,7 @@ function AgentPage() {
 
                             {/* 보상 내역 table view designed */}
                             {/* getSettlementHistory */}
-                            {/* 지급일, 정산거래량, 보상(USDT) */}
+                            {/* 지급일, 정산채굴량, 보상(USDT) */}
 
                             {/* 거래량: if totalSettlementTradingVolume not exist, then use settlementTradingVolume */}
 
@@ -565,7 +565,7 @@ function AgentPage() {
                                                     지급일
                                                 </th>
                                                 <th className='border border-gray-300 p-2 text-sm'>
-                                                    정산거래량
+                                                    정산채굴량
                                                 </th>
                                                 <th className='border border-gray-300 p-2 text-sm'>
                                                     보상금액(USDT)

@@ -645,6 +645,7 @@ async function sendMessages() {
         const keyboard = new InlineKeyboard()
         .webApp('나의 보상 보러가기', urlMySettement)
 
+        /*
         botInstance.api.sendMessage(
           telegramId,
           caption,
@@ -652,6 +653,16 @@ async function sendMessages() {
             reply_markup: keyboard,
           }
         )
+        */
+        botInstance.api.sendPhoto(
+          telegramId,
+          `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`,
+          {
+            caption: caption,
+            reply_markup: keyboard,
+          }
+        )
+
 
       } else if (category === 'agent') {
 
@@ -666,10 +677,20 @@ async function sendMessages() {
         const caption = '\n\n🚀 ' + messageText
         + '\n\n' + '👇 아래 버튼을 눌러 나의 보상으로 이동하세요.';
         
+        /*
         botInstance.api.sendMessage(
           telegramId,
           caption,
           {
+            reply_markup: keyboard,
+          }
+        )
+        */
+        botInstance.api.sendPhoto(
+          telegramId,
+          `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`,
+          {
+            caption: caption,
             reply_markup: keyboard,
           }
         )
@@ -697,10 +718,20 @@ async function sendMessages() {
         const caption = '\n\n🚀 ' + messageText
         + '\n\n' + '👇 아래 버튼을 눌러 나의 보상으로 이동하세요.';
 
+        /*
         botInstance.api.sendMessage(
           telegramId,
           caption,
           {
+            reply_markup: keyboard,
+          }
+        )
+        */
+        botInstance.api.sendPhoto(
+          telegramId,
+          `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`,
+          {
+            caption: caption,
             reply_markup: keyboard,
           }
         )
