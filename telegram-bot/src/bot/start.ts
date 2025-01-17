@@ -185,8 +185,50 @@ feature.command('start', async (ctx) => {
     const data = await responseGetUser.json();
     //console.log("data", data);
 
-    if (data.result && data.result.centerOwner) {
-      isCenterOwner = data.result.centerOwner;
+
+    if (data.result && data.result.center !== center) {
+
+      // 당신을 봇을 사용할 수 없습니다.
+      // link to the center
+
+      const welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-centerbot.png`;
+      const keyboard = new InlineKeyboard()
+      .webApp(
+        '아래 버튼을 눌러 소속된 센터로 이동하세요.',
+        'https://t.me/' + data.result.center
+      );
+
+      return ctx.replyWithPhoto(
+        welecomePhoto,
+        {
+          caption: "🚫 당신은 이 봇을 사용할 수 없습니다.",
+          ////reply_markup: keyboard
+        }
+      )
+      
+      /*
+      const keyboard = new InlineKeyboard()
+      .webApp('👇 아래 버튼을 눌러 소속된 센터로 이동하세요.',
+        "https://t.me/" + data.result.center
+      )
+
+      return ctx.reply(
+        "🚫 당신은 이 봇을 사용할 수 없습니다.",
+        { reply_markup: keyboard}
+      );
+      */
+
+    }
+
+
+
+    if (data.result && data.result.centerOwner
+
+      && data.result.center === center
+    ) {
+      
+      isCenterOwner = true;
+
     }
 
     if (data.result && data.result.walletAddress) {
@@ -200,8 +242,8 @@ feature.command('start', async (ctx) => {
 
   }
 
-  console.log('isCenterOwner', isCenterOwner);
-  console.log('walletAddress', walletAddress);
+  //console.log('isCenterOwner', isCenterOwner);
+  //console.log('walletAddress', walletAddress);
 
 
 
@@ -349,7 +391,9 @@ feature.command('start', async (ctx) => {
   let referralCodeText = referralCode ? '✅ 나의 레퍼럴코드: ' + referralCode.slice(0, 6) + '...' + referralCode.slice(-6)
    : '🚫 레퍼럴코드가 없습니다.';
 
-  if (isCenterOwner) {
+  if (
+    isCenterOwner
+  ) {
     referralCodeText = '✅ 당신은 센터장입니다.';
     welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-centerbot.png`;
   }

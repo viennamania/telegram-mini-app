@@ -71,7 +71,10 @@ export async function GET(request: NextRequest) {
 
     const searchParams = useSearchParams();
 
-    const center = searchParams.get('center');
+    //const center = searchParams.get('center');
+
+    //console.log("center: ", center);
+    const center = "owin_anawin_bot";
 
     if (!center) {
         return NextResponse.error();

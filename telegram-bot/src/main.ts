@@ -69,7 +69,7 @@ async function startPolling(config: PollingConfig) {
 
     // set commands only when the bot is started for the first time after the bot is deployed
 
-    bot.api.getMyCommands().then((commands) => {
+    bot?.api.getMyCommands().then((commands) => {
       if (commands.length === 0) {
         bot.api.setMyCommands([
           { command: "start", description: "시작하기" },
@@ -500,6 +500,7 @@ async function fetchAccountData() {
       
           if (botInstance) {
 
+            //console.log("sendMessage1");
             botInstance.api.sendMessage(
               telegramId,
               // emoji: https://emojipedia.org/
@@ -507,7 +508,11 @@ async function fetchAccountData() {
               + '\n\n' + '👇 아래 버튼을 눌러 나의 마스트봇 보상으로 이동하세요.'
               //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
               //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
-            )
+            ).then(() => {
+              //console.log('Message sent');
+            }).catch((error) => {
+              console.error('Error sending message:', error+'');
+            })
 
           }
 
@@ -612,6 +617,7 @@ async function sendStartMessageToAllUsers() {
         
         
         if (botInstance) {
+          //console.log("sendMessage2");
           botInstance.api.sendMessage(
             telegramId,
             '🚀 프로필 이미지를 설정해주세요.\n',
@@ -619,6 +625,8 @@ async function sendStartMessageToAllUsers() {
               reply_markup: keyboard,
             }
           )
+
+          await sleep(1000);
         }
 
 
@@ -684,6 +692,7 @@ async function sendMessages() {
 
       if (category === 'wallet') {
 
+
         const username = telegramId;
         const expiration = Date.now() + 6000_000; // valid for 100 minutes
         const message = JSON.stringify({
@@ -717,6 +726,9 @@ async function sendMessages() {
 
 
         const photo = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
+        
+        //console.log("sendPhoto1");
+
         botInstance.api.sendPhoto(
           telegramId,
           photo,
@@ -724,7 +736,11 @@ async function sendMessages() {
             caption: caption,
             reply_markup: keyboard,
           }
-        )
+        ).then(() => {
+        //console.log('Message sent');
+        }).catch((error) => {
+          console.error('Error sending photo:', error+'');
+        })
 
 
       } else if (category === 'settlement') {
@@ -757,6 +773,8 @@ async function sendMessages() {
           }
         )
         */
+        //console.log("sendPhoto2");
+
         botInstance.api.sendPhoto(
           telegramId,
           `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`,
@@ -764,7 +782,11 @@ async function sendMessages() {
             caption: caption,
             reply_markup: keyboard,
           }
-        )
+        ).then(() => {
+        //console.log('Message sent');
+        }).catch((error) => {
+          console.error('Error sending photo:', error+'');
+        })
 
 
       } else if (category === 'agent') {
@@ -789,6 +811,8 @@ async function sendMessages() {
           }
         )
         */
+
+        //console.log("sendPhoto3");
         botInstance.api.sendPhoto(
           telegramId,
           `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`,
@@ -830,6 +854,7 @@ async function sendMessages() {
           }
         )
         */
+        //console.log("sendPhoto4");
         botInstance.api.sendPhoto(
           telegramId,
           `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`,
@@ -860,6 +885,9 @@ async function sendMessages() {
     } catch (error) {
       console.error('Error sending message:', error)
     }
+
+
+    await sleep(1000);
 
   }
 
