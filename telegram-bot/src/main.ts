@@ -33,14 +33,73 @@ async function startPolling(config: PollingConfig) {
     logger,
   })
 
-  const me = await bot.api.getMe();
+  
+  /// error
+  ////const me = await bot.api.getMe();
+
+
+  try {
+
+    // set commands
+
+
+    logger.info('Setting commands');
+
+
+    /*
+    const response = bot.api.setMyCommands([
+      { command: "start", description: "시작하기" },
+      { command: "wallet", description: "매직월렛"},
+    ])
+
+
+    logger.info('Commands set response:', response);
+    */
 
 
 
-  bot.api.setMyCommands([
-    { command: "start", description: "시작하기" },
-    { command: "wallet", description: "매직월렛"},
-  ])
+    // GrammyError: Call to 'setMyCommands' failed! (429: Too Many Requests: retry after 686)
+    // Too Many Requests: retry after 686
+
+    // how to fix this error?
+    // set commands only once
+    // set commands only when the bot is started
+    // set commands only when the bot is started for the first time
+    // set commands only when the bot is started for the first time after the bot is deployed
+
+    // set commands only when the bot is started for the first time after the bot is deployed
+
+    bot.api.getMyCommands().then((commands) => {
+      if (commands.length === 0) {
+        bot.api.setMyCommands([
+          { command: "start", description: "시작하기" },
+          { command: "wallet", description: "매직월렛"},
+        ])
+      }
+    } )
+
+    logger.info('Commands set  response:', 'Commands set  response:');
+    
+
+
+
+
+    
+
+
+
+
+
+
+
+
+  } catch (error) {
+    ////console.error('Error setting commands:', error+ '')
+
+    logger.error('Error setting commands:', error+ '');
+
+    logger.info('Commands set  error:', error + '');
+  }
 
 
 
@@ -439,14 +498,21 @@ async function fetchAccountData() {
 
         try {
       
-          botInstance.api.sendMessage(
-            telegramId,
-            // emoji: https://emojipedia.org/
-            '🔥 나의 마스트봇 거래잔고: ' + tradingAccountBalance
-            + '\n\n' + '👇 아래 버튼을 눌러 나의 마스트봇 보상으로 이동하세요.'
-            //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
-            //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
-          )
+          if (botInstance) {
+
+            botInstance.api.sendMessage(
+              telegramId,
+              // emoji: https://emojipedia.org/
+              '🔥 나의 마스트봇 거래잔고: ' + tradingAccountBalance
+              + '\n\n' + '👇 아래 버튼을 눌러 나의 마스트봇 보상으로 이동하세요.'
+              //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
+              //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
+            )
+
+          }
+
+
+          
 
         } catch (error) {
           //console.error('Error sending message:', error)
@@ -545,14 +611,15 @@ async function sendStartMessageToAllUsers() {
           .webApp('나의 프로필 설정하기', urlMyProfile)
         
         
-      
-        botInstance.api.sendMessage(
-          telegramId,
-          '🚀 프로필 이미지를 설정해주세요.\n',
-          {
-            reply_markup: keyboard,
-          }
-        )
+        if (botInstance) {
+          botInstance.api.sendMessage(
+            telegramId,
+            '🚀 프로필 이미지를 설정해주세요.\n',
+            {
+              reply_markup: keyboard,
+            }
+          )
+        }
 
 
       } catch (error) {

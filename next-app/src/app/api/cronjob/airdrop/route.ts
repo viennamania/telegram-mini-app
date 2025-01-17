@@ -44,9 +44,11 @@ import {
 } from "thirdweb/extensions/erc20";
 
 
-import { Network, Alchemy } from 'alchemy-sdk';
+///import { Network, Alchemy } from 'alchemy-sdk';
 
 
+import { useSearchParams } from 'next/navigation'
+ 
 
 const chain = polygon;
 
@@ -63,7 +65,17 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
 
-    const center = "owin_anawin_bot";
+    //const center = "owin_anawin_bot";
+
+    // get parameters from request
+
+    const searchParams = useSearchParams();
+
+    const center = searchParams.get('center');
+
+    if (!center) {
+        return NextResponse.error();
+    }
 
     // amount is random from 0.00001 to 0.1
     const amount = Math.random() * (0.1 - 0.00001) + 0.00001;
