@@ -467,14 +467,8 @@ async function fetchAccountData() {
           // if the user blocked the bot, the bot will not be able to send messages to the user
 
 
-          
 
-
-
-          
-
-
-          botInstance.api.sendPhoto(
+          await botInstance.api.sendPhoto(
             telegramId,
             masterBotImageUrl,
             {
@@ -497,11 +491,9 @@ async function fetchAccountData() {
       } else {
 
         try {
-      
-          if (botInstance) {
 
             //console.log("sendMessage1");
-            botInstance.api.sendMessage(
+            await botInstance.api.sendMessage(
               telegramId,
               // emoji: https://emojipedia.org/
               '🔥 나의 마스트봇 거래잔고: ' + tradingAccountBalance
@@ -514,10 +506,6 @@ async function fetchAccountData() {
               console.error('Error sending message:', error+'');
             })
 
-          }
-
-
-          
 
         } catch (error) {
           //console.error('Error sending message:', error)
@@ -551,7 +539,6 @@ async function sendStartMessageToAllUsers() {
   
   const date = new Date();
   const hours = date.getHours() + 9;
-
   if (hours >= 23 || hours < 9) {
     return;
   }
@@ -613,21 +600,17 @@ async function sendStartMessageToAllUsers() {
         // 프로필 이미지를 설정해주세요.
 
         const keyboard = new InlineKeyboard()
-          .webApp('나의 프로필 설정하기', urlMyProfile)
-        
-        
-        if (botInstance) {
-          //console.log("sendMessage2");
-          botInstance.api.sendMessage(
-            telegramId,
-            '🚀 프로필 이미지를 설정해주세요.\n',
-            {
-              reply_markup: keyboard,
-            }
-          )
+          .webApp('나의 프로필 설정하기', urlMyProfile)   
 
-          await sleep(1000);
-        }
+        //console.log("sendMessage2");
+        await botInstance.api.sendMessage(
+          telegramId,
+          '🚀 프로필 이미지를 설정해주세요.\n',
+          {
+            reply_markup: keyboard,
+          }
+        )
+
 
 
       } catch (error) {
@@ -653,10 +636,11 @@ async function sendMessages() {
     return;
   }
 
+
   const center = botInstance.botInfo.username;
 
   
-  const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/getOneMessage`;
+  const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/getAllMessages`;
 
   const response = await fetch(url, {
     method: "POST",
@@ -729,7 +713,7 @@ async function sendMessages() {
         
         //console.log("sendPhoto1");
 
-        botInstance.api.sendPhoto(
+        await botInstance.api.sendPhoto(
           telegramId,
           photo,
           {
@@ -775,7 +759,7 @@ async function sendMessages() {
         */
         //console.log("sendPhoto2");
 
-        botInstance.api.sendPhoto(
+        await botInstance.api.sendPhoto(
           telegramId,
           `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`,
           {
@@ -813,7 +797,7 @@ async function sendMessages() {
         */
 
         //console.log("sendPhoto3");
-        botInstance.api.sendPhoto(
+        await botInstance.api.sendPhoto(
           telegramId,
           `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`,
           {
@@ -855,7 +839,7 @@ async function sendMessages() {
         )
         */
         //console.log("sendPhoto4");
-        botInstance.api.sendPhoto(
+        await botInstance.api.sendPhoto(
           telegramId,
           `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`,
           {
@@ -926,10 +910,10 @@ setInterval(() => {
 }, 3600*1000)
 
 
-// send messages every 1 miliseconds
+// send messages every 10 seconds
 setInterval(() => {
 
   sendMessages()
 
-}, 1)
+}, 10*1000)
 
