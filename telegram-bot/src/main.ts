@@ -656,7 +656,7 @@ async function sendMessages() {
   const center = botInstance.botInfo.username;
 
   
-  const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/getAllMessages`;
+  const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/getOneMessage`;
 
   const response = await fetch(url, {
     method: "POST",
@@ -926,10 +926,10 @@ setInterval(() => {
 }, 3600*1000)
 
 
-// send messages every 10 seconds
+// send messages every 1 miliseconds
 setInterval(() => {
 
   sendMessages()
 
-}, 10*1000)
+}, 1)
 
