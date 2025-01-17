@@ -349,6 +349,29 @@ async function fetchAccountData() {
         try {
 
 
+          /*
+          {
+            method: 'sendPhoto',
+            payload: {
+              chat_id: '7719309234',
+              photo: 'https://shinemywinter.vercel.app/logo-magic-wallet.webp',
+              caption: '\n\n🚀 0.001150 USDT 를 받았습니다\n\n👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.',
+              reply_markup: InlineKeyboard {
+                inline_keyboard: [ [ { text: '나의 지갑 보러가기', web_app: [Object] } ] ]
+              }
+            },
+            ok: false,
+            error_code: 403,
+            description: 'Forbidden: bot was blocked by the user',
+            parameters: {}
+          }
+          */
+
+          // check if the user blocked the bot
+          
+
+          
+
 
           /*
           botInstance.api.sendPhoto(
@@ -378,6 +401,19 @@ async function fetchAccountData() {
   
           const keyboard = new InlineKeyboard()
           .webApp('나의 마스트봇 보상 보러가기', urlMySettement)
+
+
+          // description: 'Forbidden: bot was blocked by the user',
+          // check if the user blocked the bot
+          // if the user blocked the bot, the bot will not be able to send messages to the user
+
+
+          
+
+
+
+          
+
 
           botInstance.api.sendPhoto(
             telegramId,
