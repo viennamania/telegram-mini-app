@@ -47,7 +47,7 @@ import {
 ///import { Network, Alchemy } from 'alchemy-sdk';
 
 
-import { useSearchParams } from 'next/navigation'
+//import { useSearchParams } from 'next/navigation'
  
 
 const chain = polygon;
@@ -69,25 +69,31 @@ export async function GET(request: NextRequest) {
 
     // get parameters from request
 
-    const searchParams = useSearchParams();
+    // Error: useSearchParams only works in Client Components. Add the "use client" directive at the top of the file to use it.
+    //const searchParams = useSearchParams();
+    //console.log("searchParams: ", searchParams);
 
     //const center = searchParams.get('center');
 
     //console.log("center: ", center);
-    const center = "owin_anawin_bot";
+    const center = request.nextUrl.searchParams.get('center');
+
+    console.log("center: ", center);
+
+
 
     if (!center) {
         return NextResponse.error();
     }
 
-    // amount is random from 0.00001 to 0.1
-    const amount = Math.random() * (0.1 - 0.00001) + 0.00001;
 
       const members = await getAllMembersByCenter({
         center: center,
         limit: 500,
         page: 1,
       });
+
+      //console.log("members: ", members);
     
       if (!members) {
         return NextResponse.error();
@@ -95,7 +101,9 @@ export async function GET(request: NextRequest) {
     
       //console.log("members: ", members);
     
-    
+        // amount is random from 0.00001 to 0.1
+        const amount = Math.random() * (0.1 - 0.00001) + 0.00001;
+
     
       const client = createThirdwebClient({
         secretKey: process.env.THIRDWEB_SECRET_KEY || "",
