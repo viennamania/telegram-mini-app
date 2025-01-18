@@ -876,7 +876,7 @@ function ProfilePage() {
                                         height={30}
                                         className="rounded"
                                         />
-                                        <span className="p-2 text-green-500 text-2xl font-semibold"> 
+                                        <span className="p-2 text-green-500 text-4xl font-semibold"> 
                                             {
                                                 Number(balance).toFixed(2)
                                             }
