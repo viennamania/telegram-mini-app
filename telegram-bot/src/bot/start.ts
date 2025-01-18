@@ -23,6 +23,7 @@ import {
 } from "thirdweb/chains";
 
 import { balanceOf } from "thirdweb/extensions/erc20";
+import { url } from 'inspector'
 
 
 
@@ -107,7 +108,7 @@ feature.command('wallet', async (ctx) => {
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
       const keyboard = new InlineKeyboard()
-        .webApp('나의 지갑 보러가기', urlMyWallet);
+        .webApp('나의 지갑 보러가기', urlMyWallet)
 
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
 
@@ -192,31 +193,26 @@ feature.command('start', async (ctx) => {
       // link to the center
 
       const welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-centerbot.png`;
+      
+      /*
       const keyboard = new InlineKeyboard()
-      .webApp(
-        '아래 버튼을 눌러 소속된 센터로 이동하세요.',
-        'https://t.me/' + data.result.center
-      );
+      .text("ABCD")
+      .row()
+      //.webApp('소속 센터봇으로 이동하기', '@owin_anawin_bot')
+      //.url('소속 센터봇으로 이동하기', 'https://t.me/owin_anawin_bot')
+      .url('소속 센터봇으로 이동하기', 'https://naver.com')
+      */
+      
 
       return ctx.replyWithPhoto(
         welecomePhoto,
         {
-          caption: "🚫 당신은 이 봇을 사용할 수 없습니다.",
-          ////reply_markup: keyboard
+          caption: "🚫 당신은 이 봇을 사용할 수 없습니다.\n\n" + "소속 센터봇: " + data.result.center,
+          //reply_markup: keyboard
         }
       )
-      
-      /*
-      const keyboard = new InlineKeyboard()
-      .webApp('👇 아래 버튼을 눌러 소속된 센터로 이동하세요.',
-        "https://t.me/" + data.result.center
-      )
 
-      return ctx.reply(
-        "🚫 당신은 이 봇을 사용할 수 없습니다.",
-        { reply_markup: keyboard}
-      );
-      */
+
 
     }
 

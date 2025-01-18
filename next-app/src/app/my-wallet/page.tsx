@@ -867,14 +867,22 @@ function ProfilePage() {
                                         />
 
                                     </div>
-                                    
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        내 자산
-                                    </div>
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        {
-                                            Number(balance).toFixed(2)
-                                        } USDT
+
+                                    <div className="flex flex-row gap-2 items-center justify-between">
+                                        <Image
+                                        src="/logo-tether.png"
+                                        alt="USDT"
+                                        width={30}
+                                        height={30}
+                                        className="rounded"
+                                        />
+                                        <span className="p-2 text-green-500 text-2xl font-semibold"> 
+                                            {
+                                                Number(balance).toFixed(2)
+                                            }
+                                        </span>
+                                        <span className="p-2 text-gray-500 text-lg font-semibold">USDT</span>
+
                                     </div>
                                 </div>
 
