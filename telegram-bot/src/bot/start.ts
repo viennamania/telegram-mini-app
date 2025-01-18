@@ -319,6 +319,35 @@ feature.command('start', async (ctx) => {
 
 
 
+  let masterBotInfo = null;
+
+
+  const urlMyApplication = `${process.env.FRONTEND_APP_ORIGIN}/api/agent/getOneApplication`;
+
+  const responseMyApplication = await fetch(urlMyApplication, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      walletAddress,
+    }),
+  });
+
+  if (responseGetReferralCode.status !== 200) {
+    return ctx.reply("Failed to get referral code");
+  } else {
+    const data = await responseMyApplication.json();
+    ///console.log("data", data);
+
+    if (data.result) {
+      masterBotInfo = data.result.masterBotInfo;
+    }
+  }
+
+
+
+
 
 
 
@@ -383,22 +412,28 @@ feature.command('start', async (ctx) => {
   }
 
 
+  //const masterBotImageUrl = application ? application?.masterBotInfo?.imageUrl : '';
 
-  let referralCodeText = referralCode ? '✅ 나의 레퍼럴코드: ' + referralCode.slice(0, 6) + '...' + referralCode.slice(-6)
-   : '🚫 레퍼럴코드가 없습니다.';
+
 
   if (
     isCenterOwner
   ) {
-    referralCodeText = '✅ 당신은 센터장입니다.';
     welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-centerbot.png`;
+  } else {
+
+    if (masterBotInfo) {
+      welecomePhoto = masterBotInfo.imageUrl;
+    } else {
+      welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`;
+    }
   }
 
   let keyboard = null;
   
   if (referralCode || isCenterOwner) {
     keyboard = new InlineKeyboard()
-    .text(referralCodeText)
+    //.text(referralCodeText)
     .row()
     .webApp('나의 프로필 보러가기', urlMyProfile)
     .row()
@@ -438,10 +473,6 @@ feature.command('start', async (ctx) => {
 
 
 
-
-
-
-
   /*
   .row()
   .text("총 계정 수: " + totalAccountCount)
@@ -449,9 +480,25 @@ feature.command('start', async (ctx) => {
   .text("총 거래 잔고: " + "$" + Number(totalTradingAccountBalance).toFixed(2))
   */
 
-  const title = 'OKX AI 봇 센터에 오신것을 환영합니다.'
+
+
+
+  let referralCodeText = "";
+
+  if (isCenterOwner) {
+   referralCodeText = '✅ 당신은 센터장입니다.';
+  } else {
+    referralCodeText = referralCode ? '✅ 나의 레퍼럴코드: ' + referralCode.slice(0, 6) + '...' + referralCode.slice(-6)
+    : '🚫 레퍼럴코드가 없습니다.'; 
+  }
+
+
+
+  const title = 'AI 봇 센터에 오신것을 환영합니다.'
   + (nickname ? '\n\n✅ 회원아이디: ' + nickname : '')
-  + (walletAddress ? '\n\n✅ 지갑주소: ' + walletAddress : '');
+  + (walletAddress ? '\n\n✅ 나의 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6) : '')
+  + '\n\n' + referralCodeText
+  + '\n\n' + '👇 아래 메뉴를 선택하세요.'
 
   //const photoFile = new InputFile(`${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`)
 
