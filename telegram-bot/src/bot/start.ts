@@ -376,6 +376,8 @@ feature.command('start', async (ctx) => {
 
   const urlMasterbot = `${process.env.FRONTEND_APP_ORIGIN}/masterbot?center=${center}`;
 
+  const urlClaim = `${process.env.FRONTEND_APP_ORIGIN}/claim?walletAddress=${walletAddress}`;
+
   let totalAccountCount = "";
   let totalTradingAccountBalance = "";
 
@@ -440,6 +442,8 @@ feature.command('start', async (ctx) => {
     .webApp('나의 에이전트봇 보러가기', urlReferral)
     .row()
     .webApp('나의 마스트봇 보러가기', urlTbot)
+    .row()
+    .webApp('💰 나의 보상내역 보러가기', urlClaim)
 
     if (isCenterOwner) {
 
@@ -465,7 +469,7 @@ feature.command('start', async (ctx) => {
     keyboard = new InlineKeyboard()
     .text('🚫 봇센터에서 레퍼럴코드를 발급받아야 사용할 수 있습니다.')
     .row()
-    .webApp('회원아이디를 설정해주세요.', urlMyProfile)
+    .webApp('⚙️ 회원아이디를 설정해주세요.', urlMyProfile)
     //.row()
     //.webApp('회원 보러가기', urlLeaderBoard)
   }

@@ -74,7 +74,9 @@ function AgentPage() {
 
     const searchParams = useSearchParams();
 
-    const center = searchParams.get('center');
+    const address = searchParams.get('walletAddress');
+
+    //const center = searchParams.get('center');
 
     /*
     const [params, setParams] = useState({ center: '' });
@@ -103,7 +105,7 @@ function AgentPage() {
     ///const address = account?.address;
   
     // test address
-    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 

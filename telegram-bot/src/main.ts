@@ -741,7 +741,7 @@ async function sendMessages() {
         });
 
         const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/claim`;
-
+        
         const caption = '\n\n🚀 ' + messageText
         + '\n\n' + '👇 아래 버튼을 눌러 나의 보상으로 이동하세요.';
 
