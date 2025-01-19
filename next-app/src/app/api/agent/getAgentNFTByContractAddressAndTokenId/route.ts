@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
     parseInt(tokenId)
   );
 
-  ////console.log("owner: ", owner);
+  ///console.log("owner: ", owner);
 
 
   /*

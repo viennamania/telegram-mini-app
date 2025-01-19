@@ -142,13 +142,13 @@ export default function AgentPage({ params }: any) {
   
         const data = await response.json();
 
-        ///console.log("getAgentNFTByContractAddressAndTokenId data", data);
+        console.log("getAgentNFTByContractAddressAndTokenId data", data);
 
   
         setAgent(data.result);
 
         setOwnerInfo(data?.ownerInfo);
-        setHolderWalletAddress(data?.ownerInfo?.walletAddress);
+        setHolderWalletAddress(data?.ownerWalletAddress);
 
 
         ////console.log("agent======", data.result);
@@ -931,7 +931,7 @@ export default function AgentPage({ params }: any) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                limit: 100,
+                limit: 10,
                 page: 1,
                 walletAddress: holderWalletAddress,
             }),
@@ -1055,16 +1055,26 @@ export default function AgentPage({ params }: any) {
 
               <div className='w-full flex flex-col gap-5'>
 
+
+
                 <div className='w-full flex flex-row items-center justify-between gap-2
                  border-b border-gray-300 pb-2
                 '>
-                    <Image
-                      src='/smart-contract.png'
-                      width={50}
-                      height={50}
-                      alt='Agent'
-                      className='rounded-lg'
-                    />
+                    {/* opensea */}
+                    <button
+                        onClick={() => {
+                            window.open('https://opensea.io/assets/matic/' + agentContractAddress + '/' + agentTokenId);
+                        }}
+                        className="p-2 rounded hover:bg-gray-300"
+                    >
+                        <Image
+                            src="/logo-opensea.png"
+                            alt="OpenSea"
+                            width={50}
+                            height={50}
+                            className="rounded-lg"
+                        />
+                    </button>
 
                   <div className='w-full flex flex-col xl:flex-row items-start justify-start gap-2'>
                       <div className='flex flex-col items-start justify-between gap-2'>
@@ -1072,7 +1082,7 @@ export default function AgentPage({ params }: any) {
                           AI 에이전트 NFT 계약주소
                         </span>
                         <span className='text-sm text-gray-800 font-semibold'>
-                            {agentContractAddress.slice(0, 5) + '...' + agentContractAddress.slice(-5)}
+                            {agentContractAddress.slice(0, 10) + '...' + agentContractAddress.slice(-10)}
                         </span>
                       </div>
                       <div className='flex flex-col items-center justify-between gap-2'>
@@ -1086,26 +1096,10 @@ export default function AgentPage({ params }: any) {
 
                   </div>
 
-                {/* opensea */}
-                <button
-                    onClick={() => {
-                        window.open('https://opensea.io/assets/matic/' + agentContractAddress + '/' + agentTokenId);
-                    }}
-                    className="p-2 rounded hover:bg-gray-300"
-                >
-                    <Image
-                        src="/logo-opensea.png"
-                        alt="OpenSea"
-                        width={50}
-                        height={50}
-                        className="rounded-lg"
-                    />
-                </button>
-
                 </div>
 
 
-                <div className='w-full grid grid-cols-2 items-start justify-start gap-5'>
+                <div className='w-full grid grid-cols-1 xl:grid-cols-2 items-start justify-start gap-5'>
 
 
                   <div className='w-full flex flex-col items-start justify-start gap-2'>
@@ -1113,169 +1107,199 @@ export default function AgentPage({ params }: any) {
 
 
 
-                    <div className='w-full flex flex-col items-start justify-between gap-2
+                    <div className='w-full flex flex-row items-start justify-between gap-2
                       border-b border-gray-300 pb-2
                     '>
 
-                      <div className='flex flex-col items-start justify-between gap-2'>
-                        <span className='text-sm text-yellow-500'>
-                            AI 에이전트 NFT 이름
-                        </span>
-                        <span className='text-2xl font-semibold text-gray-800'>
-                            {agent.name}
-                        </span>
-                      </div>
-            
-                      <div className='flex flex-col items-start justify-between gap-2'>
-                        <span className='text-sm text-yellow-500'>
-                            AI 에이전트 NFT 설명
-                        </span>
-                        <span className='text-xs text-gray-800'>
-                            {agent.description}
-                        </span>
-                      </div>
+                        <div className='w-full flex flex-col items-start justify-between gap-2'>
+
+                            <div className='flex flex-col items-start justify-between gap-2'>
+                                <span className='text-sm text-yellow-500'>
+                                    AI 에이전트 NFT 이름
+                                </span>
+                                <span className='text-xl font-semibold text-gray-800'>
+                                    {agent.name}
+                                </span>
+                            </div>
+                    
+                            <div className='flex flex-col items-start justify-between gap-2'>
+                                <span className='text-sm text-yellow-500'>
+                                    AI 에이전트 NFT 설명
+                                </span>
+                                <span className='text-xs text-gray-800'>
+                                    {agent.description}
+                                </span>
+                            </div>
+                        </div>
+
+
+                        <div className='flex flex-col items-start justify-start gap-2'>
+                            <span className='text-sm text-yellow-500'>
+                                AI 에이전트 NFT 이미지
+                            </span>
+                            {agent.image && (
+                            <Image
+                                //src={agent?.image?.thumbnailUrl}
+                                src={agent?.image?.pngUrl || '/logo-masterbot.png'}
+                                width={200}
+                                height={200}
+                                alt={agent.name}
+                                className='rounded-lg object-cover w-full animate-pulse'
+                            />
+                            )}
+                        </div>
 
                     </div>
 
-                    {holderWalletAddress && holderWalletAddress !== address && (
-                        <div className='mt-5 w-full flex flex-col items-start justify-between gap-2
-                        border-b border-gray-300 pb-2
-                        '>
-                        {/* owner info */}
-                        <div className='w-full flex flex-col items-start justify-between gap-2'>
-                            
-                            <span className='text-sm text-yellow-500'>
-                                AI 에이전트 NFT 소유자 정보
+                    <div className='mt-5 w-full flex flex-col items-start justify-between gap-2
+                      border-b border-gray-300 pb-2
+                    '>
+                      {/* owner info */}
+                      <div className='w-full flex flex-col items-start justify-between gap-2'>
+                        
+                        <span className='text-sm text-yellow-500'>
+                            AI 에이전트 NFT 소유자 정보
+                        </span>
+                        
+                        <div className='w-full flex flex-row items-center justify-start gap-2'>
+                            <span className='text-xs text-gray-800'>
+                                소유자 지갑주소: {holderWalletAddress?.slice(0, 5) + '...' + holderWalletAddress?.slice(-5)}
                             </span>
+                            {/* copy button */}
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(holderWalletAddress);
+                                toast.success("Copied");
+                              }}
+                              className='bg-gray-500 text-white p-2 rounded-lg
+                                hover:bg-gray-600
+                              '
+                            >
+                                Copy
+                            </button>
+                        </div>
+                        
+
+                        <div className='w-full flex flex-row items-center justify-start gap-2
+                        '>
+
+                          <Image
+                            src={ownerInfo?.avatar || '/profile-default.png'}
+                            width={60}
+                            height={60}
+                            alt={ownerInfo?.nickname}
+                            className='rounded-lg object-cover w-10 h-10'
+                          />
+                          <div className='flex flex-col items-start justify-between gap-2'>
+                            <span className='text-xs text-gray-800'>
+                                {ownerInfo?.nickname}
+                            </span>
+                            <span className='text-xs text-gray-800'>
+                                {ownerInfo?.mobile && ownerInfo?.mobile?.slice(0, 3) + '****' + ownerInfo?.mobile?.slice(-4)}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* button for transfer owner */}
+                        {/*
+                        {address && ownerInfo?.walletAddress && address === ownerInfo?.walletAddress && (
+                          <div className='w-full flex flex-col items-center justify-between gap-2'>
                             
-                            <div className='w-full flex flex-row items-center justify-start gap-2'>
+                            <div className='w-full flex flex-col items-start justify-between gap-2'>
+                              <span className='text-sm text-yellow-500'>
+                                  소유권 이전하기
+                              </span>
+                              <div className='flex flex-row items-center justify-start gap-2'>
+                                <div className='w-3 h-3 bg-red-500 rounded-full'></div>
                                 <span className='text-xs text-gray-800'>
-                                    소유자 지갑주소: {holderWalletAddress?.slice(0, 5) + '...' + holderWalletAddress?.slice(-5)}
+                                    소유권을 이전하면 소유자 권리를 모두 이전하는 것에 동의하는 것입니다.
                                 </span>
-                                {/* copy button */}
-                                <button
-                                onClick={() => {
-                                    navigator.clipboard.writeText(holderWalletAddress);
-                                    toast.success("Copied");
-                                }}
-                                className='bg-gray-500 text-white p-2 rounded-lg
-                                    hover:bg-gray-600
-                                '
-                                >
-                                    Copy
-                                </button>
+                              </div>
                             </div>
-                            
 
-                            <div className='w-full flex flex-row items-center justify-start gap-2
-                            border-b border-gray-300 pb-2
-                            '>
-
-                            <Image
-                                src={ownerInfo?.avatar || '/profile-default.png'}
-                                width={60}
-                                height={60}
-                                alt={ownerInfo?.nickname}
-                                className='rounded-lg object-cover w-10 h-10'
+                            <input
+                              value={transferToAddress}
+                              onChange={(e) => setTransferToAddress(e.target.value)}
+                              type='text'
+                              placeholder='이전할 지갑주소를 입력하세요.'
+                              className={`w-full p-2 rounded border border-gray-300
+                                ${loadingTransfer ? 'bg-gray-100' : 'bg-white'}
+                              `}
+                              
+                              disabled={loadingTransfer}
                             />
-                            <div className='flex flex-col items-start justify-between gap-2'>
-                                <span className='text-xs text-gray-800'>
-                                    {ownerInfo?.nickname}
-                                </span>
-                                <span className='text-xs text-gray-800'>
-                                    {ownerInfo?.mobile && ownerInfo?.mobile?.slice(0, 3) + '****' + ownerInfo?.mobile?.slice(-4)}
-                                </span>
-                            </div>
-                            </div>
+                            <button
+                              onClick={() => {
+                                //alert('준비중입니다.');
+                                confirm('소유권을 이전하시겠습니까?') &&
+                                nftTransfer(transferToAddress);
+                              }}
+                              className={`
+                                ${!transferToAddress || loadingTransfer ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600'}
+                                text-white p-2 rounded
+                              `}
+                              disabled={
+                                !transferToAddress ||
+                                loadingTransfer
+                              }
+                            >
+                              {loadingTransfer ? '소유권 이전중...' : '소유권 이전하기'}
+                            </button>
+                          </div>
+                        )}
+                        */}
 
-                            {/* button for transfer owner */}
-                            {/*
-                            {address && ownerInfo?.walletAddress && address === ownerInfo?.walletAddress && (
-                            <div className='w-full flex flex-col items-center justify-between gap-2'>
-                                
-                                <div className='w-full flex flex-col items-start justify-between gap-2'>
-                                <span className='text-sm text-yellow-500'>
-                                    소유권 이전하기
-                                </span>
-                                <div className='flex flex-row items-center justify-start gap-2'>
-                                    <div className='w-3 h-3 bg-red-500 rounded-full'></div>
-                                    <span className='text-xs text-gray-800'>
-                                        소유권을 이전하면 소유자 권리를 모두 이전하는 것에 동의하는 것입니다.
-                                    </span>
-                                </div>
-                                </div>
+                      </div>
 
-                                <input
-                                value={transferToAddress}
-                                onChange={(e) => setTransferToAddress(e.target.value)}
-                                type='text'
-                                placeholder='이전할 지갑주소를 입력하세요.'
-                                className={`w-full p-2 rounded border border-gray-300
-                                    ${loadingTransfer ? 'bg-gray-100' : 'bg-white'}
-                                `}
-                                
-                                disabled={loadingTransfer}
-                                />
-                                <button
-                                onClick={() => {
-                                    //alert('준비중입니다.');
-                                    confirm('소유권을 이전하시겠습니까?') &&
-                                    nftTransfer(transferToAddress);
-                                }}
-                                className={`
-                                    ${!transferToAddress || loadingTransfer ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600'}
-                                    text-white p-2 rounded
-                                `}
-                                disabled={
-                                    !transferToAddress ||
-                                    loadingTransfer
-                                }
-                                >
-                                {loadingTransfer ? '소유권 이전중...' : '소유권 이전하기'}
-                                </button>
-                            </div>
-                            )}
-                            */}
-
-
-
-                        </div>
-
-                        </div>
-                    )}
+                    </div>
                     
                   </div>
 
 
-                  <div className='w-full flex flex-col items-start justify-start gap-2'>
-                    <span className='text-sm text-yellow-500'>
-                        AI 에이전트 NFT 이미지
-                    </span>
-                    {agent.image && (
-                      <Image
-                        //src={agent?.image?.thumbnailUrl}
-                        src={agent?.image?.pngUrl}
-                        width={200}
-                        height={200}
-                        alt={agent.name}
-                        className='rounded-lg object-cover w-full animate-pulse'
-                      />
-                    )}
-                  </div>
-
                 </div>
+
+
+                {/* totalTradingAccountBalance */}
+                {totalTradingAccountBalance > 0 && (
+                    <div className='w-full flex flex-col xl:flex-row items-start justify-between gap-5'>
+                        {/* startTrading is exist count */}
+                        <div className='w-full flex flex-row items-center gap-2'>
+                            <span className='text-lg text-gray-800 font-semibold'>
+                                시작된 Bot:
+                            </span>
+                            <span className='text-4xl text-green-500 font-semibold'>
+                                {
+                                    applications.filter((item) => item.accountConfig?.data.roleType === "2").length
+                                }
+                            </span>
+                        </div>
+                        <div className='w-full flex flex-row items-center gap-2'>
+                            <span className='text-lg text-gray-800 font-semibold'>
+                                총 거래 계정 잔고:
+                            </span>
+                            <span className='text-4xl text-green-500 font-semibold'>
+                                {
+                                Number(totalTradingAccountBalance).toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD'
+                                })
+                                }
+                            </span>
+                        </div>
+                    </div>
+                )}
 
 
                 {/* 보상 내역 table view designed */}
                 {/* getSettlementHistory */}
-                {/* 지급일, 정산채굴량, 보상(USDT) */}
+                {/* 지급일, 정산거래량, 보상(USDT) */}
 
                 {/* 거래량: if totalSettlementTradingVolume not exist, then use settlementTradingVolume */}
 
                 <div className='w-full flex flex-col gap-2 items-start justify-between'>
                     <div className='w-full flex flex-row items-center gap-2'>
                         <span className='text-lg font-semibold text-gray-500'>
-                            보상 내역
+                            최신 보상 내역 (최근 10개)
                         </span>
                     </div>
 
@@ -1291,15 +1315,18 @@ export default function AgentPage({ params }: any) {
                         >
                             <thead>
                                 <tr>
-                                    <th className='border border-gray-300 p-2 text-sm'>
-                                        지급일
-                                    </th>
-                                    <th className='border border-gray-300 p-2 text-sm'>
-                                        정산채굴량
-                                    </th>
-                                    <th className='border border-gray-300 p-2 text-sm'>
+                                    <th className='border border-gray-300 p-2'>
                                         보상금액(USDT)
                                     </th>
+
+                                    <th className='border border-gray-300 p-2'>
+                                        정산거래량
+                                    </th>
+
+                                    <th className='border border-gray-300 p-2'>
+                                        지급일
+                                    </th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -1309,9 +1336,19 @@ export default function AgentPage({ params }: any) {
 
                                 {settlementHistory.map((settlement: any, index: number) => (
                                     <tr key={index}>
-                                        <td className='border border-gray-300 p-2 text-xs'>
-                                            {new Date(settlement.timestamp).toLocaleString()}
+
+                                        {/* same width font */}
+                                        <td className='border border-gray-300 p-2 text-2xl text-right text-green-500'
+                                            style = {{
+                                                fontFamily: 'monospace'
+                                                
+                                            }}
+                                        >
+                                            {
+                                            Number(settlement.settlementClaim.agentInsentive).toFixed(6)
+                                            }
                                         </td>
+
                                         <td className='border border-gray-300 p-2 text-sm text-right'>
                                             {
                                             settlement.settlementClaim.totalSettlementTradingVolume
@@ -1319,16 +1356,65 @@ export default function AgentPage({ params }: any) {
                                             : Number(settlement.settlementClaim.settlementTradingVolume).toFixed(0)
                                             }
                                         </td>
-                                        <td
-                                            className='border border-gray-300 p-2 text-2xl text-right text-green-500 font-semibold'
-                                            style={{
-                                                fontFamily: 'monospace',
-                                            }}
-                                        >
+
+
+                                        <td className='border border-gray-300 p-2 text-sm text-right'>
+                                            
+
+
                                             {
-                                            Number(settlement.settlementClaim.agentInsentive).toFixed(6)
+                                                (
+                                                    new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 ? "방금 전" : (
+                                                        (
+                                                            new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 ? 
+                                                            Math.floor(
+                                                                (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60
+                                                            ) + "분 전" : (
+                                                                (
+                                                                    new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 ? 
+                                                                    Math.floor(
+                                                                        (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60
+                                                                    ) + "시간 전" : (
+                                                                        (
+                                                                            new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 * 7 ? 
+                                                                            Math.floor(
+                                                                                (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24
+                                                                            ) + "일 전" : (
+                                                                                (
+                                                                                    new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 * 30 ? 
+                                                                                    Math.floor(
+                                                                                        (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24 / 7
+                                                                                    ) + "주 전" : (
+                                                                                        (
+                                                                                            new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 * 30 * 12 ? 
+                                                                                            Math.floor(
+                                                                                                (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24 / 30
+                                                                                            ) + "달 전" : (
+                                                                                                Math.floor(
+                                                                                                    (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24 / 30 / 12
+                                                                                                ) + "년 전"
+                                                                                            )
+                                                                                        )
+                                                                                    )
+                                                                                )
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+
+                                                    )
+
+                                                )
+
                                             }
+
+
+
+
                                         </td>
+
                                     </tr>
                                 ))}
                             </tbody>
@@ -1351,7 +1437,8 @@ export default function AgentPage({ params }: any) {
 
 
           {/* application list */}
-          <div className='mt-10 w-full flex flex-col gap-5'>
+          <div className='mt-5
+            w-full flex flex-col gap-5'>
 
 
             <div className='flex flex-row items-center gap-2'>
@@ -1442,35 +1529,8 @@ export default function AgentPage({ params }: any) {
             </div>
 
 
-            {/* totalTradingAccountBalance */}
-            {totalTradingAccountBalance > 0 && (
-                <div className='w-full flex flex-col gap-2'>
-                    {/* startTrading is exist count */}
-                    <div className='w-full flex flex-row items-center justify-between gap-2'>
-                        <span className='text-sm text-gray-800 font-semibold'>
-                            시작된 Bot:
-                        </span>
-                        <span className='text-2xl text-green-500 font-semibold'>
-                            {
-                            applications.filter((item) => item.accountConfig?.data.roleType === "2").length
-                            }개
-                        </span>
-                    </div>
-                    <div className='w-full flex flex-row items-center justify-between gap-2'>
-                        <span className='text-sm font-semibold text-gray-800'>
-                            총 거래 계정 잔고:
-                        </span>
-                        <span className='text-4xl font-semibold text-green-500'>
-                            {
-                            Number(totalTradingAccountBalance).toLocaleString('en-US', {
-                                style: 'currency',
-                                currency: 'USD'
-                            })
-                            }
-                        </span>
-                    </div>
-                </div>
-            )}
+
+
 
               <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-5'>
 
@@ -1586,7 +1646,6 @@ export default function AgentPage({ params }: any) {
                             {/* checkApiAccessKey */}
                             {
                             (!application.okxUid || application.okxUid === "0") ? (
-
                                 <button
                                     onClick={() => {
                                         checkApiAccessKey(
@@ -1603,7 +1662,6 @@ export default function AgentPage({ params }: any) {
                                 >
                                     {checkingApiAccessKeyList.find((item) => item.applicationId === application.id)?.checking ? "Updating..." : "Update UID"}
                                 </button>
-
                             )
                             :
                             (
@@ -1619,7 +1677,7 @@ export default function AgentPage({ params }: any) {
                                     >
                                         Copy
                                     </button>
-                                    {/*}
+                                    {/*
                                     <button
                                         onClick={() => {
                                             checkApiAccessKey(
@@ -1781,9 +1839,9 @@ export default function AgentPage({ params }: any) {
                         <div className='w-full flex flex-row items-center justify-between gap-2'>
                             <div className='flex flex-col gap-2'>
                                 <span className='text-xs text-yellow-800'>
-                                    OKX Trading Balance
+                                    OKX 거래 계정 잔고
                                 </span>
-                                <span className='text-sm text-gray-800'>
+                                <span className='text-4xl text-green-800 font-semibold'>
                                     {
                                         Number(tradingAccountBalanceList.find((item) => item.applicationId === application.id)?.tradingAccountBalance?.balance)
                                         .toLocaleString('en-US', {
