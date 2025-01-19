@@ -608,40 +608,40 @@ function AgentPage() {
 
 
                                                         (
-                                                            new Date().getTime() - settlement.transferData.timestamp
+                                                            new Date().getTime() - settlement.timestamp
                                                         ) < 60000 ? "방금 전" : (
                                                             (
-                                                                new Date().getTime() - settlement.transferData.timestamp
+                                                                new Date().getTime() - settlement.timestamp
                                                             ) < 3600000 ? 
                                                             Math.floor(
-                                                                (new Date().getTime() - settlement.transferData.timestamp) / 60000
+                                                                (new Date().getTime() - settlement.timestamp) / 60000
                                                             ) + "분 전" : (
                                                                 (
-                                                                    new Date().getTime() - settlement.transferData.timestamp
+                                                                    new Date().getTime() - settlement.timestamp
                                                                 ) < 86400000 ? 
                                                                 Math.floor(
-                                                                    (new Date().getTime() - settlement.transferData.timestamp) / 3600000
+                                                                    (new Date().getTime() - settlement.timestamp) / 3600000
                                                                 ) + "시간 전" : (
                                                                     (
-                                                                        new Date().getTime() - settlement.transferData.timestamp
+                                                                        new Date().getTime() - settlement.timestamp
                                                                     ) < 604800000 ? 
                                                                     Math.floor(
-                                                                        (new Date().getTime() - settlement.transferData.timestamp) / 86400000
+                                                                        (new Date().getTime() - settlement.timestamp) / 86400000
                                                                     ) + "일 전" : (
                                                                         (
-                                                                            new Date().getTime() - settlement.transferData.timestamp
+                                                                            new Date().getTime() - settlement.timestamp
                                                                         ) < 2592000000 ? 
                                                                         Math.floor(
-                                                                            (new Date().getTime() - settlement.transferData.timestamp) / 604800000
+                                                                            (new Date().getTime() - settlement.timestamp) / 604800000
                                                                         ) + "주 전" : (
                                                                             (
-                                                                                new Date().getTime() - settlement.transferData.timestamp
+                                                                                new Date().getTime() - settlement.timestamp
                                                                             ) < 31536000000 ? 
                                                                             Math.floor(
-                                                                                (new Date().getTime() - settlement.transferData.timestamp) / 2592000000
+                                                                                (new Date().getTime() - settlement.timestamp) / 2592000000
                                                                             ) + "달 전" : (
                                                                                 Math.floor(
-                                                                                    (new Date().getTime() - settlement.transferData.timestamp) / 31536000000
+                                                                                    (new Date().getTime() - settlement.timestamp) / 31536000000
                                                                                 ) + "년 전"
                                                                             )
                                                                         )
