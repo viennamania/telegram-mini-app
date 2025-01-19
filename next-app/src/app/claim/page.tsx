@@ -583,7 +583,7 @@ function AgentPage() {
                                                 <tr key={index}>
 
                                                     <td
-                                                        className='border border-gray-300 p-2 text-4xl text-right text-blue-500 font-semibold'
+                                                        className='border border-gray-300 p-2 text-2xl text-right text-blue-500'
                                                         style={{
                                                             fontFamily: 'monospace',
                                                         }}
