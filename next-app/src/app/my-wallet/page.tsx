@@ -62,6 +62,7 @@ import {
 
 import Uploader from '../components/uploader';
 import { updateUser } from "@/lib/api/user";
+import { send } from "@fal-ai/serverless-client/src/function";
 
 
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
@@ -89,10 +90,10 @@ function ProfilePage() {
 
 
 
-    const address = account?.address;
+    //const address = account?.address;
 
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -665,8 +666,10 @@ function ProfilePage() {
 
 
     const [toWalletAddress, setToWalletAddress] = useState("");
-    const [sendAmount, setSendAmount] = useState(0);
+    const [sendAmount, setSendAmount] = useState('');
     const [sending, setSending] = useState(false);
+
+
 
     const sendUsdt = async () => {
         if (sending) {
@@ -697,7 +700,7 @@ function ProfilePage() {
             });
             
             const { transactionHash } = await sendTransaction({
-                account: account,
+                account: account as any,
                 transaction,
             });
 
@@ -780,6 +783,17 @@ function ProfilePage() {
                     <div className="flex justify-center mt-5">
                         {address ? (
                             <div className="flex flex-row gap-2 items-center justify-between">
+
+                                <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
+                                    <Image
+                                    src="/icon-wallet-live.gif"
+                                    alt="Wallet"
+                                    width={50}
+                                    height={25}
+                                    className="rounded"
+                                    />
+                                </div>
+
                                 
                                 <Button
                                     onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
@@ -856,29 +870,21 @@ function ProfilePage() {
                                 <div className='w-full flex flex-row gap-2 items-center justify-between
                                     border border-gray-800
                                     p-4 rounded-lg'>
-                                
-                                    <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
-                                        <Image
-                                        src="/icon-wallet-live.gif"
-                                        alt="Wallet"
-                                        width={65}
-                                        height={25}
-                                        className="rounded"
-                                        />
 
-                                    </div>
-
-                                    <div className="flex flex-row gap-2 items-center justify-between">
-                                        <Image
+                                    <Image
                                         src="/logo-tether.png"
                                         alt="USDT"
                                         width={30}
                                         height={30}
                                         className="rounded"
-                                        />
+                                    />                                
+
+
+                                    <div className="flex flex-row gap-2 items-center justify-between">
+
                                         <span className="p-2 text-green-500 text-4xl font-semibold"> 
                                             {
-                                                Number(balance).toFixed(2)
+                                                Number(balance).toFixed(6)
                                             }
                                         </span>
                                         <span className="p-2 text-gray-500 text-lg font-semibold">USDT</span>
@@ -892,21 +898,57 @@ function ProfilePage() {
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                         USDT 보내기
                                     </div>
-                                    <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
+                                    <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                         <input
                                             disabled={sending}
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                            className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-6xl font-semibold"
                                             placeholder="0.00"
                                             type='number'
-                                            value={sendAmount}
+
+                                            value={
+
+                                                sendAmount
+                                                
+                                            }
+
                                             onChange={(e) => {
-                                                setSendAmount(Number(e.target.value));
+
+
+                                                if (isNaN(Number(e.target.value))) {
+                                                    alert('숫자만 입력해주세요');
+                                                    return;
+                                                }
+
+                                                if (Number(e.target.value) < 0) {
+                                                    alert('0보다 작은 숫자는 입력할 수 없습니다');
+                                                    return;
+                                                }
+
+
+
+                                                //setSendAmount(Number(e.target.value));
+
+                                                // check floating point is less than 6
+
+                                                // check input number less than balance
+
+                                                if (Number(e.target.value) > balance) {
+                                                    alert('잔액보다 많은 금액을 보낼 수 없습니다');
+                                                    return;
+                                                }
+
+
+                                                setSendAmount(
+                                                    parseFloat(e.target.value)
+                                                    //Number(e.target.value)
+                                                );
+
                                             }}
                                         />
                                         <input
                                             disabled={sending}
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                            placeholder="받는 사람 지갑주소"
+                                            className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                            placeholder="받는 사람 지갑주소(0x로 시작)"
                                             type='text'
                                             onChange={(e) => {
                                                 // cheack prefix is "0x"
