@@ -90,10 +90,10 @@ function ProfilePage() {
 
 
 
-    const address = account?.address;
+    ///const address = account?.address;
 
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -616,7 +616,7 @@ function ProfilePage() {
 
             const data = await response.json();
 
-            //console.log("getTransfers data", data);
+            console.log("getTransfers data", data);
 
 
             if (data.result) {
@@ -1078,83 +1078,9 @@ function ProfilePage() {
                         
                     </div>
 
-                    {/*transfers*/}
-                    {/* table view */}
-                    {/* if transfers.sendReceive === send, then display "보내기" */}
-                    {/* if transfers.sendReceive === receive, then display "받기" */}
-                    {/*
-                    {loadingTransfers && (
-                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                거래내역 로딩중...
-                            </div>
-                        </div>
-                    )}
-
-                    {transfers?.length > 0 && (
-                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                거래내역
-                            </div>
-
-                            <table className="w-full">
-                                <thead>
-                                    <tr>
-                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
-                                            +/-
-                                        </th>
-                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">지갑주소</th>
-                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">금액(USDT)</th>
-                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">날짜</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {transfers.map((transfer, index) => (
-                                        <tr key={index}>
-                                            <td className="p-2 text-lg text-zinc-800 font-semibold">
-                                                {transfer.sendOrReceive === "send" ? "-" : "+"}
-                                            </td>
-                                            {transfer.sendOrReceive === "send" ? (
-                                                <td className="p-2 text-xs text-zinc-800">
-                                                    {shortenAddress(transfer.transferData.toAddress)}
-                                                </td>
-                                            ) : (
-                                                <td className="p-2 text-xs text-zinc-800">
-                                                    {shortenAddress(transfer.transferData.fromAddress)}
-                                                </td>
-                                            )}
-                                            <td className="p-2 text-sm text-green-500 font-semibold text-right">
-                                                {Number(transfer.transferData.value / 10 ** 6).toFixed(6)}
-                                            </td>
-                                            <td className="p-2 text-xs text-zinc-800 font-semibold">
-                                           
-
-                                                {
-
-
-
-                                                    new Date(transfer.transferData.timestamp).toLocaleString('ko-KR', {
-                                                        timeZone: 'Asia/Seoul',
-                                                        hour12: false,
-                                                    })
-
-
-
-                                                }
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-
-                        </div>
-                    ) }
-
-                    */}
-
                     {/* 거래 내역 보기 */}
                     {/* polygon scan */}
-                    <div className="flex flex-row gap-2 items-center justify-between">
+                    <div className="w-full flex flex-row gap-2 items-center justify-end">
                         <Button
                             onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}/tokentxns#tokentxns`)}
                             className="bg-green-500 text-zinc-100 p-2 rounded
@@ -1176,6 +1102,147 @@ function ProfilePage() {
 
                         </Button>
                     </div>
+
+
+
+                    {/*transfers*/}
+                    {/* table view */}
+                    {/* if transfers.sendReceive === send, then display "보내기" */}
+                    {/* if transfers.sendReceive === receive, then display "받기" */}
+                    
+                    {loadingTransfers && (
+                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                거래내역 로딩중...
+                            </div>
+                        </div>
+                    )}
+
+                    {transfers?.length > 0 && (
+                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                거래내역
+                            </div>
+
+                            <table className="w-full">
+                                <thead>
+                                    <tr>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
+                                            +/-
+                                        </th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">지갑주소</th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">수량(USDT)</th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">시간</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {transfers.map((transfer, index) => (
+                                        <tr key={index}>
+                                            <td className="p-2 text-lg text-zinc-800 font-semibold">
+                                                {transfer.sendOrReceive === "send" ? "-" : "+"}
+                                            </td>
+                                            {transfer.sendOrReceive === "send" ? (
+                                                <td className="p-2 text-xs text-zinc-800">
+                                                    {shortenAddress(transfer.transferData.toAddress)}
+                                                </td>
+                                            ) : (
+                                                <td className="p-2 text-xs text-zinc-800">
+                                                    {shortenAddress(transfer.transferData.fromAddress)}
+                                                </td>
+                                            )}
+                                            {/* monospace font */}
+                                            <td className="p-2 text-xl text-blue-500 text-right"
+                                                style={{
+                                                    fontFamily: 'monospace',
+                                                }}
+                                            >
+                                                {Number(transfer.transferData.value / 10 ** 6).toFixed(6)}
+                                            </td>
+                                            <td className="p-2 text-xs text-zinc-800 font-semibold text-right">
+                                           
+
+                                                {
+
+
+                                                    /*
+                                                    new Date(transfer.transferData.timestamp).toLocaleString('ko-KR', {
+                                                        timeZone: 'Asia/Seoul',
+                                                        hour12: false,
+                                                    })
+                                                    */
+                                                   // sec, min, hour ago
+                                                    // 1분 이내: 방금 전
+                                                    // 1시간 이내: 1분 전
+                                                    // 1일 이내: 1시간 전
+                                                    // 1일 이상: 1일 전
+                                                    // 1주 이상: 1주 전
+                                                    // 1달 이상: 1달 전
+
+                                                    // 1분 = 60초
+                                                    // 1시간 = 60분 = 3600초
+                                                    // 1일 = 24시간 = 1440분 = 86400초
+                                                    // 1주 = 7일 = 168시간 = 10080분 = 604800초
+                                                    // 1달 = 30일 = 720시간 = 43200분 = 2592000초
+
+                                                    // 1년 = 365일 = 8760시간 = 525600분 = 31536000초
+
+                                                    (
+                                                        new Date().getTime() - transfer.transferData.timestamp
+                                                    ) < 60000 ? "방금 전" : (
+                                                        (
+                                                            new Date().getTime() - transfer.transferData.timestamp
+                                                        ) < 3600000 ? 
+                                                        Math.floor(
+                                                            (new Date().getTime() - transfer.transferData.timestamp) / 60000
+                                                        ) + "분 전" : (
+                                                            (
+                                                                new Date().getTime() - transfer.transferData.timestamp
+                                                            ) < 86400000 ? 
+                                                            Math.floor(
+                                                                (new Date().getTime() - transfer.transferData.timestamp) / 3600000
+                                                            ) + "시간 전" : (
+                                                                (
+                                                                    new Date().getTime() - transfer.transferData.timestamp
+                                                                ) < 604800000 ? 
+                                                                Math.floor(
+                                                                    (new Date().getTime() - transfer.transferData.timestamp) / 86400000
+                                                                ) + "일 전" : (
+                                                                    (
+                                                                        new Date().getTime() - transfer.transferData.timestamp
+                                                                    ) < 2592000000 ? 
+                                                                    Math.floor(
+                                                                        (new Date().getTime() - transfer.transferData.timestamp) / 604800000
+                                                                    ) + "주 전" : (
+                                                                        (
+                                                                            new Date().getTime() - transfer.transferData.timestamp
+                                                                        ) < 31536000000 ? 
+                                                                        Math.floor(
+                                                                            (new Date().getTime() - transfer.transferData.timestamp) / 2592000000
+                                                                        ) + "달 전" : (
+                                                                            Math.floor(
+                                                                                (new Date().getTime() - transfer.transferData.timestamp) / 31536000000
+                                                                            ) + "년 전"
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+
+
+                                                }
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    ) }
+
+                    
+
+
 
 
                     
