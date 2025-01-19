@@ -526,9 +526,10 @@ function AgentPage() {
                         alt="Back"
                         />
                         <span className='text-sm text-white'>
-                        뒤로가기
+                            뒤로가기
                         </span>
                     </button>
+
                 </div>
                 
 
@@ -538,10 +539,11 @@ function AgentPage() {
                     <div className='flex flex-row items-center gap-4'>
                         
                         <Image
-                            src="/logo-masterbot.png"
+                            src={myAgent?.masterBotInfo?.imageUrl || "/logo-masterbot100.png"}
                             alt="Master Bot"
                             width={100}
                             height={40}
+                            className='animate-pulse w-full rounded-lg'
                         />
                         <span className="text-lg font-semibold text-gray-800">
                             보상내역
@@ -630,33 +632,6 @@ function AgentPage() {
                     {address && myAgent?.masterBotInfo ? (
 
                         <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
-                            <div className='flex flex-col gap-2
-                                border border-gray-300 p-4 rounded-lg
-                            '>
-                                <div className='flex flex-row items-center gap-2'>
-                                    <Image
-                                        src="/logo-opensea.png"
-                                        alt="OpenSea"
-                                        width={20}
-                                        height={20}
-                                    />
-                                    <span className='text-sm font-semibold text-blue-500'>
-                                        Master Bot NFT
-                                    </span>
-                                </div>
-
-                                <div className='flex flex-row items-center gap-2'>
-                                    <Image
-                                        src={myAgent?.masterBotInfo?.imageUrl || "/logo-masterbot100.png"}
-                                        alt="Master Bot"
-                                        width={500}
-                                        height={500}
-                                        className='animate-pulse w-full rounded-lg'
-                                    />
-
-                                </div>
-                            </div>
-
 
                             {loadingStatisticsDaily && (
                                 <div className='flex flex-col items-center justify-center'>
