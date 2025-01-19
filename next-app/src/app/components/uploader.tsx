@@ -36,7 +36,11 @@ export default function Uploader(
       const file = event.currentTarget.files && event.currentTarget.files[0]
       if (file) {
         if (file.size / 1024 / 1024 > 50) {
-          toast.error('File size too big (max 50MB)')
+          
+          //toast.error('File size too big (max 50MB)')
+          alert('파일 크기가 너무 큽니다 (최대 50MB)');
+
+
         } else {
           setFile(file)
           const reader = new FileReader()
@@ -126,7 +130,7 @@ export default function Uploader(
 
 
 
-
+            {/*
             toast(
               (t: { id: string } 
                 ) => (
@@ -135,19 +139,7 @@ export default function Uploader(
                     <p className="text-sm text-gray-900 mt-5">
                       파일이 업로드되었습니다.
                     </p>
-                    {/*
-                    <p className="mt-1 text-sm text-gray-500">
-                      Your file has been uploaded to{' '}
-                      <a
-                        className="font-medium text-gray-900 underline"
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {url}
-                      </a>
-                    </p>
-                    */}
+ 
 
                   </div>
                   <button
@@ -174,10 +166,18 @@ export default function Uploader(
               ),
               { duration: 3000 }
             )
+            */}
+
+            alert("파일이 업로드되었습니다.");
+
 
           } else {
             const error = await res.text()
-            toast.error(error)
+            
+            ///toast.error(error)
+            alert(error);
+
+
           }
           
           setSaving(false)
@@ -229,7 +229,10 @@ export default function Uploader(
               const file = e.dataTransfer.files && e.dataTransfer.files[0]
               if (file) {
                 if (file.size / 1024 / 1024 > 50) {
-                  toast.error('File size too big (max 50MB)')
+
+                  //toast.error('File size too big (max 50MB)')
+                  alert('파일 크기가 너무 큽니다 (최대 50MB)');
+
                 } else {
                   setFile(file)
                   const reader = new FileReader()

@@ -322,7 +322,7 @@ feature.command('start', async (ctx) => {
   let masterBotInfo = null;
 
 
-  const urlMyApplication = `${process.env.FRONTEND_APP_ORIGIN}/api/agent/getOneApplication`;
+  const urlMyApplication = `${process.env.FRONTEND_APP_ORIGIN}/api/agent/getOneApplicationByWalletAddress`;
 
   const responseMyApplication = await fetch(urlMyApplication, {
     method: "POST",
@@ -334,8 +334,8 @@ feature.command('start', async (ctx) => {
     }),
   });
 
-  if (responseGetReferralCode.status !== 200) {
-    return ctx.reply("Failed to get referral code");
+  if (responseMyApplication.status !== 200) {
+    return ctx.reply("Failed to get my application");
   } else {
     const data = await responseMyApplication.json();
     ///console.log("data", data);
@@ -437,9 +437,9 @@ feature.command('start', async (ctx) => {
     .row()
     .webApp('나의 프로필 보러가기', urlMyProfile)
     .row()
-    .webApp('나의 AI 에이전트 보러가기', urlReferral)
+    .webApp('나의 에이전트봇 보러가기', urlReferral)
     .row()
-    .webApp('나의 OKX 트레이딩 봇 보러가기', urlTbot)
+    .webApp('나의 마스트봇 보러가기', urlTbot)
 
     if (isCenterOwner) {
 
