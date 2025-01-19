@@ -709,7 +709,7 @@ function ProfilePage() {
 
                 alert('USDT sent successfully');
 
-                setSendAmount(0);
+                setSendAmount('');
 
                 const result = await balanceOf({
                     contract,
@@ -939,8 +939,9 @@ function ProfilePage() {
 
 
                                                 setSendAmount(
-                                                    parseFloat(e.target.value)
+                                                    //parseFloat(e.target.value)
                                                     //Number(e.target.value)
+                                                    e.target.value
                                                 );
 
                                             }}
