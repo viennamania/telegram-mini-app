@@ -538,14 +538,16 @@ function AgentPage() {
 
                     <div className='flex flex-row items-center gap-4'>
                         
-                        <Image
-                            src={myAgent?.masterBotInfo?.imageUrl || "/logo-masterbot100.png"}
-                            alt="Master Bot"
-                            width={100}
-                            height={40}
-                            className='animate-pulse w-full rounded-lg'
-                        />
-                        <span className="text-lg font-semibold text-gray-800">
+                        {myAgent?.masterBotInfo?.imageUrl && (
+                            <Image
+                                src={myAgent?.masterBotInfo?.imageUrl}
+                                alt="Master Bot"
+                                width={100}
+                                height={40}
+                                className='animate-pulse w-full rounded-lg'
+                            />
+                        )}
+                        <span className="flex text-lg font-semibold text-gray-800">
                             보상내역
                         </span>
                     </div>
@@ -554,6 +556,17 @@ function AgentPage() {
                     <div className="flex justify-center mt-5">
                         {address ? (
                             <div className="flex flex-row gap-2 items-center justify-between">
+
+                                <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
+                                    <Image
+                                    src="/icon-wallet-live.gif"
+                                    alt="Wallet"
+                                    width={50}
+                                    height={25}
+                                    className="rounded"
+                                    />
+                                </div>
+
                                 
                                 <Button
                                     onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
@@ -570,6 +583,20 @@ function AgentPage() {
                                 >
                                     복사
                                 </Button>
+
+                                {/* polygon scan */}
+                                <Button
+                                    onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
+                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                                >
+                                    <Image
+                                        src="/logo-polygon.png"
+                                        alt="Polygon"
+                                        width={20}
+                                        height={20}
+                                        className="rounded"
+                                    />
+                                </Button>
                                 
                             </div>
                         ) : (
@@ -579,19 +606,6 @@ function AgentPage() {
                         )}      
                     </div>
 
-
-                    {address && userCode && nickname && (
-                        <div className='flex flex-row items-center gap-2'>
-                            {/* dot */}
-                            <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
-                            <span className='text-sm font-semibold text-zinc-800'>
-                                회원아이디
-                            </span>
-                            <span className='text-2xl font-semibold text-blue-500'>
-                                {nickname}
-                            </span>
-                        </div>
-                    ) }
 
                     {address
                     && !loadingUserData && !isLoadingUserDataError
