@@ -93,7 +93,7 @@ function ProfilePage() {
     const address = account?.address;
 
     // test address
-    ////const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -948,7 +948,7 @@ function ProfilePage() {
                                         />
                                         <input
                                             disabled={sending}
-                                            className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                            className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-sm font-semibold"
                                             placeholder="받는 사람 지갑주소(0x로 시작)"
                                             type='text'
                                             onChange={(e) => {
@@ -957,29 +957,35 @@ function ProfilePage() {
                                                 setToWalletAddress(e.target.value);
                                             }}
                                         />
-                                        <button
-                                            disabled={sending}
-                                            onClick={() => {
-                                                confirm('USDT를 보내시겠습니까?') &&
-                                                sendUsdt();
-                                            }}
-                                            className={`p-2 bg-blue-500 text-zinc-100 rounded ${sending ? 'opacity-50' : ''}`}
-                                        >
-                                            <div className='flex flex-row gap-2 items-center justify-between'>
-                                                {sending && (
-                                                    <Image
-                                                        src="/loading.png"
-                                                        alt="Send"
-                                                        width={25}
-                                                        height={25}
-                                                        className="animate-spin"
-                                                    />
-                                                )}
-                                                <span className='text-lg font-semibold'>
-                                                    보내기
-                                                </span>
-                                            </div>
-                                        </button>
+
+                                        <div className="mt-5 w-full flex flex-row gap-2 items-center justify-end">
+                                            <button
+                                                disabled={sending || !sendAmount || !toWalletAddress}
+                                                onClick={() => {
+                                                    confirm('USDT를 보내시겠습니까?') &&
+                                                    sendUsdt();
+                                                }}
+                                                className={`p-2 bg-blue-500 text-zinc-100 rounded
+                                                    ${sending || !sendAmount || !toWalletAddress
+                                                     ? 'opacity-50' : ''}`
+                                                }
+                                            >
+                                                <div className='flex flex-row gap-2 items-center justify-between'>
+                                                    {sending && (
+                                                        <Image
+                                                            src="/loading.png"
+                                                            alt="Send"
+                                                            width={25}
+                                                            height={25}
+                                                            className="animate-spin"
+                                                        />
+                                                    )}
+                                                    <span className='text-lg font-semibold'>
+                                                        보내기
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
