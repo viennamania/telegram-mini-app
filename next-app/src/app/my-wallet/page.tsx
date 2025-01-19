@@ -90,10 +90,10 @@ function ProfilePage() {
 
 
 
-    ///const address = account?.address;
+    const address = account?.address;
 
     // test address
-    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -1163,28 +1163,6 @@ function ProfilePage() {
 
                                                 {
 
-
-                                                    /*
-                                                    new Date(transfer.transferData.timestamp).toLocaleString('ko-KR', {
-                                                        timeZone: 'Asia/Seoul',
-                                                        hour12: false,
-                                                    })
-                                                    */
-                                                   // sec, min, hour ago
-                                                    // 1분 이내: 방금 전
-                                                    // 1시간 이내: 1분 전
-                                                    // 1일 이내: 1시간 전
-                                                    // 1일 이상: 1일 전
-                                                    // 1주 이상: 1주 전
-                                                    // 1달 이상: 1달 전
-
-                                                    // 1분 = 60초
-                                                    // 1시간 = 60분 = 3600초
-                                                    // 1일 = 24시간 = 1440분 = 86400초
-                                                    // 1주 = 7일 = 168시간 = 10080분 = 604800초
-                                                    // 1달 = 30일 = 720시간 = 43200분 = 2592000초
-
-                                                    // 1년 = 365일 = 8760시간 = 525600분 = 31536000초
 
                                                     (
                                                         new Date().getTime() - transfer.transferData.timestamp

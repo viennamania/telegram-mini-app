@@ -561,14 +561,16 @@ function AgentPage() {
                                     >
                                         <thead>
                                             <tr>
+
+
                                                 <th className='border border-gray-300 p-2 text-sm'>
-                                                    지급일
+                                                    보상금액(USDT)
                                                 </th>
                                                 <th className='border border-gray-300 p-2 text-sm'>
                                                     정산채굴량
                                                 </th>
                                                 <th className='border border-gray-300 p-2 text-sm'>
-                                                    보상금액(USDT)
+                                                    지급시간
                                                 </th>
                                             </tr>
                                         </thead>
@@ -579,23 +581,9 @@ function AgentPage() {
 
                                             {settlementHistory.map((settlement: any, index: number) => (
                                                 <tr key={index}>
-                                                    <td className='border border-gray-300 p-2 text-xs'>
-                                                        {new Date(settlement.timestamp).toLocaleString(
-                                                            'ko-KR',
-                                                            {
-                                                                timeZone: 'Asia/Seoul',
-                                                            }
-                                                        )}
-                                                    </td>
-                                                    <td className='border border-gray-300 p-2 text-sm text-right'>
-                                                        {
-                                                        settlement.settlementClaim.totalSettlementTradingVolume
-                                                        ? Number(settlement.settlementClaim.totalSettlementTradingVolume).toFixed(0)
-                                                        : Number(settlement.settlementClaim.settlementTradingVolume).toFixed(0)
-                                                        }
-                                                    </td>
+
                                                     <td
-                                                        className='border border-gray-300 p-2 text-2xl text-right text-blue-500 font-semibold'
+                                                        className='border border-gray-300 p-2 text-4xl text-right text-blue-500 font-semibold'
                                                         style={{
                                                             fontFamily: 'monospace',
                                                         }}
@@ -604,6 +592,71 @@ function AgentPage() {
                                                         Number(settlement.settlementClaim.masterInsentive).toFixed(6)
                                                         }
                                                     </td>
+
+                                                    <td className='border border-gray-300 p-2 text-sm text-right'>
+                                                        {
+                                                        settlement.settlementClaim.totalSettlementTradingVolume
+                                                        ? Number(settlement.settlementClaim.totalSettlementTradingVolume).toFixed(0)
+                                                        : Number(settlement.settlementClaim.settlementTradingVolume).toFixed(0)
+                                                        }
+                                                    </td>
+
+
+                                                    <td className='border border-gray-300 p-2 text-sm'>
+
+                                                    {
+
+
+                                                        (
+                                                            new Date().getTime() - settlement.transferData.timestamp
+                                                        ) < 60000 ? "방금 전" : (
+                                                            (
+                                                                new Date().getTime() - settlement.transferData.timestamp
+                                                            ) < 3600000 ? 
+                                                            Math.floor(
+                                                                (new Date().getTime() - settlement.transferData.timestamp) / 60000
+                                                            ) + "분 전" : (
+                                                                (
+                                                                    new Date().getTime() - settlement.transferData.timestamp
+                                                                ) < 86400000 ? 
+                                                                Math.floor(
+                                                                    (new Date().getTime() - settlement.transferData.timestamp) / 3600000
+                                                                ) + "시간 전" : (
+                                                                    (
+                                                                        new Date().getTime() - settlement.transferData.timestamp
+                                                                    ) < 604800000 ? 
+                                                                    Math.floor(
+                                                                        (new Date().getTime() - settlement.transferData.timestamp) / 86400000
+                                                                    ) + "일 전" : (
+                                                                        (
+                                                                            new Date().getTime() - settlement.transferData.timestamp
+                                                                        ) < 2592000000 ? 
+                                                                        Math.floor(
+                                                                            (new Date().getTime() - settlement.transferData.timestamp) / 604800000
+                                                                        ) + "주 전" : (
+                                                                            (
+                                                                                new Date().getTime() - settlement.transferData.timestamp
+                                                                            ) < 31536000000 ? 
+                                                                            Math.floor(
+                                                                                (new Date().getTime() - settlement.transferData.timestamp) / 2592000000
+                                                                            ) + "달 전" : (
+                                                                                Math.floor(
+                                                                                    (new Date().getTime() - settlement.transferData.timestamp) / 31536000000
+                                                                                ) + "년 전"
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+
+
+                                                        }
+
+                                                    </td>
+
+
+
                                                 </tr>
                                             ))}
                                         </tbody>
