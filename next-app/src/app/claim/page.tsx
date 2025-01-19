@@ -329,7 +329,7 @@ function AgentPage() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                limit: 100,
+                limit: 10,
                 page: 1,
                 walletAddress: address,
             }),
@@ -538,14 +538,14 @@ function AgentPage() {
 
                             {/* 보상 내역 table view designed */}
                             {/* getSettlementHistory */}
-                            {/* 지급일, 정산채굴량, 보상(USDT) */}
+                            {/* 지급시간, 정산채굴량, 보상(USDT) */}
 
                             {/* 거래량: if totalSettlementTradingVolume not exist, then use settlementTradingVolume */}
 
                             <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                 <div className='w-full flex flex-row items-center gap-2'>
                                     <span className='text-lg font-semibold text-gray-500'>
-                                        보상 내역
+                                        최신 보상 내역 (최근 10개)
                                     </span>
                                 </div>
 
@@ -605,6 +605,55 @@ function AgentPage() {
                                                     <td className='border border-gray-300 p-2 text-sm'>
 
                                                         {settlement.timestamp}
+
+                                                        
+                                                        {
+                                                            (
+                                                                new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 ? "방금 전" : (
+                                                                    (
+                                                                        new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 ? 
+                                                                        Math.floor(
+                                                                            (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60
+                                                                        ) + "분 전" : (
+                                                                            (
+                                                                                new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 ? 
+                                                                                Math.floor(
+                                                                                    (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60
+                                                                                ) + "시간 전" : (
+                                                                                    (
+                                                                                        new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 * 7 ? 
+                                                                                        Math.floor(
+                                                                                            (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24
+                                                                                        ) + "일 전" : (
+                                                                                            (
+                                                                                                new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 * 30 ? 
+                                                                                                Math.floor(
+                                                                                                    (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24 / 7
+                                                                                                ) + "주 전" : (
+                                                                                                    (
+                                                                                                        new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 * 30 * 12 ? 
+                                                                                                        Math.floor(
+                                                                                                            (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24 / 30
+                                                                                                        ) + "달 전" : (
+                                                                                                            Math.floor(
+                                                                                                                (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24 / 30 / 12
+                                                                                                            ) + "년 전"
+                                                                                                        )
+                                                                                                    )
+                                                                                                )
+                                                                                            )
+                                                                                        )
+                                                                                    )
+                                                                                )
+                                                                            )
+                                                                        )
+                                                                    )
+
+                                                                )
+
+                                                            )
+
+                                                        }
 
 
                                                     {/*
