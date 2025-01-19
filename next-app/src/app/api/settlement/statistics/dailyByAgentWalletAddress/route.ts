@@ -1,35 +1,25 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 
-/*
-import {
-	getAllAgents,
-} from '@lib/api/agent';
-*/
-
-
 export async function POST(request: NextRequest) {
 
-  const body = await request.json();
+    const body = await request.json();
 
-  const { walletAddress, center } = body;
-
-
-  if (!walletAddress) {
-
-    return NextResponse.error();
-  }
+    const { agentWalletAddress } = body;
 
 
+    if (!agentWalletAddress) {
 
+        return NextResponse.error();
+    }
 
-    const response = await fetch("https://owinwallet.com/api/settlement/statistics/dailyByMasterWalletAddress", {
+    const response = await fetch("https://owinwallet.com/api/settlement/statistics/dailyByAgentWalletAddress", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        walletAddress,
+        agentWalletAddress
       }),
     });
   
@@ -47,10 +37,5 @@ export async function POST(request: NextRequest) {
       result: jsonObj?.result,
       
     });
-
-
-
-
-
   
 }

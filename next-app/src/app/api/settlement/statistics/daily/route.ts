@@ -1,31 +1,41 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 
-
-import {
-    getStatisticsDailyTradingVolume,
-    getStatisticsDailyTradingAccountBalance,
-} from '@lib/api/agent';
-
-
 export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
+    const { center } = body;
 
 
-    const tradingVolume = await getStatisticsDailyTradingVolume();
+    if (!center) {
 
-    const tradingAccountBalance = await getStatisticsDailyTradingAccountBalance();
+        return NextResponse.error();
+    }
 
-
-
-
-    return NextResponse.json({
-
-        tradingVolume,
-        tradingAccountBalance
-
+    const response = await fetch("https://owinwallet.com/api/settlement/statistics/daily", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        center,
+      }),
     });
-
+  
+    if (!response.ok) {
+      return NextResponse.error();
+    }
+  
+    const jsonObj = await response.json();
+  
+    ////console.log("getReferApplications jsonObj: ", jsonObj);
+  
+    
+    return NextResponse.json({
+  
+      result: jsonObj?.result,
+      
+    });
+  
 }
