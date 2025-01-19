@@ -605,6 +605,8 @@ function ProfilePage() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
+                    limit: 10,
+                    page: 1,
                     walletAddress: address,
                 }),
             });

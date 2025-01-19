@@ -9,16 +9,16 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
-  const { walletAddress } = body;
+  const { limit, page, walletAddress } = body;
 
 
   //console.log("walletAddress", walletAddress);
 
 
   const result = await getTransferByWalletAddress({
+    limit,
+    page,
     walletAddress,
-    limit: 500,
-    page: 1,
   });
 
  
