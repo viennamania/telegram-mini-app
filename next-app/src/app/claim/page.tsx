@@ -100,10 +100,10 @@ function AgentPage() {
     const router = useRouter();
 
 
-    const address = account?.address;
+    ///const address = account?.address;
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -343,7 +343,7 @@ function AgentPage() {
 
         const data = await response.json();
 
-        console.log("data", data);
+        ///console.log("data", data);
 
         if (data.settlements) {
             setSettlementHistory(data.settlements);
@@ -359,6 +359,126 @@ function AgentPage() {
         address && getSettlementHistory();
     } , [address]);
 
+
+
+
+    const [statisticsDaily, setStatisticsDaily] = useState([] as any[]);
+
+    const [loadingStatisticsDaily, setLoadingStatisticsDaily] = useState(false);
+
+    const [averageTradingAccountBalanceDaily, setAverageTradingAccountBalanceDaily] = useState(0);
+
+    const [sumMasterBotProfit, setSumMasterBotProfit] = useState(0);
+
+    useEffect(() => {
+
+        const getStatisticsDaily = async () => {
+            
+            setLoadingStatisticsDaily(true);
+
+            const response = await fetch("/api/settlement/statistics/dailyByMasterWalletAddress", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    masterWalletAddress: address,
+                }),
+            });
+
+            if (!response.ok) {
+                console.error('Error fetching data');
+
+                setLoadingStatisticsDaily(false);
+                return;
+            }
+
+            const data = await response.json();
+
+            ///console.log("getStatisticsDaily data", data);
+
+            //setStatisticsDaily(data.statisticsDaily);
+
+            const tradingVolumeDaily = data.result.tradingVolume;
+
+            const tradingAccountBalanceDaily = data.result.tradingAccountBalance;
+
+            // select average from tradingAccountBalanceDaily where tradingAccountBalanceDaily.average > 0
+
+            let sumTradingAccountBalanceDaily = 0;
+            let countTradingAccountBalanceDaily = 0;
+            for (let i = 0; i < tradingAccountBalanceDaily?.length; i++) {
+                if (tradingAccountBalanceDaily[i].average > 0) {
+                    sumTradingAccountBalanceDaily += tradingAccountBalanceDaily[i].average;
+                    countTradingAccountBalanceDaily++;
+                }
+            }
+
+            setAverageTradingAccountBalanceDaily(sumTradingAccountBalanceDaily / countTradingAccountBalanceDaily);
+
+
+            let sumMasterBotProfit = 0;
+
+            for (let i = 0; i < tradingAccountBalanceDaily?.length; i++) {
+                if (tradingAccountBalanceDaily[i].average > 0) {
+
+                    // find tradingVolumenDaily where yearmonthday is the same
+
+
+                    tradingVolumeDaily?.map((item: any) => {
+                        if (item._id.yearmonthday === tradingAccountBalanceDaily[i]._id.yearmonthday) {
+                            
+                            sumMasterBotProfit += item.masterReward / tradingAccountBalanceDaily[i].average * 100;
+
+                        }
+                    } );
+
+                }
+            }
+            setSumMasterBotProfit(sumMasterBotProfit);
+
+            //console.log("sumMasterBotProfit", sumMasterBotProfit);
+            ///console.log("averageTradingAccountBalanceDaily", averageTradingAccountBalanceDaily);
+
+
+            //setStatisticsDaily(tradingVolumenDaily);
+
+
+            const merged = tradingVolumeDaily?.map((item: any) => {
+                const tradingAccountBalance = tradingAccountBalanceDaily?.find((item2: any) => item2._id.yearmonthday === item._id.yearmonthday);
+        
+                return {
+                    ...item,
+                    tradingAccountBalance: tradingAccountBalance?.average || 0,
+                };
+            });
+
+            ///console.log("merged", merged);
+
+            /*
+            {
+                "_id": {
+                    "yearmonthday": "2025-01-19",
+                    "claimedTradingVolume": 432.11999999999534
+                },
+                "tradingAccountBalance": 42.271692100295574
+}
+            */
+
+            setStatisticsDaily(merged);
+
+
+
+
+
+
+            setLoadingStatisticsDaily(false);
+
+        }
+
+        address && getStatisticsDaily();
+
+    } , [address]);
 
 
 
@@ -535,14 +655,219 @@ function AgentPage() {
                                 </div>
                             </div>
 
+
+                            {loadingStatisticsDaily && (
+                                <div className='flex flex-col items-center justify-center'>
+                                        <Image
+                                            src="/icon-reward.gif"
+                                            alt="Loading"
+                                            width={300}
+                                            height={300}
+                                        />
+                                </div>
+                            )}
+
+                           {/* statisticsDaily */}
+                           {/* tradingVolume, total, count */}
+                           <div className='mt-5 flex flex-col gap-5
+                                border border-gray-300 p-4 rounded-lg bg-gray-100
+                            '>
+                            
+
+                                <div className='w-full flex flex-row gap-2 items-center justify-start'>
+                                    <Image
+                                        src="/icon-mining.gif"
+                                        alt="mining"
+                                        width={50}
+                                        height={50}
+                                        className='rounded-lg'
+                                    />
+
+                                    <span className='text-lg text-gray-800 font-semibold'>
+                                        일별 채굴보상
+                                    </span>
+                                </div>
+
+                                
+                                { // 날짜, 거래량, 마스터봇 보상, 에이전트봇 보상, 센터봇 보상 table view
+                                
+                                !loadingStatisticsDaily && statisticsDaily?.length > 0 && (
+
+                                    <div className='w-full flex flex-col gap-5'>
+
+                                        <table className='w-full'>
+                                            <thead
+                                                className='bg-gray-200
+                                                    border border-gray-300 p-2 rounded-lg
+                                                '
+                                            >
+                                                <tr
+                                                    className='border-b border-gray-300
+                                                        hover:bg-gray-200 h-12
+                                                    '
+                                                >
+                                                    <th className='text-sm text-gray-800 font-semibold text-center'>
+                                                        날짜
+                                                    </th>
+                                                    <th className='text-sm text-gray-800 font-semibold text-center'>
+                                                        AUM($)
+                                                    </th>
+
+                                                    <th className='text-sm text-gray-800 font-semibold text-center'>
+                                                        채굴보상
+                                                    </th>
+                                                    {/* 운용자산대비 채굴보상 비율 */}
+                                                    <th className='text-sm text-gray-800 font-semibold text-center'>
+                                                        비율(%)
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody
+                                                className='bg-gray-100
+                                                    border border-gray-300 p-2 rounded-lg
+                                                '
+                                            >
+                                                {statisticsDaily.map((item: any) => (
+                                                    <tr key={item._id.yearmonthday}
+                                                        className='border-b border-gray-300
+                                                            hover:bg-gray-200 h-12
+                                                        '>
+                                                        <td className='text-sm text-gray-800 text-center w-40'>
+                                                            {item._id.yearmonthday.slice(5)}
+                                                        </td>
+
+                                                        <td className='text-sm text-red-800 text-right'
+                                                            style={{
+                                                                fontFamily: 'monospace',
+                                                            }}
+                                                        >
+                                                            {
+                                                                Number(item.tradingAccountBalance.toFixed(2)).toLocaleString('en-US', {
+                                                                    style: 'currency',
+                                                                    currency: 'USD'
+                                                                })
+                                                            }
+                                                        </td>
+
+
+                                                        <td className='text-sm text-gray-800 text-right pl-2 pr-2'
+                                                            style={{
+                                                                fontFamily: 'monospace',
+                                                            }}
+                                                        >
+                                                            <div className='flex flex-row items-center justify-end gap-2'>
+                                                                <span className='text-sm text-green-500'>
+                                                                    {
+                                                                    Number(item.masterReward.toFixed(2)).toLocaleString('en-US', {
+                                                                        style: 'currency',
+                                                                        currency: 'USD'
+                                                                    })
+                                                                    }
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td className='text-lg text-gray-800 text-right pl-2 pr-2'
+                                                            style={{
+                                                                fontFamily: 'monospace',
+                                                            }}
+                                                        >
+                                                            <div className='flex flex-row items-center justify-end gap-2'>
+                                                                
+                                                                {
+                                                                    (item.tradingAccountBalance > 0) ? (
+                                                                        <span className='text-lg text-blue-500 font-semibold'>
+                                                                            {
+                                                                                (item.masterReward / item.tradingAccountBalance * 100).toFixed(4) + "%"
+                                                                            }
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span className='text-sm text-gray-800 font-semibold'>
+                                                                            N/A
+                                                                        </span>
+                                                                    )
+                                                                }
+                                                              
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                ))}
+
+
+                                                {/* sum of count, total, masterReward, agentReward, centerReward */}
+                                                <tr
+                                                    className='border-b border-gray-300
+                                                        hover:bg-gray-200 p-2
+
+                                                        bg-gray-200
+                                                        h-12
+
+                                                    '
+                                                >
+                                                    <td className='text-lg text-gray-800 font-semibold text-center'>
+                                                        {''}
+                                                    </td>
+                                                    <td className='text-lg text-red-800 text-right'
+                                                        style={{
+                                                            fontFamily: 'monospace',
+                                                        }}
+                                                    >
+                                                        {
+                                                          
+                                                        }
+                                                    </td>
+
+                                                    <td className='text-lg text-green-500 text-right pl-2 pr-2'
+                                                        style={{
+                                                            fontFamily: 'monospace',
+                                                        }}
+                                                    >
+                                                        {
+                                                            Number(statisticsDaily.reduce((acc, item) => acc + item.masterReward, 0).toFixed(2)).toLocaleString('en-US', {
+                                                                style: 'currency',
+                                                                currency: 'USD'
+                                                            })
+                                                        }
+                                                    </td>
+                                                    <td className='text-xl text-blue-500 font-semibold text-right pl-2 pr-2'
+                                                        style={{
+                                                            fontFamily: 'monospace',
+                                                        }}
+                                                    >
+                                                        {
+                                                            sumMasterBotProfit.toFixed(4) + "%"
+                                                        }
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                )}
+
+                            </div>
+
+
+
+
+
+
+
+
+
                             {/* 보상 내역 table view designed */}
                             {/* getSettlementHistory */}
                             {/* 지급시간, 정산채굴량, 보상(USDT) */}
 
                             {/* 거래량: if totalSettlementTradingVolume not exist, then use settlementTradingVolume */}
 
-                            <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                            <div className='mt-5 w-full flex flex-col gap-2 items-start justify-between'>
                                 <div className='w-full flex flex-row items-center gap-2'>
+                                    {/* dot */}
+                                    <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
                                     <span className='text-lg font-semibold text-gray-500'>
                                         최근 보상 내역 (최근 10개)
                                     </span>
@@ -650,56 +975,6 @@ function AgentPage() {
 
                                                         }
 
-
-                                                    {/*
-                                                    
-
-
-                                                        (
-                                                            new Date().getTime() - settlement.timestamp
-                                                        ) < 60000 ? "방금 전" : (
-                                                            (
-                                                                new Date().getTime() - settlement.timestamp
-                                                            ) < 3600000 ? 
-                                                            Math.floor(
-                                                                (new Date().getTime() - settlement.timestamp) / 60000
-                                                            ) + "분 전" : (
-                                                                (
-                                                                    new Date().getTime() - settlement.timestamp
-                                                                ) < 86400000 ? 
-                                                                Math.floor(
-                                                                    (new Date().getTime() - settlement.timestamp) / 3600000
-                                                                ) + "시간 전" : (
-                                                                    (
-                                                                        new Date().getTime() - settlement.timestamp
-                                                                    ) < 604800000 ? 
-                                                                    Math.floor(
-                                                                        (new Date().getTime() - settlement.timestamp) / 86400000
-                                                                    ) + "일 전" : (
-                                                                        (
-                                                                            new Date().getTime() - settlement.timestamp
-                                                                        ) < 2592000000 ? 
-                                                                        Math.floor(
-                                                                            (new Date().getTime() - settlement.timestamp) / 604800000
-                                                                        ) + "주 전" : (
-                                                                            (
-                                                                                new Date().getTime() - settlement.timestamp
-                                                                            ) < 31536000000 ? 
-                                                                            Math.floor(
-                                                                                (new Date().getTime() - settlement.timestamp) / 2592000000
-                                                                            ) + "달 전" : (
-                                                                                Math.floor(
-                                                                                    (new Date().getTime() - settlement.timestamp) / 31536000000
-                                                                                ) + "년 전"
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-
-
-                                                    */}
 
                                                     </td>
 

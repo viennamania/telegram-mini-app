@@ -29,13 +29,16 @@ export async function POST(request: NextRequest) {
   
     const jsonObj = await response.json();
   
-    ////console.log("getReferApplications jsonObj: ", jsonObj);
-  
+    ///console.log("getReferApplications jsonObj: ", jsonObj);
+
+
+
     
     return NextResponse.json({
   
-      result: jsonObj?.result,
+      result: jsonObj,
       
     });
+  
   
 }
