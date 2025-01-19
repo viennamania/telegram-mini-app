@@ -1299,7 +1299,7 @@ export default function AgentPage({ params }: any) {
                 <div className='w-full flex flex-col gap-2 items-start justify-between'>
                     <div className='w-full flex flex-row items-center gap-2'>
                         <span className='text-lg font-semibold text-gray-500'>
-                            최신 보상 내역 (최근 10개)
+                            최근 보상 내역 (최근 10개)
                         </span>
                     </div>
 

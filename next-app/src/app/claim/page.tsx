@@ -362,7 +362,6 @@ function AgentPage() {
 
 
 
-
     return (
 
         <main
@@ -545,7 +544,7 @@ function AgentPage() {
                             <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                 <div className='w-full flex flex-row items-center gap-2'>
                                     <span className='text-lg font-semibold text-gray-500'>
-                                        최신 보상 내역 (최근 10개)
+                                        최근 보상 내역 (최근 10개)
                                     </span>
                                 </div>
 
@@ -602,7 +601,7 @@ function AgentPage() {
                                                     </td>
 
 
-                                                    <td className='border border-gray-300 p-2 text-sm'>
+                                                    <td className='border border-gray-300 p-2 text-sm text-right'>
                                                         {
                                                             (
                                                                 new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 ? "방금 전" : (
