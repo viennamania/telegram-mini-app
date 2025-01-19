@@ -603,10 +603,6 @@ function AgentPage() {
 
 
                                                     <td className='border border-gray-300 p-2 text-sm'>
-
-                                                        {settlement.timestamp}
-
-                                                        
                                                         {
                                                             (
                                                                 new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 ? "방금 전" : (
