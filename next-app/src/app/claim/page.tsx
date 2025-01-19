@@ -505,34 +505,6 @@ function AgentPage() {
                     timeout={15000}
                 />
 
-                {/* history back */}
-                {/* sticky top-0 bg-white */}
-                <div className='
-                    sticky top-0 bg-black bg-opacity-50 z-50
-                    flex flex-row items-center justify-between gap-4
-                    p-4
-                    w-full
-                '>
-                    <button
-                        onClick={() => router.back()}
-                        className="flex flex-row items-center gap-2 bg-gray-500 text-white p-2 rounded-lg
-                        hover:bg-gray-600
-                        "
-                    >
-                        <Image
-                        src="/icon-back.png"
-                        width={24}
-                        height={24}
-                        alt="Back"
-                        />
-                        <span className='text-sm text-white'>
-                            뒤로가기
-                        </span>
-                    </button>
-
-                </div>
-                
-
 
                 <div className="mt-5 flex flex-col items-start justify-center space-y-4">
 
