@@ -580,7 +580,12 @@ function AgentPage() {
                                             {settlementHistory.map((settlement: any, index: number) => (
                                                 <tr key={index}>
                                                     <td className='border border-gray-300 p-2 text-xs'>
-                                                        {new Date(settlement.timestamp).toLocaleString()}
+                                                        {new Date(settlement.timestamp).toLocaleString(
+                                                            'ko-KR',
+                                                            {
+                                                                timeZone: 'Asia/Seoul',
+                                                            }
+                                                        )}
                                                     </td>
                                                     <td className='border border-gray-300 p-2 text-sm text-right'>
                                                         {
@@ -590,7 +595,7 @@ function AgentPage() {
                                                         }
                                                     </td>
                                                     <td
-                                                        className='border border-gray-300 p-2 text-2xl text-right text-green-500 font-semibold'
+                                                        className='border border-gray-300 p-2 text-2xl text-right text-blue-500 font-semibold'
                                                         style={{
                                                             fontFamily: 'monospace',
                                                         }}
