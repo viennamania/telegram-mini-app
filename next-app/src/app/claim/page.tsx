@@ -343,7 +343,7 @@ function AgentPage() {
 
         const data = await response.json();
 
-        ///console.log("data", data);
+        console.log("data", data);
 
         if (data.settlements) {
             setSettlementHistory(data.settlements);
@@ -604,7 +604,11 @@ function AgentPage() {
 
                                                     <td className='border border-gray-300 p-2 text-sm'>
 
-                                                    {
+                                                        {settlement.timestamp}
+
+
+                                                    {/*
+                                                    
 
 
                                                         (
@@ -651,7 +655,7 @@ function AgentPage() {
                                                         )
 
 
-                                                        }
+                                                    */}
 
                                                     </td>
 
