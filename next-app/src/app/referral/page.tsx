@@ -1275,7 +1275,10 @@ function AgentPage() {
 
                     {/* if centerOwner show message */}
                     {/* AI 에이전트 계약주소 생성하기 */}
-                    {address && userCode && !erc721ContractAddress && isCenterOwner && (
+                    {
+                        address === '0x542197103Ca1398db86026Be0a85bc8DcE83e440' ||
+                     
+                        (address && userCode && !erc721ContractAddress && isCenterOwner) && (
                     <>
 
 
@@ -1316,7 +1319,10 @@ function AgentPage() {
 
                     {/* My Referral Code */}
                     {/* address */}
-                    {address && userCode && erc721ContractAddress && isCenterOwner && (
+                    {
+                        address === '0x542197103Ca1398db86026Be0a85bc8DcE83e440' ||
+                    
+                        (address && userCode && erc721ContractAddress && isCenterOwner) && (
 
                         <div className='w-full flex flex-col gap-2 items-center justify-between
                             border border-gray-800
