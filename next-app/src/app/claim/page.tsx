@@ -632,7 +632,7 @@ function AgentPage() {
 
                            {/* statisticsDaily */}
                            {/* tradingVolume, total, count */}
-                           <div className='mt-5 flex flex-col gap-5
+                           <div className='w-full mt-5 flex flex-col gap-5
                                 border border-gray-300 p-4 rounded-lg bg-gray-100
                             '>
                             
