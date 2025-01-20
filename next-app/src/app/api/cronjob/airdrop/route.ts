@@ -80,6 +80,7 @@ export async function GET(request: NextRequest) {
 
     console.log("center: ", center);
 
+  
 
 
     if (!center) {
@@ -100,6 +101,8 @@ export async function GET(request: NextRequest) {
 
 
 
+
+
       const members = await getAllMembersByCenter({
         center: center,
         limit: 500,
@@ -111,6 +114,11 @@ export async function GET(request: NextRequest) {
       if (!members) {
         return NextResponse.error();
       }
+
+
+      return NextResponse.error();
+
+
     
       //console.log("members: ", members);
     
