@@ -875,6 +875,20 @@ async function sendMessages() {
 
     } catch (error) {
       console.error('Error sending message:', error)
+
+      // delete message
+      const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/deleteMessage`;
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: _id,
+        }),
+      });
+
+
     }
 
 
