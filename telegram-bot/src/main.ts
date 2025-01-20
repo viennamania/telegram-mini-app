@@ -691,23 +691,10 @@ async function sendMessages() {
         const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
 
         const keyboard = new InlineKeyboard()
-        .webApp('나의 지갑 보러가기', urlMyWallet)
-    
-        /*
-        botInstance.api.sendMessage(
-          telegramId,
-          '🚀 ' + messageText,
-          {
-            reply_markup: keyboard,
-          }
-        )
-        */
-
-        // const text = '\n\n✅ 지갑주소: ' + walletAddress + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
+        .webApp('💰 나의 지갑 보러가기', urlMyWallet)
 
         const caption = '\n\n🚀 ' + messageText
         + '\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
-
 
         const photo = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
         
@@ -729,48 +716,68 @@ async function sendMessages() {
 
       } else if (category === 'settlement') {
 
-        const username = telegramId;
-        const expiration = Date.now() + 6000_000; // valid for 100 minutes
-        const message = JSON.stringify({
-          username,
-          expiration,
+
+        const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
+
+        const responseGetUser = await fetch(urlGetUser, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            telegramId,
+          }),
         });
       
-        const authCode = await adminAccount.signMessage({
-          message,
-        });
+        if (responseGetUser.status !== 200) {
+          
+          ///return ctx.reply("Failed to get user");
 
-        const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/claim`;
-        
-        const caption = '\n\n🚀 ' + messageText
-        + '\n\n' + '👇 아래 버튼을 눌러 나의 보상으로 이동하세요.';
+        } else {
 
-        const keyboard = new InlineKeyboard()
-        .webApp('나의 보상 보러가기', urlMySettement)
+          const data = await responseGetUser.json();
+          //console.log("data", data);
+      
+          if (data.result && data.result.walletAddress) {
 
-        /*
-        botInstance.api.sendMessage(
-          telegramId,
-          caption,
-          {
-            reply_markup: keyboard,
+            const walletAddress = data.result.walletAddress;
+            
+            const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/claim?walletAddress=${walletAddress}`;
+            
+
+            const caption = '\n\n🚀 ' + messageText
+            + '\n\n' + '👇 아래 버튼을 눌러 나의 보상으로 이동하세요.';
+
+            const keyboard = new InlineKeyboard()
+            .webApp('💰 나의 보상내역 보러가기', urlMySettement)
+
+            /*
+            botInstance.api.sendMessage(
+              telegramId,
+              caption,
+              {
+                reply_markup: keyboard,
+              }
+            )
+            */
+            //console.log("sendPhoto2");
+
+            await botInstance.api.sendPhoto(
+              telegramId,
+              `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`,
+              {
+                caption: caption,
+                reply_markup: keyboard,
+              }
+            ).then(() => {
+            //console.log('Message sent');
+            }).catch((error) => {
+              console.error('Error sending photo:', error+'');
+            })
+
           }
-        )
-        */
-        //console.log("sendPhoto2");
 
-        await botInstance.api.sendPhoto(
-          telegramId,
-          `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`,
-          {
-            caption: caption,
-            reply_markup: keyboard,
-          }
-        ).then(() => {
-        //console.log('Message sent');
-        }).catch((error) => {
-          console.error('Error sending photo:', error+'');
-        })
+        }
 
 
       } else if (category === 'agent') {
@@ -781,7 +788,7 @@ async function sendMessages() {
         const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/agent/${contract}/${tokenId}`;
 
         const keyboard = new InlineKeyboard()
-        .webApp('나의 보상 보러가기', urlMySettement)
+        .webApp('💰 나의 보상 보러가기', urlMySettement)
 
         const caption = '\n\n🚀 ' + messageText
         + '\n\n' + '👇 아래 버튼을 눌러 나의 보상으로 이동하세요.';
@@ -823,7 +830,7 @@ async function sendMessages() {
         const urlMyCenter = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/center`;
 
         const keyboard = new InlineKeyboard()
-        .webApp('나의 보상 보러가기', urlMyCenter)
+        .webApp('💰 나의 보상 보러가기', urlMyCenter)
 
 
         const caption = '\n\n🚀 ' + messageText
