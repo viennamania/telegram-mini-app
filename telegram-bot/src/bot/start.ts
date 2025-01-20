@@ -319,7 +319,7 @@ feature.command('start', async (ctx) => {
 
 
 
-
+  /*
   let masterBotInfo = null;
 
 
@@ -345,7 +345,7 @@ feature.command('start', async (ctx) => {
       masterBotInfo = data.result.masterBotInfo;
     }
   }
-
+  */
 
 
 
@@ -415,7 +415,6 @@ feature.command('start', async (ctx) => {
   }
 
 
-  //const masterBotImageUrl = application ? application?.masterBotInfo?.imageUrl : '';
 
 
 
@@ -425,11 +424,16 @@ feature.command('start', async (ctx) => {
     welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-centerbot.png`;
   } else {
 
+    /*
     if (masterBotInfo) {
       welecomePhoto = masterBotInfo.imageUrl;
     } else {
       welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`;
     }
+    */
+
+    welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`;
+    
   }
 
   let keyboard = null;

@@ -445,6 +445,7 @@ async function fetchAccountData() {
           */
 
 
+          /*
           const username = telegramId;
           const expiration = Date.now() + 6000_000; // valid for 100 minutes
           const message = JSON.stringify({
@@ -457,7 +458,9 @@ async function fetchAccountData() {
           });
   
           const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/claim`;
-  
+          */
+
+          const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/claim?walletAddress=${user.walletAddress}`;
           const keyboard = new InlineKeyboard()
           .webApp('나의 마스트봇 보상 보러가기', urlMySettement)
 
