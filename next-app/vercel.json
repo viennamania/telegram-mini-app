@@ -2,7 +2,7 @@
     "crons": [
 
         {
-            "path": "/api/cronjob/airdrop?center=owin_ananwin_bot",
+            "path": "/api/cronjob/airdrop?center=owin_anawin_bot",
             "schedule": "*/10 * * * *"
         },
         {

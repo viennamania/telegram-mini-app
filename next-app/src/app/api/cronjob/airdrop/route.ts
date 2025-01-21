@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
     //console.log("center: ", center);
     const center = request.nextUrl.searchParams.get('center');
 
-    console.log("center: ", center);
+    //console.log("center: ", center);
 
   
 
@@ -170,6 +170,9 @@ export async function GET(request: NextRequest) {
       // 0x4EF39b249A165cdA40b9c7b5F64e79bAb78Ff0C2
     
     
+
+      //console.log("members: ", members);
+
     
       let transactions = [] as any;
     
@@ -177,12 +180,11 @@ export async function GET(request: NextRequest) {
     
       members.forEach(async (member : any) => {
     
-        const tronWalletAddress = member.walletAddress;
-    
-    
+        const toWalletAddress = member.walletAddress;
+
         const transaction = transfer({
           contract: contractUSDT,
-          to: tronWalletAddress,
+          to: toWalletAddress,
           amount: sendAmount,
         });
     
@@ -190,6 +192,9 @@ export async function GET(request: NextRequest) {
     
       } );
     
+
+    
+
     
       const batchOptions: SendBatchTransactionOptions = {
         account: account,
