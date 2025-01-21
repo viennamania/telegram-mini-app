@@ -1847,7 +1847,7 @@ function HomeContent() {
                                 <button
                                     className='bg-blue-500 text-zinc-100 p-2 rounded-lg text-lg font-semibold'
                                     onClick={() => {
-                                        router.push("/claim");
+                                        router.push("/claim?walletAddress=" + address);
                                     }}
                                 >
                                     <div className='flex flex-row items-center gap-2'>

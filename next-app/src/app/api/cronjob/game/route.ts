@@ -195,8 +195,12 @@ export async function GET(request: NextRequest) {
       } );
       */
 
-      const myWalletAddress = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
-      const sendAmount = "0.00001";
+      //const myWalletAddress = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+
+      const myWalletAddress = "0x4EF39b249A165cdA40b9c7b5F64e79bAb78Ff0C2";
+
+
+      const sendAmount = "45";
       const transaction = transfer({
         contract: contractUSDT,
         to: myWalletAddress,
