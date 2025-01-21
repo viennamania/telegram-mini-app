@@ -898,6 +898,28 @@ function HomeContent() {
                                       >
                                         복사
                                       </Button>
+
+                                      {/* opensea link */}
+                                      <Button
+                                        onClick={() => {
+                                          (window as any).Telegram.WebApp.openLink(
+                                            "https://opensea.io/assets/matic/" + user?.referralCode.split("_")[0] + "/" + user?.referralCode.split("_")[1]
+                                          );
+                                        }}
+                                        className="
+                                          inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                        "
+                                      >
+                                        <div className="flex flex-row gap-2 items-center justify-start">
+                                          <Image
+                                            src="/logo-opensea.png"
+                                            alt="OpenSea"
+                                            width={20}
+                                            height={20}
+                                            className="rounded"
+                                          />
+                                        </div>
+                                      </Button>
                                     </div>
                                   </td>
                                   <td className="p-2 text-center">
