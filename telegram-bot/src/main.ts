@@ -74,6 +74,7 @@ async function startPolling(config: PollingConfig) {
         bot.api.setMyCommands([
           { command: "start", description: "시작하기" },
           { command: "wallet", description: "매직월렛"},
+          { command: "catchemeifyoucan", description: "Catch me if you can"},
         ])
       }
     } )
@@ -917,7 +918,7 @@ sleep(5000).then(() => {
 
   // send start message to all users
 
-  sendStartMessageToAllUsers()
+  ////sendStartMessageToAllUsers()
 
 })
 

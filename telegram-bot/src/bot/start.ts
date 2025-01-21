@@ -41,6 +41,109 @@ const adminAccount = privateKeyToAccount({
 
 
 
+// show game
+feature.command('game', async (ctx) => {
+  
+  const telegramId = ctx.from?.id+"";
+
+  const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
+
+  const responseGetUser = await fetch(urlGetUser, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      telegramId,
+    }),
+  });
+
+  if (responseGetUser.status !== 200) {
+    return ctx.reply("Failed to get user");
+  } else {
+    const data = await responseGetUser.json();
+    //console.log("data", data);
+
+    if (data.result && data.result.walletAddress) {
+      const walletAddress = data.result.walletAddress;
+
+
+      // get balance
+      const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+      const clientId = process.env.THIRDWEB_CLIENT_ID;
+      const client = createThirdwebClient({
+        clientId: clientId as string,
+      });
+      const contract = getContract({
+        client,
+        chain: polygon,
+        address: contractAddress,
+      });
+
+      const result = await balanceOf({
+        contract,
+        address: walletAddress,
+      });
+
+      const balance = Number(result) / 10 ** 6;
+
+
+
+      const center = ctx.me.username+"";
+      const username = ctx.from?.id+"";
+      const expiration = Date.now() + 6000_000; // valid for 100 minutes
+      const message = JSON.stringify({
+        username,
+        expiration,
+      });
+    
+      const authCode = await adminAccount.signMessage({
+        message,
+      });
+
+      const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
+
+
+      const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
+      + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
+      const keyboard = new InlineKeyboard()
+        .webApp('💰 나의 지갑 보러가기', urlMyWallet)
+
+      const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
+
+      return ctx.replyWithPhoto(
+        photoUrl,
+        {
+          caption: text,
+          reply_markup: keyboard
+        }
+      )
+
+      /*
+      return ctx.reply(
+        text,
+        { reply_markup: keyboard}
+      );
+      */
+
+
+      /*
+      return ctx.reply(
+        "지갑주소: " + walletAddress
+        + "\n" + "잔고: " + balance + " USDT"
+      );
+      */
+
+    }
+  }
+
+  return ctx.reply("Failed to get wallet address");
+
+})
+
+
+
+
 
 
 // show wallet address and balance
