@@ -1,4 +1,6 @@
+import { wallet } from '@/app/constants';
 import clientPromise from '../mongodb';
+import { create } from 'domain';
 
 
 export interface UserProps {
@@ -582,23 +584,59 @@ export async function getAllUsersTelegramIdByCenter(
 
   // telegramId is not empty and not null and not empty string
 
-  
+  // referrals collection
+  /*
+  {
+    "_id": {
+      "$oid": "67860af11cbd056942632b2d"
+    },
+    "telegramId": "441516803",
+    "referralCode": "0x4BC23C679e3E2aac58D43Bb5257281562FB01e04_0"
+  } 
+  */
+  // join with referrals collection and get referralCode
 
-  const users = await collection
-    .find<UserProps>(
-      {
+
+  const referralsCollection = client.db('shinemywinter').collection('referrals');
+
+  const users = await collection.aggregate([
+    {
+      $match: {
         center: center,
         telegramId: { $exists: true, $ne: '' },
-      },
-      {
-        limit: limit,
-        skip: (page - 1) * limit,
-      }, 
-    ).toArray();
+      }
+    },
+    {
+      $lookup: {
+        from: 'referrals',
+        localField: 'telegramId',
+        foreignField: 'telegramId',
+        as: 'referral'
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        telegramId: 1,
+        nickname: 1,
+        walletAddress: 1,
+        createdAt: 1,
+        avatar: 1,
+        center: 1,
+        centerOwner: 1,
 
-    return users;
+        referralCode: { $arrayElemAt: ['$referral.referralCode', 0] }
+      }
+    }
+  ]).toArray();
+
+  
+
+
+  return users;
 
 }
+
 
 // get all members by center excluding center owner
 export async function getAllMembersByCenter(

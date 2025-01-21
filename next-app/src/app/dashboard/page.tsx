@@ -837,6 +837,7 @@ function HomeContent() {
                           <tr className="bg-zinc-800 text-zinc-100">
                               <th className="p-2">회원아이디</th>
                               <th className="p-2">지갑주소</th>
+                              <th className="p-2">레퍼럴코드</th>
                               <th className="p-2">센터장</th>
                               <th className="p-2">에이전트</th>
                           </tr>
@@ -870,6 +871,26 @@ function HomeContent() {
                                         onClick={() => {
                                           navigator.clipboard.writeText(user?.walletAddress);
                                           alert(`${user?.walletAddress} 복사되었습니다.`);
+                                        }}
+                                        className="
+                                          inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                        "
+                                      >
+                                        복사
+                                      </Button>
+                                    </div>
+                                  </td>
+                                  <td className="p-2">
+                                    <div className="flex flex-row gap-2 items-center justify-start">
+                                      <span className="text-sm">
+                                        {user?.referralCode}
+                                      </span>
+                                      <Button
+                                        onClick={() => {
+                                          navigator.clipboard.writeText(
+                                            "t.me/" + selectCenter + "/?start=" + user?.referralCode
+                                          );
+                                          alert(`${user?.referralCode} 복사되었습니다.`);
                                         }}
                                         className="
                                           inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
