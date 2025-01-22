@@ -115,6 +115,28 @@ export async function POST(request: NextRequest) {
 
   // decodedLog: { to: [Object], from: [Object], tokenId: [Object] },
 
+  /*
+  to {
+    type: 'address',
+    value: '0x57793d5584cdD42D3e76B9d210015060e3cc2fc2'
+  }
+  from {
+    type: 'address',
+    value: '0x542197103Ca1398db86026Be0a85bc8DcE83e440'
+  }
+  tokenId {
+    type: 'uint256',
+    value: '1014'
+  }
+  */
+  /*
+  TypeError: Cannot read properties of undefined (reading 'value')
+    at c (/var/task/next-app/.next/server/app/api/webhook/thirdwebNft/route.js:1:1855)
+    */
+
+  // conver decodedLog to string
+  console.log("decodedLog", JSON.stringify(decodedLog));
+  
 
   console.log("to", decodedLog.to, "from", decodedLog.from, "tokenId", decodedLog.tokenId);
 
