@@ -512,6 +512,9 @@ function AgentPage() {
                     
                     <div className="flex justify-center mt-5">
                         {address ? (
+
+                            <div className="flex flex-col gap-2 items-start justify-between">
+
                             <div className="flex flex-row gap-2 items-center justify-between">
 
                                 <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
@@ -555,6 +558,34 @@ function AgentPage() {
                                     />
                                 </Button>
                                 
+                            </div>
+
+                            <div className='w-full flex flex-row gap-2 items-center justify-between
+                                border border-gray-800
+                                p-4 rounded-lg'>
+
+                                <Image
+                                    src="/logo-tether.png"
+                                    alt="USDT"
+                                    width={30}
+                                    height={30}
+                                    className="rounded"
+                                />                                
+
+
+                                <div className="flex flex-row gap-2 items-center justify-between">
+
+                                    <span className="p-2 text-green-500 text-4xl font-semibold"> 
+                                        {
+                                            Number(balance).toFixed(6)
+                                        }
+                                    </span>
+                                    <span className="p-2 text-gray-500 text-lg font-semibold">USDT</span>
+
+                                </div>
+                            </div>
+
+
                             </div>
                         ) : (
                             <p className="text-sm text-zinc-400">
