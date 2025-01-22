@@ -101,15 +101,15 @@ feature.command('game', async (ctx) => {
         message,
       });
 
-      const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
+      const urlGame = `${process.env.FRONTEND_APP_ORIGIN}/game?walletAddress=${walletAddress}`;
 
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
-      + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 나의 게임으로 이동하세요.';
+      + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 게임으로 이동하세요.';
       const keyboard = new InlineKeyboard()
-        .webApp('💰 게임하러가기', urlMyWallet)
+        .webApp('💰 게임하러가기', urlGame)
 
-      const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
+      const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-sports-game.jpg`;
 
       return ctx.replyWithPhoto(
         photoUrl,
@@ -118,21 +118,6 @@ feature.command('game', async (ctx) => {
           reply_markup: keyboard
         }
       )
-
-      /*
-      return ctx.reply(
-        text,
-        { reply_markup: keyboard}
-      );
-      */
-
-
-      /*
-      return ctx.reply(
-        "지갑주소: " + walletAddress
-        + "\n" + "잔고: " + balance + " USDT"
-      );
-      */
 
     }
   }
