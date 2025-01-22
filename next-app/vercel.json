@@ -4,6 +4,14 @@
         {
             "path": "/api/cronjob/airdrop?center=owin_anawin_bot",
             "schedule": "*/10 * * * *"
+        },
+        {
+            "path": "/api/cronjob/airdrop?center=ppump_orry_bot",
+            "schedule": "*/10 * * * *"
+        },
+        {
+            "path": "/api/cronjob/airdrop?center=exms_aaa_bot",
+            "schedule": "*/10 * * * *"
         }
 
     ]
