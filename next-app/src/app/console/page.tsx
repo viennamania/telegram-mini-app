@@ -783,6 +783,42 @@ function HomeContent() {
                   텔레그램 회원 목록
               </div>
 
+              {/* 에어드롭 USDT */}
+              {/* input amountAirDrop */}
+              {address && !loadingUsers && users.length > 0 && (
+
+                <div className="flex flex-row gap-2 items-center justify-between">
+                  <input
+                    disabled={loadingAirDrop}
+
+                    onChange={(e) => {
+                      setAmountAirDrop(Number(e.target.value));
+                    }}
+                    type="number"
+                    placeholder="에어드롭 USDT"
+                    className="w-32 p-2 rounded border border-gray-300"
+                  />
+                  {/* button airDrop */}
+                  <Button
+                    disabled={loadingAirDrop}
+                    onClick={() => {
+                      // airDrop
+                      confirm("에어드롭을 진행하시겠습니까?") && airDrop(
+                        amountAirDrop
+                      );
+
+
+
+                    }}
+                    className={`${loadingAirDrop ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
+                  >
+                    {loadingAirDrop ? "로딩중..." : "에어드롭"}
+                  </Button>
+                </div>
+              
+              )}
+                
+
 
             </div>
             
