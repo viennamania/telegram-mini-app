@@ -526,12 +526,19 @@ function AgentPage() {
    /* my NFTs */
    const [myNfts, setMyNfts] = useState([] as any[]);
 
+   const [loadingMyNfts, setLoadingMyNfts] = useState(false);
 
    
    useEffect(() => {
 
 
        const getMyNFTs = async () => {
+
+              if (!address) {
+                return;
+              }
+
+              setLoadingMyNfts(true);
 
             
            try {
@@ -580,12 +587,15 @@ function AgentPage() {
                 });
 
                 if (!response.ok) {
+
+                    setLoadingMyNfts(false);
                     throw new Error('Failed to get NFTs');
+
                 }
 
                 const data = await response.json();
 
-                console.log("myOwnedNfts====", data.result);
+                //console.log("myOwnedNfts====", data.result);
 
 
 
@@ -596,6 +606,7 @@ function AgentPage() {
                     // exclude name is "MasgerBot"
                     const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
 
+                        /*
                         // granderby horse nft
                         if (nft.contract === "0x41FBA0bd9f4DC9a968a10aEBb792af6A09969F60") {
                             return true;
@@ -605,6 +616,7 @@ function AgentPage() {
                         if (nft.contract.isSpam === true) {
                             return false;
                         }
+                        */
 
                         if (nft.name === "MasterBot") {
                             return false;
@@ -625,7 +637,7 @@ function AgentPage() {
                 }
 
                 
-                   
+                setLoadingMyNfts(false);
    
 
 
@@ -633,6 +645,8 @@ function AgentPage() {
                console.error("Error getting NFTs", error);
            }
            
+
+           setLoadingMyNfts(false);
 
        };
 
@@ -1637,6 +1651,8 @@ function AgentPage() {
                                             onClick={() => {
                                                 // fetch the NFTs again
                                                 const getMyNFTs = async () => {
+
+                                                    setLoadingMyNfts(true);
                                                     try {
                                                         const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
                                                             method: "POST",
@@ -1657,9 +1673,6 @@ function AgentPage() {
                                                                 // exclude name is "MasgerBot"
                                                                 const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
                                                                     
-                                                                    if (nft.contract.isSpam === true) {
-                                                                        return false;
-                                                                    }
 
                                                                     if (nft.name === "MasterBot") {
                                                                         return false;
@@ -1675,9 +1688,13 @@ function AgentPage() {
                                                             }
                                                         }
 
+
+
                                                     } catch (error) {
                                                         console.error("Error getting NFTs", error);
                                                     }
+
+                                                    setLoadingMyNfts(false);
                                                 };
 
                                                 getMyNFTs();
@@ -1690,7 +1707,17 @@ function AgentPage() {
                                 
                                 </div>
 
-                                {myNfts.length === 0 && (
+                                {loadingMyNfts && (
+                                    <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                                        <span className='text-lg font-semibold text-green-500'>
+                                            AI 에이전트 NFT를 불러오는 중입니다.
+                                        </span>
+                                    </div>
+                                )}
+
+
+
+                                {address && myNfts.length === 0 && (
                                     <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                         <span className='text-lg font-semibold text-red-500'>
                                             AI 에이전트 NFT가 없습니다.
@@ -1700,7 +1727,9 @@ function AgentPage() {
 
 
                                 <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2'>
-                                    {myNfts?.map((nft, index) => (
+
+
+                                    {address && myNfts?.map((nft, index) => (
                                         <div
                                             key={index}
                                             className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg

@@ -125,7 +125,19 @@ export async function POST(request: NextRequest) {
     */
 
     if (nft.tokenType === 'ERC721') {
+
+      // granderby horse nft
+      if (nft.contract.address === "0x41FBA0bd9f4DC9a968a10aEBb792af6A09969F60") {
+        finalResult.push(nft);
+        return;
+      }
+
+      if (nft.contract.isSpam === true) {
+        return;
+      }
+
       finalResult.push(nft);
+
     }
 
   });
