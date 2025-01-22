@@ -536,7 +536,7 @@ feature.command('start', async (ctx) => {
     .row()
     .webApp('🤖 나의 마스터봇 보러가기', urlTbot)
     .row()
-    .webApp('💰 나의 보상내역 보러가기', urlClaim)
+    .webApp('💰 나의 마스트봇 보상내역 보러가기', urlClaim)
 
     if (isCenterOwner) {
 

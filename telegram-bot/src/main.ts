@@ -754,7 +754,7 @@ async function sendMessages() {
             + '\n\n' + '👇 아래 버튼을 눌러 나의 보상으로 이동하세요.';
 
             const keyboard = new InlineKeyboard()
-            .webApp('💰 나의 보상내역 보러가기', urlMySettement)
+            .webApp('💰 나의 마스트봇 보상내역 보러가기', urlMySettement)
 
             /*
             botInstance.api.sendMessage(
