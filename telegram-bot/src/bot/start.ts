@@ -43,7 +43,7 @@ const adminAccount = privateKeyToAccount({
 
 
 
-// show game
+// show otc
 feature.command('otc', async (ctx) => {
   
   const telegramId = ctx.from?.id+"";

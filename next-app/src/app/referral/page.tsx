@@ -601,22 +601,8 @@ function AgentPage() {
 
 
                 if (data.result) {
-
-                    //exclude conatract.isSpam === true
                     // exclude name is "MasgerBot"
                     const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
-
-                        /*
-                        // granderby horse nft
-                        if (nft.contract === "0x41FBA0bd9f4DC9a968a10aEBb792af6A09969F60") {
-                            return true;
-                        }
-            
-                        
-                        if (nft.contract.isSpam === true) {
-                            return false;
-                        }
-                        */
 
                         if (nft.name === "MasterBot") {
                             return false;
@@ -806,15 +792,8 @@ function AgentPage() {
             if (response.ok) {
                 const data = await response.json();
                 if (data.result) {
-                    
-
-                    //exclude conatract.isSpam === true
                     // exclude name is "MasgerBot"
                     const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
-                        
-                        if (nft.contract.isSpam === true) {
-                            return false;
-                        }
 
                         if (nft.name === "MasterBot") {
                             return false;
@@ -982,13 +961,9 @@ function AgentPage() {
                 if (data.result) {
                     
                     //setMyNfts(data.result.ownedNfts);
-                    //exclude conatract.isSpam === true
                     // exclude name is "MasgerBot"
                     const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
                         
-                        if (nft.contract.isSpam === true) {
-                            return false;
-                        }
 
                         if (nft.name === "MasterBot") {
                             return false;
@@ -1669,7 +1644,6 @@ function AgentPage() {
                                                             if (data.result) {
                                                                 ///setMyNfts(data.result.ownedNfts);
 
-                                                                //exclude conatract.isSpam === true
                                                                 // exclude name is "MasgerBot"
                                                                 const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
                                                                     
