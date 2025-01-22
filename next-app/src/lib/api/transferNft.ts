@@ -20,6 +20,10 @@ export interface TransferProps {
 
 export async function insertOne(data: any) {
 
+    console.log("insertOne data", data);
+
+
+
     if (!data.transactionHash || !data.transactionIndex || !data.fromAddress || !data.toAddress || !data.timestamp) {
         return null;
     }
@@ -37,7 +41,7 @@ export async function insertOne(data: any) {
 
     console.log("transferData", transferData);
 
-    
+
 
     const client = await clientPromise;
 

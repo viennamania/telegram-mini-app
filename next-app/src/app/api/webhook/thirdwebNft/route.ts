@@ -145,10 +145,10 @@ export async function POST(request: NextRequest) {
 
 
 
-  const toAddress = decodedLog.to.value;
-  const fromAddress = decodedLog.from.value;
+  const toAddress = decodedLog?.to?.value;
+  const fromAddress = decodedLog?.from?.value;
 
-  const tokenId = decodedLog.tokenId.value;
+  const tokenId = decodedLog?.tokenId?.value;
 
   console.log("toAddress", toAddress, "fromAddress", fromAddress, "tokenId", tokenId);
 
@@ -177,6 +177,8 @@ export async function POST(request: NextRequest) {
   }
   */
 
+
+
   const result = insertOne({
     transactionHash,
     transactionIndex,
@@ -187,7 +189,7 @@ export async function POST(request: NextRequest) {
     timestamp,
   });
 
-  console.log("insertOne", result);
+  //console.log("insertOne", result);
 
   
 
