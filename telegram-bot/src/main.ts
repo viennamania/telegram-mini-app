@@ -69,14 +69,15 @@ async function startPolling(config: PollingConfig) {
 
     // set commands only when the bot is started for the first time after the bot is deployed
 
-    bot?.api.getMyCommands().then((commands) => {
-      if (commands.length === 0) {
+    bot?.api.getMyCommands()
+    .then((commands) => {
+      //if (commands.length === 0) {
         bot.api.setMyCommands([
           { command: "start", description: "시작하기" },
           { command: "wallet", description: "매직월렛"},
           { command: "catchemeifyoucan", description: "Catch me if you can"},
         ])
-      }
+      //}
     } )
 
     logger.info('Commands set  response:', 'Commands set  response:');
