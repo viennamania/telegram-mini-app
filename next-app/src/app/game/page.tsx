@@ -619,6 +619,8 @@ function AgentPage() {
                     )}
 
                     {/* Coming Soon */}
+
+                    {/*
                     <span className='text-lg font-semibold text-red-500'>
                         Coming Soon
                     </span>
@@ -630,6 +632,20 @@ function AgentPage() {
                         height={500}
                         className="rounded-lg w-full"
                     />
+                    */}
+
+                    {/* https://taptaptap-seven.vercel.app/play/ */}
+                    {/* iframe */}
+                    
+                    <iframe
+                        src="https://taptaptap-seven.vercel.app/play/"
+                        className="w-full h-96"
+                    >
+                    </iframe>
+
+
+
+
 
 
 
