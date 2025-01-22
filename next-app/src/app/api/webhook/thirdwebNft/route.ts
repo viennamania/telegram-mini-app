@@ -1,20 +1,10 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-/*
-import {
-  UserProps,
-	acceptBuyOrder,
-  updateBuyOrderByQueueId,
-} from '@lib/api/order';
-*/
-
-import {
-  getOneByWalletAddress
-} from '@lib/api/user';
 
 import {
   insertOne,
-} from '@lib/api/transfer';
+} from '@lib/api/transferNft';
+import { token } from "thirdweb/extensions/vote";
 
 
 
@@ -127,7 +117,11 @@ export async function POST(request: NextRequest) {
 
   const toAddress = decodedLog.to.value;
   const fromAddress = decodedLog.from.value;
-  const value = decodedLog.value.value;
+
+  const tokenId = decodedLog.tokenId.value;
+
+
+  //const value = decodedLog.value.value;
 
   /*
   console.log("transactionHash", transactionHash, "transactionIndex", transactionIndex,
@@ -154,7 +148,9 @@ export async function POST(request: NextRequest) {
     transactionIndex,
     fromAddress,
     toAddress,
-    value,
+    //value,
+    contractAddress,
+    tokenId,
     timestamp,
   });
 
