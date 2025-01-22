@@ -105,9 +105,9 @@ feature.command('game', async (ctx) => {
 
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
-      + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
+      + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 나의 게임으로 이동하세요.';
       const keyboard = new InlineKeyboard()
-        .webApp('💰 나의 지갑 보러가기', urlMyWallet)
+        .webApp('💰 게임하러가기', urlMyWallet)
 
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
 
