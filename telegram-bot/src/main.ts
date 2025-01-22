@@ -464,7 +464,7 @@ async function fetchAccountData() {
 
           const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/claim?walletAddress=${user.walletAddress}`;
           const keyboard = new InlineKeyboard()
-          .webApp('나의 마스트봇 보상 보러가기', urlMySettement)
+          .webApp('나의 마스터봇 보상 보러가기', urlMySettement)
 
 
           // description: 'Forbidden: bot was blocked by the user',
@@ -477,9 +477,9 @@ async function fetchAccountData() {
             telegramId,
             masterBotImageUrl,
             {
-              caption: '🔥 나의 마스트봇 채굴량: ' + tradingVolume
-              + '\n\n💪 나의 마스트봇 거래잔고: ' + tradingAccountBalance
-              + '\n\n' + '👇 아래 버튼을 눌러 나의 마스트봇 보상으로 이동하세요.'
+              caption: '🔥 나의 마스터봇 채굴량: ' + tradingVolume
+              + '\n\n💪 나의 마스터봇 거래잔고: ' + tradingAccountBalance
+              + '\n\n' + '👇 아래 버튼을 눌러 나의 마스터봇 보상으로 이동하세요.'
               //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
               //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
               ,
@@ -501,8 +501,8 @@ async function fetchAccountData() {
             await botInstance.api.sendMessage(
               telegramId,
               // emoji: https://emojipedia.org/
-              '🔥 나의 마스트봇 거래잔고: ' + tradingAccountBalance
-              + '\n\n' + '👇 아래 버튼을 눌러 나의 마스트봇 보상으로 이동하세요.'
+              '🔥 나의 마스터봇 거래잔고: ' + tradingAccountBalance
+              + '\n\n' + '👇 아래 버튼을 눌러 나의 마스터봇 보상으로 이동하세요.'
               //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
               //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
             ).then(() => {

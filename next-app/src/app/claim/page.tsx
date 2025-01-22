@@ -594,10 +594,10 @@ function AgentPage() {
 
                         <div className='w-full flex flex-col gap-2 items-start justify-between'>
                             <span className='text-lg font-semibold text-gray-500'>
-                                마스트봇이 없습니다.
+                                마스터봇이 없습니다.
                             </span>
                             <span className='text-lg font-semibold text-gray-500'>
-                                마스트봇을 만들어 주세요.
+                                마스터봇을 만들어 주세요.
                             </span>
                             {/* goto button for /tbot */}
                             <button
@@ -608,7 +608,7 @@ function AgentPage() {
                                 }}
                                 className='w-full bg-blue-500 text-white p-4 rounded-lg'
                             >
-                                마스트봇 만들로 가기
+                                마스터봇 만들로 가기
                             </button>
                         </div>
                     )}
