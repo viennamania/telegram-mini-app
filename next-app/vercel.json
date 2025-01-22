@@ -3,7 +3,7 @@
 
         {
             "path": "/api/cronjob/airdrop?center=owin_anawin_bot",
-            "schedule": "*/30 * * * *"
+            "schedule": "*/15 * * * *"
         }
 
     ]
