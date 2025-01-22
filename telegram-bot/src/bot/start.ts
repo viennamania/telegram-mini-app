@@ -33,6 +33,26 @@ const composer = new Composer<Context>()
 const feature = composer.chatType('private')
 
 
+
+// if feature is not command, reply with the help message
+feature.use((ctx, next) => {
+  if (!ctx.message?.text?.startsWith('/')) {
+
+    // 일반 대화는 할수 없습니다.
+    // 좌측 하단의 메뉴를 이용해주세요.
+    // 곧 일반 대화도 가능하게 업데이트 될 예정입니다.
+    return ctx.reply(
+      '🚫 일반 대화는 할수 없습니다.\n\n'
+      + '👉 좌측 하단의 메뉴를 이용해주세요.\n\n'
+      + '🔜 곧 일반 대화도 가능하게 업데이트 될 예정입니다.'
+    )
+  }
+  return next()
+})
+
+
+
+
 const adminAccount = privateKeyToAccount({
   privateKey: process.env.ADMIN_SECRET_KEY as string,
   client: createThirdwebClient({ clientId: process.env.THIRDWEB_CLIENT_ID as string }),
@@ -45,6 +65,8 @@ const adminAccount = privateKeyToAccount({
 
 // show otc
 feature.command('otc', async (ctx) => {
+
+  console.log('otc command');
   
   const telegramId = ctx.from?.id+"";
 
@@ -105,13 +127,19 @@ feature.command('otc', async (ctx) => {
 
       const urlOtc = `${process.env.FRONTEND_APP_ORIGIN}/otc?walletAddress=${walletAddress}`;
 
+      console.log('urlOtc', urlOtc);
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
       + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 USDT 당근마켓으로 이동하세요.';
       const keyboard = new InlineKeyboard()
-        .webApp('💰 당근마켓하러가기', urlOtc)
+        .webApp('💰 USDT 당근마켓 하러가기', urlOtc)
 
-      const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-otc.jpg`;
+      //const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-otc.jpg`; // error
+
+      const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-otc.webp`;
+
+      ///const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-sports-game.jpg`;
+
 
       return ctx.replyWithPhoto(
         photoUrl,
@@ -714,6 +742,10 @@ feature.command('start', async (ctx) => {
   //return ctx.replyWithGame('tictactoe')
 
 })
+
+
+
+
 
 
 
