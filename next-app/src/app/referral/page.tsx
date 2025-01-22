@@ -103,10 +103,10 @@ function AgentPage() {
 
 
 
-    const address = account?.address;
+    //const address = account?.address;
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -585,13 +585,22 @@ function AgentPage() {
 
                 const data = await response.json();
 
-                ///console.log("myOwnedNfts====", data.result);
+                console.log("myOwnedNfts====", data.result);
+
+
+
 
                 if (data.result) {
 
                     //exclude conatract.isSpam === true
                     // exclude name is "MasgerBot"
                     const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
+
+                        // granderby horse nft
+                        if (nft.contract === "0x41FBA0bd9f4DC9a968a10aEBb792af6A09969F60") {
+                            return true;
+                        }
+            
                         
                         if (nft.contract.isSpam === true) {
                             return false;
@@ -603,6 +612,8 @@ function AgentPage() {
 
                         return true;
                     });
+
+                    //console.log("filteredNfts", filteredNfts);
 
                     setMyNfts(filteredNfts);
 
