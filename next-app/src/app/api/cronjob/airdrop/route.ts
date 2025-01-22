@@ -123,7 +123,7 @@ export async function GET(request: NextRequest) {
       //console.log("members: ", members);
     
         // amount is random from 0.00001 to 0.1
-        const amount = Math.random() * (0.1 - 0.00001) + 0.00001;
+        const amount = Math.random() * (1 - 0.00001) + 0.00001;
 
     
       const client = createThirdwebClient({
