@@ -986,10 +986,10 @@ function HomeContent() {
 
                                       <div className="flex flex-col gap-2 items-start justify-between">
                                         <span className="text-sm">
-                                          {nft.name.slice(0, 10) + "..."}
+                                          {nft.name && nft.name.slice(0, 10) + "..."}
                                         </span>
                                         <span className="text-sm text-gray-400">
-                                          {nft.description.slice(0, 10) + "..."}
+                                          {nft.description && nft.description.slice(0, 10) + "..."}
                                         </span>
                                       </div>
 
@@ -997,8 +997,8 @@ function HomeContent() {
 
 
                                         <Image
-                                          src={nft.image?.thumbnailUrl || "/icon-nft.png"}
-                                          alt={nft.name}
+                                          src={nft?.image?.thumbnailUrl || "/icon-nft.png"}
+                                          alt={nft?.name}
                                           width={100}
                                           height={100}
                                           className="rounded w-10 h-10"

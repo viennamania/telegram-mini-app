@@ -1790,16 +1790,16 @@ function AgentPage() {
                                                 <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                                     {/* contract address */}
                                                     <div className='text-xs font-semibold'>
-                                                        계약주소: {nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
+                                                        계약주소: {nft?.contract?.address && nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
                                                     </div>
                                                     <div className='text-2xl font-semibold text-blue-500'>
-                                                        계약번호: #{nft.tokenId}
+                                                        계약번호: #{nft?.tokenId}
                                                     </div>
                                                     <div className='text-sm font-semibold text-green-500'>
-                                                        이름: {nft.name}
+                                                        이름: {nft?.name}
                                                     </div>
                                                     <div className='text-xs font-semibold'>
-                                                        설명: {nft.description}
+                                                        설명: {nft?.description}
                                                     </div>
 
                                                 </div>
@@ -1808,7 +1808,7 @@ function AgentPage() {
 
                                             
                                             <Image
-                                                src={nft.image.pngUrl}
+                                                src={nft?.image?.pngUrl}
                                                 alt="NFT"
                                                 width={500}
                                                 height={500}
