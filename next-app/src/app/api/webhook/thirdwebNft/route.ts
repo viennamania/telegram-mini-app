@@ -4,8 +4,6 @@ import { NextResponse, type NextRequest } from "next/server";
 import {
   insertOne,
 } from '@lib/api/transferNft';
-import { token } from "thirdweb/extensions/vote";
-
 
 
 export async function POST(request: NextRequest) {
@@ -112,6 +110,13 @@ export async function POST(request: NextRequest) {
 
 
   //console.log("to", decodedLog.to, "from", decodedLog.from, "value", decodedLog.value);
+
+
+
+  // decodedLog: { to: [Object], from: [Object], tokenId: [Object] },
+
+
+  console.log("to", decodedLog.to, "from", decodedLog.from, "tokenId", decodedLog.tokenId);
 
 
 
