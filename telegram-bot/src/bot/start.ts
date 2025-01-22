@@ -125,14 +125,21 @@ feature.command('otc', async (ctx) => {
         message,
       });
 
-      const urlOtc = `${process.env.FRONTEND_APP_ORIGIN}/otc?walletAddress=${walletAddress}`;
+  
+      const urlOtc = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/otc`;
+
+
 
       console.log('urlOtc', urlOtc);
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
-      + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 USDT 당근마켓으로 이동하세요.';
+      + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 USDT 판매/구매 하세요.';
       const keyboard = new InlineKeyboard()
-        .webApp('💰 USDT 당근마켓 하러가기', urlOtc)
+        .webApp('💰 USDT 판매하기', urlOtc)
+        .row()
+        .webApp('💰 USDT 구매하기', urlOtc)
+
+
 
       //const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-otc.jpg`; // error
 
@@ -223,7 +230,8 @@ feature.command('game', async (ctx) => {
         message,
       });
 
-      const urlGame = `${process.env.FRONTEND_APP_ORIGIN}/game?walletAddress=${walletAddress}`;
+
+      const urlGame = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/game`;
 
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)

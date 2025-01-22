@@ -76,7 +76,7 @@ async function startPolling(config: PollingConfig) {
           { command: "start", description: "시작하기" },
           { command: "wallet", description: "매직월렛"},
           { command: "game", description: "게임"},
-          { command: "otc", description: "USDT 당근마켓"},
+          { command: "otc", description: "USDT 개인간 거래"},
         ])
       //}
     } )
