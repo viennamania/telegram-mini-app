@@ -136,7 +136,10 @@ export async function POST(request: NextRequest) {
 
   // conver decodedLog to string
   console.log("decodedLog", JSON.stringify(decodedLog));
-  
+  /*
+  decodedLog {"to":{"type":"address","value":"0x542197103Ca1398db86026Be0a85bc8DcE83e440"},"from":{"type":"address","value":"0x57793d5584cdD42D3e76B9d210015060e3cc2fc2"},"tokenId":{"type":"uint256","value":"1014"}}
+  */
+
 
   console.log("to", decodedLog.to, "from", decodedLog.from, "tokenId", decodedLog.tokenId);
 
@@ -146,6 +149,10 @@ export async function POST(request: NextRequest) {
   const fromAddress = decodedLog.from.value;
 
   const tokenId = decodedLog.tokenId.value;
+
+  console.log("toAddress", toAddress, "fromAddress", fromAddress, "tokenId", tokenId);
+
+
 
 
   //const value = decodedLog.value.value;
@@ -175,13 +182,12 @@ export async function POST(request: NextRequest) {
     transactionIndex,
     fromAddress,
     toAddress,
-    //value,
     contractAddress,
     tokenId,
     timestamp,
   });
 
-  ///console.log("insertOne", result);
+  console.log("insertOne", result);
 
   
 

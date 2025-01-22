@@ -13,7 +13,6 @@ export interface TransferProps {
     transactionIndex: string;
     fromAddress: string;
     toAddress: string;
-    //value: string;
     contractAddress: string;
     tokenId: string;
     timestamp: string;
@@ -30,12 +29,15 @@ export async function insertOne(data: any) {
         transactionIndex: data.transactionIndex,
         fromAddress: data.fromAddress,
         toAddress: data.toAddress,
-        //value: data.value,
         contractAddress: data.contractAddress,
         tokenId: data.tokenId,
         timestamp: data.timestamp,
     };
 
+
+    console.log("transferData", transferData);
+
+    
 
     const client = await clientPromise;
 
