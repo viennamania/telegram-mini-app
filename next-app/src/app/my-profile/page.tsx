@@ -1127,7 +1127,7 @@ function ProfilePage() {
                             </div>
                         )}
 
-
+                        {/*
                         {userCode && (
                             <div className='flex flex-row xl:flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
 
@@ -1144,6 +1144,7 @@ function ProfilePage() {
 
                             </div>
                         )}
+                        */}
 
 
                     </div>
