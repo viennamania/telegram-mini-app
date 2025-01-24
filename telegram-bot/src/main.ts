@@ -739,7 +739,7 @@ async function sendMessages() {
           message,
         });
 
-        const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
+        const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/nft`;
 
         const keyboard = new InlineKeyboard()
         .webApp('💰 나의 NFT 보러가기', urlMyWallet)
