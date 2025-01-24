@@ -570,6 +570,10 @@ function HomeContent() {
               <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                   텔레그램 회원 목록
               </div>
+              {/* 회원수 */}
+              <span className="text-lg text-green-500 font-semibold bg-green-100 p-2 rounded">
+                  회원수: {users.length} 명
+              </span>
 
 
             </div>
