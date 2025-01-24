@@ -1090,7 +1090,7 @@ export default function AgentPage({ params }: any) {
                             AI 에이전트 NFT 계약번호
                         </span>
                         <span className='text-lg text-gray-800 font-semibold'>
-                            #{agentTokenId}
+                            #{agentTokenId?.length > 10 ? agentTokenId.slice(0, 10) + '...' : agentTokenId}
                         </span>
                       </div>
 

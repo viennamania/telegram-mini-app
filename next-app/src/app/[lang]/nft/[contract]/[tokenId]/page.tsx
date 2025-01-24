@@ -1081,7 +1081,7 @@ export default function AgentPage({ params }: any) {
                             NFT Token ID
                         </span>
                         <span className='text-lg text-gray-800 font-semibold'>
-                            #{agentTokenId?.length > 10 ? agentTokenId.slice(0, 10) + '...' + agentTokenId.slice(-10) : agentTokenId}
+                            #{agentTokenId?.length > 10 ? agentTokenId.slice(0, 10) + '...' : agentTokenId}
                         </span>
                       </div>
 

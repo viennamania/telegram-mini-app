@@ -1774,7 +1774,7 @@ function AgentPage() {
                                                         Contract: {nft?.contract?.address && nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
                                                     </div>
                                                     <div className='text-2xl font-semibold text-blue-500'>
-                                                        Number: #{nft?.tokenId}
+                                                        Number: #{nft?.tokenId.length > 10 ? nft.tokenId.slice(0, 10) + '...' : nft.tokenId}
                                                     </div>
                                                     <div className='text-sm font-semibold text-green-500'>
                                                         Name: {nft?.name}
