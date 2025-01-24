@@ -991,34 +991,7 @@ export default function AgentPage({ params }: any) {
             w-full flex flex-row items-center justify-between">
 
             {/* title */}
-            {/* 돌아가기 버튼 */}
-            <button
-                onClick={() => {
-                    router.back();
-                }}
-                className="p-2 bg-gray-500 text-white rounded"
-            >
-                <div className='flex flex-row gap-2 items-center justify-center'>
-                    <Image
-                        src="/icon-back.png"
-                        alt="Back"
-                        width={20}
-                        height={20}
-                        className="rounded-lg"
-                    />
-                    <span className='text-lg font-semibold'>
-                        돌아가기
-                    </span>
-                </div>
-            </button>
-        </div>
-
-
-
-        <div className="mt-10 flex flex-col items-start justify-center space-y-4">
-
-
-          <div className='flex flex-row items-center gap-2'>
+            <div className='flex flex-row items-center gap-2'>
               <Image
                 src='/icon-nft.png'
                 width={30}
@@ -1032,6 +1005,14 @@ export default function AgentPage({ params }: any) {
                     NFT Information
               </span>
           </div>
+        </div>
+
+
+
+        <div className="mt-10 flex flex-col items-start justify-center space-y-4">
+
+
+
 
 
           {/* agent nft info */}
