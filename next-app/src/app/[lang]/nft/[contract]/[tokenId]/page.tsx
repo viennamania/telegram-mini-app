@@ -999,7 +999,7 @@ export default function AgentPage({ params }: any) {
                 alt='Agent'
                 className='rounded-lg'
               />
-              <span className='text-lg font-semibold text-gray-800'>
+              <span className='text-lg font-semibold text-gray-100'>
                     {/*NFT 정보*/}
                     {/* english */}
                     NFT Information
