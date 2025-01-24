@@ -741,7 +741,7 @@ function AgentPage() {
                                                                     (item.tradingAccountBalance > 0) ? (
                                                                         <span className='text-lg text-blue-500 font-semibold'>
                                                                             {
-                                                                                (item.masterReward / item.tradingAccountBalance * 100).toFixed(4) + "%"
+                                                                                item.tradingAccountBalance > 0 && Number(item.masterReward / item.tradingAccountBalance * 100).toFixed(4) + "%"
                                                                             }
                                                                         </span>
                                                                     ) : (
