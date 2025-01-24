@@ -532,12 +532,16 @@ function AgentPage() {
                                     onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
                                     className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                                 >
-                                    내 지갑주소: {shortenAddress(address)}
+                                    
+                                    {/* english */}
+                                    Wallet Address: {shortenAddress(address)}
                                 </Button>
                                 <Button
                                     onClick={() => {
                                         navigator.clipboard.writeText(address);
-                                        alert('지갑주소가 복사되었습니다.');
+                                        //alert('지갑주소가 복사되었습니다.');
+                                        // english
+                                        alert('Wallet address copied.');
                                     }}
                                     className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                                 >
@@ -589,7 +593,10 @@ function AgentPage() {
                             </div>
                         ) : (
                             <p className="text-sm text-zinc-400">
-                                연결된 지갑이 없습니다. 지갑을 연결해 주세요.
+                                {/* 연결된 지갑이 없습니다. 지갑을 연결해 주세요. */}
+                                {/* english */}
+                                No connected wallet. Please connect your wallet.
+                                
                             </p>
                         )}      
                     </div>
@@ -600,7 +607,10 @@ function AgentPage() {
                     && !userCode && !nickname && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between'>
                             <span className='text-lg font-semibold text-red-500'>
-                                닉네임이 없습니다. 닉네임을 만들어 주세요.
+                                {/* 닉네임이 없습니다. 닉네임을 만들어 주세요. */}
+                                {/* english */}
+                                No nickname. Please create a nickname.
+
                             </span>
 
                         </div>
@@ -613,7 +623,10 @@ function AgentPage() {
                     {loadingUserData && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between'>
                             <span className='text-lg font-semibold text-gray-800'>
-                                정보를 불러오는 중입니다.
+
+                                {/* 정보를 불러오는 중입니다. */}
+                                {/* english */}
+                                Loading user data.
                             </span>
                         </div>
                     )}

@@ -773,7 +773,9 @@ function ProfilePage() {
 
                     {/* title */}
                     <div className="text-2xl font-semibold text-zinc-100">
-                        나의 지갑
+
+                        {/* 나의 지갑 */}
+                        My Wallet
                     </div>
                 </div>
 
@@ -801,7 +803,10 @@ function ProfilePage() {
                                     onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
                                     className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                                 >
+                                    {/*
                                     내 지갑주소: {shortenAddress(address)}
+                                    */}
+                                    My Wallet Address: {shortenAddress(address)}
                                 </Button>
                                 <Button
                                     onClick={() => {
@@ -830,7 +835,9 @@ function ProfilePage() {
                             </div>
                         ) : (
                             <p className="text-sm text-zinc-400">
-                                연결된 지갑이 없습니다. 지갑을 연결해 주세요.
+                                {/* 연결된 지갑이 없습니다. 지갑을 연결해 주세요. */}
+                                No connected wallet. Please connect wallet.
+
                             </p>
                         )}      
                     </div>
@@ -839,7 +846,8 @@ function ProfilePage() {
                     {loadingUser && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                로딩중...
+                                {/* 로딩중... */}
+                                Loading...
                             </div>
                         </div>
                     )}
@@ -855,7 +863,9 @@ function ProfilePage() {
                             >
                                 <div className="flex flex-row gap-2 items-center justify-between">
                                     <span className="text-lg font-semibold">
-                                        새로고침
+                                        {/* 새로고침 */}
+                                        Refresh
+
                                     </span>
                                 </div>
                             </button>
@@ -898,7 +908,9 @@ function ProfilePage() {
 
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        USDT 보내기
+                                        {/* USDT 보내기 */}
+                                        Send USDT
+
                                     </div>
                                     <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                         <input
@@ -917,7 +929,9 @@ function ProfilePage() {
 
 
                                                 if (isNaN(Number(e.target.value))) {
-                                                    alert('숫자만 입력해주세요');
+                                                    //alert('숫자만 입력해주세요');
+                                                    // english
+                                                    alert('Please enter only numbers');
                                                     return;
                                                 }
 
@@ -935,7 +949,9 @@ function ProfilePage() {
                                                 // check input number less than balance
 
                                                 if (Number(e.target.value) > balance) {
-                                                    alert('잔액보다 많은 금액을 보낼 수 없습니다');
+                                                    //alert('잔액보다 많은 금액을 보낼 수 없습니다');
+                                                    // english
+                                                    alert('You cannot send more than the balance');
                                                     return;
                                                 }
 
@@ -983,7 +999,8 @@ function ProfilePage() {
                                                         />
                                                     )}
                                                     <span className='text-lg font-semibold'>
-                                                        보내기
+                                                        {/*보내기*/}
+                                                        Send
                                                     </span>
                                                 </div>
                                             </button>
@@ -1098,7 +1115,10 @@ function ProfilePage() {
                                     className="rounded"
                                 />
                                 <span className="text-lg font-semibold">
-                                    폴리스캔에서 거래내역 보기
+                                    {/*폴리스캔에서 거래내역 보기*/}
+                                    {/* english */}
+                                    View transactions on PolygonScan
+
                                 </span>
                             </div>
 
@@ -1115,7 +1135,9 @@ function ProfilePage() {
                     {loadingTransfers && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                거래내역 로딩중...
+                                {/*거래내역 로딩중...*/}
+                                Loading transactions...
+
                             </div>
                         </div>
                     )}
@@ -1123,7 +1145,8 @@ function ProfilePage() {
                     {transfers?.length > 0 && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                거래내역
+                                {/*거래내역*/}
+                                Transactions
                             </div>
 
                             <table className="w-full">
