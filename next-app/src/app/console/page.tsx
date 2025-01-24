@@ -625,51 +625,7 @@ function HomeContent() {
         
 
               {/* refresh button */}
-              
-              <Button
-                onClick={() => {
-                  // fetch centers
 
-                  const fetchData = async () => {
-                    setLoadingCenters(true);
-                    const response = await fetch("/api/user/getAllCenters", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            limit: 100,
-                            page: 1,
-                            marketingCenter: marketingCenter,
-                        }),
-                    });
-
-                    if (!response.ok) {
-                        console.error("Error fetching centers");
-                        setLoadingCenters(false);
-                        return;
-                    }
-
-                    const data = await response.json();
-
-                    setCenterList(data.result);
-
-                    setLoadingCenters(false);
-
-                  }
-
-                  fetchData();
-
-
-                  setSelectCenter(null);
-                  setSelectUser(null);
-                  setUsers([]);
-                  setApplications([]);
-                }}
-                className={`${loadingCenters ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
-              >
-                {loadingCenters ? "로딩중..." : "새로고침"}
-              </Button>
               
 
 
