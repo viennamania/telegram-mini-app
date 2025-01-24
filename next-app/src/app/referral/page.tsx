@@ -1629,11 +1629,9 @@ function AgentPage() {
                                                                 router.push('/referral/' + nft.contract.address + '/' + nft.tokenId);
                                                             }}
                                                             className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                            hover:bg-blue-600 text-sm xl:text-lg font-semibold"
+                                                            hover:bg-blue-600 text-lg xl:text-xl font-semibold"
                                                         >
-                                                            <span className='text-xs xl:text-lg font-semibold'>
                                                                 상세보기
-                                                            </span>
                                                         </button>
 
                                                         {/* referral link button */}
@@ -1661,17 +1659,21 @@ function AgentPage() {
 
                                                     </div>
 
+                                                </div>
+
+                                                <div className='w-full flex flex-col gap-2 items-start justify-between'>
+
                                                     <div className="flex flex-row items-center justify-start gap-5">
                                                         {/* dot */}
                                                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                                        <span className="text-xs xl:text-lg font-semibold">
-                                                            레퍼럴로 회원가입을 유치하면 가입보상으로 10 USDT를 받습니다.
+                                                        <span className="text-sm xl:text-lg font-semibold">
+                                                            레퍼럴로 회원가입을 유치하면 가입보상으로 1 USDT를 받습니다.
                                                         </span>
                                                     </div>
                                                     <div className="flex flex-row items-center justify-start gap-5">
                                                         {/* dot */}
                                                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                                        <span className="text-xs xl:text-lg font-semibold">
+                                                        <span className="text-sm xl:text-lg font-semibold">
                                                             가입한 회원의 채굴보상에서 28%를 채굴보상으로 받습니다.
                                                         </span>
                                                     </div>
@@ -1688,10 +1690,10 @@ function AgentPage() {
                                             </div>
 
 
-                                            <div className='w-full flex flex-col gap-2 items-center justify-between'>
+                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
 
 
-                                                <div className="w-full flex flex-row gap-2 items-center justify-center">
+                                                <div className="w-full flex flex-col gap-2 items-center justify-center">
 
                                                     <button
                                                         onClick={() => {
@@ -1715,13 +1717,13 @@ function AgentPage() {
 
                                                 <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                                     {/* contract address */}
-                                                    <div className='text-xs font-semibold'>
+                                                    <div className='text-sm font-semibold'>
                                                         계약주소: {nft?.contract?.address && nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
                                                     </div>
                                                     <div className='text-2xl font-semibold text-blue-500'>
                                                         계약번호: #{nft?.tokenId > 10 ? nft.tokenId.slice(0, 10) + '...' : nft.tokenId}
                                                     </div>
-                                                    <div className='text-sm font-semibold text-green-500'>
+                                                    <div className='text-lg font-semibold text-green-500'>
                                                         이름: {nft?.name}
                                                     </div>
                                                     <div className='text-xs font-semibold'>
@@ -1745,7 +1747,7 @@ function AgentPage() {
 
                                             {/* transfer NFT */}
                                             
-                                            <div className='w-full flex flex-col gap-2 items-end justify-between'>
+                                            <div className='mt-5 w-full flex flex-col gap-2 items-end justify-between'>
                                                 
                                                 <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                                     <span className='text-sm text-red-500 font-semibold'>
