@@ -969,7 +969,8 @@ function ProfilePage() {
                                         <input
                                             disabled={sending}
                                             className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-sm font-semibold"
-                                            placeholder="받는 사람 지갑주소(0x로 시작)"
+                                            //placeholder="받는 사람 지갑주소(0x로 시작)"
+                                            placeholder="Recipient wallet address (starts with 0x)"
                                             type='text'
                                             onChange={(e) => {
                                                 // cheack prefix is "0x"
@@ -1157,9 +1158,21 @@ function ProfilePage() {
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
                                             +/-
                                         </th>
-                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">지갑주소</th>
-                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">수량(USDT)</th>
-                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">시간</th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
+                                            {/*보내는 사람*/}
+                                            {/* english */}
+                                            Sender / Receiver
+                                        </th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
+                                            {/*수량(USDT)*/}
+                                            {/* english */}
+                                            Amount(USDT)
+                                        </th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
+                                            {/*시간*/}
+                                            {/* english */}
+                                            Time
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1193,40 +1206,47 @@ function ProfilePage() {
 
                                                     (
                                                         new Date().getTime() - transfer.transferData.timestamp
-                                                    ) < 60000 ? "방금 전" : (
+                                                    //) < 60000 ? "방금 전" : (
+                                                    ) < 60000 ? "Just now" : (
                                                         (
                                                             new Date().getTime() - transfer.transferData.timestamp
                                                         ) < 3600000 ? 
                                                         Math.floor(
                                                             (new Date().getTime() - transfer.transferData.timestamp) / 60000
-                                                        ) + "분 전" : (
+                                                        //) + "분 전" : (
+                                                        ) + " minutes ago" : (
                                                             (
                                                                 new Date().getTime() - transfer.transferData.timestamp
                                                             ) < 86400000 ? 
                                                             Math.floor(
                                                                 (new Date().getTime() - transfer.transferData.timestamp) / 3600000
-                                                            ) + "시간 전" : (
+                                                            //) + "시간 전" : (
+                                                            ) + " hours ago" : (
                                                                 (
                                                                     new Date().getTime() - transfer.transferData.timestamp
                                                                 ) < 604800000 ? 
                                                                 Math.floor(
                                                                     (new Date().getTime() - transfer.transferData.timestamp) / 86400000
-                                                                ) + "일 전" : (
+                                                                //) + "일 전" : (
+                                                                ) + " days ago" : (
                                                                     (
                                                                         new Date().getTime() - transfer.transferData.timestamp
                                                                     ) < 2592000000 ? 
                                                                     Math.floor(
                                                                         (new Date().getTime() - transfer.transferData.timestamp) / 604800000
-                                                                    ) + "주 전" : (
+                                                                    //) + "주 전" : (
+                                                                    ) + " weeks ago" : (
                                                                         (
                                                                             new Date().getTime() - transfer.transferData.timestamp
                                                                         ) < 31536000000 ? 
                                                                         Math.floor(
                                                                             (new Date().getTime() - transfer.transferData.timestamp) / 2592000000
-                                                                        ) + "달 전" : (
+                                                                        //) + "달 전" : (
+                                                                        ) + " months ago" : (
                                                                             Math.floor(
                                                                                 (new Date().getTime() - transfer.transferData.timestamp) / 31536000000
-                                                                            ) + "년 전"
+                                                                            //) + "년 전"
+                                                                            ) + " years ago"
                                                                         )
                                                                     )
                                                                 )

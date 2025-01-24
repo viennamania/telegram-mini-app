@@ -1296,7 +1296,7 @@ function AgentPage() {
                                 <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                     <input 
                                         className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                        placeholder="에이전트 이름"
+                                        placeholder="Agent Name"
                                         type='text'
                                         onChange={(e) => {
                                             setAgentName(e.target.value);
@@ -1305,7 +1305,7 @@ function AgentPage() {
                                     />
                                     <input 
                                         className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                        placeholder="에이전트 설명"
+                                        placeholder="Agent Description"
                                         type='text'
                                         onChange={(e) => {
                                             setAgentDescription(e.target.value);
@@ -1679,7 +1679,7 @@ function AgentPage() {
                                                                 router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
                                                             }}
                                                             className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                            hover:bg-blue-600 text-xs xl:text-lg font-semibold"
+                                                            hover:bg-blue-600 text-lg xl:text-lg font-semibold"
                                                         >
                                                             <span className='text-xs xl:text-lg font-semibold'>
                                                                 {/*상세보기*/}
