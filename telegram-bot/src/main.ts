@@ -672,10 +672,14 @@ async function sendMessages() {
 
   for (const message of messages) {
 
+
     const _id = message._id;
 
     const telegramId = message.telegramId;
     const messageText = message.message;
+
+    const nftInfo = message?.nftInfo;
+
     const category = message.category; // "wallet", "settlement", "agent", "center"
 
     try {
@@ -756,7 +760,8 @@ async function sendMessages() {
         //+ '\n\n' + '👇 Press the button below to go to My Wallet.';
 
 
-        const photo = `${process.env.FRONTEND_APP_ORIGIN}/logo-nft-wallet.webp`;
+        const photo = nftInfo?.image?.pngUrl ? nftInfo.image.pngUrl
+        : `${process.env.FRONTEND_APP_ORIGIN}/logo-nft-wallet.avif`;
         
         //console.log("sendPhoto1");
 

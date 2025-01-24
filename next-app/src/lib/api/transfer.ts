@@ -131,6 +131,7 @@ export async function insertOne(data: any) {
                 category: "wallet",
                 telegramId: telegramId,
                 message: message,
+                timestamp: data.timestamp,
             }
             );
 

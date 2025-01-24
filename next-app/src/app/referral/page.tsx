@@ -1618,7 +1618,7 @@ function AgentPage() {
                                                 
                                                 <button
                                                     onClick={() => {
-                                                        router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
+                                                        router.push('/referral/' + nft.contract.address + '/' + nft.tokenId);
                                                     }}
                                                     className="p-2 bg-blue-500 text-zinc-100 rounded
                                                     hover:bg-blue-600 text-xs xl:text-lg font-semibold"
