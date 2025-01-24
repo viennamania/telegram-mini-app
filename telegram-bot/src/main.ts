@@ -700,15 +700,33 @@ async function sendMessages() {
 
         const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
 
+        const urlGame = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/game`;
+
+
+        const urlOtc = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/otc`;
+
+
         const keyboard = new InlineKeyboard()
         .webApp('💰 나의 지갑 보러가기', urlMyWallet)
         // english
         //.webApp('💰 Go to My Wallet', urlMyWallet)
+        .row()
+        .webApp('🎮 게임 하러가기', urlGame)
+        // english
+        //.webApp('🎮 Go to Game', urlGame);
+        .row()
+        .webApp('💱 USDT 판매 하러가기', urlOtc)
+        // english
+        //.webApp('💱 Go to USDT OTC', urlOtc);
+
 
         const caption = '\n\n🚀 ' + messageText
-        + '\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
+        + '\n\n' + '👇 아래 버튼을 눌러 원하는 서비스로 이동하세요.';
         // english
-        //+ '\n\n' + '👇 Press the button below to go to My Wallet.';
+        //+ '\n\n' + '👇 Press the button below to go to each service';
+
+
+        
 
 
         const photo = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;

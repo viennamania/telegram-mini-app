@@ -14,7 +14,11 @@ import {
 import Link from "next/link";
 import { useEffect, useState, Suspense } from "react";
 
-import { useSearchParams } from "next/navigation";
+
+import {
+  useRouter,
+  useSearchParams,
+} from "next//navigation";
 
 import {
   polygon,
@@ -47,6 +51,7 @@ function HomeContent() {
 
   console.log('center', center);
 
+  const router = useRouter();
 
   
   const account = useActiveAccount();
@@ -555,9 +560,31 @@ function HomeContent() {
         <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
 
           {selectCenter && (
-            <span className="bg-green-500 text-xl text-zinc-100 p-2 rounded">
-                {"@"+selectCenter}
-            </span>
+            <div className="flex flex-row gap-2 items-center justify-between">
+
+              <button
+                onClick={() => {
+                  router.push("https://t.me/" + selectCenter);
+                }}
+                className="
+                  inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                "
+              >
+                <div className="flex flex-row gap-2 items-center justify-start">
+                  <Image
+                    src="/logo-telegram.webp"
+                    alt="Center"
+                    width={50}
+                    height={50}
+                    className="rounded"
+                  />
+                  <span className="bg-green-500 text-xl text-zinc-100 p-2 rounded">
+                      {"@"+selectCenter}
+                  </span>
+                </div>
+              </button>
+
+            </div>
           )}
 
 
