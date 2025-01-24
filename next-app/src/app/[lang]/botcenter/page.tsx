@@ -639,7 +639,7 @@ function HomeContent() {
                                   <td className="p-2">
                                     <div className="flex flex-row gap-2 items-center justify-start">
                                       <span className="text-sm">
-                                        {user?.referralCode}
+                                        {user?.referralCode?.length > 15 ? user?.referralCode.slice(0, 15) + "..." : user?.referralCode}
                                       </span>
                                       <Button
                                         onClick={() => {
