@@ -46,6 +46,8 @@ feature.use((ctx, next) => {
       + '👉 좌측 하단의 메뉴를 이용해주세요.\n\n'
       + '🔜 곧 일반 대화도 가능하게 업데이트 될 예정입니다.'
     )
+    // english
+    //return ctx.reply('🚫 You cannot chat.\n\n👉 Please use the menu on the bottom left.\n\n🔜 General chat will be available soon')
   }
   return next()
 })
@@ -337,8 +339,14 @@ feature.command('wallet', async (ctx) => {
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
       + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
+      // english
+      //+ '\n\n' + '✅ Wallet Address: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
+      //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to go to my wallet.'
+  
       const keyboard = new InlineKeyboard()
         .webApp('💰 나의 지갑 보러가기', urlMyWallet)
+        // english
+        //.webApp('💰 Go to my wallet', urlMyWallet)
 
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
 
@@ -438,6 +446,8 @@ feature.command('start', async (ctx) => {
         welecomePhoto,
         {
           caption: "🚫 당신은 이 봇을 사용할 수 없습니다.\n\n" + "소속 센터봇: " + data.result.center,
+          // english
+          //caption: "🚫 You cannot use this bot.\n\n" + "Center Bot: " + data.result.center,
           //reply_markup: keyboard
         }
       )
@@ -746,7 +756,7 @@ feature.command('start', async (ctx) => {
   + (walletAddress ? '\n\n✅ 나의 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6) : '')
   + '\n\n' + referralCodeText
   + '\n\n' + '👇 아래 메뉴를 선택하세요.'
-  
+
   // english
   //+ '\n\n' + '👇 Please select the menu below.'
 
