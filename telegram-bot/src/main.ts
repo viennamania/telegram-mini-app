@@ -725,6 +725,52 @@ async function sendMessages() {
         })
 
 
+      } else if (category === 'nft') {
+
+
+        const username = telegramId;
+        const expiration = Date.now() + 6000_000; // valid for 100 minutes
+        const message = JSON.stringify({
+          username,
+          expiration,
+        });
+      
+        const authCode = await adminAccount.signMessage({
+          message,
+        });
+
+        const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
+
+        const keyboard = new InlineKeyboard()
+        .webApp('💰 나의 NFT 보러가기', urlMyWallet)
+        // english
+        //.webApp('💰 Go to My Wallet', urlMyWallet)
+
+        const caption = '\n\n🚀 ' + messageText
+        + '\n\n' + '👇 아래 버튼을 눌러 나의 NFT로 이동하세요.';
+        // english
+        //+ '\n\n' + '👇 Press the button below to go to My Wallet.';
+
+
+        const photo = `${process.env.FRONTEND_APP_ORIGIN}/logo-nft-wallet.webp`;
+        
+        //console.log("sendPhoto1");
+
+        await botInstance.api.sendPhoto(
+          telegramId,
+          photo,
+          {
+            caption: caption,
+            reply_markup: keyboard,
+          }
+        ).then(() => {
+        //console.log('Message sent');
+        }).catch((error) => {
+          console.error('Error sending photo:', error+'');
+        })
+
+
+
       } else if (category === 'settlement') {
 
 
