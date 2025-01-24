@@ -1166,12 +1166,12 @@ function AgentPage() {
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                 {/*AI 에이전트 NFT 발행*/}
                                 {/* english */}
-                                Mint AI Agent NFT
+                                Mint NFT
                             </div>
                             <span className='text-lg font-semibold'>
                                 {/*AI 에이전트 NFT를 발행받을려면 센터장에게 문의하세요.*/}
                                 {/* english */}
-                                To mint AI Agent NFT, please contact the center owner.
+                                To mint NFT, please contact the center owner.
                             </span>
                         </div>
                     )}
@@ -1296,7 +1296,9 @@ function AgentPage() {
                                 <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                     <input 
                                         className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                        placeholder="에이전트 이름"
+                                        //placeholder="에이전트 이름"
+                                        placeholder="NFT Name"
+
                                         type='text'
                                         onChange={(e) => {
                                             setAgentName(e.target.value);
@@ -1305,7 +1307,9 @@ function AgentPage() {
                                     />
                                     <input 
                                         className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                        placeholder="에이전트 설명"
+                                        //placeholder="에이전트 설명"
+                                        placeholder="NFT Description"
+
                                         type='text'
                                         onChange={(e) => {
                                             setAgentDescription(e.target.value);
@@ -1333,8 +1337,11 @@ function AgentPage() {
                                                 className='animate-spin'
                                             />
                                         )}
-                                        {mintingAgentNft && 'AI 에이전트 NFT 발행중...'}
-                                        {!mintingAgentNft && 'AI 에이전트 NFT 발행하기'}
+                                        {/*mintingAgentNft && 'AI 에이전트 NFT 발행중...'*/}
+                                        {/* english */}
+                                        {mintingAgentNft && 'Minting NFT...'}
+                                        {!mintingAgentNft && 'Mint NFT'}
+
                                     </div>
                                 </button>
 
@@ -1357,7 +1364,7 @@ function AgentPage() {
                                         <span className='text-xs font-semibold'>
                                             {/*AI 에이전트 이미지 생성중...*/}
                                             {/* english */}
-                                            AI Agent Image Generating...
+                                            NFT Image Generating...
                                         </span>
                                     </div>
                                 )}
@@ -1365,7 +1372,7 @@ function AgentPage() {
                                 {agentImage && (
                                     <Image
                                         src={agentImage}
-                                        alt="AI Agent"
+                                        alt="NFT"
                                         width={200}
                                         height={200}
                                         className="rounded-lg"
@@ -1397,7 +1404,7 @@ function AgentPage() {
                                 <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                     {/*AI 에이전트 계약주소*/}
                                     {/* english */}
-                                    AI Agent Contract Address
+                                    NFT Contract Address
                                 </div>
 
                                 <span className='text-xs xl:text-lg font-semibold'>
@@ -1450,13 +1457,14 @@ function AgentPage() {
                                 <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                     {/*AI 에이전트 NFT 발행*/}
                                     {/* english */}
-                                    Mint AI Agent NFT
+                                    Mint NFT
                                 </span>
 
                                 <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                     <input 
                                         className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                        placeholder="에이전트 이름"
+                                        //placeholder="에이전트 이름"
+                                        placeholder="NFT Name"
                                         type='text'
                                         onChange={(e) => {
                                             setAgentName(e.target.value);
@@ -1496,11 +1504,11 @@ function AgentPage() {
                                         
                                         {/*mintingAgentNft && 'AI 에이전트 NFT 발행중...'*/}
                                         {/* english */}
-                                        {mintingAgentNft && 'Minting AI Agent NFT...'}
+                                        {mintingAgentNft && 'Minting NFT...'}
 
                                         {/*!mintingAgentNft && 'AI 에이전트 NFT 발행하기'*/}
                                         {/* english */}
-                                        {!mintingAgentNft && 'Mint AI Agent NFT'}
+                                        {!mintingAgentNft && 'Mint NFT'}
 
                                     </div>
                                 </button>
@@ -1524,7 +1532,7 @@ function AgentPage() {
                                         <span className='text-xs font-semibold'>
                                             {/*AI 에이전트 이미지 생성중...*/}
                                             {/* english */}
-                                            AI Agent Image Generating...
+                                            NFT Image Generating...
                                         </span>
                                     </div>
                                 )}
@@ -1532,7 +1540,7 @@ function AgentPage() {
                                 {agentImage && (
                                     <Image
                                         src={agentImage}
-                                        alt="AI Agent"
+                                        alt="NFT"
                                         width={200}
                                         height={200}
                                         className="rounded-lg"
@@ -1565,7 +1573,7 @@ function AgentPage() {
                                     <span className="flex bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                         {/*My AI 에이전트 NFT*/}
                                         {/* english */}
-                                        My AI Agent NFT
+                                        My NFT
                                     </span>
 
                                     <div className='flex flex-row items-center justify-start gap-2'>
@@ -1635,7 +1643,7 @@ function AgentPage() {
                                         <span className='text-lg font-semibold text-green-500'>
                                             {/*AI 에이전트 NFT를 불러오는 중입니다.*/}
                                             {/* english */}
-                                            Loading AI Agent NFTs...
+                                            Loading NFTs...
                                         </span>
                                     </div>
                                 )}
@@ -1647,7 +1655,7 @@ function AgentPage() {
                                         <span className='text-lg font-semibold text-red-500'>
                                             {/*AI 에이전트 NFT가 없습니다.*/}
                                             {/* english */}
-                                            No AI Agent NFTs.
+                                            No NFTs.
                                         </span>
                                     </div>
                                 )}

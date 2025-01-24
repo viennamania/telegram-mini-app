@@ -744,7 +744,11 @@ async function sendMessages() {
         const keyboard = new InlineKeyboard()
         .webApp('💰 나의 NFT 보러가기', urlMyWallet)
         // english
-        //.webApp('💰 Go to My Wallet', urlMyWallet)
+        //.webApp('💰 Go to My Wallet', urlMyWallet')
+        
+
+
+
 
         const caption = '\n\n🚀 ' + messageText
         + '\n\n' + '👇 아래 버튼을 눌러 나의 NFT로 이동하세요.';
