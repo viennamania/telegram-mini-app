@@ -35,6 +35,7 @@ export async function insertOne(data: any) {
         toAddress: data.toAddress,
         contractAddress: data.contractAddress,
         tokenId: data.tokenId,
+        nftInfo: data.nftInfo,
         timestamp: data.timestamp,
     };
 
@@ -140,7 +141,10 @@ export async function insertOne(data: any) {
             await collectionTelegramMessages.insertOne(
             {
                 center: center,
-                category: "wallet",
+                
+                //category: "wallet",
+                category: "nft",
+
                 telegramId: telegramId,
                 message: message,
             }

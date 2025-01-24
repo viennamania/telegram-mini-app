@@ -1,9 +1,20 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+import { Network, Alchemy } from 'alchemy-sdk';
+
 
 import {
   insertOne,
 } from '@lib/api/transferNft';
+
+
+const settings = {
+  apiKey: process.env.ALCHEMY_API_KEY,
+  network: Network.MATIC_MAINNET,
+};
+
+const alchemy = new Alchemy(settings);
+
 
 
 export async function POST(request: NextRequest) {
@@ -178,6 +189,14 @@ export async function POST(request: NextRequest) {
   */
 
 
+    const response = await alchemy.nft.getNftMetadata(
+      contractAddress,
+      parseInt(tokenId)
+    );
+   
+    const nftInfo = response;
+ 
+
 
   const result = insertOne({
     transactionHash,
@@ -186,6 +205,7 @@ export async function POST(request: NextRequest) {
     toAddress,
     contractAddress,
     tokenId,
+    nftInfo: nftInfo,
     timestamp,
   });
 
