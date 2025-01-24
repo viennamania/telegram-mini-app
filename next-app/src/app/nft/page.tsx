@@ -1662,7 +1662,7 @@ function AgentPage() {
                                                         계약주소: {nft?.contract?.address && nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
                                                     </div>
                                                     <div className='text-2xl font-semibold text-blue-500'>
-                                                        계약번호: #{nft?.tokenId}
+                                                        계약번호: #{nft?.tokenId > 10 ? nft.tokenId.slice(0, 10) + '...' : nft.tokenId}
                                                     </div>
                                                     <div className='text-sm font-semibold text-green-500'>
                                                         이름: {nft?.name}
