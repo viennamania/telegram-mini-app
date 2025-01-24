@@ -1156,7 +1156,7 @@ function ProfilePage() {
                                 <thead>
                                     <tr>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
-                                            +/-
+                                            + / -
                                         </th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
                                             {/*보내는 사람*/}
@@ -1178,8 +1178,13 @@ function ProfilePage() {
                                 <tbody>
                                     {transfers.map((transfer, index) => (
                                         <tr key={index}>
-                                            <td className="p-2 text-lg text-zinc-800 font-semibold">
-                                                {transfer.sendOrReceive === "send" ? "-" : "+"}
+                                            <td className="p-2 text-xl text-zinc-800 font-semibold">
+                                                {transfer.sendOrReceive === "send" ?
+                                                <span className="text-red-500">-</span>
+                                               
+                                                :
+                                                <span className="text-green-500">+</span>
+                                                }
                                             </td>
                                             {transfer.sendOrReceive === "send" ? (
                                                 <td className="p-2 text-xs text-zinc-800">
