@@ -998,7 +998,7 @@ function HomeContent() {
                                     {/* copy telegram link */}
                                     <div className="flex flex-row gap-2 items-center justify-start">
                                       <span className="text-sm text-gray-400">
-                                        레퍼럴:{nft.contract.address + "_" + nft.tokenId}
+                                        레퍼럴:{nft.contract.address + "_" + (nft.tokenId?.length > 10 ? nft.tokenId.slice(0, 10) + "..." : nft.tokenId)}
                                       </span>
                                       <Button
                                         onClick={() => {
