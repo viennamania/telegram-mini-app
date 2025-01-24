@@ -15,7 +15,7 @@ import type { Bot } from './bot/index.js'
 import { privateKeyToAccount } from 'thirdweb/wallets'
 import { createThirdwebClient } from 'thirdweb'
 import { config } from 'dotenv' 
-import { Composer, InlineKeyboard } from 'grammy'
+import { Composer, InlineKeyboard, InputFile } from 'grammy'
 config()
 
 
@@ -733,6 +733,7 @@ async function sendMessages() {
         
         //console.log("sendPhoto1");
 
+        /*
         await botInstance.api.sendPhoto(
           telegramId,
           photo,
@@ -745,6 +746,21 @@ async function sendMessages() {
         }).catch((error) => {
           console.error('Error sending photo:', error+'');
         })
+
+        */
+
+
+        const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
+        await botInstance.api.sendVideo(
+          telegramId,
+          videoFile,
+          {
+            caption: caption,
+            reply_markup: keyboard,
+          }
+        );
+
+     
 
 
       } else if (category === 'nft') {

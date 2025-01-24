@@ -238,6 +238,10 @@ feature.command('game', async (ctx) => {
       });
 
 
+
+
+
+
       const urlGame = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/game`;
 
 
@@ -254,6 +258,8 @@ feature.command('game', async (ctx) => {
 
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-sports-game.jpg`;
 
+
+      /*
       return ctx.replyWithPhoto(
         photoUrl,
         {
@@ -261,6 +267,21 @@ feature.command('game', async (ctx) => {
           reply_markup: keyboard
         }
       )
+      */
+
+      const videoUrl = `${process.env.FRONTEND_APP_ORIGIN}/connecting.gif`;
+      const videoFile = new InputFile(videoUrl)
+
+      ctx.replyWithVideo(
+        videoFile,
+        {
+          caption: text,
+          reply_markup: keyboard
+        }
+      )
+
+
+
 
     }
   }

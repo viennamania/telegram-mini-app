@@ -1664,49 +1664,59 @@ function AgentPage() {
                                         >
 
                                             <div className='w-full flex flex-row gap-2 items-center justify-between'>
-                                                {/* goto button for detail page */}
-                                                
-                                                <button
-                                                    onClick={() => {
-                                                        router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
-                                                    }}
-                                                    className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                    hover:bg-blue-600 text-xs xl:text-lg font-semibold"
-                                                >
-                                                    <span className='text-xs xl:text-lg font-semibold'>
-                                                        {/*상세보기*/}
-                                                        {/* english */}
-                                                        Detail
-                                                    </span>
-                                                </button>
+
                                                 
                                                 
                                                 <div className="flex flex-col xl:flex-row items-center justify-start gap-5">
-                                                    {/* referral link button */}
-                                                    <button
-                                                        onClick={() => {
-                                                            navigator.clipboard.writeText(
-                                                                /*
-                                                                referralUrl + '/?center=' + center +
-                                                                '&agent=' + nft.contract.address + 
-                                                                '&tokenId=' + nft.tokenId
-                                                                */
-                                                                //'t.me/ppump_orry_bot?start=' + nft.contract.address + '_' + nft.tokenId
+                                                    
+                                                    <div className="flex flex-row items-center justify-start gap-2">
+                                                        
+                                                        
+                                                                                                        {/* goto button for detail page */}
+                                                
+                                                        <button
+                                                            onClick={() => {
+                                                                router.push('/agent/' + nft.contract.address + '/' + nft.tokenId);
+                                                            }}
+                                                            className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                            hover:bg-blue-600 text-xs xl:text-lg font-semibold"
+                                                        >
+                                                            <span className='text-xs xl:text-lg font-semibold'>
+                                                                {/*상세보기*/}
+                                                                {/* english */}
+                                                                Detail
+                                                            </span>
+                                                        </button>
+                                                        
+                                                        
+                                                        
+                                                        {/* referral link button */}
+                                                        
+                                                        <button
+                                                            onClick={() => {
+                                                                navigator.clipboard.writeText(
+                                                                    /*
+                                                                    referralUrl + '/?center=' + center +
+                                                                    '&agent=' + nft.contract.address + 
+                                                                    '&tokenId=' + nft.tokenId
+                                                                    */
+                                                                    //'t.me/ppump_orry_bot?start=' + nft.contract.address + '_' + nft.tokenId
 
-                                                                't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
-                                                            );
-                                                            //toast.success('레퍼럴 URL 복사 완료');
-                                                            //alert('레퍼럴 복사되었습니다.');
-                                                            // english
-                                                            alert('Referral copied.');
-                                                        }}
-                                                        className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                        hover:bg-blue-600 text-lg xl:text-xl font-semibold"
-                                                    >
-                                                        {/*레퍼럴 복사하기*/}
-                                                        {/* english */}
-                                                        Copy Referral
-                                                    </button>
+                                                                    't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
+                                                                );
+                                                                //toast.success('레퍼럴 URL 복사 완료');
+                                                                //alert('레퍼럴 복사되었습니다.');
+                                                                // english
+                                                                alert('Referral copied.');
+                                                            }}
+                                                            className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                            hover:bg-blue-600 text-lg xl:text-xl font-semibold"
+                                                        >
+                                                            {/*레퍼럴 복사하기*/}
+                                                            {/* english */}
+                                                            Copy Referral
+                                                        </button>
+                                                    </div>
 
                                                     <div className="flex flex-row items-center justify-start gap-5">
                                                         {/* dot */}
