@@ -147,6 +147,8 @@ export async function insertOne(data: any) {
 
                 telegramId: telegramId,
                 message: message,
+                nftInfo: data.nftInfo,
+                timestamp: data.timestamp,
             }
             );
 
