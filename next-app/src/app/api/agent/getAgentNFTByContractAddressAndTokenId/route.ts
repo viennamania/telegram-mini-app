@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
   */
   const response = await alchemy.nft.getNftMetadata(
     erc721ContractAddress,
-    parseInt(tokenId)
+    tokenId
   );
 
   ///console.log("response: ", response);
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
   // Get owner of NFT
   const owner = await alchemy.nft.getOwnersForNft(
     erc721ContractAddress,
-    parseInt(tokenId)
+    tokenId
   );
 
   ///console.log("owner: ", owner);

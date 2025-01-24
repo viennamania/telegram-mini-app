@@ -77,7 +77,7 @@ export async function findOne(data: any) {
     return null;
   }
 
-  const tokenid = parseInt(data.tokenid);
+  const tokenid = data.tokenid;
 
 
   const client = await clientPromise;
@@ -170,7 +170,7 @@ export async function updateOneByImage(data: any) {
     return null;
   }
 
-  const tokenid = parseInt(data.tokenid);
+  const tokenid = data.tokenid;
 
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('images');

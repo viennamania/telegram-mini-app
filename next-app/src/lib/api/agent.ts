@@ -93,7 +93,7 @@ export async function insertOne(data: any) {
       agentBot: data.agentBot,
       
       ///agentBotNumber: data.agentBotNumber,
-      agentBotNumber: parseInt(data.agentBotNumber),
+      agentBotNumber: data.agentBotNumber,
 
       userName: data.userName,
       userPhoneNumber: data.userPhoneNumber,
@@ -264,7 +264,7 @@ export async function getMyReferAgents(
       $match: {
         agentBot: agentBot,
         //agentBotNumber: agentBotNumber,
-        agentBotNumber: parseInt(agentBotNumber),
+        agentBotNumber: agentBotNumber,
       }
     },
     {

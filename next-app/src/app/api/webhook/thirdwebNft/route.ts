@@ -191,7 +191,7 @@ export async function POST(request: NextRequest) {
 
     const response = await alchemy.nft.getNftMetadata(
       contractAddress,
-      parseInt(tokenId)
+      tokenId
     );
    
     const nftInfo = response;

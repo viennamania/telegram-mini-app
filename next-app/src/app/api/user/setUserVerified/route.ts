@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
     // Get owner of NFT
     const owner = await alchemy.nft.getOwnersForNft(
       nftContractAddress,
-      parseInt(tokenId)
+      tokenId
     );
 
     ///console.log("owner: ", owner);
