@@ -134,6 +134,11 @@ feature.command('otc', async (ctx) => {
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
       + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 USDT 판매/구매 하세요.';
+
+      // english
+      //+ '\n\n' + '✅ Wallet Address: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
+      //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to sell/buy USDT.';
+
       const keyboard = new InlineKeyboard()
         .webApp('💰 USDT 판매하기', urlOtc)
         .row()
@@ -236,8 +241,14 @@ feature.command('game', async (ctx) => {
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
       + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 게임으로 이동하세요.';
+      // english
+      //+ '\n\n' + '✅ Wallet Address: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
+      //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to go to the game.';
+
       const keyboard = new InlineKeyboard()
         .webApp('💰 게임하러가기', urlGame)
+        // english
+        //.webApp('💰 Go to the game', urlGame)
 
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-sports-game.jpg`;
 
@@ -691,8 +702,14 @@ feature.command('start', async (ctx) => {
   } else {
     keyboard = new InlineKeyboard()
     .text('🚫 봇센터에서 레퍼럴코드를 발급받아야 사용할 수 있습니다.')
+    // english
+    //.text('🚫 You need to get a referral code from the bot center to use it.')
+
     .row()
     .webApp('⚙️ 회원아이디를 설정해주세요.', urlMyProfile)
+    // english
+    //.webApp('⚙️ Set your nickname.', urlMyProfile)
+
     //.row()
     //.webApp('회원 보러가기', urlLeaderBoard)
   }
@@ -717,6 +734,9 @@ feature.command('start', async (ctx) => {
   } else {
     referralCodeText = referralCode ? '✅ 나의 레퍼럴코드: ' + referralCode.slice(0, 6) + '...' + referralCode.slice(-6)
     : '🚫 레퍼럴코드가 없습니다.'; 
+    // english
+    //referralCodeText = referralCode ? '✅ My Referral Code: ' + referralCode.slice(0, 6) + '...' + referralCode.slice(-6)
+    //: '🚫 There is no referral code.';
   }
 
 
@@ -726,6 +746,9 @@ feature.command('start', async (ctx) => {
   + (walletAddress ? '\n\n✅ 나의 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6) : '')
   + '\n\n' + referralCodeText
   + '\n\n' + '👇 아래 메뉴를 선택하세요.'
+  
+  // english
+  //+ '\n\n' + '👇 Please select the menu below.'
 
   //const photoFile = new InputFile(`${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`)
 
