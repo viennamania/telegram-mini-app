@@ -134,7 +134,13 @@ export async function insertOne(data: any) {
             ///const message = "You have received " + Number(amount).toFixed(6) + " USDT";
             //const message = Number(amount).toFixed(6) + " USDT 를 받았습니다";
 
-            const message = "NFT를 받았습니다";
+            const message = "NFT를 받았습니다"
+            + "\n"
+            + "NFT Name: " + data.nftInfo.name
+            + "\n"
+            + "NFT Desc: " + data.nftInfo.description
+            // NFT 이름: data.nftInfo.name
+            // NFT 설명: data.nftInfo.description
 
             const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
 

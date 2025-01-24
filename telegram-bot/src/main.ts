@@ -743,12 +743,14 @@ async function sendMessages() {
           message,
         });
 
-        const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/nft`;
+
+        const urlNFT = `${process.env.FRONTEND_APP_ORIGIN}/nft/${nftInfo.contract.address}/${nftInfo.tokenId}`;
+
 
         const keyboard = new InlineKeyboard()
-        .webApp('💰 나의 NFT 보러가기', urlMyWallet)
+        .webApp('💰 나의 NFT 보러가기', urlNFT)
         // english
-        //.webApp('💰 Go to My Wallet', urlMyWallet')
+        //.webApp('💰 Go to My NFT', urlNFT')
         
 
 
