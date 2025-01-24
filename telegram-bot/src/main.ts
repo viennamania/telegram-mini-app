@@ -698,9 +698,14 @@ async function sendMessages() {
 
         const keyboard = new InlineKeyboard()
         .webApp('💰 나의 지갑 보러가기', urlMyWallet)
+        // english
+        //.webApp('💰 Go to My Wallet', urlMyWallet)
 
         const caption = '\n\n🚀 ' + messageText
         + '\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
+        // english
+        //+ '\n\n' + '👇 Press the button below to go to My Wallet.';
+
 
         const photo = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
         
