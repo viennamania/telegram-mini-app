@@ -1615,7 +1615,7 @@ function AgentPage() {
 
                                             <div className='w-full flex flex-col gap-2 items-center justify-between'>
 
-                                                <div className="flex flex-row items-center justify-start gap-2">
+                                                <div className="w-full flex flex-row items-between justify-start gap-2">
                                                 
 
                                                     <button
@@ -1684,7 +1684,7 @@ function AgentPage() {
                                             </div>
 
 
-                                            <div className='mt-5 w-full flex flex-row gap-2 items-center justify-center'>
+                                            <div className='mt-5 w-full flex flex-row gap-2 items-start justify-center'>
 
 
                                                 <button
