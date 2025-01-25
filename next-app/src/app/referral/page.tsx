@@ -1674,7 +1674,7 @@ function AgentPage() {
                                                     <div className="flex flex-row items-center justify-start gap-5">
                                                         {/* dot */}
                                                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                                        <span className="text-xs xl:text-lg font-semibold">
+                                                        <span className="text-sm xl:text-lg font-semibold">
                                                             NFT 소유권을 이전하면 이전한 이후부터 채굴보상은 이전 받은 소유자에게 지급됩니다.
                                                         </span>
                                                     </div>
@@ -1684,17 +1684,18 @@ function AgentPage() {
                                             </div>
 
 
-                                            <div className='w-full flex flex-row gap-2 items-center justify-center'>
+                                            <div className='mt-5 w-full flex flex-row gap-2 items-center justify-center'>
 
 
-                                                <div className="w-full flex flex-col gap-2 items-center justify-center">
-
-                                                    <button
-                                                        onClick={() => {
-                                                            window.open('https://opensea.io/assets/matic/' + nft.contract.address + '/' + nft.tokenId);
-                                                        }}
-                                                        className="p-2 rounded hover:bg-gray-300"
-                                                    >
+                                                <button
+                                                    onClick={() => {
+                                                        window.open('https://opensea.io/assets/matic/' + nft.contract.address + '/' + nft.tokenId);
+                                                    }}
+                                                    className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                    hover:bg-blue-600
+                                                    " 
+                                                >
+                                                    <div className="flex flex-col gap-2 items-center justify-center">
                                                         <Image
                                                             src="/logo-opensea.png"
                                                             alt="OpenSea"
@@ -1702,20 +1703,20 @@ function AgentPage() {
                                                             height={30}
                                                             className="rounded-lg"
                                                         />
-                                                    </button>
-                                                    <span className='text-xs font-semibold'>
-                                                        OpenSea에서 보기
-                                                    </span>
-                                                    
-                                                </div>
+                                                        <span className='text-sm font-semibold'>
+                                                            OpenSea에서 확인하기
+                                                        </span>
+                                                    </div>
+                                                </button>
+
 
                                                 <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                                     {/* contract address */}
                                                     <div className='text-sm font-semibold'>
                                                         계약주소: {nft?.contract?.address && nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
                                                     </div>
-                                                    <div className='text-2xl font-semibold text-blue-500'>
-                                                        계약번호: #{nft?.tokenId > 10 ? nft.tokenId.slice(0, 10) + '...' : nft.tokenId}
+                                                    <div className='text-xl font-semibold text-blue-500'>
+                                                        계약번호: #{nft?.tokenId?.length > 10 ? nft.tokenId.slice(0, 10) + '...' : nft.tokenId}
                                                     </div>
                                                     <div className='text-lg font-semibold text-green-500'>
                                                         이름: {nft?.name}
