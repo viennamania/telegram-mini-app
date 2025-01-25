@@ -331,18 +331,28 @@ async function fetchAccountData() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        walletAddress: '0x',
         center,
       }),
     });
     
     if (response.status !== 200) {
       ///return ctx.reply("Failed to get leaderboard");
+
+      console.log('Failed to get applications for center')
+
       return;
     }
 
 
     const data = await response.json();
+
+    if (!data?.result) {
+
+      console.log('No data result')
+
+      return;
+    }
+
 
     const applications = data.result.applications;
 
@@ -1040,3 +1050,11 @@ setInterval(() => {
 
 }, 10*1000)
 
+
+
+
+/*
+TypeError: Cannot read properties of undefined (reading 'data')
+    at fetchAccountData (file:///home/ubuntu/ppump_orry_bot/build/src/main.js:266:78)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    */
