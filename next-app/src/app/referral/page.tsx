@@ -1613,53 +1613,47 @@ function AgentPage() {
                                             bg-yellow-100'
                                         >
 
-                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
-                                                {/* goto button for detail page */}
+                                            <div className='w-full flex flex-col gap-2 items-center justify-between'>
+
+                                                <div className="flex flex-row items-center justify-start gap-2">
                                                 
 
-                                                
-                                                
-                                                <div className="flex flex-col xl:flex-row items-center justify-start gap-5">
+                                                    <button
+                                                        onClick={() => {
+                                                            router.push('/referral/' + nft.contract.address + '/' + nft.tokenId);
+                                                        }}
+                                                        className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                        hover:bg-blue-600 text-lg xl:text-xl font-semibold"
+                                                    >
+                                                            상세보기
+                                                    </button>
+
+                                                    {/* referral link button */}
                                                     
-                                                    <div className="flex flex-row items-center justify-start gap-2">
-                                                    
+                                                    <button
+                                                        onClick={() => {
+                                                            navigator.clipboard.writeText(
+                                                                /*
+                                                                referralUrl + '/?center=' + center +
+                                                                '&agent=' + nft.contract.address + 
+                                                                '&tokenId=' + nft.tokenId
+                                                                */
+                                                                //'t.me/ppump_orry_bot?start=' + nft.contract.address + '_' + nft.tokenId
 
-                                                        <button
-                                                            onClick={() => {
-                                                                router.push('/referral/' + nft.contract.address + '/' + nft.tokenId);
-                                                            }}
-                                                            className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                            hover:bg-blue-600 text-lg xl:text-xl font-semibold"
-                                                        >
-                                                                상세보기
-                                                        </button>
-
-                                                        {/* referral link button */}
-                                                        
-                                                        <button
-                                                            onClick={() => {
-                                                                navigator.clipboard.writeText(
-                                                                    /*
-                                                                    referralUrl + '/?center=' + center +
-                                                                    '&agent=' + nft.contract.address + 
-                                                                    '&tokenId=' + nft.tokenId
-                                                                    */
-                                                                    //'t.me/ppump_orry_bot?start=' + nft.contract.address + '_' + nft.tokenId
-
-                                                                    't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
-                                                                );
-                                                                //toast.success('레퍼럴 URL 복사 완료');
-                                                                alert('레퍼럴 복사되었습니다.');
-                                                            }}
-                                                            className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                            hover:bg-blue-600 text-lg xl:text-xl font-semibold"
-                                                        >
-                                                            레퍼럴 복사하기
-                                                        </button>
-
-                                                    </div>
+                                                                't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
+                                                            );
+                                                            //toast.success('레퍼럴 URL 복사 완료');
+                                                            alert('레퍼럴 복사되었습니다.');
+                                                        }}
+                                                        className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                        hover:bg-blue-600 text-lg xl:text-xl font-semibold"
+                                                    >
+                                                        레퍼럴 복사하기
+                                                    </button>
 
                                                 </div>
+
+                                        
 
                                                 <div className='w-full flex flex-col gap-2 items-start justify-between'>
 
@@ -1690,7 +1684,7 @@ function AgentPage() {
                                             </div>
 
 
-                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                            <div className='w-full flex flex-row gap-2 items-center justify-center'>
 
 
                                                 <div className="w-full flex flex-col gap-2 items-center justify-center">
