@@ -238,6 +238,7 @@ export async function insertAgentMessageByWalletAddress(
         center,
         contract,
         tokenId,
+        agentBotNft,
         walletAddress,
         message,
     }
@@ -246,6 +247,7 @@ export async function insertAgentMessageByWalletAddress(
         center: string,
         contract: string,
         tokenId: string,
+        agentBotNft: object,
         walletAddress: string,
         message: string,
     }
@@ -267,6 +269,7 @@ export async function insertAgentMessageByWalletAddress(
                 center,
                 contract,
                 tokenId,
+                agentBotNft,
                 category: "agent",
                 telegramId: user.telegramId,
                 message,

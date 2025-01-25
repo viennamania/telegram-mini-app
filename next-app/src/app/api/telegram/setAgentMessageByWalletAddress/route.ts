@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
     center,
     contract,
     tokenId,
+    agentBotNft,
     walletAddress,
     message,
   } = body;
@@ -24,6 +25,7 @@ export async function POST(request: NextRequest) {
     center,
     contract,
     tokenId,
+    agentBotNft,
     walletAddress,
     message,
   } );

@@ -896,14 +896,22 @@ async function sendMessages() {
 
         const contract = message.contract;
         const tokenId = message.tokenId;
+        const agentBotInfo = message?.agentBotInfo;
 
-        const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/agent/${contract}/${tokenId}`;
+        const agentBotImageUrl = agentBotInfo ? agentBotInfo?.image?.pngUrl : '';
+
+        const photoUrl = agentBotImageUrl ? agentBotImageUrl : `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`;
+
+
+        const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/agent-reward/${contract}/${tokenId}`;
+
+
 
         const keyboard = new InlineKeyboard()
-        .webApp('💰 나의 보상 보러가기', urlMySettement)
+        .webApp('💰 나의 에이전트봇 보상 보러가기', urlMySettement)
 
         const caption = '\n\n🚀 ' + messageText
-        + '\n\n' + '👇 아래 버튼을 눌러 나의 보상으로 이동하세요.';
+        + '\n\n' + '👇 아래 버튼을 눌러 나의 에이전트봇 보상을 확인하세요.';
         
         /*
         botInstance.api.sendMessage(
@@ -918,7 +926,7 @@ async function sendMessages() {
         //console.log("sendPhoto3");
         await botInstance.api.sendPhoto(
           telegramId,
-          `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`,
+          photoUrl,
           {
             caption: caption,
             reply_markup: keyboard,
