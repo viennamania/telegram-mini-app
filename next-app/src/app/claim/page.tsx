@@ -629,7 +629,7 @@ function AgentPage() {
 
                             {/* statisticsDaily */}
                             {/* tradingVolume, total, count */}
-                            <div className='w-full mt-5 flex flex-col gap-5
+                            <div className='w-full flex flex-col gap-5
                                 border border-gray-300 p-4 rounded-lg bg-gray-100
                             '>
                             
@@ -976,7 +976,7 @@ function AgentPage() {
 
                             {/* 거래량: if totalSettlementTradingVolume not exist, then use settlementTradingVolume */}
 
-                            <div className='mt-5 w-full flex flex-col gap-2 items-start justify-between
+                            <div className='w-full flex flex-col gap-2 items-start justify-between
                                 border border-gray-300 p-4 rounded-lg bg-gray-100
                             '>
 
