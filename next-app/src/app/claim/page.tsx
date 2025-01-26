@@ -506,7 +506,7 @@ function AgentPage() {
                 />
 
 
-                <div className="mt-5 flex flex-col items-start justify-center space-y-4">
+                <div className="w-full flex flex-col items-start justify-center space-y-4">
 
                     <div className='flex flex-row items-center gap-4'>
                         
@@ -519,7 +519,7 @@ function AgentPage() {
                                 className='animate-pulse w-full rounded-lg'
                             />
                         )}
-                        <span className="flex text-lg font-semibold text-gray-800">
+                        <span className=" text-lg font-semibold text-gray-800">
                             보상내역
                         </span>
                     </div>
@@ -579,43 +579,8 @@ function AgentPage() {
                     </div>
 
 
-                    {address
-                    && !loadingUserData && !isLoadingUserDataError
-                    && !userCode && !nickname && (
-                        <div className='w-full flex flex-col gap-2 items-start justify-between'>
-                            <span className='text-lg font-semibold text-red-500'>
-                                닉네임이 없습니다. 닉네임을 만들어 주세요.
-                            </span>
-
-                        </div>
-                    )}
-
-                    {address && !loadingUserData && !myAgent?.masterBotInfo && (
-
-                        <div className='w-full flex flex-col gap-2 items-start justify-between'>
-                            <span className='text-lg font-semibold text-gray-500'>
-                                마스터봇이 없습니다.
-                            </span>
-                            <span className='text-lg font-semibold text-gray-500'>
-                                마스터봇을 만들어 주세요.
-                            </span>
-                            {/* goto button for /tbot */}
-                            <button
-                                onClick={() => {
-                                    router.push(
-                                        '/tbot'
-                                    );
-                                }}
-                                className='w-full bg-blue-500 text-white p-4 rounded-lg'
-                            >
-                                마스터봇 만들로 가기
-                            </button>
-                        </div>
-                    )}
-
-
-                    {/* masterBot */}
-                    {address && myAgent?.masterBotInfo ? (
+     
+                    {address ? (
 
                         <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
 
@@ -946,12 +911,85 @@ function AgentPage() {
                                             </div>
                                         </div>
 
+                                    </div>
 
 
+                                    {/* 전체 수익률 = AUM 수익률 + 거래보상 수익률 */}
+                                    <div className='w-full flex flex-col gap-2 items-start justify-between
+                                        border border-gray-300 p-4 rounded-lg bg-gray-100
+                                    '>
+                                        
+                                        <div className='w-full flex flex-row gap-2 items-center justify-start
+                                        border-b border-gray-300 p-2
+                                        '>
+
+                                            {/* dot */}
+                                            <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
+                                            <span className='text-lg text-gray-800 font-semibold'>
+                                                전체 수익률
+                                            </span>
+                                        </div>
+
+                                        <div className='w-full flex flex-col gap-2 items-start justify-between'>
+
+                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    시작 AUM
+                                                </span>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    {
+                                                        Number(statisticsDaily[0].tradingAccountBalance.toFixed(2)).toLocaleString('en-US', {
+                                                            style: 'currency',
+                                                            currency: 'USD'
+                                                        })
+                                                    }
+                                                </span>
+                                            </div>
+                                            {/* 현재 AUM */}
+                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    현재 AUM
+                                                </span>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    {
+                                                        Number(statisticsDaily[statisticsDaily.length - 1].tradingAccountBalance.toFixed(2)).toLocaleString('en-US', {
+                                                            style: 'currency',
+                                                            currency: 'USD'
+                                                        })
+                                                    }
+                                                </span>
+                                            </div>
+                                            {/* 누적 거래보상 */}
+                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    누적 거래보상
+                                                </span>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    {
+                                                        Number(statisticsDaily.reduce((acc, item) => acc + item.masterReward, 0).toFixed(2)).toLocaleString('en-US', {
+                                                            style: 'currency',
+                                                            currency: 'USD'
+                                                        })
+                                                    }
+                                                </span>
+                                            </div>
+
+                                            {/* 시작 AUM 대비 전체 수익률 */}
+                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    시작 AUM 대비 전체 수익률
+                                                </span>
+                                                <span className='text-2xl text-green-500 font-semibold'>
+                                                    {
+                                                        Number((statisticsDaily[statisticsDaily.length - 1].tradingAccountBalance - statisticsDaily[0].tradingAccountBalance) / statisticsDaily[0].tradingAccountBalance * 100).toFixed(2) + "%"
+                                                    }
+                                                </span>
+                                            </div>
+
+                                        </div>
 
                                     </div>
 
-                                    
 
                                     
 
