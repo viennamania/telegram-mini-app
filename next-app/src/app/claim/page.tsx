@@ -514,7 +514,7 @@ function AgentPage() {
                             <Image
                                 src={myAgent?.masterBotInfo?.imageUrl}
                                 alt="Master Bot"
-                                width={100}
+                                width={50}
                                 height={40}
                                 className='animate-pulse w-full rounded-lg'
                             />
@@ -621,18 +621,15 @@ function AgentPage() {
 
                             {loadingStatisticsDaily && (
                                 <div className='flex flex-col items-center justify-center'>
-                                        <Image
-                                            src="/icon-reward.gif"
-                                            alt="Loading"
-                                            width={300}
-                                            height={300}
-                                        />
+                                    <span className='text-lg font-semibold text-gray-500'>
+                                        Loading...
+                                    </span>
                                 </div>
                             )}
 
-                           {/* statisticsDaily */}
-                           {/* tradingVolume, total, count */}
-                           <div className='w-full mt-5 flex flex-col gap-5
+                            {/* statisticsDaily */}
+                            {/* tradingVolume, total, count */}
+                            <div className='w-full mt-5 flex flex-col gap-5
                                 border border-gray-300 p-4 rounded-lg bg-gray-100
                             '>
                             
@@ -647,7 +644,7 @@ function AgentPage() {
                                     />
 
                                     <span className='text-lg text-gray-800 font-semibold'>
-                                        일별 채굴보상
+                                        일별 거래보상
                                     </span>
                                 </div>
 
@@ -677,7 +674,7 @@ function AgentPage() {
                                                     </th>
 
                                                     <th className='text-sm text-gray-800 font-semibold text-center'>
-                                                        채굴보상
+                                                        거래보상
                                                     </th>
                                                     {/* 운용자산대비 채굴보상 비율 */}
                                                     <th className='text-sm text-gray-800 font-semibold text-center'>
@@ -818,6 +815,158 @@ function AgentPage() {
 
 
 
+                            {/* 시작 AUM, 오늘 AUM, 시작 AUM 대비 오늘 AUM 증가율 */}
+                            {/* 시작 AUM => statisticsDaily[0].tradingAccountBalance */}
+                            {/* 오늘 AUM => statisticsDaily[statisticsDaily.length - 1].tradingAccountBalance */}
+                            {/* 시작 AUM 대비 오늘 AUM 증가율 => (오늘 AUM - 시작 AUM) / 시작 AUM * 100 */}
+
+                            {statisticsDaily.length > 0 && (
+
+                                <div className="w-full flex flex-col gap-2 items-start justify-between">
+
+
+                                    <div className='w-full flex flex-col gap-2 items-start justify-between
+                                        border border-gray-300 p-4 rounded-lg bg-gray-100
+                                    '>
+
+                                        <div className='w-full flex flex-row gap-2 items-center justify-start
+                                        border-b border-gray-300 p-2
+                                        '>
+
+                                            {/* dot */}
+                                            <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
+                                            <span className='text-lg text-gray-800 font-semibold'>
+                                                AUM 수익률
+                                            </span>
+                                        </div>
+
+                                        <div className='w-full flex flex-col gap-2 items-start justify-between'>
+
+                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    시작 AUM
+                                                </span>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    {
+                                                        Number(statisticsDaily[0].tradingAccountBalance.toFixed(2)).toLocaleString('en-US', {
+                                                            style: 'currency',
+                                                            currency: 'USD'
+                                                        })
+                                                    }
+                                                </span>
+                                            </div>
+
+                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    오늘 AUM
+                                                </span>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    {
+                                                        Number(statisticsDaily[statisticsDaily.length - 1].tradingAccountBalance.toFixed(2)).toLocaleString('en-US', {
+                                                            style: 'currency',
+                                                            currency: 'USD'
+                                                        })
+                                                    }
+                                                </span>
+                                            </div>
+
+                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    시작 AUM 대비 오늘 AUM 수익률
+                                                </span>
+                                                <span className='text-2xl text-green-500 font-semibold'>
+                                                    {
+                                                        Number((statisticsDaily[statisticsDaily.length - 1].tradingAccountBalance - statisticsDaily[0].tradingAccountBalance) / statisticsDaily[0].tradingAccountBalance * 100).toFixed(2) + "%"
+                                                    }
+                                                </span>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    {/*
+                                    시작 AUM, 오늘까지의 채굴보상 합계, 시작 AUM 대비 채굴보상 수익률
+                                    */}
+                                    <div className='w-full flex flex-col gap-2 items-start justify-between
+                                        border border-gray-300 p-4 rounded-lg bg-gray-100
+                                    '>
+                                        
+                                        <div className='w-full flex flex-row gap-2 items-center justify-start]
+                                        border-b border-gray-300 p-2
+                                        '>
+
+                                            {/* dot */}
+                                            <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
+                                            <span className='text-lg text-gray-800 font-semibold'>
+                                                거래보상 수익률
+                                            </span>
+                                        </div>
+
+                                        <div className='w-full flex flex-col gap-2 items-start justify-between'>
+
+                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    시작 AUM
+                                                </span>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    {
+                                                        Number(statisticsDaily[0].tradingAccountBalance.toFixed(2)).toLocaleString('en-US', {
+                                                            style: 'currency',
+                                                            currency: 'USD'
+                                                        })
+                                                    }
+                                                </span>
+                                            </div>
+
+                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    오늘까지의 거래보상 합계
+                                                </span>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    {
+                                                        Number(statisticsDaily.reduce((acc, item) => acc + item.masterReward, 0).toFixed(2)).toLocaleString('en-US', {
+                                                            style: 'currency',
+                                                            currency: 'USD'
+                                                        })
+                                                    }
+                                                </span>
+                                            </div>
+
+                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                                <span className='text-lg text-gray-800 font-semibold'>
+                                                    시작 AUM 대비 거래보상 수익률
+                                                </span>
+                                                <span className='text-2xl text-green-500 font-semibold'>
+                                                    {
+                                                        Number(statisticsDaily.reduce((acc, item) => acc + item.masterReward, 0) / statisticsDaily[0].tradingAccountBalance * 100).toFixed(2) + "%"
+                                                    }
+                                                </span>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                    
+
+                                    
+
+                                </div>
+                            )}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -827,7 +976,11 @@ function AgentPage() {
 
                             {/* 거래량: if totalSettlementTradingVolume not exist, then use settlementTradingVolume */}
 
-                            <div className='mt-5 w-full flex flex-col gap-2 items-start justify-between'>
+                            <div className='mt-5 w-full flex flex-col gap-2 items-start justify-between
+                                border border-gray-300 p-4 rounded-lg bg-gray-100
+                            '>
+
+
                                 <div className='w-full flex flex-row items-center gap-2'>
                                     {/* dot */}
                                     <div className='w-4 h-4 bg-blue-500 rounded-full'></div>
@@ -843,84 +996,92 @@ function AgentPage() {
                                         </span>
                                     </div>
                                 ) : (
-                                    <table
-                                        className='w-full border border-gray-300'
-                                    >
-                                        <thead>
-                                            <tr>
+
+                                    <div className='w-full flex flex-col gap-2 items-start justify-between'>
+
+                                        {settlementHistory.length === 0 && (
+                                            <span className='text-lg font-semibold text-gray-500'>
+                                                보상 내역이 없습니다.
+                                            </span>
+                                        )}
+
+                                        <table
+                                            className='w-full border border-gray-300'
+                                        >
+                                            <thead>
+                                                <tr>
 
 
-                                                <th className='border border-gray-300 p-2 text-sm'>
-                                                    보상금액(USDT)
-                                                </th>
-                                                <th className='border border-gray-300 p-2 text-sm'>
-                                                    정산채굴량
-                                                </th>
-                                                <th className='border border-gray-300 p-2 text-sm'>
-                                                    지급시간
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                      
+                                                    <th className='border border-gray-300 p-2 text-sm'>
+                                                        보상금액(USDT)
+                                                    </th>
+                                                    <th className='border border-gray-300 p-2 text-sm'>
+                                                        정산채굴량
+                                                    </th>
+                                                    <th className='border border-gray-300 p-2 text-sm'>
+                                                        지급시간
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
 
-                                            {settlementHistory.map((settlement: any, index: number) => (
-                                                <tr key={index}>
+                                                {settlementHistory.map((settlement: any, index: number) => (
+                                                    <tr key={index}>
 
-                                                    <td
-                                                        className='border border-gray-300 p-2 text-2xl text-right text-blue-500'
-                                                        style={{
-                                                            fontFamily: 'monospace',
-                                                        }}
-                                                    >
-                                                        {
-                                                        Number(settlement.settlementClaim.masterInsentive).toFixed(6)
-                                                        }
-                                                    </td>
+                                                        <td
+                                                            className='border border-gray-300 p-2 text-2xl text-right text-blue-500'
+                                                            style={{
+                                                                fontFamily: 'monospace',
+                                                            }}
+                                                        >
+                                                            {
+                                                            Number(settlement.settlementClaim.masterInsentive).toFixed(6)
+                                                            }
+                                                        </td>
 
-                                                    <td className='border border-gray-300 p-2 text-sm text-right'>
-                                                        {
-                                                        settlement.settlementClaim.totalSettlementTradingVolume
-                                                        ? Number(settlement.settlementClaim.totalSettlementTradingVolume).toFixed(0)
-                                                        : Number(settlement.settlementClaim.settlementTradingVolume).toFixed(0)
-                                                        }
-                                                    </td>
+                                                        <td className='border border-gray-300 p-2 text-sm text-right'>
+                                                            {
+                                                            settlement.settlementClaim.totalSettlementTradingVolume
+                                                            ? Number(settlement.settlementClaim.totalSettlementTradingVolume).toFixed(0)
+                                                            : Number(settlement.settlementClaim.settlementTradingVolume).toFixed(0)
+                                                            }
+                                                        </td>
 
 
-                                                    <td className='border border-gray-300 p-2 text-sm text-right'>
-                                                        {
-                                                            (
-                                                                new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 ? "방금 전" : (
-                                                                    (
-                                                                        new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 ? 
-                                                                        Math.floor(
-                                                                            (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60
-                                                                        ) + "분 전" : (
-                                                                            (
-                                                                                new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 ? 
-                                                                                Math.floor(
-                                                                                    (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60
-                                                                                ) + "시간 전" : (
-                                                                                    (
-                                                                                        new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 * 7 ? 
-                                                                                        Math.floor(
-                                                                                            (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24
-                                                                                        ) + "일 전" : (
-                                                                                            (
-                                                                                                new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 * 30 ? 
-                                                                                                Math.floor(
-                                                                                                    (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24 / 7
-                                                                                                ) + "주 전" : (
-                                                                                                    (
-                                                                                                        new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 * 30 * 12 ? 
-                                                                                                        Math.floor(
-                                                                                                            (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24 / 30
-                                                                                                        ) + "달 전" : (
+                                                        <td className='border border-gray-300 p-2 text-sm text-right'>
+                                                            {
+                                                                (
+                                                                    new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 ? "방금 전" : (
+                                                                        (
+                                                                            new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 ? 
+                                                                            Math.floor(
+                                                                                (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60
+                                                                            ) + "분 전" : (
+                                                                                (
+                                                                                    new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 ? 
+                                                                                    Math.floor(
+                                                                                        (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60
+                                                                                    ) + "시간 전" : (
+                                                                                        (
+                                                                                            new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 * 7 ? 
+                                                                                            Math.floor(
+                                                                                                (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24
+                                                                                            ) + "일 전" : (
+                                                                                                (
+                                                                                                    new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 * 30 ? 
+                                                                                                    Math.floor(
+                                                                                                        (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24 / 7
+                                                                                                    ) + "주 전" : (
+                                                                                                        (
+                                                                                                            new Date().getTime() -  new Date(settlement.timestamp).getTime() < 1000 * 60 * 60 * 24 * 30 * 12 ? 
                                                                                                             Math.floor(
-                                                                                                                (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24 / 30 / 12
-                                                                                                            ) + "년 전"
+                                                                                                                (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24 / 30
+                                                                                                            ) + "달 전" : (
+                                                                                                                Math.floor(
+                                                                                                                    (new Date().getTime() -  new Date(settlement.timestamp).getTime()) / 1000 / 60 / 60 / 24 / 30 / 12
+                                                                                                                ) + "년 전"
+                                                                                                            )
                                                                                                         )
                                                                                                     )
                                                                                                 )
@@ -930,23 +1091,25 @@ function AgentPage() {
                                                                                 )
                                                                             )
                                                                         )
+
                                                                     )
 
                                                                 )
 
-                                                            )
-
-                                                        }
+                                                            }
 
 
-                                                    </td>
+                                                        </td>
 
 
 
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
                                 )}
 
                             </div>

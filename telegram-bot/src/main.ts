@@ -131,11 +131,14 @@ async function startPolling(config: PollingConfig) {
     },
   })
 
+  /*
   logger.info({
     msg: 'Bot running.......',
     username: bot.botInfo.username,
 
   })
+  */
+
 }
 
 
@@ -320,222 +323,232 @@ async function fetchAccountData() {
   }
 
 
+  try {
 
-  if (botInstance) {
+    if (botInstance) {
 
-    const center = botInstance.botInfo.username;
+      const center = botInstance.botInfo.username;
 
-    const response = await fetch("https://owinwallet.com/api/agent/getApplicationsForCenter", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        center,
-      }),
-    });
-    
-    if (response.status !== 200) {
-      ///return ctx.reply("Failed to get leaderboard");
-
-      console.log('Failed to get applications for center')
-
-      return;
-    }
-
-
-    const data = await response.json();
-
-    if (!data?.result) {
-
-      console.log('No data result')
-
-      return;
-    }
-
-
-    const applications = data.result.applications;
-
-    const totalAccountCount = data.result.totalCount;
+      const response = await fetch("https://owinwallet.com/api/agent/getApplicationsForCenter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          center,
+        }),
+      });
       
-    const totalTradingAccountBalance = '$' + Number(data.result.totalTradingAccountBalance).toFixed(2);
+      if (response.status !== 200) {
+        ///return ctx.reply("Failed to get leaderboard");
 
+        console.log('Failed to get applications for center')
 
-    const url = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getAllUsersTelegramIdByCenter`;
-
-    const responseUsers = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        center,
-      }),
-    });
-
-    if (responseUsers.status !== 200) {
-      ///return ctx.reply("Failed to get leaderboard");
-
-      console.log('Failed to get users telegram id by center')
-
-      return;
-    }
-
-    const dataUsers = await responseUsers.json();
-
-    ///console.log('dataUsers:', dataUsers);
-
-    
-    for (const user of dataUsers.result) {
-      const telegramId = user.telegramId;
-
-      if (!telegramId) {
-        continue;
-      }
-
-      // find application for the user by wallet address
-
-      const application = applications.find((application: any) => application.walletAddress === user.walletAddress);
-
-      ///console.log('application:', application);
-
-      if (!application) {
-        continue;
+        return;
       }
 
 
-      const masterBotImageUrl = application ? application?.masterBotInfo?.imageUrl : '';
+      const data = await response.json();
+
+      if (!data?.result) {
+
+        console.log('No data result')
+
+        return;
+      }
 
 
+      const applications = data.result.applications;
 
-
-      const tradingAccountBalance = application ? '$' + Number(application.tradingAccountBalance.balance).toFixed(2) : 'N/A';
-
-      const tradingAccountVolume = Number(application.affiliateInvitee.data.volMonth).toFixed(0);
-      const claimedTradingVolume = Number(application.claimedTradingVolume).toFixed(0);
-      const tradingVolume = Number(tradingAccountVolume) - Number(claimedTradingVolume);
-
-
-      if (masterBotImageUrl) {
-
-        try {
-
-
-          /*
-          {
-            method: 'sendPhoto',
-            payload: {
-              chat_id: '7719309234',
-              photo: 'https://shinemywinter.vercel.app/logo-magic-wallet.webp',
-              caption: '\n\n🚀 0.001150 USDT 를 받았습니다\n\n👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.',
-              reply_markup: InlineKeyboard {
-                inline_keyboard: [ [ { text: '나의 지갑 보러가기', web_app: [Object] } ] ]
-              }
-            },
-            ok: false,
-            error_code: 403,
-            description: 'Forbidden: bot was blocked by the user',
-            parameters: {}
-          }
-          */
-
-          // check if the user blocked the bot
-          
-
-          
-
-
-          /*
-          botInstance.api.sendPhoto(
-            telegramId,
-            masterBotImageUrl,
-            {
-              caption: '🔥 My Trading Account Balance: ' + tradingAccountBalance + '\n'
-              //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
-              //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
-            }
-          )
-          */
-
-
-          /*
-          const username = telegramId;
-          const expiration = Date.now() + 6000_000; // valid for 100 minutes
-          const message = JSON.stringify({
-            username,
-            expiration,
-          });
+      const totalAccountCount = data.result.totalCount;
         
-          const authCode = await adminAccount.signMessage({
-            message,
-          });
-  
-          const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/claim`;
-          */
-
-          const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/claim?walletAddress=${user.walletAddress}`;
-          const keyboard = new InlineKeyboard()
-          .webApp('나의 마스터봇 보상 보러가기', urlMySettement)
+      const totalTradingAccountBalance = '$' + Number(data.result.totalTradingAccountBalance).toFixed(2);
 
 
-          // description: 'Forbidden: bot was blocked by the user',
-          // check if the user blocked the bot
-          // if the user blocked the bot, the bot will not be able to send messages to the user
+      const url = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getAllUsersTelegramIdByCenter`;
+
+      const responseUsers = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          center,
+        }),
+      });
+
+      if (responseUsers.status !== 200) {
+        ///return ctx.reply("Failed to get leaderboard");
+
+        console.log('Failed to get users telegram id by center')
+
+        return;
+      }
+
+      const dataUsers = await responseUsers.json();
+
+      ///console.log('dataUsers:', dataUsers);
+
+      
+      for (const user of dataUsers.result) {
+        const telegramId = user.telegramId;
+
+        if (!telegramId) {
+          continue;
+        }
+
+        // find application for the user by wallet address
+
+        const application = applications.find((application: any) => application.walletAddress === user.walletAddress);
+
+        ///console.log('application:', application);
+
+        if (!application) {
+          continue;
+        }
+
+
+        const masterBotImageUrl = application ? application?.masterBotInfo?.imageUrl : '';
 
 
 
-          await botInstance.api.sendPhoto(
-            telegramId,
-            masterBotImageUrl,
+
+        const tradingAccountBalance = application ? '$' + Number(application.tradingAccountBalance.balance).toFixed(2) : 'N/A';
+
+        //const tradingAccountVolume = Number(application.affiliateInvitee.data.volMonth).toFixed(0);
+
+
+        const tradingAccountVolume = application.affiliateInvitee ? Number(application.affiliateInvitee.data.volMonth).toFixed(0) : 0;
+
+
+        const claimedTradingVolume = Number(application.claimedTradingVolume).toFixed(0);
+        const tradingVolume = Number(tradingAccountVolume) - Number(claimedTradingVolume);
+
+
+        if (masterBotImageUrl) {
+
+          try {
+
+
+            /*
             {
-              caption: '🔥 나의 마스터봇 채굴량: ' + tradingVolume
-              + '\n\n💪 나의 마스터봇 거래잔고: ' + tradingAccountBalance
-              + '\n\n' + '👇 아래 버튼을 눌러 나의 마스터봇 보상으로 이동하세요.'
-              //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
-              //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
-              ,
-
-              reply_markup: keyboard,
+              method: 'sendPhoto',
+              payload: {
+                chat_id: '7719309234',
+                photo: 'https://shinemywinter.vercel.app/logo-magic-wallet.webp',
+                caption: '\n\n🚀 0.001150 USDT 를 받았습니다\n\n👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.',
+                reply_markup: InlineKeyboard {
+                  inline_keyboard: [ [ { text: '나의 지갑 보러가기', web_app: [Object] } ] ]
+                }
+              },
+              ok: false,
+              error_code: 403,
+              description: 'Forbidden: bot was blocked by the user',
+              parameters: {}
             }
-          )
+            */
+
+            // check if the user blocked the bot
+            
+
+            
 
 
-        } catch (error) {
-          console.error('Error sending photo:', error)
-        }
-
-      } else {
-
-        try {
-
-            //console.log("sendMessage1");
-            await botInstance.api.sendMessage(
+            /*
+            botInstance.api.sendPhoto(
               telegramId,
-              // emoji: https://emojipedia.org/
-              '🔥 나의 마스터봇 거래잔고: ' + tradingAccountBalance
-              + '\n\n' + '👇 아래 버튼을 눌러 나의 마스터봇 보상으로 이동하세요.'
-              //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
-              //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
-            ).then(() => {
-              //console.log('Message sent');
-            }).catch((error) => {
-              console.error('Error sending message:', error+'');
-            })
+              masterBotImageUrl,
+              {
+                caption: '🔥 My Trading Account Balance: ' + tradingAccountBalance + '\n'
+                //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
+                //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
+              }
+            )
+            */
 
 
-        } catch (error) {
-          //console.error('Error sending message:', error)
+            /*
+            const username = telegramId;
+            const expiration = Date.now() + 6000_000; // valid for 100 minutes
+            const message = JSON.stringify({
+              username,
+              expiration,
+            });
+          
+            const authCode = await adminAccount.signMessage({
+              message,
+            });
+    
+            const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/claim`;
+            */
+
+            const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/claim?walletAddress=${user.walletAddress}`;
+            const keyboard = new InlineKeyboard()
+            .webApp('나의 마스터봇 보상 보러가기', urlMySettement)
+
+
+            // description: 'Forbidden: bot was blocked by the user',
+            // check if the user blocked the bot
+            // if the user blocked the bot, the bot will not be able to send messages to the user
+
+
+
+            await botInstance.api.sendPhoto(
+              telegramId,
+              masterBotImageUrl,
+              {
+                caption: '🔥 나의 마스터봇 채굴량: ' + tradingVolume
+                + '\n\n💪 나의 마스터봇 거래잔고: ' + tradingAccountBalance
+                + '\n\n' + '👇 아래 버튼을 눌러 나의 마스터봇 보상으로 이동하세요.'
+                //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
+                //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
+                ,
+
+                reply_markup: keyboard,
+              }
+            )
+
+
+          } catch (error) {
+            console.error('Error sending photo:', error)
+          }
+
+        } else {
+
+          try {
+
+              //console.log("sendMessage1");
+              await botInstance.api.sendMessage(
+                telegramId,
+                // emoji: https://emojipedia.org/
+                '🔥 나의 마스터봇 거래잔고: ' + tradingAccountBalance
+                + '\n\n' + '👇 아래 버튼을 눌러 나의 마스터봇 보상으로 이동하세요.'
+                //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
+                //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
+              ).then(() => {
+                //console.log('Message sent');
+              }).catch((error) => {
+                console.error('Error sending message:', error+'');
+              })
+
+
+          } catch (error) {
+            //console.error('Error sending message:', error)
+          }
+
         }
+        
+        
 
       }
-      
+
+
       
 
     }
 
-
-    
-
+  } catch (error) {
+    console.error('Error fetching account data:', error+'')
   }
   
 }
@@ -896,9 +909,11 @@ async function sendMessages() {
 
         const contract = message.contract;
         const tokenId = message.tokenId;
-        const agentBotInfo = message?.agentBotInfo;
+        const agentBotNft = message?.agentBotNft;
 
-        const agentBotImageUrl = agentBotInfo ? agentBotInfo?.image?.pngUrl : '';
+        const agentBotImageUrl = agentBotNft ? agentBotNft?.image?.pngUrl : '';
+        const agentBotName = agentBotNft ? agentBotNft?.name : '';
+        const agnetbotDescription = agentBotNft ? agentBotNft?.description : '';
 
         const photoUrl = agentBotImageUrl ? agentBotImageUrl : `${process.env.FRONTEND_APP_ORIGIN}/logo-mining.webp`;
 
@@ -910,7 +925,8 @@ async function sendMessages() {
         const keyboard = new InlineKeyboard()
         .webApp('💰 나의 에이전트봇 보상 보러가기', urlMySettement)
 
-        const caption = '\n\n🚀 ' + messageText
+        const caption = '\n\n🚀 ' + agentBotName
+        + '\n\n🚀 ' + messageText
         + '\n\n' + '👇 아래 버튼을 눌러 나의 에이전트봇 보상을 확인하세요.';
         
         /*
@@ -1064,5 +1080,15 @@ setInterval(() => {
 /*
 TypeError: Cannot read properties of undefined (reading 'data')
     at fetchAccountData (file:///home/ubuntu/ppump_orry_bot/build/src/main.js:266:78)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    */
+
+/*
+file:///home/ubuntu/ppump_orry_bot/build/src/main.js:270
+            const tradingAccountVolume = Number(application.affiliateInvitee.data.volMonth).toFixed(0);
+                                                                             ^
+
+TypeError: Cannot read properties of undefined (reading 'data')
+    at fetchAccountData (file:///home/ubuntu/ppump_orry_bot/build/src/main.js:270:78)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     */
