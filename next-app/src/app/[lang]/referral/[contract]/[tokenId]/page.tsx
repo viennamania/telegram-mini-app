@@ -118,6 +118,10 @@ export default function AgentPage({ params }: any) {
   const [ownerInfo, setOwnerInfo] = useState({} as any);
 
   const [loadingAgent, setLoadingAgent] = useState(false);
+
+  const [animationUrl, setAnimationUrl] = useState("");
+
+
   useEffect(() => {
       
       const getAgent = async () => {
@@ -142,10 +146,31 @@ export default function AgentPage({ params }: any) {
   
         const data = await response.json();
 
-        console.log("getAgentNFTByContractAddressAndTokenId data", data);
+        ///console.log("getAgentNFTByContractAddressAndTokenId data", data);
 
+
+   
   
         setAgent(data.result);
+
+        // video url
+        // animation_url
+        // raw.metadata.animation_url
+
+        ///console.log(data.result.raw?.metadata?.animation_url);
+
+        // convert 
+        // ipfs://QmVJDX9cTQpLmoHEHAmJZm6bFqaqErmkAwqy21mJoV5gfC/0.mp4
+        // to
+        // https://ipfs.io/ipfs/QmVJDX9cTQpLmoHEHAmJZm6bFqaqErmkAwqy21mJoV5gfC/0.mp4
+
+        if (data.result.raw?.metadata?.animation_url) {
+            setAnimationUrl(
+                data.result.raw.metadata.animation_url.replace("ipfs://", "https://ipfs.io/ipfs/")
+            );
+        }
+
+
 
         setOwnerInfo(data?.ownerInfo);
         setHolderWalletAddress(data?.ownerWalletAddress);
@@ -1137,15 +1162,26 @@ export default function AgentPage({ params }: any) {
                             <span className='text-sm text-yellow-500'>
                                 AI 에이전트 NFT 이미지
                             </span>
-                            {agent.image && (
-                            <Image
-                                //src={agent?.image?.thumbnailUrl}
-                                src={agent?.image?.pngUrl || '/logo-masterbot.png'}
-                                width={200}
-                                height={200}
-                                alt={agent.name}
-                                className='rounded-lg object-cover w-full animate-pulse'
-                            />
+                            {!animationUrl && agent.image && (
+                                <Image
+                                    //src={agent?.image?.thumbnailUrl}
+                                    src={agent?.image?.pngUrl || '/logo-masterbot.png'}
+                                    width={200}
+                                    height={200}
+                                    alt={agent.name}
+                                    className='rounded-lg object-cover w-full animate-pulse'
+                                />
+                            )}
+                            {/* animationUrl */}
+                            {/* auto play */}
+                            {animationUrl && (
+                                <video
+                                    src={animationUrl}
+                                    controls
+                                    autoPlay
+                                    loop
+                                    className='rounded-lg object-cover w-full'
+                                />
                             )}
                         </div>
 
