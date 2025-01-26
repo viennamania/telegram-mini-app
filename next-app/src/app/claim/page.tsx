@@ -835,6 +835,8 @@ function AgentPage() {
                                                 </span>
                                             </div>
 
+                                            
+
                                             <div className='w-full flex flex-row gap-2 items-center justify-between'>
                                                 <span className='text-lg text-gray-800 font-semibold'>
                                                     시작 AUM 대비 오늘 AUM 수익률
