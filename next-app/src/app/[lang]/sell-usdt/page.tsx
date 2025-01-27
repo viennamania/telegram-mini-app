@@ -650,11 +650,17 @@ export default function Index({ params }: any) {
 
 
 
-
+      
+      //<main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
+      
     
     return (
 
-      <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
+
+      <main
+        className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto"
+      >
+
 
         <AutoConnect
             client={client}
@@ -662,7 +668,7 @@ export default function Index({ params }: any) {
             timeout={15000}
         />
 
-        <div className="py-20 w-full">
+        <div className="py-0 w-full">
   
           {/* goto home button using go back icon
           history back
@@ -676,7 +682,7 @@ export default function Index({ params }: any) {
 
               <div className='flex flex-row items-center space-x-4'>
                   <Image
-                    src="/logo-tether.png"
+                    src="/trade-sell.png"
                     alt="USDT"
                     width={35}
                     height={35}
@@ -781,12 +787,6 @@ export default function Index({ params }: any) {
                   
                             {/* sell icon */}
                             <div className=" flex flex-row items-center gap-2">
-                              <Image
-                                src="/trade-sell.png"
-                                alt="Sell"
-                                width={40}
-                                height={40}
-                              />
                               <h2 className="text-lg font-semibold text-white">{Order}</h2>
                             </div>
 

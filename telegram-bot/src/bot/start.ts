@@ -141,8 +141,11 @@ feature.command('otc', async (ctx) => {
       //+ '\n\n' + '✅ Wallet Address: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
       //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to sell/buy USDT.';
 
+      const urlSellUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/sell-usdt`;
+
+
       const keyboard = new InlineKeyboard()
-        .webApp('💰 USDT 판매하기', urlOtc)
+        .webApp('💰 USDT 판매하기', urlSellUsdt)
         .row()
         .webApp('💰 USDT 구매하기', urlOtc)
 

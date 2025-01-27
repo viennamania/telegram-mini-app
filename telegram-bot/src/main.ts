@@ -728,6 +728,8 @@ async function sendMessages() {
 
         const urlOtc = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/otc`;
 
+        const urlSellUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/sell-usdt`;
+
 
         const keyboard = new InlineKeyboard()
         .webApp('💰 나의 지갑 보러가기', urlMyWallet)
@@ -738,7 +740,7 @@ async function sendMessages() {
         // english
         //.webApp('🎮 Go to Game', urlGame);
         .row()
-        .webApp('💱 USDT 판매 하러가기', urlOtc)
+        .webApp('💱 USDT 판매 하러가기', urlSellUsdt)
         // english
         //.webApp('💱 Go to USDT OTC', urlOtc);
 
