@@ -744,6 +744,12 @@ function HomeContent() {
               {address && !loadingUsers && users.length > 0 && (
 
                 <div className="flex flex-row gap-2 items-center justify-between">
+
+                  {/* 회원수 */}
+                  <span className="text-lg text-gray-800 font-semibold bg-gray-100 p-2 rounded">
+                    회원수: {users.length}
+                  </span>
+
                   <input
                     disabled={loadingAirDrop}
 
@@ -752,7 +758,7 @@ function HomeContent() {
                     }}
                     type="number"
                     placeholder="에어드롭 USDT"
-                    className="w-32 p-2 rounded border border-gray-300"
+                    className=" w-36  p-2 rounded border border-gray-300"
                   />
                   {/* button airDrop */}
                   <Button

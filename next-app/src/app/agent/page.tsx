@@ -40,10 +40,6 @@ import {
 import { shortenAddress } from "thirdweb/utils";
 import { Button } from "@headlessui/react";
 
-import Link from "next/link";
-
-import { smartWallet, inAppWallet } from "thirdweb/wallets";
-
 
 import Image from 'next/image';
 
