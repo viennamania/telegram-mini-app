@@ -1184,6 +1184,7 @@ export default function Index({ params }: any) {
                                       );
                                     }}
                                   />
+                                  {/*
                                   <button
                                     disabled={acceptingSellOrder[index] || !agreementForTrade[index]}
                                     className={`
@@ -1192,7 +1193,7 @@ export default function Index({ params }: any) {
                                       px-2 py-1 rounded-md hover:bg-green-600
                                     `}
                                     onClick={() => {
-                                      acceptSellOrder(index, item._id, smsReceiverMobileNumber);
+                                      acceptSellOrder(index, item._id, "");
                                     }}
                                   >
                                     {acceptingSellOrder[index] && (
@@ -1209,6 +1210,7 @@ export default function Index({ params }: any) {
                                     }
                                     
                                   </button>
+                                  */}
                                 </div>
                               )}
 
