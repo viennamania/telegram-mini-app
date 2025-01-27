@@ -777,197 +777,97 @@ function HomeContent() {
 
 
             </div>
+
+            <div className="w-full flex flex-col gap-2 items-start justify-between">
             
-            {address && (
-              <>          
-                {loadingUsers ? (
-                  <div className="w-full flex flex-col items-center justify-center">
-                      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
-                  </div>
-                ) : (
+              {address && (
+                <>          
+                  {loadingUsers ? (
+                    <div className="flex flex-col items-center justify-center">
+                        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
+                    </div>
+                  ) : (
 
-                  <>
-                  
-                  <table className="w-full">
-                      <thead>
-                          <tr className="bg-zinc-800 text-zinc-100">
-                              <th className="p-2">회원아이디</th>
-                              <th className="p-2">지갑주소</th>
-                              <th className="p-2">레퍼럴코드</th>
-                              <th className="p-2">센터장</th>
-                              <th className="p-2">에이전트</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {users.map((user, index) => (
-                              <tr
-                                key={index}
-                                className={`${selectUser === user?.walletAddress ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}`}
-                              >
-                                  <td className="p-2">
-                                    <div className="flex flex-row gap-2 items-center justify-start">
-                                      <Image
-                                        src={user?.avatar || "/icon-anonymous.png"}
-                                        alt={user?.nickname}
-                                        width={50}
-                                        height={50}
-                                        className="rounded w-10 h-10"
-                                      />
-                                      <span className="text-sm">
-                                        {user?.nickname}
-                                      </span>
-                                    </div>
-                                  </td>
-                                  <td className="p-2">
-                                    <div className="flex flex-row gap-2 items-center justify-start">
-                                      <span className="text-sm">
-                                        {user?.walletAddress?.slice(0, 6) + "..."}
-                                      </span>
-                                      <Button
-                                        onClick={() => {
-                                          navigator.clipboard.writeText(user?.walletAddress);
-                                          alert(`${user?.walletAddress} 복사되었습니다.`);
-                                        }}
-                                        className="
-                                          inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                        "
-                                      >
-                                        복사
-                                      </Button>
-                                    </div>
-                                  </td>
-                                  <td className="p-2">
-                                    <div className="flex flex-row gap-2 items-center justify-start">
-                                      <span className="text-sm">
-                                        {user?.referralCode}
-                                      </span>
-                                      <Button
-                                        onClick={() => {
-                                          navigator.clipboard.writeText(
-                                            "t.me/" + selectCenter + "/?start=" + user?.referralCode
-                                          );
-                                          alert(`${user?.referralCode} 복사되었습니다.`);
-                                        }}
-                                        className="
-                                          inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                        "
-                                      >
-                                        복사
-                                      </Button>
-
-                                      {/* opensea link */}
-                                      <Button
-                                        onClick={() => {
-                                          (window as any).Telegram.WebApp.openLink(
-                                            "https://opensea.io/assets/matic/" + user?.referralCode.split("_")[0] + "/" + user?.referralCode.split("_")[1]
-                                          );
-                                        }}
-                                        className="
-                                          inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                        "
-                                      >
-                                        <div className="flex flex-row gap-2 items-center justify-start">
-                                          <Image
-                                            src="/logo-opensea.png"
-                                            alt="OpenSea"
-                                            width={20}
-                                            height={20}
-                                            className="rounded"
-                                          />
-                                        </div>
-                                      </Button>
-                                    </div>
-                                  </td>
-                                  <td className="p-2 text-center">
-                                    {user?.centerOwner && (
-                                      <span className="text-white font-semibold bg-green-500 p-1 rounded">
-                                        O
-                                      </span>
-                                    )}
-                                  </td>
-                                  <td className="p-2 text-center">
-                                    <input
-                                      type="radio"
-                                      id={user?.walletAddress}
-                                      name="user"
-                                      value={user?.telegramId}
-                                      checked={selectUser === user?.walletAddress}
-                                      onChange={() => {
-                                          setSelectUser(user?.walletAddress);
-                                      }}
-                                      className="w-4 h-4"
-                                    />
-                                  </td>
-                              </tr>
-                          ))}
-                      </tbody>
-                  </table>
-                  
-
-                  </>
-                )}
-              </>
-            )}
-
-
-          
-            {selectUser && (
-              <>
-                {loadingAgentNft ? (
-                  <div className="w-full flex flex-col items-center justify-center">
-                      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
-                  </div>
-                ) : (
-                  <div className="mt-5 w-full flex flex-col gap-2 items-start justify-between">
-                      <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                          에이전트 NFT 목록
-                      </div>
-                      <div className="w-full flex flex-col gap-2 items-start justify-between">
-                          {agentNft && agentNft.length === 0 && (
-                              <div className="w-full flex flex-col items-center justify-center">
-                                  <span className="text-sm text-gray-400">
-                                      NFT가 없습니다.
-                                  </span>
-                              </div>
-                          )}
-
-                          {agentNft && agentNft.map((nft : any, index : number) => (
-                              <div
+                    <table className="w-full">
+                        <thead>
+                            <tr className="bg-zinc-800 text-zinc-100">
+                                <th className="p-2">회원아이디</th>
+                                <th className="p-2">지갑주소</th>
+                                <th className="p-2">레퍼럴코드</th>
+                                <th className="p-2">센터장</th>
+                                <th className="p-2">에이전트</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.map((user, index) => (
+                                <tr
                                   key={index}
-                                  className="flex flex-row gap-2 items-center justify-between"
-                              >
-                                  <div className="
-                                    border border-gray-300 p-4 rounded-lg
-                                    flex flex-col gap-1 items-center justify-start">
-
-                                      <div className="flex flex-col gap-2 items-start justify-between">
-                                        <span className="text-sm">
-                                          {nft.name && nft.name.slice(0, 10) + "..."}
-                                        </span>
-                                        <span className="text-sm text-gray-400">
-                                          {nft.description && nft.description.slice(0, 10) + "..."}
-                                        </span>
-                                      </div>
-
+                                  className={`${selectUser === user?.walletAddress ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}`}
+                                >
+                                    <td className="p-2">
                                       <div className="flex flex-row gap-2 items-center justify-start">
-
-
                                         <Image
-                                          src={nft?.image?.thumbnailUrl || "/icon-nft.png"}
-                                          alt={nft?.name}
-                                          width={100}
-                                          height={100}
+                                          src={user?.avatar || "/icon-anonymous.png"}
+                                          alt={user?.nickname}
+                                          width={50}
+                                          height={50}
                                           className="rounded w-10 h-10"
                                         />
-                                      
+                                        <span className="text-sm">
+                                          {user?.nickname}
+                                        </span>
+                                      </div>
+                                    </td>
+
+                                    <td className="p-2">
+                                      <div className="flex flex-row gap-2 items-center justify-start">
+                                        <span className="text-sm">
+                                          {user?.walletAddress?.slice(0, 6) + "..."}
+                                        </span>
                                         <Button
                                           onClick={() => {
-                                              (window as any).Telegram.WebApp.openLink(
-                                                "https://opensea.io/assets/matic/" + nft.contract.address + "/" + nft.tokenId
-                                              );
+                                            navigator.clipboard.writeText(user?.walletAddress);
+                                            alert(`${user?.walletAddress} 복사되었습니다.`);
                                           }}
                                           className="
-                                          inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                            inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                          "
+                                        >
+                                          복사
+                                        </Button>
+                                      </div>
+                                    </td>
+
+                                    <td className="p-2">
+                                      <div className="flex flex-row gap-2 items-center justify-start">
+                                        <span className="text-sm">
+                                          
+                                          {user?.referralCode?.slice(0, 6) + "..."}
+
+                                        </span>
+                                        <Button
+                                          onClick={() => {
+                                            navigator.clipboard.writeText(
+                                              "t.me/" + selectCenter + "/?start=" + user?.referralCode
+                                            );
+                                            alert(`${user?.referralCode} 복사되었습니다.`);
+                                          }}
+                                          className="
+                                            inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                          "
+                                        >
+                                          복사
+                                        </Button>
+
+                                        {/* opensea link */}
+                                        <Button
+                                          onClick={() => {
+                                            (window as any).Telegram.WebApp.openLink(
+                                              "https://opensea.io/assets/matic/" + user?.referralCode.split("_")[0] + "/" + user?.referralCode.split("_")[1]
+                                            );
+                                          }}
+                                          className="
+                                            inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
                                           "
                                         >
                                           <div className="flex flex-row gap-2 items-center justify-start">
@@ -980,56 +880,157 @@ function HomeContent() {
                                             />
                                           </div>
                                         </Button>
-
                                       </div>
-
-                                  </div>
-
-
-
-
-                                  {nft.name === "MasterBot" ? (
-                                    <span className="text-sm text-green-500 font-semibold bg-green-100 p-2 rounded">
-                                      마스터봇
-                                    </span>
-                                  ) : (
-
-                                  <>    
-                                    {/* copy telegram link */}
-                                    <div className="flex flex-row gap-2 items-center justify-start">
-                                      <span className="text-sm text-gray-400">
-                                        레퍼럴:{nft.contract.address + "_" + (nft.tokenId?.length > 10 ? nft.tokenId.slice(0, 10) + "..." : nft.tokenId)}
-                                      </span>
-                                      <Button
-                                        onClick={() => {
-                                          navigator.clipboard.writeText(
-                                            "https://t.me/" + selectCenter + "/?start=" + nft.contract.address + "_" + nft.tokenId
-                                          );
-                                          alert(`레퍼럴 링크 복사되었습니다.`);
+                                    </td>
+                                    <td className="p-2 text-center">
+                                      {user?.centerOwner && (
+                                        <span className="text-white font-semibold bg-green-500 p-1 rounded">
+                                          O
+                                        </span>
+                                      )}
+                                    </td>
+                                    <td className="p-2 text-center">
+                                      <input
+                                        type="radio"
+                                        id={user?.walletAddress}
+                                        name="user"
+                                        value={user?.telegramId}
+                                        checked={selectUser === user?.walletAddress}
+                                        onChange={() => {
+                                            setSelectUser(user?.walletAddress);
                                         }}
-                                        className="
-                                          inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                        "
-                                      >
-                                        복사하기
-                                      </Button>
+                                        className="w-4 h-4"
+                                      />
+                                    </td>
+
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    
+                  )}
+                </>
+              )}
+
+
+            
+              {selectUser && (
+                <>
+                  {loadingAgentNft ? (
+                    <div className="flex flex-col items-center justify-center">
+                        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
+                    </div>
+                  ) : (
+                    <div className="w-full flex flex-col gap-2 items-start justify-between">
+                        <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                            에이전트 NFT 목록
+                        </div>
+                        <div className="w-full flex flex-col gap-2 items-start justify-between">
+                            {agentNft && agentNft.length === 0 && (
+                                <div className="w-full flex flex-col items-center justify-center">
+                                    <span className="text-sm text-gray-400">
+                                        NFT가 없습니다.
+                                    </span>
+                                </div>
+                            )}
+
+                            {agentNft && agentNft.map((nft : any, index : number) => (
+                                <div
+                                    key={index}
+                                    className="flex flex-row gap-2 items-center justify-between"
+                                >
+                                    <div className="
+                                      border border-gray-300 p-4 rounded-lg
+                                      flex flex-col gap-1 items-center justify-start">
+
+                                        <div className="flex flex-col gap-2 items-start justify-between">
+                                          <span className="text-sm">
+                                            {nft.name && nft.name.slice(0, 10) + "..."}
+                                          </span>
+                                          <span className="text-sm text-gray-400">
+                                            {nft.description && nft.description.slice(0, 10) + "..."}
+                                          </span>
+                                        </div>
+
+                                        <div className="flex flex-row gap-2 items-center justify-start">
+
+
+                                          <Image
+                                            src={nft?.image?.thumbnailUrl || "/icon-nft.png"}
+                                            alt={nft?.name}
+                                            width={100}
+                                            height={100}
+                                            className="rounded w-10 h-10"
+                                          />
+                                        
+                                          <Button
+                                            onClick={() => {
+                                                (window as any).Telegram.WebApp.openLink(
+                                                  "https://opensea.io/assets/matic/" + nft.contract.address + "/" + nft.tokenId
+                                                );
+                                            }}
+                                            className="
+                                            inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                            "
+                                          >
+                                            <div className="flex flex-row gap-2 items-center justify-start">
+                                              <Image
+                                                src="/logo-opensea.png"
+                                                alt="OpenSea"
+                                                width={20}
+                                                height={20}
+                                                className="rounded"
+                                              />
+                                            </div>
+                                          </Button>
+
+                                        </div>
+
                                     </div>
-                                  </>
 
 
-                                  )}
 
 
-                              </div>
-                          ))}
+                                    {nft.name === "MasterBot" ? (
+                                      <span className="text-sm text-green-500 font-semibold bg-green-100 p-2 rounded">
+                                        마스터봇
+                                      </span>
+                                    ) : (
 
-                      </div>
-                  </div>
-                )}
-              </>
+                                    <>    
+                                      {/* copy telegram link */}
+                                      <div className="flex flex-row gap-2 items-center justify-start">
+                                        <Button
+                                          onClick={() => {
+                                            navigator.clipboard.writeText(
+                                              "https://t.me/" + selectCenter + "/?start=" + nft.contract.address + "_" + nft.tokenId
+                                            );
+                                            alert(`레퍼럴 링크 복사되었습니다.`);
+                                          }}
+                                          className="
+                                            inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                          "
+                                        >
+                                          레퍼럴 복사하기
+                                        </Button>
+                                      </div>
+                                    </>
 
-            )}
 
+                                    )}
+
+
+                                </div>
+                            ))}
+
+                        </div>
+                    </div>
+                  )}
+                </>
+
+              )}
+
+            </div>
 
           </div>
 
