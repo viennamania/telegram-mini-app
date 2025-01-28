@@ -766,13 +766,13 @@ export default function Index({ params }: any) {
                 </div>
 
 
-                  <div className=" w-full grid gap-4  justify-center">
+                  <div className=" w-full flex gap-4  justify-center">
 
 
                     {/* sell order is different border color
                     */}
-                    <article
-                      className=" bg-black p-4 rounded-md border-2 border-green-500"
+                    <div
+                      className="w-full bg-black p-4 rounded-md border-2 border-green-500"
                     >
 
                       <div className="flex flex-col xl:flex-row gap-5 xl:gap-10 items-center">
@@ -780,14 +780,13 @@ export default function Index({ params }: any) {
 
                         <div className="flex flex-col gap-2 items-start">
                           
+                          {/*
                           <div className=" flex flex-row items-center justify-between gap-4">
                   
-                            {/* sell icon */}
                             <div className=" flex flex-row items-center gap-2">
                               <h2 className="text-lg font-semibold text-white">{Order}</h2>
                             </div>
 
-                            {/* check box for private sale */}
                             <div className="flex flex-row items-center gap-2">
 
                               <Image
@@ -809,6 +808,7 @@ export default function Index({ params }: any) {
                             </div>
 
                           </div>
+                          */}
 
 
                           {/* my seller info */}
@@ -819,7 +819,7 @@ export default function Index({ params }: any) {
 
                             <div className="mt-4 flex flex-row items-center gap-2">
                               <Image
-                                src={avatar}
+                                src={avatar || "/profile-default.png"}
                                 alt="Profile"
                                 width={24}
                                 height={24}
@@ -831,7 +831,9 @@ export default function Index({ params }: any) {
                                 }}
 
                               />
-                              <div className="text-lg font-semibold text-white">{nickname}</div>
+                              <div className="text-lg font-semibold text-white">
+                                {nickname}
+                              </div>
 
                               <Image
                                 src="/verified.png"
@@ -849,7 +851,8 @@ export default function Index({ params }: any) {
                           )}
 
 
-                          <p className="mt-4 text-xl font-bold text-zinc-400">1 USDT = {
+                          <p className="mt-4 text-xl font-bold text-zinc-400">
+                            환율: 1 USDT = {
                             // currency format
                             Number(rate).toLocaleString('ko-KR', {
                               style: 'currency',
@@ -858,10 +861,11 @@ export default function Index({ params }: any) {
                           }</p>
                           
                           <div className=" flex flex-row items-center gap-2">
-                            <p className="text-xl text-blue-500 font-bold ">
+
+                            <div className="flex flex-row items-center gap-2 text-4xl text-blue-500 font-bold ">
                               <input 
                                 type="number"
-                                className=" w-28 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
+                                className=" w-32 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                                 placeholder="Amount"
                                 value={usdtAmount}
                                 onChange={(e) => {
@@ -878,11 +882,7 @@ export default function Index({ params }: any) {
                                     setUsdtAmount(0);
                                     return;
                                   }
-
                                   
-                              
-
-
                                   parseFloat(e.target.value) < 0 ? setUsdtAmount(0) : setUsdtAmount(parseFloat(e.target.value));
 
                                   parseFloat(e.target.value) > 1000 ? setUsdtAmount(1000) : setUsdtAmount(parseFloat(e.target.value));
@@ -891,18 +891,28 @@ export default function Index({ params }: any) {
 
 
                               />
-                              <span className="ml-1 text-sm">USDT</span>
-                            </p>
+                              <span className="text-lg">USDT</span>
+                            </div>
 
-                            <p className=" text-xl text-zinc-400 font-bold">
+                            <div className=" text-xl text-zinc-400 font-bold">
                               = {
                               Number(defaultKrWAmount).toLocaleString('ko-KR', {
                                 style: 'currency',
                                 currency: 'KRW'
                               })
                               }
-                            </p>
+                            </div>
                           </div>
+
+                          {/* 판매할 수량을 입력하세요. */}
+                          <div className="flex flex-row items-center gap-2">
+                            {/* dot */}
+                            <div className="w-2 h-2 bg-zinc-400 rounded-full inline-block mr-2"></div>
+                            <span className="text-sm text-zinc-400">
+                              판매할 수량을 입력하세요.
+                            </span>
+                          </div>
+
 
 
                           {seller && (
@@ -967,7 +977,14 @@ export default function Index({ params }: any) {
 
                             </div>
 
-                            <div className="flex flex-col gap-2">
+                            <div className="w-full flex flex-col items-center justify-center gap-2">
+                              {/* 판매할 금액을 변경하세요 */}
+                              <div className="flex flex-row items-center gap-2">
+                                <div className="w-2 h-2 bg-zinc-400 rounded-full inline-block mr-2"></div>
+                                <span className="text-sm text-zinc-400">
+                                  판매할 금액을 변경하세요
+                                </span>
+                              </div>
                               <div className="flex flex-row items-center gap-2"> 
     
                                 <input 
@@ -1164,14 +1181,15 @@ export default function Index({ params }: any) {
                                       sellOrder();
                                   }}
                               >
-                                {Place_Order}
+                                {/*Place_Order*/}
+                                판매주문하기
                               </button>
                           )}
 
                         </div>
 
 
-                    </article>
+                    </div>
 
                     <article
                       className="hidden xl:block"
@@ -1191,21 +1209,21 @@ export default function Index({ params }: any) {
 
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">{Total}</div>
-                      <div className="text-xl font-semibold text-white">
+                      <div className="text-xl font-semibold text-gray-400">
                         {sellOrders.length}
                       </div>
                     </div>
 
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">{Orders}</div>
-                      <div className="text-xl font-semibold text-white">
+                      <div className="text-xl font-semibold text-gray-400">
                         {sellOrders.filter((item) => item.status === 'ordered').length}
                       </div>
                     </div>
 
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">{Trades}</div>
-                      <div className="text-xl font-semibold text-white">
+                      <div className="text-xl font-semibold text-gray-400">
 
                         {
                           //sellOrders.filter((item) => item.status === 'accepted').length
@@ -1352,7 +1370,7 @@ export default function Index({ params }: any) {
                                   )}
 
                                   <p className="text-sm text-zinc-400">
-                                    Opened {
+                                    {
                                     new Date().getTime() - new Date(item.createdAt).getTime() < 1000 * 60 ? (
                                       ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000) + ' ' + seconds_ago
                                     ) :
@@ -1360,7 +1378,7 @@ export default function Index({ params }: any) {
                                       ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
                                     ) : (
                                       ' ' + Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
-                                    )}
+                                    )}에 시작되었습니다.
                                   </p>
 
                                 </div>
@@ -1374,13 +1392,14 @@ export default function Index({ params }: any) {
                                       width={28}
                                       height={28}
                                     />
-                                    <p className="text-sm text-zinc-400">Expires in {
+                                    <p className="text-sm text-zinc-400">
+                                      {
 
                                       24 - Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60 / 60) - 1
 
-                                    } hours {
+                                    } 시간 {
                                       60 - Math.floor((new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60) % 60
-                                    } minutes
+                                    } 분후에 만료됩니다.
 
                                     
                                     </p>
@@ -1394,7 +1413,9 @@ export default function Index({ params }: any) {
                                       width={28}
                                       height={28}
                                     />
-                                    <p className="text-sm text-zinc-400">Expired</p>
+                                    <p className="text-sm text-zinc-400">
+                                      만료되었습니다.
+                                    </p>
                                   </div>
                                 )}
 
@@ -1462,7 +1483,8 @@ export default function Index({ params }: any) {
 
                             {item.acceptedAt && (
                               <p className="mb-2 text-sm text-zinc-400">
-                                Trade started at {new Date(item.acceptedAt).toLocaleDateString() + ' ' + new Date(item.acceptedAt).toLocaleTimeString()}
+                                {new Date(item.acceptedAt).toLocaleDateString() + ' ' + new Date(item.acceptedAt).toLocaleTimeString()}
+                                에 거래가 시작되었습니다.
                               </p>
                             )}
 
@@ -1471,7 +1493,8 @@ export default function Index({ params }: any) {
                             {item.status === 'cancelled' && (
 
                                 <p className="text-sm text-zinc-400"> 
-                                  Cancelled at {new Date(item?.cancelledAt).toLocaleString()}
+                                  {new Date(item?.cancelledAt).toLocaleString()}
+                                  에 거래가 취소되었습니다.
                                 </p>
                     
                             )}
@@ -1481,7 +1504,8 @@ export default function Index({ params }: any) {
                             {item.paymentConfirmedAt && (
                               <p className="mb-2 text-sm text-zinc-400">
                                 
-                                Completed at {new Date(item.paymentConfirmedAt).toLocaleDateString() + ' ' + new Date(item.paymentConfirmedAt).toLocaleTimeString()}
+                                {new Date(item.paymentConfirmedAt).toLocaleDateString() + ' ' + new Date(item.paymentConfirmedAt).toLocaleTimeString()}
+                                에 거래가 완료되었습니다.
                             
                               </p>
                             )}
@@ -1489,6 +1513,24 @@ export default function Index({ params }: any) {
 
 
                             <div className="mt-4 flex flex-col items-start gap-2">
+
+
+
+
+                              <div className="flex flex-row items-start gap-2">
+
+                                <p className="text-2xl font-semibold text-white">
+                                  {item.usdtAmount} USDT
+                                </p>
+
+                                <p className="text-lg font-semibold text-white">{Rate}: {
+
+                                  Number(item.krwAmount / item.usdtAmount).toFixed(2)
+
+                                }</p>
+
+                              </div>
+
 
 
                               <p className="text-2xl text-zinc-400">
@@ -1503,18 +1545,6 @@ export default function Index({ params }: any) {
                                 }
                               </p>
 
-
-                              <div className="flex flex-row items-start gap-2">
-
-                                <p className="text-lg font-semibold text-white">{item.usdtAmount} USDT</p>
-
-                                <p className="text-lg font-semibold text-white">{Rate}: {
-
-                                  Number(item.krwAmount / item.usdtAmount).toFixed(2)
-
-                                }</p>
-
-                              </div>
 
                             </div>
 
@@ -1645,7 +1675,7 @@ export default function Index({ params }: any) {
                             {/* share button */}
                            
 
-
+                            {/*
                             <div className=" mt-4 flex flex-row gap-2 items-center justify-center">
 
                               {item.privateSale && (
@@ -1687,6 +1717,7 @@ export default function Index({ params }: any) {
 
 
                             </div>
+                            */}
                           
 
 
