@@ -396,10 +396,10 @@ function HomeContent() {
   }, [selectCenter]);
 
 
-  // airDrop
+  // airDrop Center
   const [amountAirDrop, setAmountAirDrop] = useState(0);
   const [loadingAirDrop, setLoadingAirDrop] = useState(false);
-  const airDrop = async (amountAirDrop: number) => {
+  const airDropCenter = async (amountAirDrop: number) => {
 
       setLoadingAirDrop(true);
       const response = await fetch("/api/settlement/airdrop", {
@@ -431,6 +431,43 @@ function HomeContent() {
       setLoadingAirDrop(false);
 
   };
+
+  // airDrop All MarketingCenter Users
+  const [amountAirDropAll, setAmountAirDropAll] = useState(0);
+  const [loadingAirDropAll, setLoadingAirDropAll] = useState(false);
+  const airDropAll = async (amountAirDropAll: number) => {
+
+      setLoadingAirDropAll(true);
+      const response = await fetch("/api/settlement/airdropAll", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              amount: amountAirDropAll,
+              marketingCenter: marketingCenter,
+          }),
+      });
+
+      if (!response.ok) {
+          console.error("Error airdropping all");
+          setLoadingAirDropAll(false);
+          return;
+      }
+
+      const data = await response.json();
+
+      //console.log("airdropAll data", data);
+
+      if (data?.result) {
+          alert("에어드롭이 완료되었습니다.");
+      }
+
+
+      setLoadingAirDropAll(false);
+
+
+  }
 
 
   
@@ -679,7 +716,43 @@ function HomeContent() {
             
             <div className="flex flex-row gap-2 items-center justify-between">
               <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                  텔레그램 센터 선택
+                  텔레그램 봇센터
+              </div>
+              {/* center count */}
+              <div className="bg-gray-800 text-sm text-zinc-100 p-2 rounded">
+                  {centerList.length}개
+              </div>
+              {/* 전체 회원수
+              세터별 회원수 전체합계
+              */}
+              <div className="bg-gray-800 text-sm text-zinc-100 p-2 rounded">
+                전체 회원수:
+                {
+                  centerList.reduce((acc, cur) => acc + cur.count, 0)
+                }
+              </div>
+
+              {/* airDropAll */}
+              <div className="bg-gray-800 text-sm text-zinc-100 p-2 rounded">
+                <input
+                  type="number"
+                  value={amountAirDropAll}
+                  onChange={(e) => setAmountAirDropAll(Number(e.target.value))}
+                  className="bg-gray-700 text-zinc-100 p-2 rounded"
+                />
+                <Button
+                  onClick={() => {
+                    if (amountAirDropAll <= 0) {
+                      alert("에어드롭 금액을 입력해 주세요.");
+                      return;
+                    }
+                    confirm("전체 센터에 에어드롭 하시겠습니까?") &&
+                    airDropAll(amountAirDropAll);
+                  } }
+                  className={`${loadingAirDropAll ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
+                >
+                  {loadingAirDropAll ? "로딩중..." : "에어드롭"}
+                </Button>
               </div>
 
             </div>
@@ -783,6 +856,10 @@ function HomeContent() {
                   텔레그램 회원 목록
               </div>
 
+              {/* 회원수 */}
+              <div className="bg-gray-800 text-sm text-zinc-100 p-2 rounded">
+                  {users.length}명
+              </div>
 
             </div>
             

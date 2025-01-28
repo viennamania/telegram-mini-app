@@ -701,8 +701,48 @@ export async function getAllMembersByCenter(
 
 
 
+// getAllMembersByMarketingCenter
+export async function getAllMembersByMarketingCenter(
+  {
+    limit = 100,
+    page = 1,
+    marketingCenter,
+  }: {
+    limit: number;
+    page: number;
+    marketingCenter: string;
+  }
+): Promise<any> {
+
+  ///console.log('getAllMembersByCenter center: ' + center);
+
+  if (!marketingCenter) {
+    return null;
+  }
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('users');
+
+  // marketingCenter is prefix of center
 
 
+  const users = await collection
+    .find<UserProps>(
+      {
+        telegramId: { $exists: true, $ne: '' },
+        center: { $regex: '^' + marketingCenter },
+      },
+      {
+        limit: limit,
+        skip: (page - 1) * limit,
+      }, 
+    ).toArray();
+
+    //console.log('getAllMembersByCenter users: ' + users);
+
+    return users;
+
+}
 
 
 
