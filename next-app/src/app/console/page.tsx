@@ -433,6 +433,47 @@ function HomeContent() {
   };
 
 
+  // send erc20 to address
+  const [amountSend, setAmountSend] = useState(0);
+  const [toAddress, setToAddress] = useState("");
+  const [loadingSend, setLoadingSend] = useState(false);
+  const send = async () => {
+    
+      setLoadingSend(true);
+      // api call sendToUserTelegramId
+      const response = await fetch("/api/settlement/sendToUserTelegramId", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              amount: amountSend,
+              userTelegramId: toAddress,
+          }),
+      });
+
+      if (!response.ok) {
+          console.error("Error sending");
+          setLoadingSend(false);
+          return;
+      }
+
+      const data = await response.json();
+
+      console.log("send data", data);
+
+      if (data?.result) {
+          alert("전송이 완료되었습니다.");
+      } else {
+          alert("전송에 실패했습니다.");
+      }
+
+      setLoadingSend(false);
+
+  }
+
+
+
   
   return (
 
@@ -716,7 +757,45 @@ function HomeContent() {
         </div>
       
 
-                    
+        {/* send to user telegramId */}
+        {/* input amountSend */}
+        {address && (
+          <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                텔레그램 사용자에게 USDT 전송
+            </div>
+            <div className="w-full flex flex-row gap-2 items-start justify-between">
+                <input
+                  disabled={loadingSend}
+                  onChange={(e) => {
+                    setAmountSend(Number(e.target.value));
+                  }}
+                  type="number"
+                  placeholder="전송 USDT"
+                  className="w-36 p-2 rounded border border-gray-300"
+                />
+                <input
+                  disabled={loadingSend}
+                  onChange={(e) => {
+                    setToAddress(e.target.value);
+                  }}
+                  type="text"
+                  placeholder="텔레그램 ID"
+                  className="w-36 p-2 rounded border border-gray-300"
+                />
+                <Button
+                  disabled={loadingSend}
+                  onClick={() => {
+                    // send
+                    confirm("전송하시겠습니까?") && send();
+                  }}
+                  className={`${loadingSend ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
+                >
+                  {loadingSend ? "전송중..." : "전송"}
+                </Button>
+            </div>
+          </div>
+        )}
 
 
 
@@ -798,6 +877,7 @@ function HomeContent() {
                         <thead>
                             <tr className="bg-zinc-800 text-zinc-100">
                                 <th className="p-2">회원아이디</th>
+                                <th className="p-2">TID</th>
                                 <th className="p-2">지갑주소</th>
                                 <th className="p-2">레퍼럴코드</th>
                                 <th className="p-2">센터장</th>
@@ -822,6 +902,26 @@ function HomeContent() {
                                         <span className="text-sm">
                                           {user?.nickname}
                                         </span>
+                                      </div>
+                                    </td>
+                                    {/* telegram id */}
+                                    <td className="p-2">
+                                      <div className="flex flex-row gap-2 items-center justify-start">
+                                        <span className="text-sm">
+                                          {user?.telegramId}
+                                        </span>
+                                        <Button
+                                          onClick={() => {
+                                            (window as any).Telegram.WebApp.openLink(
+                                              "https://t.me/" + user?.telegramId
+                                            );
+                                          }}
+                                          className="
+                                            inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                          "
+                                        >
+                                          텔레그램
+                                        </Button>
                                       </div>
                                     </td>
 

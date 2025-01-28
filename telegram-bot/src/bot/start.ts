@@ -263,7 +263,7 @@ feature.command('game', async (ctx) => {
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-sports-game.jpg`;
 
 
-      /*
+      
       return ctx.replyWithPhoto(
         photoUrl,
         {
@@ -271,8 +271,9 @@ feature.command('game', async (ctx) => {
           reply_markup: keyboard
         }
       )
-      */
+    
 
+      /*
       const videoUrl = `${process.env.FRONTEND_APP_ORIGIN}/connecting.gif`;
       const videoFile = new InputFile(videoUrl)
 
@@ -283,6 +284,7 @@ feature.command('game', async (ctx) => {
           reply_markup: keyboard
         }
       )
+      */
 
 
 
@@ -812,6 +814,45 @@ feature.command('start', async (ctx) => {
 
 
 
+
+// public chat
+const publicChat = composer.chatType('group');
+
+// if feature is not command, reply with the help message
+
+publicChat.use((ctx, next) => {
+
+  console.log('public chat');
+  console.log('ctx.message', ctx.message);
+
+
+  if (!ctx.message?.text?.startsWith('/')) {
+
+    // 일반 대화는 할수 없습니다.
+    // 좌측 하단의 메뉴를 이용해주세요.
+    // 곧 일반 대화도 가능하게 업데이트 될 예정입니다.
+    /*
+    return ctx.reply(
+      '🚫 일반 대화는 할수 없습니다.\n\n'
+      + '👉 좌측 하단의 메뉴를 이용해주세요.\n\n'
+      + '🔜 곧 일반 대화도 가능하게 업데이트 될 예정입니다.'
+    )
+    // english
+    //return ctx.reply('🚫 You cannot chat.\n\n👉 Please use the menu on the bottom left.\n\n🔜 General chat will be available soon')
+    */
+
+    // reply public chat message
+    // return ctx.reply(ctx.message.text);
+
+    if (ctx.message && ctx.message.text) {
+      return ctx.reply(ctx.message.text);
+    }
+
+  }
+  
+
+  return next()
+})
 
 
 
