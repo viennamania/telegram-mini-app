@@ -65,7 +65,9 @@ import { updateUser } from "@/lib/api/user";
 import { send } from "@fal-ai/serverless-client/src/function";
 
 
-const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+//const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // NOAHK 포인트 on Polygon
+
+const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAHK on Polygon
 
 
 function ProfilePage() {
@@ -121,7 +123,7 @@ function ProfilePage() {
   
         if (!result) return;
     
-        setBalance( Number(result) / 10 ** 6 );
+        setBalance( Number(result) / 10 ** 18 );
   
       };
   
@@ -693,7 +695,7 @@ function ProfilePage() {
         try {
 
 
-            // send USDT
+            // send NOAHK 포인트
             // Call the extension function to prepare the transaction
             const transaction = transfer({
                 contract: contract,
@@ -709,7 +711,7 @@ function ProfilePage() {
             
             if (transactionHash) {
 
-                alert('USDT sent successfully');
+                alert('NOAHK 포인트 sent successfully');
 
                 setSendAmount('');
 
@@ -724,7 +726,7 @@ function ProfilePage() {
 
             } else {
 
-                alert('Failed to send USDT');
+                alert('Failed to send NOAHK 포인트');
 
             }  
 
@@ -733,7 +735,7 @@ function ProfilePage() {
             
             console.error("error", error);
 
-            alert('Failed to send USDT');
+            alert('Failed to send NOAHK 포인트');
         }
 
         setSending(false);
@@ -874,8 +876,8 @@ function ProfilePage() {
                                     p-4 rounded-lg'>
 
                                     <Image
-                                        src="/logo-tether.png"
-                                        alt="USDT"
+                                        src="/logo-noahk-erc20.png"
+                                        alt="NOAHK 포인트"
                                         width={30}
                                         height={30}
                                         className="rounded"
@@ -889,16 +891,16 @@ function ProfilePage() {
                                                 Number(balance).toFixed(6)
                                             }
                                         </span>
-                                        <span className="p-2 text-gray-500 text-lg font-semibold">USDT</span>
+                                        <span className="p-2 text-gray-500 text-lg font-semibold">NOAHK 포인트</span>
 
                                     </div>
                                 </div>
 
-                                {/* send USDT */}
+                                {/* send NOAHK 포인트 */}
 
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        USDT 보내기
+                                        NOAHK 포인트 보내기
                                     </div>
                                     <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                         <input
@@ -964,7 +966,7 @@ function ProfilePage() {
                                             <button
                                                 disabled={sending || !sendAmount || !toWalletAddress}
                                                 onClick={() => {
-                                                    confirm('USDT를 보내시겠습니까?') &&
+                                                    confirm('NOAHK 포인트를 보내시겠습니까?') &&
                                                     sendUsdt();
                                                 }}
                                                 className={`p-2 bg-blue-500 text-zinc-100 rounded
@@ -1000,7 +1002,7 @@ function ProfilePage() {
                                 {/*
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        {Send_USDT}
+                                        {Send_NOAHK 포인트}
                                     </div>
                                     <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                         <input
@@ -1133,7 +1135,7 @@ function ProfilePage() {
                                             +/-
                                         </th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">지갑주소</th>
-                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">수량(USDT)</th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">수량(NOAHK 포인트)</th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">시간</th>
                                     </tr>
                                 </thead>
