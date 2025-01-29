@@ -714,7 +714,7 @@ function ProfilePage() {
             
             if (transactionHash) {
 
-                alert('NOAHK 포인트 sent successfully');
+                alert('NOAHK 포인트를 성공적으로 보냈습니다');
 
                 setSendAmount('');
 
@@ -726,6 +726,35 @@ function ProfilePage() {
                 //console.log(result);
 
                 setBalance( Number(result) / 10 ** 18 );
+
+                // reload the transfers
+                const response = await fetch("/api/wallet/getTransfersNoahkByWalletAddress", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        limit: 10,
+                        page: 1,
+                        walletAddress: address,
+                    }),
+                });
+
+                if (!response.ok) {
+                    return;
+                }
+
+                const data = await response.json();
+
+                //console.log("getTransfers data", data);
+
+                if (data.result) {
+                    setTransfers(data.result.transfers);
+                } else {
+                    setTransfers([]);
+                }
+                
+
 
             } else {
 
