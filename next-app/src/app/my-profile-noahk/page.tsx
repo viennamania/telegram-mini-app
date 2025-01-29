@@ -73,7 +73,7 @@ function ProfilePage() {
 
     const center = searchParams.get("center");
     
-    ///const telegramId = searchParams.get("telegramId");
+    const paramTelegramId = searchParams.get("telegramId");
 
 
 
@@ -177,7 +177,7 @@ function ProfilePage() {
 
     const [isValideTelegramId, setIsValideTelegramId] = useState(false);
 
-    const [telegramId, setTelegramId] = useState("");
+    const [telegramId, setTelegramId] = useState(paramTelegramId || '');
 
 
     useEffect(() => {
