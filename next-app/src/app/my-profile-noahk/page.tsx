@@ -99,8 +99,6 @@ function ProfilePage() {
     ///const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
   
 
-
-
     const [balance, setBalance] = useState(0);
     useEffect(() => {
   
