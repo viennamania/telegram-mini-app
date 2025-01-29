@@ -753,7 +753,7 @@ function ProfilePage() {
                 } else {
                     setTransfers([]);
                 }
-                
+
 
 
             } else {
@@ -1171,7 +1171,7 @@ function ProfilePage() {
                                             +/-
                                         </th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">지갑주소</th>
-                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">수량(NOAHK 포인트)</th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">수량</th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">시간</th>
                                     </tr>
                                 </thead>
