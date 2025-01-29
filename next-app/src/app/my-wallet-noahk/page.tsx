@@ -811,11 +811,7 @@ function ProfilePage() {
                     </div>
                 </div>
 
-                {/* "포인트는 회사의 서비스 내에서만 사용 가능하며, 외부 플랫폼이나 현금화는 불가능합니다."
-"회원 간 양도나 거래는 회사 시스템 내에서만 이루어지며, 외부 유통은 금지됩니다." */}
-                {/* "Points can only be used within the company's services and cannot be converted to cash or used on external platforms.
-Transfers or transactions between members are only allowed within the company's system, and external distribution is prohibited."
-*/}
+
 
                 <div className="w-full flex flex-col gap-4 items-start justify-center">
                     <div className="flex flex-row gap-2 items-center justify-start">
@@ -842,7 +838,11 @@ Transfers or transactions between members are only allowed within the company's 
                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                         {/* text */}
                         <div className="text-sm text-zinc-400">
-                            Points can only be used within the company's services and cannot be converted to cash or used on external platforms.
+
+                            {/*Points can only be used within the company's services and cannot be converted to cash or used on external platforms.*/}
+                            {/* `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` */}
+                            Points can only be used within the company&apos;s services and cannot be converted to cash or used on external platforms.
+                        
                         </div>
                     </div>
                     <div className="flex flex-row gap-2 items-center justify-start">
@@ -850,7 +850,9 @@ Transfers or transactions between members are only allowed within the company's 
                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                         {/* text */}
                         <div className="text-sm text-zinc-400">
-                            Transfers or transactions between members are only allowed within the company's system, and external distribution is prohibited.
+                            {/*Transfers or transactions between members are only allowed within the company's system, and external distribution is prohibited.*/}
+
+                            Traansfers or transactions between members are only allowed within the company&apos;s system, and external distribution is prohibited.
                         </div>
                     </div>
                 </div>
@@ -983,7 +985,7 @@ Transfers or transactions between members are only allowed within the company's 
                                     <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                         <input
                                             disabled={sending}
-                                            className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-6xl font-semibold"
+                                            className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
                                             placeholder="0"
                                             type='number'
 
@@ -1222,7 +1224,12 @@ Transfers or transactions between members are only allowed within the company's 
                                 </thead>
                                 <tbody>
                                     {transfers.map((transfer, index) => (
-                                        <tr key={index}>
+                                        <tr
+                                            key={index}
+                                            className="hover:bg-zinc-800
+                                                transition-colors duration-100
+                                            "
+                                        >
                                             <td className="p-2 text-lg text-zinc-800 font-semibold">
                                                 {transfer.sendOrReceive === "send" ? "-" : "+"}
                                             </td>
