@@ -722,7 +722,7 @@ function ProfilePage() {
 
                 //console.log(result);
 
-                setBalance( Number(result) / 10 ** 6 );
+                setBalance( Number(result) / 10 ** 18 );
 
             } else {
 
@@ -906,7 +906,7 @@ function ProfilePage() {
                                         <input
                                             disabled={sending}
                                             className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-6xl font-semibold"
-                                            placeholder="0.00"
+                                            placeholder="0"
                                             type='number'
 
                                             value={
@@ -1160,7 +1160,7 @@ function ProfilePage() {
                                                     fontFamily: 'monospace',
                                                 }}
                                             >
-                                                {Number(transfer.transferData.value / 10 ** 6).toFixed(6)}
+                                                {Number(transfer.transferData.value / 10 ** 18).toFixed(0)}
                                             </td>
                                             <td className="p-2 text-xs text-zinc-800 font-semibold text-right">
                                            
