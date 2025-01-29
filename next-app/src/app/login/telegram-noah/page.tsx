@@ -97,7 +97,7 @@ function TelegramLoginContent() {
 
             <div className="flex flex-col gap-2 items-center justify-center">
 
-                <div className="text-2xl
+                <div className="text-lg
                 text-yellow-400
                 font-semibold">
                     로그인 중입니다. 잠시만 기다려주세요.
