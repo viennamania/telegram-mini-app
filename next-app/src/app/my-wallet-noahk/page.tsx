@@ -1264,12 +1264,13 @@ function ProfilePage() {
                                         <tr
                                             key={index}
                                             className="
-                                            bg-zinc-700
-                                            hover:bg-zinc-800
+                                                border-b border-gray-300
+                                                hover:bg-zinc-800
                                                 transition-colors duration-100
                                             "
                                         >
-                                            <td className="p-2 text-lg text-zinc-800 font-semibold">
+                                            <td
+                                            className="p-2 text-lg text-zinc-800 font-semibold">
                                                 {transfer.sendOrReceive === "send" ? "-" : "+"}
                                             </td>
                                             {transfer.sendOrReceive === "send" ? (
