@@ -814,6 +814,28 @@ feature.command('start', async (ctx) => {
 
 
 
+  /*
+  {
+    message_id: 1043,
+    from: {
+      id: 441516803,
+      is_bot: false,
+      first_name: 'Wayne',
+      last_name: 'Park',
+      username: 'waynepark',
+      language_code: 'ko'
+    },
+    chat: {
+      id: -4641266454,
+      title: '복권방',
+      type: 'group',
+      all_members_are_administrators: true
+    },
+    date: 1738135270,
+    text: '/start@ppump_songpa_bot',
+    entities: [ { offset: 0, length: 23, type: 'bot_command' } ]
+  }
+  */
 
 // public chat
 const publicChat = composer.chatType('group');
@@ -824,6 +846,7 @@ publicChat.use((ctx, next) => {
 
   console.log('public chat');
   console.log('ctx.message', ctx.message);
+
 
 
   if (!ctx.message?.text?.startsWith('/')) {
@@ -853,6 +876,86 @@ publicChat.use((ctx, next) => {
 
   return next()
 })
+
+
+
+
+
+
+// show game
+publicChat.command('game', async (ctx) => {
+
+  const text = "복권방";
+  const urlGame = "https://naver.com";
+
+  const keyboard = new InlineKeyboard()
+    .webApp('💰 게임하러가기', urlGame)
+    // english
+    //.webApp('💰 Go to the game', urlGame)
+
+
+  return ctx.reply(
+    '🚫 준비중입니다.'
+  )
+
+
+})
+
+
+publicChat.command('wallet', async (ctx) => {
+
+  const text = "복권방";
+  const urlGame = "https://naver.com";
+
+  const keyboard = new InlineKeyboard()
+    .webApp('💰 게임하러가기', urlGame)
+    // english
+    //.webApp('💰 Go to the game', urlGame)
+
+
+  return ctx.reply(
+    '🚫 준비중입니다.'
+  )
+
+
+})
+
+publicChat.command('otc', async (ctx) => {
+
+  const text = "복권방";
+  const urlGame = "https://naver.com";
+
+  const keyboard = new InlineKeyboard()
+    .webApp('💰 게임하러가기', urlGame)
+    // english
+    //.webApp('💰 Go to the game', urlGame)
+
+
+  return ctx.reply(
+    '🚫 준비중입니다.'
+  )
+
+
+})
+
+publicChat.command('start', async (ctx) => {
+
+  const text = "복권방";
+  const urlGame = "https://naver.com";
+
+  const keyboard = new InlineKeyboard()
+    .webApp('💰 게임하러가기', urlGame)
+    // english
+    //.webApp('💰 Go to the game', urlGame)
+
+
+  return ctx.reply(
+    '🚫 준비중입니다.'
+  )
+
+
+})
+
 
 
 

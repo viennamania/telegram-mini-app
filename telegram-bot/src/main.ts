@@ -790,6 +790,10 @@ async function sendMessages() {
         // send video to multiple users
 
 
+
+        // send to Group
+        //await botInstance.api.sendMessage(
+
      
 
 
