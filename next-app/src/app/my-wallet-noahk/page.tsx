@@ -916,8 +916,9 @@ function ProfilePage() {
                                 
                             </div>
                         ) : (
-                            <p className="text-sm text-zinc-400">
-                                연결된 지갑이 없습니다. 지갑을 연결해 주세요.
+                            <p className="text-sm text-zinc-800">
+                                로그인 후 지갑주소가 표시됩니다.<br />
+                                창을 닫고 메뉴에서 지갑을 다시 시작해주세요.
                             </p>
                         )}      
                     </div>
@@ -1288,7 +1289,7 @@ function ProfilePage() {
                                             >
                                                 {
                                                     //Number(transfer.transferData.value / 10 ** 18).toFixed(0)
-                                                    Number(transfer.transferData.value).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                                    Number(transfer.transferData.value / 10 ** 18).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                                 }
 
                                             </td>
