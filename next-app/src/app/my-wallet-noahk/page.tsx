@@ -95,7 +95,7 @@ function ProfilePage() {
     const address = account?.address;
 
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -1013,7 +1013,8 @@ function ProfilePage() {
 
                                     <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                         
-                                        <div className="w-full flex flex-row gap-2 items-center justify-between">
+                                        <div className="w-full flex flex-col gap-2 items-end justify-between">
+
                                             <input
                                                 disabled={sending}
                                                 className="flex p-2 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
@@ -1244,9 +1245,10 @@ function ProfilePage() {
                     {/* table view */}
                     {/* if transfers.sendReceive === send, then display "보내기" */}
                     {/* if transfers.sendReceive === receive, then display "받기" */}
-                    
+
                     {loadingTransfers && (
-                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                        <div className="w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
+                            bg-yellow-500 bg-opacity-50">
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                 거래내역 로딩중...
                             </div>
@@ -1256,9 +1258,14 @@ function ProfilePage() {
                     {transfers?.length > 0 && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
                             bg-yellow-500 bg-opacity-50'>
-                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                거래내역
+                            
+                            <div className="flex flex-row gap-2 items-center justify-between">
+                                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                <span className="text-lg font-semibold">
+                                    거래내역
+                                </span>
                             </div>
+                            
 
                             <table className="w-full">
                                 <thead>
