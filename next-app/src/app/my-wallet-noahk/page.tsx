@@ -1011,13 +1011,17 @@ function ProfilePage() {
 
                                     </div>
 
-                                    <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
+                                    <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                         
                                         <div className="w-full flex flex-col gap-2 items-end justify-between">
 
                                             <input
                                                 disabled={sending}
-                                                className="flex p-2 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
+                                                
+                                                //className="flex p-2 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
+
+                                                className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
+
                                                 placeholder="0"
                                                 type='number'
 
