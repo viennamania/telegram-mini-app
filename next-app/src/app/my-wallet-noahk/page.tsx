@@ -966,8 +966,16 @@ function ProfilePage() {
                                     <div className="flex flex-row gap-2 items-center justify-between">
 
                                         <span className="p-2 text-green-500 text-4xl font-semibold"> 
-                                            {
-                                                Number(balance).toFixed(0)
+                                            {// 3 ditit , comma separated, not currency
+
+                                                //Number(balance).toFixed(0)
+
+                                                Number(balance).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+
+
+
+
                                             }
                                         </span>
                                         <span className="p-2 text-gray-500 text-lg font-semibold">NOAHK 포인트</span>
@@ -983,53 +991,75 @@ function ProfilePage() {
                                         NOAHK 포인트 보내기
                                     </div>
                                     <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
-                                        <input
-                                            disabled={sending}
-                                            className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
-                                            placeholder="0"
-                                            type='number'
+                                        
+                                        <div className="flex flex-row gap-2 items-center justify-between">
+                                            <input
+                                                disabled={sending}
+                                                className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
+                                                placeholder="0"
+                                                type='number'
 
-                                            value={
+                                                value={
 
-                                                sendAmount
-                                                
-                                            }
-
-                                            onChange={(e) => {
-
-
-                                                if (isNaN(Number(e.target.value))) {
-                                                    alert('숫자만 입력해주세요');
-                                                    return;
+                                                    sendAmount
+                                                    
                                                 }
 
-                                                if (Number(e.target.value) < 0) {
-                                                    alert('0보다 작은 숫자는 입력할 수 없습니다');
-                                                    return;
-                                                }
+                                                onChange={(e) => {
+
+
+                                                    if (isNaN(Number(e.target.value))) {
+                                                        alert('숫자만 입력해주세요');
+                                                        return;
+                                                    }
+
+                                                    if (Number(e.target.value) < 0) {
+                                                        alert('0보다 작은 숫자는 입력할 수 없습니다');
+                                                        return;
+                                                    }
 
 
 
-                                                //setSendAmount(Number(e.target.value));
+                                                    //setSendAmount(Number(e.target.value));
 
-                                                // check floating point is less than 6
+                                                    // check floating point is less than 6
 
-                                                // check input number less than balance
+                                                    // check input number less than balance
 
-                                                if (Number(e.target.value) > balance) {
-                                                    alert('잔액보다 많은 금액을 보낼 수 없습니다');
-                                                    return;
-                                                }
+                                                    if (Number(e.target.value) > balance) {
+                                                        alert('잔액보다 많은 금액을 보낼 수 없습니다');
+                                                        return;
+                                                    }
 
 
-                                                setSendAmount(
-                                                    //parseFloat(e.target.value)
-                                                    //Number(e.target.value)
-                                                    e.target.value
-                                                );
+                                                    setSendAmount(
+                                                        //parseFloat(e.target.value)
+                                                        //Number(e.target.value)
+                                                        e.target.value
+                                                    );
 
-                                            }}
-                                        />
+                                                }}
+                                            />
+
+                                            {/* balance max button */}
+                                            <button
+                                                disabled={sending}
+                                                onClick={() => {
+                                                    setSendAmount(balance.toString());
+                                                }}
+                                                className="p-2 bg-green-500 text-zinc-100 rounded"
+                                            >
+                                                <div className="flex flex-row gap-2 items-center justify-between">
+                                                    <span className="text-lg font-semibold">
+                                                        최대
+                                                    </span>
+                                                </div>
+                                            </button>
+
+
+                                        </div>
+
+
                                         <input
                                             disabled={sending}
                                             className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-sm font-semibold"
