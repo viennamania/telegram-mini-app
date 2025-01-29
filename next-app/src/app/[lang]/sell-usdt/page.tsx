@@ -404,7 +404,8 @@ export default function Index({ params }: any) {
     
     const [sellOrders, setSellOrders] = useState<SellOrder[]>([]);
 
-    const [searchMyOrders, setSearchMyOrders] = useState(false);
+    //const [searchMyOrders, setSearchMyOrders] = useState(false);
+    const [searchMyOrders, setSearchMyOrders] = useState(true);
 
 
     useEffect(() => {
@@ -1237,6 +1238,8 @@ export default function Index({ params }: any) {
 
 
                     <div className="ml-5 flex flex-col gap-2 items-start justify-end">
+                      
+                      {/*
                       <div className="flex flex-row items-center gap-2">
                         <Image
                           src={user?.avatar || "/profile-default.png"}
@@ -1253,7 +1256,11 @@ export default function Index({ params }: any) {
                         />
                         <div className="text-lg font-semibold text-white ">{user?.nickname}</div>
                       </div>
+                      */}
+
+
                       {/* checkbox for search my trades */}
+                      {/*
                       <div className="flex flex-row items-center gap-2">
                         <input
                           disabled={!address}
@@ -1266,6 +1273,8 @@ export default function Index({ params }: any) {
                           {Search_my_trades}
                         </label>
                       </div>
+                      */}
+
                     </div>
 
 
@@ -1274,6 +1283,21 @@ export default function Index({ params }: any) {
 
 
                   <div className=" w-full grid gap-4 xl:grid-cols-3 justify-center">
+
+                    {sellOrders.length === 0 && (
+                      <div className="w-full flex flex-col items-center justify-center gap-4">
+                        <Image
+                          src="/no-data.png"
+                          alt="No Data"
+                          width={100}
+                          height={100}
+                        />
+                        <div className="text-xl font-semibold text-gray-400">
+                          퍈매주문한 내역이 없습니다.
+                        </div>
+                      </div>
+                    )}
+
 
                     {sellOrders.map((item, index) => (
 
