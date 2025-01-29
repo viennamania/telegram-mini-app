@@ -1087,6 +1087,7 @@ function ProfilePage() {
 
                     {/* 거래 내역 보기 */}
                     {/* polygon scan */}
+                    {/*}
                     <div className="w-full flex flex-row gap-2 items-center justify-end">
                         <Button
                             onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}/tokentxns#tokentxns`)}
@@ -1109,6 +1110,7 @@ function ProfilePage() {
 
                         </Button>
                     </div>
+                    */}
 
 
 
