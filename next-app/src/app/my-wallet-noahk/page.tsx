@@ -813,7 +813,10 @@ function ProfilePage() {
 
 
 
-                <div className="w-full flex flex-col gap-4 items-start justify-center">
+                <div className="w-full flex flex-col gap-4 items-start justify-center
+                    bg-zinc-800 bg-opacity-90
+                    p-4 rounded-lg
+                    mt-4">
                     <div className="flex flex-row gap-2 items-center justify-start">
                         {/* dot */}
                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
@@ -832,7 +835,10 @@ function ProfilePage() {
                     </div>
                 </div>
                 {/* english */}
-                <div className="w-full flex flex-col gap-4 items-start justify-center">
+                <div className="w-full flex flex-col gap-4 items-start justify-center
+                    bg-zinc-800 bg-opacity-90
+                    p-4 rounded-lg
+                    mt-4">
                     <div className="flex flex-row gap-2 items-center justify-start">
                         {/* dot */}
                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
