@@ -753,7 +753,7 @@ function ProfilePage() {
         <main
             className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto"
             style={{
-                backgroundImage: "url('/mobile-background-profile.jpg')",
+                backgroundImage: "url('/mobile-background-profile2.avif')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
