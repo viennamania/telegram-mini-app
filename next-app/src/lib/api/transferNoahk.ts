@@ -79,10 +79,16 @@ export async function insertOne(data: any) {
     */
     const userFromAddress = await collectionUsers.findOne(
         { walletAddress: data.fromAddress },
-        { projection: { telegramId: 1, walletAddress: 1 } }
+        { projection: {
+                nickname: 1,
+                telegramId: 1,
+                walletAddress: 1,
+                center: 1
+            }
+        }
     )
 
-    if (userFromAddress && userFromAddress.walletAddress) {
+    if (userFromAddress) {
         
         await collectionUserTransfers.insertOne(
         {
@@ -99,7 +105,13 @@ export async function insertOne(data: any) {
 
     const userToAddress = await collectionUsers.findOne(
         { walletAddress: data.toAddress },
-        { projection: { telegramId: 1, walletAddress: 1, center: 1 } }
+        { projection: {
+                nickname: 1,
+                telegramId: 1,
+                walletAddress: 1,
+                center: 1
+            }
+        }
     )
 
     if (userToAddress && userToAddress.walletAddress) {

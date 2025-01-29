@@ -95,7 +95,7 @@ function ProfilePage() {
     const address = account?.address;
 
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -994,15 +994,29 @@ function ProfilePage() {
 
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
                                     bg-yellow-500 bg-opacity-50'>
+                                    
+                                    {/*
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                         NOAHK 포인트 보내기
                                     </div>
+                                    */}
+                                    <div className="flex flex-row gap-2 items-center justify-between">
+
+                                        {/* dot */}
+                                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                        {/* text */}                             
+                                        <span className="text-lg font-semibold">
+                                            NOAHK 포인트 보내기
+                                        </span>
+
+                                    </div>
+
                                     <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                         
-                                        <div className="flex flex-row gap-2 items-center justify-between">
+                                        <div className="w-full flex flex-row gap-2 items-center justify-between">
                                             <input
                                                 disabled={sending}
-                                                className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
+                                                className="flex p-2 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
                                                 placeholder="0"
                                                 type='number'
 
@@ -1054,13 +1068,11 @@ function ProfilePage() {
                                                 onClick={() => {
                                                     setSendAmount(balance.toString());
                                                 }}
-                                                className="p-2 bg-green-500 text-zinc-100 rounded"
-                                            >
-                                                <div className="flex flex-row gap-2 items-center justify-between">
-                                                    <span className="text-lg font-semibold">
-                                                        최대
-                                                    </span>
-                                                </div>
+                                                className="flex p-2 bg-blue-500 text-zinc-100 rounded">
+                                            
+                                                <span className="text-lg font-semibold">
+                                                    최대
+                                                </span>
                                             </button>
 
 
@@ -1264,7 +1276,7 @@ function ProfilePage() {
                                         <tr
                                             key={index}
                                             className="
-                                                border-b border-gray-300
+                                                border-b border-gray-800
                                                 hover:bg-zinc-800
                                                 transition-colors duration-100
                                             "

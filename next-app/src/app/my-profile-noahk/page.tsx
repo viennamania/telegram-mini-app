@@ -73,7 +73,7 @@ function ProfilePage() {
 
     const center = searchParams.get("center");
     
-    const telegramId = searchParams.get("telegramId");
+    ///const telegramId = searchParams.get("telegramId");
 
 
 
@@ -91,11 +91,11 @@ function ProfilePage() {
 
 
 
-    const address = account?.address;
+    //const address = account?.address;
   
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
     ///const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
   
 
@@ -179,7 +179,7 @@ function ProfilePage() {
 
     const [isValideTelegramId, setIsValideTelegramId] = useState(false);
 
-    ///const [telegramId, setTelegramId] = useState("");
+    const [telegramId, setTelegramId] = useState("");
 
 
     useEffect(() => {
@@ -196,7 +196,7 @@ function ProfilePage() {
 
             const data = await response.json();
 
-            ///console.log("data", data);
+            //console.log("data", data);
 
             if (data.result) {
                 setNickname(data.result.nickname);
@@ -218,10 +218,10 @@ function ProfilePage() {
                 if (data.result?.centerOwner) {
                     setIsCenterOwner(true);
                 }
-            
-                ///setTelegramId(data.result.telegramId);
 
-                if (data.result.telegramId) {
+
+                if (data.result.telegramId) {            
+                    setTelegramId(data.result.telegramId);
                     setIsValideTelegramId(true);
                 }
 
@@ -250,10 +250,10 @@ function ProfilePage() {
 
         };
 
-        address && center &&
+        address &&
         fetchData();
 
-    }, [address, center]);
+    }, [address]);
     
 
 
@@ -545,9 +545,8 @@ function ProfilePage() {
 
 
    /* my NFTs */
+   /*
    const [myNfts, setMyNfts] = useState([] as any[]);
-
-
    
    useEffect(() => {
 
@@ -556,36 +555,6 @@ function ProfilePage() {
 
             
            try {
-
-                /*
-                const contract = getContract({
-                     client,
-                     chain: polygon,
-                     address: erc721ContractAddress,
-                });
-
-
-                
-                const nfts = await getOwnedNFTs({
-                    contract: contract,
-                    owner: address as string,
-                });
-
-                console.log("nfts=======", nfts);
-
-                setMyNfts( nfts );
-                */
-
-                /*
-                setMyNfts([
-                    {
-                         name: "AI Agent",
-                         description: "This is AI Agent",
-                         image: "https://owinwallet.com/logo-aiagent.png",
-                    },
-                ]);
-                */
-
 
                 // api /api/agent/getAgentNFTByWalletAddress
 
@@ -630,193 +599,8 @@ function ProfilePage() {
 
    }
    , [ address ]);
-   
+   */
 
-
-   console.log("myNfts", myNfts);
-
-
-
-
-    const [agentName, setAgentName] = useState("");
-    const [agentDescription, setAgentDescription] = useState("");
-
-
-    const [agentImage, setAgentImage] = useState("https://owinwallet.com/logo-aiagent.png");
-    const [ganeratingAgentImage, setGeneratingAgentImage] = useState(false);
-
-
-    const [mintingAgentNft, setMintingAgentNft] = useState(false);
-    const [messageMintingAgentNft, setMessageMintingAgentNft] = useState("");
-    const mintAgentNft = async () => {
-
-        if (mintingAgentNft) {
-            //toast.error('이미 실행중입니다');
-            setMessageMintingAgentNft('이미 실행중입니다');
-            return;
-        }
-
-        if (!address) {
-            //toast.error('지갑을 먼저 연결해주세요');
-            setMessageMintingAgentNft('지갑을 먼저 연결해주세요');
-            return;
-        }
-
-        if (!erc721ContractAddress) {
-            //toast.error('AI 에이전트 계약주소를 먼저 생성해주세요');
-            setMessageMintingAgentNft('AI 에이전트 계약주소를 먼저 생성해주세요');
-            return;
-        }
-
-        if (agentName.length < 5 || agentName.length > 15) {
-            //toast.error('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
-            setMessageMintingAgentNft('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
-            return;
-        }
-
-        if (agentDescription.length < 5 || agentDescription.length > 100) {
-            //toast.error('에이전트 설명은 5자 이상 100자 이하로 입력해주세요');
-            setMessageMintingAgentNft('에이전트 설명은 5자 이상 100자 이하로 입력해주세요');
-            return;
-        }
-
-        if (!agentImage) {
-            //toast.error('에이전트 이미지를 선택해주세요');
-            setMessageMintingAgentNft('에이전트 이미지를 선택해주세요');
-            return;
-        }
-
-
-        setMessageMintingAgentNft('AI 에이전트 NFT 발행중입니다');
-
-
-        setMintingAgentNft(true);
-
-        try {
-
-
-            setGeneratingAgentImage(true);
-
-
-            setMessageMintingAgentNft('AI 에이전트 이미지 생성중입니다');
-
-            // genrate image from api
-            // /api/ai/generateImage
-
-            const responseGenerateImage = await fetch("/api/ai/generateImageAgent", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    englishPrompt: "",
-                }),
-            });
-
-            const dataGenerateImage = await responseGenerateImage.json();
-
-            const imageUrl = dataGenerateImage?.result?.imageUrl;
-        
-            if (!imageUrl) {
-
-                setGeneratingAgentImage(false);
-
-                throw new Error('Failed to generate image');
-            }
-
-
-            setGeneratingAgentImage(false);
-            setAgentImage(imageUrl);
-
-
-            setMessageMintingAgentNft('AI 에이전트 NFT 발행중입니다');
-
-            const contract = getContract({
-                client,
-                chain: polygon,
-                address: erc721ContractAddress,
-
-              });
-
-
-            const transaction = mintTo({
-                contract: contract,
-                to: address as string,
-                nft: {
-                    name: agentName,
-                    description: agentDescription,
-
-                    ////image: agentImage,
-                    image: imageUrl,
-
-                },
-            });
-
-            //await sendTransaction({ transaction, account: activeAccount as any });
-
-
-
-            //setActiveAccount(smartConnectWallet);
-
-            const transactionResult = await sendAndConfirmTransaction({
-                transaction: transaction,
-                account: account as any,
-
-                ///////account: smartConnectWallet as any,
-            });
-
-            //console.log("transactionResult", transactionResult);
-
-
-            if (!transactionResult) {
-                throw new Error('AI 에이전트 NFT 발행 실패. 관리자에게 문의해주세요');
-            }
-
-            setMessageMintingAgentNft('AI 에이전트 NFT 발행 완료');
-
-
-            // fetch the NFTs again
-            const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    walletAddress: address,
-                    //erc721ContractAddress: erc721ContractAddress,
-                }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.result) {
-                    setMyNfts(data.result.ownedNfts);
-                } else {
-                    setMyNfts([]);
-                }
-            }
-
-            setAgentName("");
-            setAgentDescription("");
-
-            ///toast.success('AI 에이전트 NFT 발행 완료');
-
-
-
-
-        } catch (error) {
-            console.error("mintAgentNft error", error);
-
-            ///toast.error('AI 에이전트 NFT 발행 실패');
-
-            setMessageMintingAgentNft('AI 에이전트 NFT 발행 실패');
-        }
-
-        setMintingAgentNft(false);
-
-        setAgentImage("https://owinwallet.com/logo-aiagent.png");
-
-    }
 
 
 
@@ -860,9 +644,20 @@ function ProfilePage() {
 
                 <div className="flex flex-col items-start justify-center space-y-4">
 
-                    <div className="flex justify-center mt-5">
+                   <div className="flex justify-center mt-5">
                         {address ? (
                             <div className="flex flex-row gap-2 items-center justify-between">
+
+                                <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
+                                    <Image
+                                    src="/icon-wallet-live.gif"
+                                    alt="Wallet"
+                                    width={50}
+                                    height={25}
+                                    className="rounded"
+                                    />
+                                </div>
+
                                 
                                 <Button
                                     onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
@@ -879,6 +674,20 @@ function ProfilePage() {
                                 >
                                     복사
                                 </Button>
+
+                                {/* polygon scan */}
+                                <Button
+                                    onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
+                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                                >
+                                    <Image
+                                        src="/logo-polygon.png"
+                                        alt="Polygon"
+                                        width={20}
+                                        height={20}
+                                        className="rounded"
+                                    />
+                                </Button>
                                 
                             </div>
                         ) : (
@@ -892,10 +701,17 @@ function ProfilePage() {
 
 
                     {userCode && isValideTelegramId && (
-                        <div className='w-full flex flex-row gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                텔레그램아이디
+                        <div className='w-full flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
+                        bg-zinc-800 bg-opacity-90
+                        '>
+                            <div className="flex flex-row gap-2 items-center justify-between">
+                                {/* dot */}
+                                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                <span className="text-sm font-semibold text-gray-200">
+                                    텔레그램아이디
+                                </span>
                             </div>
+
                             <div className='flex flex-row gap-2 items-center justify-between'>
                                 <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
                                     {telegramId}
@@ -914,7 +730,7 @@ function ProfilePage() {
 
                             {/*}
                             {isCenterOwner && (
-                                <span className='text-xs font-semibold text-green-500'>
+                                <span className='text-sm font-semibold text-green-500'>
                                     센터 소유자 입니다.
                                 </span>
                             )}
@@ -923,47 +739,19 @@ function ProfilePage() {
                         </div>
                     )}
 
-                    {userCode && !isValideTelegramId && (
-                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                            <div className="flex flex-row gap-2 items-center justify-between">
-                                <span className='text-sm font-semibold text-gray-500'>
-                                    텔레그램아이디
-                                </span>
-                                <span className='text-lg font-semibold text-blue-500'>
-                                    {telegramId}
-                                </span>
-                            </div>
-
-                            <button
-                                onClick={() => {
-                                    setUserTelegramId();
-                                }}
-                                disabled={loadingSetUserTelegramId}
-                                className={`
-                                    ${loadingSetUserTelegramId ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
-                                    p-2 rounded-lg text-sm font-semibold
-                                    w-64 mt-5
-                                `}
-                            >
-                                {loadingSetUserTelegramId ? "텔레그램 ID 저장중..." : "텔레그램 ID 저장하기"}
-                            </button>
-    
-                        </div>
-                    )}
-
 
 
                     {/* 회원아이디을 저장하면 나의 소속 센터 봇가 설정됩니다 */}
+                    {/*
                     {address && !userCenter && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                 회원아이디을 저장하면 나의 소속 센터 봇이 설정됩니다
                             </div>
-                            <span className='text-xs font-semibold text-gray-500'>
+                            <span className='text-sm font-semibold text-gray-500'>
                                 회원아이디는 영문 소문자와 숫자로 5자 이상 10자 이하로 입력해주세요.
                             </span>
 
-                            {/* center */}
                             <div className="flex flex-row gap-2 items-center justify-between">
                                 <span className='text-sm font-semibold text-gray-500'>
                                     나의 소속 센터 봇:
@@ -975,6 +763,7 @@ function ProfilePage() {
 
                         </div>
                     )}
+                    */}
 
                     
 
@@ -982,10 +771,16 @@ function ProfilePage() {
 
 
                         {address && userCode && (
-                            <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
 
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    회원아이디
+                            <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
+                            bg-zinc-800 bg-opacity-90
+                            '>
+                                <div className="flex flex-row gap-2 items-center justify-between">
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <span className="text-sm font-semibold text-gray-200">
+                                        회원아이디
+                                    </span>
                                 </div>
 
                                 <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
@@ -1032,13 +827,18 @@ function ProfilePage() {
                         { (address && (nicknameEdit || !userCode)) && (
                             <div className=' flex flex-col xl:flex-row gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
 
-                                <div
-                                    className="bg-green-500 text-sm text-zinc-100 p-2 rounded"
-                                >
-                                    {!userCode ? "회원아이디 설정" :
-                                        nicknameEdit ? "수정할 내 회원아이디" : "새로운 회원아이디"
-                                    }
+                                <div className="flex flex-row gap-2 items-center justify-between">
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <span
+                                        className="text-sm font-semibold text-gray-500"
+                                    >
+                                        {!userCode ? "회원아이디 설정" :
+                                            nicknameEdit ? "수정할 내 회원아이디" : "새로운 회원아이디"
+                                        }
+                                    </span>
                                 </div>
+
 
                                 <div className='flex flex-col gap-2 items-start justify-between'>
                                     <input
@@ -1074,7 +874,7 @@ function ProfilePage() {
 
                                     {editedNickname && isNicknameDuplicate && (
                                         <div className='flex flex-row gap-2 items-center justify-between'>
-                                            <span className='text-xs font-semibold text-red-500'>
+                                            <span className='text-sm font-semibold text-red-500'>
                                                 이미 사용중인 회원아이디입니다.
                                             </span>
                                         </div>
@@ -1085,7 +885,7 @@ function ProfilePage() {
                                     && editedNickname.length >= 5
                                     && (
                                         <div className='flex flex-row gap-2 items-center justify-between'>
-                                            <span className='text-xs font-semibold text-green-500'>
+                                            <span className='text-sm font-semibold text-green-500'>
                                                 사용가능한 회원아이디입니다.
                                             </span>
                                         </div>
@@ -1094,7 +894,7 @@ function ProfilePage() {
 
 
                                 <div className='flex flex-row gap-2 items-center justify-between'>
-                                    <span className='text-xs font-semibold'>
+                                    <span className='text-sm font-semibold'>
                                         회원아이디은 5자 이상 10자 이하로 입력해주세요
                                     </span>
                                 </div>
@@ -1216,7 +1016,7 @@ function Header(
                         "/tbot?center=" + center + "agent=" + agent + "&tokenId=" + tokenId
                     );
                 }}
-                className="text-gray-600 hover:underline text-xs xl:text-lg"
+                className="text-gray-600 hover:underline text-sm xl:text-lg"
                 >
                 TBOT
                 </button>
@@ -1224,7 +1024,7 @@ function Header(
                 onClick={() => {
                     router.push('/profile?center=' + center + 'agent=' + agent + '&tokenId=' + tokenId);
                 }}
-                className="text-gray-600 hover:underline text-xs xl:text-lg"
+                className="text-gray-600 hover:underline text-sm xl:text-lg"
                 >
                 SETTINGS
                 </button>
