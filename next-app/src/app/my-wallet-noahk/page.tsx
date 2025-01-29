@@ -595,12 +595,14 @@ function ProfilePage() {
 
     const [loadingTransfers, setLoadingTransfers] = useState(false);
     const [transfers, setTransfers] = useState([] as any[]);
+
+    /*
     useEffect(() => {
         
         const getTransfers = async () => {
 
             setLoadingTransfers(true);
-
+            
             const response = await fetch("/api/wallet/getTransfersByWalletAddress", {
                 method: "POST",
                 headers: {
@@ -638,6 +640,7 @@ function ProfilePage() {
         }
 
     } , [address]);
+    */
 
 
 
