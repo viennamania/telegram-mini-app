@@ -1262,7 +1262,9 @@ function ProfilePage() {
                                     {transfers.map((transfer, index) => (
                                         <tr
                                             key={index}
-                                            className="hover:bg-zinc-800
+                                            className="
+                                            bg-zinc-700
+                                            hover:bg-zinc-800
                                                 transition-colors duration-100
                                             "
                                         >
@@ -1284,7 +1286,11 @@ function ProfilePage() {
                                                     fontFamily: 'monospace',
                                                 }}
                                             >
-                                                {Number(transfer.transferData.value / 10 ** 18).toFixed(0)}
+                                                {
+                                                    //Number(transfer.transferData.value / 10 ** 18).toFixed(0)
+                                                    Number(transfer.transferData.value).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                                }
+
                                             </td>
                                             <td className="p-2 text-xs text-zinc-800 font-semibold text-right">
                                            
