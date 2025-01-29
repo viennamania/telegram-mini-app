@@ -901,7 +901,8 @@ function ProfilePage() {
 
                                 {/* send NOAHK 포인트 */}
 
-                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
+                                    bg-zinc-800'>
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                         NOAHK 포인트 보내기
                                     </div>
@@ -1128,7 +1129,8 @@ function ProfilePage() {
                     )}
 
                     {transfers?.length > 0 && (
-                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
+                            bg-zinc-800'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                 거래내역
                             </div>
