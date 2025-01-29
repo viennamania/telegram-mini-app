@@ -893,7 +893,7 @@ function ProfilePage() {
                     {userCode && isValideTelegramId && (
                         <div className='w-full flex flex-row gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                매직아이디(MID)
+                                텔레그램아이디
                             </div>
                             <div className='flex flex-row gap-2 items-center justify-between'>
                                 <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
@@ -904,7 +904,7 @@ function ProfilePage() {
                             <button
                                 onClick={() => {
                                     navigator.clipboard.writeText(telegramId as string);
-                                    alert('매직아이디가 복사되었습니다.');
+                                    alert('텔레그램아이디가 복사되었습니다.');
                                 }}
                                 className="p-2 bg-blue-500 text-zinc-100 rounded"
                             >
@@ -926,7 +926,7 @@ function ProfilePage() {
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                             <div className="flex flex-row gap-2 items-center justify-between">
                                 <span className='text-sm font-semibold text-gray-500'>
-                                    매직아이디(MID)
+                                    텔레그램아이디
                                 </span>
                                 <span className='text-lg font-semibold text-blue-500'>
                                     {telegramId}
