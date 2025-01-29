@@ -891,7 +891,7 @@ function ProfilePage() {
 
                                         <span className="p-2 text-green-500 text-4xl font-semibold"> 
                                             {
-                                                Number(balance).toFixed(6)
+                                                Number(balance).toFixed(0)
                                             }
                                         </span>
                                         <span className="p-2 text-gray-500 text-lg font-semibold">NOAHK 포인트</span>
