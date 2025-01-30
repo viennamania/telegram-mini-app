@@ -77,6 +77,10 @@ export async function insertOne(data: any) {
         { $project: { _id: 1, telegramId: 1, walletAddress: 1 } }
     ])
     */
+
+
+    let sendOrReceive = "send";
+
     const userFromAddress = await collectionUsers.findOne(
         { walletAddress: data.fromAddress },
         { projection: {
@@ -91,13 +95,16 @@ export async function insertOne(data: any) {
 
     if (userFromAddress) {
         
+        /*
         await collectionUserTransfers.insertOne(
         {
             user: userFromAddress,
             sendOrReceive: "send",
             transferData: transferData,
-        }
-        );
+        } );
+        */
+
+        sendOrReceive = "send";
 
 
     }
@@ -116,34 +123,62 @@ export async function insertOne(data: any) {
         }
     )
 
-    if (userToAddress && userToAddress.walletAddress) {
+    if (userToAddress) {
 
+        /*
         const response = await collectionUserTransfers.insertOne(
         {
             user: userToAddress,
             sendOrReceive: "receive",
             transferData: transferData,
         } );
+        */
+        sendOrReceive = "receive";
+    }
 
 
+    let response = null;
 
-        if (response) {
+    if (sendOrReceive === "send") {
 
-        
-            const walletAddress = userToAddress.walletAddress;
-            const telegramId = userToAddress.telegramId;
-            const center = userToAddress.center;
+        const response = await collectionUserTransfers.insertOne(
+        {
+            user: userFromAddress,
+            otherUser: userToAddress,
 
+            sendOrReceive: sendOrReceive,
+            transferData: transferData,
+        } );
+
+
+    } else if (sendOrReceive === "receive") {
+
+        const response = await collectionUserTransfers.insertOne(
+        {
+            user: userToAddress,
+            otherUser: userFromAddress,
+
+            sendOrReceive: sendOrReceive,
+            transferData: transferData,
+        } );
+
+        if (response ) {
+
+    
+            const walletAddress = userToAddress?.walletAddress;
+            const telegramId = userToAddress?.telegramId;
+            const center = userToAddress?.center;
+    
             if (telegramId) {
-
+    
                 // divide by 1e18
                 const amount = parseFloat(data.value) / 1e18;
-
+    
                 ///const message = "You have received " + Number(amount).toFixed(6) + " USDT";
                 const message = Number(amount).toFixed(0) + " NOAH-K 포인트를 받았습니다";
-
+    
                 const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
-
+    
                 await collectionTelegramMessages.insertOne(
                 {
                     center: center,
@@ -154,16 +189,25 @@ export async function insertOne(data: any) {
                     timestamp: data.timestamp,
                 }
                 );
-
+    
             }
 
         }
 
-        
 
 
         
     }
+
+
+
+
+
+        
+
+
+        
+   
 
 
 
