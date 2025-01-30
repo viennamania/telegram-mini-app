@@ -190,7 +190,7 @@ function ProfilePage() {
 
             setLoadingUser(true);
 
-            const response = await fetch("/api/user/getUser", {
+            const response = await fetch("/api/userNoahk/getUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -288,7 +288,7 @@ function ProfilePage() {
 
     const checkNicknameIsDuplicate = async ( nickname: string ) => {
 
-        const response = await fetch("/api/user/checkUserByNickname", {
+        const response = await fetch("/api/userNoahk/checkUserByNickname", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -342,7 +342,7 @@ function ProfilePage() {
         if (nicknameEdit) {
 
 
-            const response = await fetch("/api/user/updateUser", {
+            const response = await fetch("/api/userNoahk/updateUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -381,7 +381,7 @@ function ProfilePage() {
 
         } else {
 
-            const response = await fetch("/api/user/setUserVerified", {
+            const response = await fetch("/api/userNoahk/setUserVerified", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -429,7 +429,7 @@ function ProfilePage() {
         
         setLoadingSetUserTelegramId(true);
 
-        const response = await fetch("/api/user/updateUserTelegramId", {
+        const response = await fetch("/api/userNoahk/updateUserTelegramId", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -520,7 +520,7 @@ function ProfilePage() {
                 console.log("erc721ContractAddress", erc721ContractAddress);
 
                 // save the contract address to the database
-                // /api/user/updateUser
+                // /api/userNoahk/updateUser
                 // walletAddress, erc721ContractAddress
 
                 if (!erc721ContractAddress) {
@@ -528,7 +528,7 @@ function ProfilePage() {
                 }
 
 
-                const response = await fetch('/api/user/updateUserErc721Contract', {
+                const response = await fetch('/api/userNoahk/updateUserErc721Contract', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
