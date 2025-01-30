@@ -116,42 +116,45 @@ export async function insertOne(data: any) {
 
     if (userToAddress && userToAddress.walletAddress) {
 
-        await collectionUserTransfers.insertOne(
+        const response = await collectionUserTransfers.insertOne(
         {
             user: userToAddress,
             sendOrReceive: "receive",
             transferData: transferData,
-        }
-        );
+        } );
 
 
 
+        if (response) {
 
         
-        const telegramId = userToAddress.telegramId;
-        const center = userToAddress.center;
+            const telegramId = userToAddress.telegramId;
+            const center = userToAddress.center;
 
-        if (telegramId) {
+            if (telegramId) {
 
-            // divide by 1e18
-            const amount = parseFloat(data.value) / 1e18;
+                // divide by 1e18
+                const amount = parseFloat(data.value) / 1e18;
 
-            ///const message = "You have received " + Number(amount).toFixed(6) + " USDT";
-            const message = Number(amount).toFixed(0) + " NOAH-K 포인트를 받았습니다";
+                ///const message = "You have received " + Number(amount).toFixed(6) + " USDT";
+                const message = Number(amount).toFixed(0) + " NOAH-K 포인트를 받았습니다";
 
-            const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+                const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
 
-            await collectionTelegramMessages.insertOne(
-            {
-                center: center,
-                category: "wallet",
-                telegramId: telegramId,
-                message: message,
-                timestamp: data.timestamp,
+                await collectionTelegramMessages.insertOne(
+                {
+                    center: center,
+                    category: "wallet",
+                    telegramId: telegramId,
+                    message: message,
+                    timestamp: data.timestamp,
+                }
+                );
+
             }
-            );
 
         }
+
         
 
 
