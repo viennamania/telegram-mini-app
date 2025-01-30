@@ -1263,11 +1263,80 @@ function ProfilePage() {
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
                             bg-yellow-500 bg-opacity-50'>
                             
-                            <div className="flex flex-row gap-2 items-center justify-between">
-                                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                <span className="text-lg font-semibold">
-                                    거래내역
-                                </span>
+                            <div className="w-full flex flex-row gap-2 items-center justify-between">
+                                <div className="flex flex-row gap-2 items-center justify-between">
+                                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <span className="text-lg font-semibold">
+                                        거래내역
+                                    </span>
+                                </div>
+                                {/* reload transfers button */}
+                                <button
+                                    onClick={() => {
+                                        const getTransfers = async () => {
+
+                                            setLoadingTransfers(true);
+                                            
+                                            const response = await fetch("/api/wallet/getTransfersNoahkByWalletAddress", {
+                                                method: "POST",
+                                                headers: {
+                                                    "Content-Type": "application/json",
+                                                },
+                                                body: JSON.stringify({
+                                                    limit: 10,
+                                                    page: 1,
+                                                    walletAddress: address,
+                                                }),
+                                            });
+
+                                            if (!response.ok) {
+                                                setLoadingTransfers(false);
+                                                return;
+                                            }
+
+                                            const data = await response.json();
+
+                                            console.log("getTransfers data", data);
+
+
+                                            if (data.result) {
+                                                setTransfers(data.result.transfers);
+                                            } else {
+                                                setTransfers([]);
+                                            }
+
+                                            setLoadingTransfers(false);
+
+                                        }
+
+                                        getTransfers();
+
+                                    } }
+
+                                    disabled={loadingTransfers}
+                                    className={
+
+                                        `p-2 bg-blue-500 text-zinc-100 rounded
+                                        ${loadingTransfers ? 'opacity-50' : ''}`
+                                    }
+                                >
+                                    <div className="flex flex-row gap-2 items-center justify-between">
+                                        {loadingTransfers && (
+                                            <Image
+                                                src="/loading.png"
+                                                alt="Send"
+                                                width={25}
+                                                height={25}
+                                                className="animate-spin"
+                                            />
+                                        )}
+                                        <span className="text-lg font-semibold">
+                                            새로고침
+                                        </span>
+                                    </div>
+                                </button>
+
+                                    
                             </div>
                             
 
