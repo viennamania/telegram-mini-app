@@ -95,7 +95,7 @@ function ProfilePage() {
   
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
     ///const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
   
 
@@ -164,6 +164,21 @@ function ProfilePage() {
 
 
     const [seller, setSeller] = useState(null) as any;
+
+    /*
+
+        "seller": {
+            "status": "confirmed",
+            "bankInfo": {
+            "bankName": "하나은행",
+            "accountNumber": "01234567890",
+            "accountHolder": "강하나"
+            }
+        },
+
+    */
+
+
 
 
     const [isAgent, setIsAgent] = useState(false);
@@ -506,6 +521,73 @@ function ProfilePage() {
 
     }
 
+
+    // setSeller
+    const [loadingSetSeller, setLoadingSetSeller] = useState(false);
+    const setSellerInfo = async () => {
+
+        setLoadingSetSeller(true);
+
+        const response = await fetch("/api/userNoahk/updateSeller", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                walletAddress: address,
+                seller: seller,
+            }),
+        });
+
+        if (response.status !== 200) {
+            //toast.error('Error saving Seller info');
+            alert('판매자 정보 저장에 실패했습니다.');
+            setLoadingSetSeller(false);
+            return;
+        }
+
+        const data = await response.json();
+
+        //console.log("data", data);
+
+        if (data.result) {
+            //toast.success('Seller info saved');
+            alert('판매자 정보가 저장되었습니다.');
+
+            // get user data
+            const response = await fetch("/api/userNoahk/getUser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    walletAddress: address,
+                }),
+            });
+
+            if (response.status === 200) {
+
+                const data = await response.json();
+
+                if (data.result) {
+                    setUser(data.result);
+
+                    setSeller(data.result.seller);
+
+
+                }
+
+            }
+
+
+        } else {
+            //toast.error('Error saving Seller info');
+            alert('판매자 정보 저장에 실패했습니다.');
+        }
+
+        setLoadingSetSeller(false);
+
+    }
 
 
     return (
@@ -948,6 +1030,185 @@ function ProfilePage() {
 
                             </div>
                         )}
+
+
+
+                        {/* seller */}
+                        {/* 판매자 은행정보 */}
+
+                        {address && seller && seller && (
+
+                            <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
+                            bg-zinc-800 bg-opacity-90
+                            '>
+                                <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <span className="text-sm font-semibold text-gray-200">
+                                        판매자 은행정보
+                                    </span>
+                                </div>
+
+                                <div className='flex flex-row gap-2 items-center justify-between'>
+                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                                        {seller?.bankInfo?.bankName} {seller?.bankInfo?.accountNumber} {seller?.bankInfo?.accountHolder}
+                                    </div>
+                                </div>
+
+                                {/* seller.status === 'confirmed' */}
+                                {seller?.status === 'confirmed' && (
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <span className='text-sm font-semibold text-green-500'>
+                                            판매자 정보가 확인되었습니다.
+                                        </span>
+                                    </div>
+                                )}
+
+                                {/* seller.status === 'pending' */}
+                                {seller?.status === 'pending' && (
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <span className='text-sm font-semibold text-gray-500'>
+                                            판매자 정보를 확인중입니다.
+                                        </span>
+                                    </div>
+                                )}
+
+                                {/* seller.status === 'rejected' */}
+                                {seller?.status === 'rejected' && (
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <span className='text-sm font-semibold text-red-500'>
+                                            판매자 정보가 거절되었습니다.
+                                        </span>
+                                    </div>
+                                )}
+
+                            </div>
+
+                        )}
+
+
+
+                        {/* 판매자 정보 저장하기 */}
+                        <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
+                        bg-zinc-800 bg-opacity-90
+                        '>
+                            <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                {/* dot */}
+                                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                <span className="text-sm font-semibold text-gray-200">
+                                    판매자 정보 저장하기
+                                </span>
+                            </div>
+
+                            <div className='flex flex-row gap-2 items-center justify-between'>
+                                <input
+                                    disabled={!address}
+                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+
+                                    placeholder="은행명"
+                                    
+                                    value={seller?.bankInfo?.bankName}
+
+                                    type='text'
+                                    onChange={(e) => {
+                                        setSeller({
+                                            ...seller,
+                                            bankInfo: {
+                                                ...seller?.bankInfo,
+                                                bankName: e.target.value,
+                                            }
+                                        });
+                                    } }
+                                />
+                            </div>
+                                    
+
+                            <div className='flex flex-row gap-2 items-center justify-between'>
+                                <input
+                                    disabled={!address}
+                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+
+                                    placeholder="계좌번호"
+                                    
+                                    value={seller?.bankInfo?.accountNumber}
+
+                                    type='text'
+                                    onChange={(e) => {
+                                        setSeller({
+                                            ...seller,
+                                            bankInfo: {
+                                                ...seller.bankInfo,
+                                                accountNumber: e.target.value,
+                                            }
+                                        });
+                                    } }
+                                />
+                            </div>
+
+                            <div className='flex flex-row gap-2 items-center justify-between'>
+                                <input
+                                    disabled={!address}
+                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+
+                                    placeholder="예금주"
+                                    
+                                    value={seller?.bankInfo?.accountHolder}
+
+                                    type='text'
+                                    onChange={(e) => {
+                                        setSeller({
+                                            ...seller,
+                                            bankInfo:
+                                            {
+                                                ...seller.bankInfo,
+                                                accountHolder: e.target.value,
+                                            }
+                                        });
+                                    } }
+                                />
+                            </div>
+
+                            <button
+                                disabled={
+                                    !address
+                                    || !seller?.bankInfo?.bankName
+                                    || !seller?.bankInfo?.accountNumber
+                                    || !seller?.bankInfo?.accountHolder
+                                    || loadingSetSeller
+                                }
+                                className={`
+                                    ${!address
+                                    || !seller?.bankInfo?.bankName
+                                    || !seller?.bankInfo?.accountNumber
+                                    || !seller?.bankInfo?.accountHolder
+                                    || loadingSetSeller
+                                    ? 'bg-gray-500 text-zinc-100'
+                                    : 'bg-blue-500 text-zinc-100'}
+
+                                    p-2 rounded-lg text-sm font-semibold
+                                    w-full mt-5
+                                `}
+                                onClick={() => {
+                                    confirm('판매자 정보를 저장하시겠습니까?') && setSellerInfo();
+                                }}
+                            >
+                                {loadingSetSeller ? "저장중..." : "저장"}
+                            </button>
+
+                        
+
+                        </div>
+
+
+
+
+
+
+
+                                            
 
 
 

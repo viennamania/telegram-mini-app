@@ -1,8 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import {
-	updateSellerStatus,
-} from '@lib/api/user';
+	updateSeller
+} from '@lib/api/userNoahk';
 
 
 
@@ -10,17 +10,18 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
-  const { walletAddress, sellerStatus, bankName, accountNumber, accountHolder } = body;
+  //const { walletAddress, sellerStatus, bankName, accountNumber, accountHolder } = body;
+  const { walletAddress, seller } = body;
 
   //console.log("walletAddress", walletAddress);
   //console.log("sellerStatus", sellerStatus);
 
-  const result = await updateSellerStatus({
+ 
+
+
+  const result = await updateSeller({
     walletAddress: walletAddress,
-    sellerStatus: sellerStatus,
-    bankName: bankName,
-    accountNumber: accountNumber,
-    accountHolder: accountHolder,
+    seller: seller,
   });
 
 
