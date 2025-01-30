@@ -127,16 +127,17 @@ export async function insertOne(data: any) {
 
 
 
-        /*
+        
         const telegramId = userToAddress.telegramId;
         const center = userToAddress.center;
 
         if (telegramId) {
 
-            const amount = parseFloat(data.value) / 1000000.0;
+            // divide by 1e18
+            const amount = parseFloat(data.value) / 1e18;
 
             ///const message = "You have received " + Number(amount).toFixed(6) + " USDT";
-            const message = Number(amount).toFixed(6) + " USDT 를 받았습니다";
+            const message = Number(amount).toFixed(0) + " NOAH-K 포인트를 받았습니다";
 
             const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
 
@@ -151,7 +152,7 @@ export async function insertOne(data: any) {
             );
 
         }
-        */
+        
 
 
         
