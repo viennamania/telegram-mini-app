@@ -840,6 +840,13 @@ feature.command('start', async (ctx) => {
 // public chat
 const publicChat = composer.chatType('group');
 
+
+publicChat.hears('hello', async (ctx) => {
+  return ctx.reply('Hello!')
+})
+
+
+
 // if feature is not command, reply with the help message
 
 publicChat.use((ctx, next) => {
@@ -876,86 +883,6 @@ publicChat.use((ctx, next) => {
 
   return next()
 })
-
-
-
-
-
-
-// show game
-publicChat.command('game', async (ctx) => {
-
-  const text = "복권방";
-  const urlGame = "https://naver.com";
-
-  const keyboard = new InlineKeyboard()
-    .webApp('💰 게임하러가기', urlGame)
-    // english
-    //.webApp('💰 Go to the game', urlGame)
-
-
-  return ctx.reply(
-    '🚫 준비중입니다.'
-  )
-
-
-})
-
-
-publicChat.command('wallet', async (ctx) => {
-
-  const text = "복권방";
-  const urlGame = "https://naver.com";
-
-  const keyboard = new InlineKeyboard()
-    .webApp('💰 게임하러가기', urlGame)
-    // english
-    //.webApp('💰 Go to the game', urlGame)
-
-
-  return ctx.reply(
-    '🚫 준비중입니다.'
-  )
-
-
-})
-
-publicChat.command('otc', async (ctx) => {
-
-  const text = "복권방";
-  const urlGame = "https://naver.com";
-
-  const keyboard = new InlineKeyboard()
-    .webApp('💰 게임하러가기', urlGame)
-    // english
-    //.webApp('💰 Go to the game', urlGame)
-
-
-  return ctx.reply(
-    '🚫 준비중입니다.'
-  )
-
-
-})
-
-publicChat.command('start', async (ctx) => {
-
-  const text = "복권방";
-  const urlGame = "https://naver.com";
-
-  const keyboard = new InlineKeyboard()
-    .webApp('💰 게임하러가기', urlGame)
-    // english
-    //.webApp('💰 Go to the game', urlGame)
-
-
-  return ctx.reply(
-    '🚫 준비중입니다.'
-  )
-
-
-})
-
 
 
 
