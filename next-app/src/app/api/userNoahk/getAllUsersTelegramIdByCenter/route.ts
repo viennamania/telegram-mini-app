@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import {
 	getAllUsersTelegramIdByCenter,
-} from '@lib/api/user';
+} from '@lib/api/userNoahk';
 import { get } from "http";
 
 
