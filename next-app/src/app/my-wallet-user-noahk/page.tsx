@@ -1365,7 +1365,6 @@ function ProfilePage() {
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
                             bg-yellow-500 bg-opacity-50'>
                             
-                            <div className="flex flex-row gap-2 items-center justify-between">
                             <div className="w-full flex flex-row gap-2 items-center justify-between">
                                 <div className="flex flex-row gap-2 items-center justify-between">
                                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
