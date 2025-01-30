@@ -1046,7 +1046,7 @@ function ProfilePage() {
                                                     {/* nickname */}
                                                     <div className="flex flex-col gap-1">
                                                         <span className="text-lg text-green-500">       
-                                                            {transfer?.user?.nickname}
+                                                            {transfer?.otherUser?.nickname}
                                                         </span>
                                                     </div>
                                                 </td>
