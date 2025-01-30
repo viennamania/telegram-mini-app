@@ -1275,7 +1275,9 @@ function ProfilePage() {
                                 <thead>
                                     <tr>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
-                                            +/-
+                                            {/*+/-*/}
+                                            {/* + is color green, - is color red */}
+                                            <span className="text-green-500">+</span> / <span className="text-red-500">-</span>
                                         </th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">지갑주소</th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">수량</th>
@@ -1293,9 +1295,22 @@ function ProfilePage() {
                                             "
                                         >
                                             <td
-                                            className="p-2 text-lg text-zinc-800 font-semibold">
-                                                {transfer.sendOrReceive === "send" ? "-" : "+"}
+                                                className="p-2 text-2xl text-zinc-800 font-semibold">
+
+
+                                                {/*transfer.sendOrReceive === "send" ? "-" : "+"*/}
+                                                {/* + is color green, - is color red */}
+
+                                                {transfer.sendOrReceive === "send" ? (
+                                                    <span className="text-red-500">-</span>
+                                                ) : (
+                                                    <span className="text-green-500">+</span>
+                                                )}
+
                                             </td>
+
+
+
                                             {transfer.sendOrReceive === "send" ? (
                                                 <td className="p-2 text-xs text-zinc-800">
                                                     {shortenAddress(transfer.transferData.toAddress)}
