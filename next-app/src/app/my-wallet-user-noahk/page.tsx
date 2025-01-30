@@ -1361,9 +1361,11 @@ function ProfilePage() {
                         </div>
                     )}
 
+
+
                     {transfers?.length > 0 && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
-                            bg-yellow-500 bg-opacity-50'>
+                            bg-zinc-100 bg-opacity-90'>
                             
                             <div className="w-full flex flex-row gap-2 items-center justify-between">
                                 <div className="flex flex-row gap-2 items-center justify-between">
@@ -1461,7 +1463,7 @@ function ProfilePage() {
                                             key={index}
                                             className="
                                                 border-b border-gray-800
-                                                hover:bg-zinc-800
+                                                hover:bg-zinc-800 hover:bg-opacity-50
                                                 transition-colors duration-100
                                             "
                                         >
@@ -1479,15 +1481,37 @@ function ProfilePage() {
                                                 )}
 
                                             </td>
+
                                             {transfer.sendOrReceive === "send" ? (
-                                                <td className="p-2 text-xs text-zinc-800">
-                                                    {shortenAddress(transfer.transferData.toAddress)}
+                                                <td className="p-2">
+                                                    <div className="flex flex-col gap-1">
+                                                        <span className="text-xs text-red-500">       
+                                                            {shortenAddress(transfer.transferData.toAddress)}
+                                                        </span>
+                                                    </div>
+                                                    {/* nickname */}
+                                                    <div className="flex flex-col gap-1">
+                                                        <span className="text-lg text-red-500">       
+                                                            {transfer?.user?.nickname}
+                                                        </span>
+                                                    </div>
                                                 </td>
                                             ) : (
-                                                <td className="p-2 text-xs text-zinc-800">
-                                                    {shortenAddress(transfer.transferData.fromAddress)}
+                                                <td className="p-2">
+                                                    <div className="flex flex-col gap-1">
+                                                        <span className="text-xs text-green-500">       
+                                                            {shortenAddress(transfer.transferData.fromAddress)}
+                                                        </span>
+                                                    </div>
+                                                    {/* nickname */}
+                                                    <div className="flex flex-col gap-1">
+                                                        <span className="text-lg text-green-500">       
+                                                            {transfer?.user?.nickname}
+                                                        </span>
+                                                    </div>
                                                 </td>
                                             )}
+
                                             {/* monospace font */}
                                             <td className="p-2 text-xl text-blue-500 text-right"
                                                 style={{
@@ -1560,14 +1584,6 @@ function ProfilePage() {
 
                         </div>
                     ) }
-
-                    
-
-
-
-
-                    
-                   
 
                     
 
