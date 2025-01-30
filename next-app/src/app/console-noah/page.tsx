@@ -789,7 +789,7 @@ function HomeContent() {
                                 <th className="p-2">회원아이디</th>
                                 <th className="p-2">TID</th>
                                 <th className="p-2">지갑주소</th>
-                                <th className="p-2">센터장</th>
+                                <th className="p-2">핸드폰번호</th>
                                 <th className="p-2">NFT</th>
                             </tr>
                         </thead>
@@ -855,11 +855,9 @@ function HomeContent() {
 
 
                                     <td className="p-2 text-center">
-                                      {user?.centerOwner && (
-                                        <span className="text-white font-semibold bg-green-500 p-1 rounded">
-                                          O
-                                        </span>
-                                      )}
+                                      <span className="text-sm">
+                                        {user?.mobile}
+                                      </span>
                                     </td>
                                     <td className="p-2 text-center">
                                       <input

@@ -1060,6 +1060,36 @@ export async function updateUser(username: string, bio: string) {
 
 
 
+// updateUserMobile
+export async function updateUserMobile({
+  walletAddress,
+  mobile,
+}: {
+  walletAddress: string;
+  mobile: string;
+}) {
+
+  console.log('updateUserMobile walletAddress: ' + walletAddress + ' mobile: ' + mobile);
+
+  
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('usersNoahk');
+
+  return await collection.updateOne(
+    { walletAddress },
+    {
+      $set: {
+        mobile,
+      }
+    }
+  );
+  
+}
+
+
+
+
 export async function checkUser(id: string, password: string): Promise<UserProps | null> {
   
 
