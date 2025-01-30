@@ -672,7 +672,54 @@ function ProfilePage() {
     } , [telegramId]);
 
 
+
+
+
+    const [toUserNickname, setToUserNickname] = useState("");
+    const [isValidUserNickname, setIsValidUserNickname] = useState(false);
+
+    useEffect(() => {
+        
+        const getToUser = async () => {
+
+            const response = await fetch("/api/userNoahk/getUserByNickname", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nickname: toUserNickname,
+                    center: center,
+                }),
+            });
+
+            const data = await response.json();
+
+            ///console.log("getToUser data", data);
+
+            if (data.result) {
+                setToWalletAddress(data.result.walletAddress);
+                setIsValidUserNickname(true);
+            } else {
+                setToWalletAddress("");
+                setIsValidUserNickname(false);
+            }
+
+        };
+
+        if (toUserNickname) {
+            getToUser();
+        }
+
+    } , [toUserNickname]);
+
+
+
+
+
     const [toWalletAddress, setToWalletAddress] = useState("");
+
+
     const [sendAmount, setSendAmount] = useState('');
     const [sending, setSending] = useState(false);
 
@@ -1084,6 +1131,7 @@ function ProfilePage() {
                                         </div>
 
 
+                                        {/*}
                                         <input
                                             disabled={sending}
                                             className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-sm font-semibold"
@@ -1095,6 +1143,34 @@ function ProfilePage() {
                                                 setToWalletAddress(e.target.value);
                                             }}
                                         />
+                                        */}
+                                        {/* input nickname */}
+                                        <input
+                                            disabled={sending}
+                                            className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                            placeholder="받는 사람 회원아이디"
+                                            type='text'
+                                            onChange={(e) => {
+                                                setToUserNickname(e.target.value);
+                                            }}
+                                        />
+
+                                        {/* isValidUserNickname */}
+                                        {/* 등록된 회원입니다. */}
+                                        {/* 등록된 회원이 아닙니다. */}
+                                        {isValidUserNickname ? (
+                                            <div className="text-green-500 text-lg font-semibold">
+                                                등록된 회원입니다.
+                                            </div>
+                                        ) : (
+                                            <div className="text-red-500 text-lg font-semibold">
+                                                등록된 회원이 아닙니다.
+                                            </div>
+                                        )}
+
+                                    
+                                        
+
 
                                         <div className="mt-5 w-full flex flex-row gap-2 items-center justify-end">
                                             <button
