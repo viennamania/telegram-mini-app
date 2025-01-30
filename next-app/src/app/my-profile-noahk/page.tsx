@@ -61,7 +61,7 @@ import {
 
 
 import Uploader from '../components/uploader';
-import { updateUser } from "@/lib/api/user";
+import { updateUser } from "@/lib/api/userNoahk";
 
 
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
@@ -182,7 +182,7 @@ function ProfilePage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch("/api/user/getUser", {
+            const response = await fetch("/api/userNoahk/getUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -263,7 +263,7 @@ function ProfilePage() {
 
     const checkNicknameIsDuplicate = async ( nickname: string ) => {
 
-        const response = await fetch("/api/user/checkUserByNickname", {
+        const response = await fetch("/api/userNoahk/checkUserByNickname", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -301,13 +301,13 @@ function ProfilePage() {
 
         if (editedNickname.length < 5 || editedNickname.length > 10) {
 
-            //toast.error("회원아이디은 5자 이상 10자 이하로 입력해주세요");
+            //toast.error("회원아이디는 5자 이상 10자 이하로 입력해주세요");
             return;
         }
         
         ///if (!/^[a-z0-9]*$/.test(nickname)) {
         if (!/^[a-z0-9]*$/.test(editedNickname)) {
-            //toast.error("회원아이디은 영문 소문자와 숫자만 입력해주세요");
+            //toast.error("회원아이디는 영문 소문자와 숫자로 5자 이상 10자 이하로 입력해주세요.");
             return;
         }
 
@@ -317,7 +317,7 @@ function ProfilePage() {
         if (nicknameEdit) {
 
 
-            const response = await fetch("/api/user/updateUser", {
+            const response = await fetch("/api/userNoahk/updateUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -356,7 +356,7 @@ function ProfilePage() {
 
         } else {
 
-            const response = await fetch("/api/user/setUserVerified", {
+            const response = await fetch("/api/userNoahk/setUserVerified", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -404,7 +404,7 @@ function ProfilePage() {
         
         setLoadingSetUserTelegramId(true);
 
-        const response = await fetch("/api/user/updateUserTelegramId", {
+        const response = await fetch("/api/userNoahk/updateUserTelegramId", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -653,13 +653,15 @@ function ProfilePage() {
 
 
                         { (address && (nicknameEdit || !userCode)) && (
-                            <div className=' flex flex-col xl:flex-row gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+                            <div className=' flex flex-col xl:flex-row gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
+                            bg-zinc-800 bg-opacity-90
+                            '>
 
                                 <div className="flex flex-row gap-2 items-center justify-between">
                                     {/* dot */}
                                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                     <span
-                                        className="text-sm font-semibold text-gray-500"
+                                        className="text-sm font-semibold text-gray-200"
                                     >
                                         {!userCode ? "회원아이디 설정" :
                                             nicknameEdit ? "수정할 내 회원아이디" : "새로운 회원아이디"
@@ -668,10 +670,12 @@ function ProfilePage() {
                                 </div>
 
 
-                                <div className='flex flex-col gap-2 items-start justify-between'>
+                                <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                     <input
                                         disabled={!address}
-                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
+                                        className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+
                                         placeholder="회원아이디"
                                         
                                         //value={nickname}
@@ -683,11 +687,11 @@ function ProfilePage() {
                                             // check if the value is alphanumeric and lowercase
 
                                             if (!/^[a-z0-9]*$/.test(e.target.value)) {
-                                                //toast.error('회원아이디은 영문 소문자와 숫자만 입력해주세요');
+                                                //toast.error('회원아이디는 영문 소문자와 숫자로 5자 이상 10자 이하로 입력해주세요.');
+                                                
                                                 return;
                                             }
                                             if ( e.target.value.length > 10) {
-                                                //toast.error('회원아이디은 10자 이하로 입력해주세요');
                                                 return;
                                             }
 
@@ -699,6 +703,12 @@ function ProfilePage() {
 
                                         } }
                                     />
+                                    {/* display input length */}
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <span className='text-sm font-semibold text-zinc-100'>
+                                            {editedNickname.length} / 10
+                                        </span>
+                                    </div>
 
                                     {editedNickname && isNicknameDuplicate && (
                                         <div className='flex flex-row gap-2 items-center justify-between'>
@@ -722,8 +732,10 @@ function ProfilePage() {
 
 
                                 <div className='flex flex-row gap-2 items-center justify-between'>
-                                    <span className='text-sm font-semibold'>
-                                        회원아이디은 5자 이상 10자 이하로 입력해주세요
+                                    <span className='text-sm text-zinc-100 font-semibold'>
+
+                                        회원아이디는 영문 소문자와 숫자로 5자 이상 10자 이하로 입력해주세요.
+
                                     </span>
                                 </div>
                                 <button
@@ -740,14 +752,14 @@ function ProfilePage() {
                                         || editedNickname.length < 5
                                         || isNicknameDuplicate
                                         || loadingSetUserData
-                                        ? 'bg-gray-300 text-gray-400'
+                                        ? 'bg-gray-500 text-zinc-100'
                                         : 'bg-blue-500 text-zinc-100'}
 
                                         p-2 rounded-lg text-sm font-semibold
-                                        w-64 mt-5
+                                        w-full mt-5
                                     `}
                                     onClick={() => {
-                                        setUserData();
+                                        confirm('회원아이디를 저장하시겠습니까?') && setUserData();
                                     }}
                                 >
                                     {loadingSetUserData ? "저장중..." : "저장"}
