@@ -894,7 +894,7 @@ function ProfilePage() {
                                         
                                         value={mobile}
 
-                                        type='text'
+                                        type='number'
                                         onChange={(e) => {
                                             setMobile(e.target.value);
                                         } }
