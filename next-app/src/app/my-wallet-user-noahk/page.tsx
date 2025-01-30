@@ -1154,9 +1154,32 @@ function ProfilePage() {
                                             placeholder="받는 사람 회원아이디"
                                             type='text'
                                             onChange={(e) => {
+                                                // check small letter and number
+                                                // then, do not allow to input
+
+                                                if (!/^[a-z0-9]*$/.test(e.target.value)) {
+                                                    return;
+                                                }
+
+
+
+
+
                                                 setToUserNickname(e.target.value);
                                             }}
                                         />
+
+                                        {/* 회원아이디는 영문 소문자와 숫자만 입력해주세요 */}
+                                        <div className="flex flex-row gap-2 items-center justify-between">
+                                            {/* dot */}
+                                            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                            {/* text */}
+                                            <span className="text-sm text-gray-500">
+                                                회원아이디는 영문 소문자와 숫자만 입력해주세요
+                                            </span>
+                                        </div>
+
+                                        
 
                                         {/* isValidUserNickname */}
                                         {/* 등록된 회원입니다. */}
