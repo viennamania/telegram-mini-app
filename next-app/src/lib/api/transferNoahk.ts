@@ -130,6 +130,7 @@ export async function insertOne(data: any) {
         if (response) {
 
         
+            const walletAddress = userToAddress.walletAddress;
             const telegramId = userToAddress.telegramId;
             const center = userToAddress.center;
 
@@ -147,6 +148,7 @@ export async function insertOne(data: any) {
                 {
                     center: center,
                     category: "wallet",
+                    walletAddress: walletAddress,
                     telegramId: telegramId,
                     message: message,
                     timestamp: data.timestamp,
