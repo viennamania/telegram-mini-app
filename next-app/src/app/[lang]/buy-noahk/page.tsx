@@ -878,6 +878,15 @@ export default function Index({ params }: any) {
                       border border-gray-800
                       p-4 rounded-lg'>
 
+                      <Image
+                          src="/logo-noahk-erc20.png"
+                          alt="noah-k"
+                          width={30}
+                          height={30}
+                          className="rounded"
+                      />                                
+
+
                       <div className="flex flex-row gap-2 items-center justify-between">
 
                           <span className="p-2 text-green-500 text-4xl font-semibold"> 
