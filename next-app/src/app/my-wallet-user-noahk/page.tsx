@@ -33,8 +33,13 @@ import {
     useConnectedWallets,
     useSetActiveWallet,
 
+    useConnect,
 
 } from "thirdweb/react";
+
+
+import { useQuery } from "@tanstack/react-query";
+
 
 import { shortenAddress } from "thirdweb/utils";
 import { Button } from "@headlessui/react";
@@ -827,7 +832,8 @@ function ProfilePage() {
 
 
 
-    /*
+
+        /*
 
 
       const center = ctx.me.username+"";
@@ -847,6 +853,78 @@ function ProfilePage() {
 
       */
 
+
+
+    const { connect } = useConnect();
+
+
+    const username = telegramId;
+    const expiration = Date.now() + 6000_000; // valid for 100 minutes
+    const message = JSON.stringify({
+      username,
+      expiration,
+    });
+
+    const adminAccount = privateKeyToAccount({
+        privateKey: process.env.ADMIN_SECRET_KEY as string,
+        client: createThirdwebClient({ clientId: process.env.THIRDWEB_CLIENT_ID as string }),
+    })
+  
+    const authCode = adminAccount.signMessage({
+      message,
+    });
+
+    const signature = authCode;
+
+    useQuery({
+        queryKey: ["telegram-login", signature, message],
+        queryFn: async () => {
+            if (!signature || !message) {
+                console.error('Missing signature or message');
+                return false;
+            }
+            try {
+
+                await connect(async () => {
+                    await wallet.connect({
+                        client,
+                        strategy: "auth_endpoint",
+                        payload: JSON.stringify({
+                            signature: signature,
+                            message: message,
+                        }),
+                        encryptionKey: process.env.NEXT_PUBLIC_AUTH_PHRASE as string,
+                    });
+                    return wallet;
+                });
+
+                /*
+                  const message = JSON.stringify({
+                        username,
+                        expiration,
+                    });
+                */
+                // username form message
+
+                const { username } = JSON.parse(message);
+
+                //router.replace("/?center=" + params.center + "&telegramId=" + username);
+
+                //router.replace(params.path + "?center=" + params.center + "&telegramId=" + username + "&referralCode=" + params.referralCode);
+
+                return true;
+
+            } catch (error) {
+                console.error('Connection error:', error);
+                return false;
+            }
+        },
+        enabled: !!signature && !!message,
+    });
+
+
+
+    /*
     const connectTelegram = async () => {
 
         const adminAccount = privateKeyToAccount({
@@ -872,7 +950,10 @@ function ProfilePage() {
 
         window.location.href = url;
 
+
+
     }
+    */
 
 
 
@@ -1021,12 +1102,14 @@ function ProfilePage() {
                                     창을 닫고 메뉴에서 지갑을 다시 시작해주세요.
                                 </p>
                                 {/* connectTelegram */}
+                                {/*
                                 <Button
                                     onClick={connectTelegram}
                                     className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                                 >
                                     지갑 연결
                                 </Button>
+                                */}
                             </div>
                         )}      
                     </div>
