@@ -854,7 +854,7 @@ function ProfilePage() {
       */
 
 
-
+    /*
     const { connect } = useConnect();
 
 
@@ -898,12 +898,6 @@ function ProfilePage() {
                     return wallet;
                 });
 
-                /*
-                  const message = JSON.stringify({
-                        username,
-                        expiration,
-                    });
-                */
                 // username form message
 
                 const { username } = JSON.parse(message);
@@ -922,6 +916,7 @@ function ProfilePage() {
         enabled: !!signature && !!message,
     });
 
+    */
 
 
     /*
