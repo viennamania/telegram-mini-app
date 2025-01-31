@@ -86,6 +86,8 @@ interface SellOrder {
   buyer: any;
 
   privateSale: boolean;
+
+  escrow: any;
 }
 
 
@@ -630,7 +632,8 @@ export default function Index({ params }: any) {
       if (data.result) {
         
         //toast.success('Order has been cancelled');
-        alert('Order has been cancelled');
+        //alert('Order has been cancelled');
+        alert('판매주문이 취소되었습니다.');
 
 
         await fetch('/api/orderNoahk/getAllSellOrders', {
@@ -696,6 +699,12 @@ export default function Index({ params }: any) {
         return;
       }
 
+      if (!sellOrders[index]?.escrow?.walletAddress) {
+        alert('에스크로 지갑주소가 없습니다.');
+        return;
+      }
+
+
       setRequestingPaymentList(requestingPaymentList.map((item, i) => i === index ? true : item));
 
 
@@ -705,7 +714,8 @@ export default function Index({ params }: any) {
           contract,
           
           //to: escrowWalletAddress,
-          to: sellOrders[index].escrowWalletAddress,
+          //to: sellOrders[index].escrowWalletAddress,
+          to: sellOrders[index]?.escrow?.walletAddress,
 
           amount: sellOrders[index].sellAmount,
         });
@@ -721,7 +731,32 @@ export default function Index({ params }: any) {
 
         if (transactionResult) {
 
-          alert('에스크로 지갑으로 NOAH-K가 전송되었습니다.');
+          // api/requestPayment
+          const response = await fetch('/api/orderNoahk/requestPayment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              orderId: sellOrders[index]._id,
+              transactionHash: transactionResult.transactionHash,
+            })
+          });
+
+          if (response.ok) {
+
+            const data = await response.json();
+
+            setSellOrders(sellOrders.map((item, i) => i === index ? data.result : item));
+            
+
+
+            //toast.success('Payment requested');
+            alert('에스크로 지갑으로 NOAH-K가 전송되었습니다.');
+          } else {
+            //toast.error('Payment request failed');
+            alert('에스크로 지갑으로 NOAH-K 전송이 실패했습니다.');
+          }
 
         } else {
 
@@ -1731,7 +1766,7 @@ export default function Index({ params }: any) {
 
                             {item.walletAddress === address && item.status === 'ordered' && (
 
-                              <div className="w-full flex flex-row items-center justify-end gap-2">
+                              <div className="mt-5 w-full flex flex-row items-center justify-end gap-2">
 
                                       
                                 <button
@@ -1741,7 +1776,7 @@ export default function Index({ params }: any) {
                                       // api call
                                       // cancelSellOrder
 
-                                      confirm('주문을 취소하시겠습니까?') &&
+                                      confirm('판매주문을 취소하시겠습니까?') &&
                                       cancelSellOrder(item._id, index);
 
                                     }}
@@ -1986,6 +2021,7 @@ export default function Index({ params }: any) {
                             {/* waiting for escrow */}
                             {item.status === 'accepted' && (
                                 <div className="mt-4 flex flex-row gap-2 items-center justify-start">
+                                  {/*
                                   <Image
                                     src="/loading.png"
                                     alt="Escrow"
@@ -1993,6 +2029,7 @@ export default function Index({ params }: any) {
                                     height={32}
                                     className="animate-spin"
                                   />
+                                  */}
 
                                   <div className="flex flex-col gap-2 items-start">
                                     {/*
@@ -2027,20 +2064,22 @@ export default function Index({ params }: any) {
 
                                     {/* request payment button */}
                                     {/* 에스크로에 예치하고 구매자에게 결제요청 */}
-                                    <button
-                                      disabled={requestingPaymentList[index]}
-                                      className={
-                                        `text-sm bg-green-500 text-white px-3 py-2 rounded-md
-                                        ${requestingPaymentList[index] ? 'bg-gray-500' : 'bg-green-500'}
-                                        `
-                                      }
-                                      onClick={() => {
-                                        // request payment
-                                        requestPayment(index);
-                                      }}
-                                    >
-                                      에스크로에 예치하고 결제요청하기
-                                    </button>
+                                    <div className="mt-5 w-full flex flex-row items-center justify-end gap-2">
+                                      <button
+                                        disabled={requestingPaymentList[index]}
+                                        className={
+                                          `text-sm bg-green-500 text-white px-3 py-2 rounded-md
+                                          ${requestingPaymentList[index] ? 'bg-gray-500' : 'bg-green-500'}
+                                          `
+                                        }
+                                        onClick={() => {
+                                          // request payment
+                                          requestPayment(index);
+                                        }}
+                                      >
+                                        에스크로에 예치하고 결제요청하기
+                                      </button>
+                                    </div>
 
                                   </div>
                                 </div>

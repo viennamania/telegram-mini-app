@@ -839,8 +839,10 @@ export async function acceptSellOrder(data: any) {
         depositBankName: depositBankName,
       },
       escrow: {
+        processing: false,
+        escrowed: false,
         walletAddress: data.escrowWalletAddress,
-        privateKey: data.escrowWalletPrivateKey,
+        walletPrivateKey: data.escrowWalletPrivateKey,
       },
     } }
   );

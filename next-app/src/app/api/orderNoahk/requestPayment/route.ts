@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
           amount: amount
   */
 
-  const { lang, chain, orderId, transactionHash } = body;
+  const { orderId, transactionHash } = body;
 
   console.log("orderId", orderId);
   
@@ -45,62 +45,6 @@ export async function POST(request: NextRequest) {
   const accountHolder = seller.bankInfo.accountHolder;
   const depositName = tradeId;
   const amount = krwAmount;
-
-
-    // send sms
-
-
-    console.log("byuer.mobile", buyer.mobile);
-
-
-
-    if (!buyer.mobile) {
-      return NextResponse.json({
-        result,
-      });
-    }
-
-    // check buyer.mobile is prefixed with +
-    if (!buyer.mobile.startsWith("+")) {
-      return NextResponse.json({
-        result,
-      });
-    }
-
-    const to = buyer.mobile;
-
-
-
-
-    const accountSid = process.env.TWILIO_ACCOUNT_SID;
-    const authToken = process.env.TWILIO_AUTH_TOKEN;
-    const client = twilio(accountSid, authToken);
-
-
-
-    let message = null;
-
-    try {
-
-      const msgBody = `[GTETHER] TID[${tradeId}] ${bankName} ${accountNumber} ${accountHolder} 입금자명:[${depositName}] ${amount}원`;
-
-      message = await client.messages.create({
-        ///body: "This is the ship that made the Kessel Run in fourteen parsecs?",
-        body: msgBody,
-        from: "+17622254217",
-        to: to,
-      });
-
-      console.log(message.sid);
-
-    } catch (e) {
-        
-      console.log("error", e);
-
-    }
-
-
-
 
 
 
