@@ -603,10 +603,23 @@ export default function Index({ params }: any) {
             });
 
 
+            if (!response.ok) {
+                //toast.error('Failed to fetch sell orders');
+                alert('Failed to fetch sell orders');
+                return;
+            }
 
 
             const data = await response.json();
-            setSellOrders(data.result.orders);
+
+
+            //setSellOrders(data.result.orders);
+
+            // exclude my sell orders
+            setSellOrders(data.result.orders.filter((item: any) => item.walletAddress !== address));
+
+
+
         }
 
         fetchSellOrders();
@@ -1278,7 +1291,7 @@ export default function Index({ params }: any) {
           
                         <div
                           key={index}
-                          className="w-full flex flex-col items-center justify-center"
+                          className="relative flex flex-col items-center justify-center"
                         >
 
 
@@ -1312,8 +1325,8 @@ export default function Index({ params }: any) {
 
 
                           <article
-                              //key={index}
-                              className={` w-72 xl:w-full h-full relative
+
+                              className={` w-96 xl:w-full h-full
                                 ${item.walletAddress === address ? 'border-green-500' : 'border-gray-200'}
 
                                 ${item.status === 'accepted' || item.status === 'paymentRequested' ? 'border-red-600' : 'border-gray-200'}
