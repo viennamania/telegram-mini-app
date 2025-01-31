@@ -1570,11 +1570,11 @@ export default function Index({ params }: any) {
 
                     
 
-                              <div className="mt-4 flex flex-col items-start">
+                              <div className="mt-4 flex flex-col items-center justify-center gap-2">
 
                                 <div className="mt-2 flex flex-row items-start gap-2">
 
-                                  <p className="text-xl font-semibold text-white">
+                                  <p className="text-2xl font-semibold text-green-500">
                                     {item.sellAmount}{' '}NOAH-K
                                   </p>
                                   <p className="text-lg font-semibold text-white">{Rate}: {
@@ -1586,7 +1586,7 @@ export default function Index({ params }: any) {
 
 
 
-                                <p className="text-2xl text-zinc-400">
+                                <p className="text-2xl text-yellow-500 font-semibold">
                                   {Price}: {
                                     // currency
                                   
@@ -1606,7 +1606,11 @@ export default function Index({ params }: any) {
                               <div className="mt-4 mb-4 flex flex-col items-start text-sm
                                 text-zinc-400
                               ">
-                                {Payment}: {Bank_Transfer} ({item.seller?.bankInfo.bankName})
+                                {Payment}: {Bank_Transfer} (
+                                  {item.seller?.bankInfo.bankName}
+                                  {' '}{item.seller?.bankInfo.accountNumber.slice(0, 5)}****
+                                  {' '}{item.seller?.bankInfo.accountHolder.slice(0, 1)}**
+                                  )
                               </div>
 
 
