@@ -965,6 +965,7 @@ export default function Index({ params }: any) {
 
                           {/* escrow wallet address */}
                           {/* 에스크로 지갑주소 */}
+                          {/*}
                           {address && seller && escrowWalletAddress && (
                             <div className="mt-4 flex flex-col gap-2 items-start">
                               <div className="flex flex-row items-center gap-2">
@@ -977,7 +978,9 @@ export default function Index({ params }: any) {
                               </div>
                             </div>
                           )}
+                          */}
 
+                 
 
 
 
