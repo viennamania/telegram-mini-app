@@ -779,6 +779,7 @@ export default function Index({ params }: any) {
 
                     {/* sell order is different border color
                     */}
+
                     <div
                       className="w-full bg-black p-4 rounded-md border-2 border-green-500"
                     >
@@ -955,11 +956,7 @@ export default function Index({ params }: any) {
                             </span>
                           </div>
 
-
-
-
-
-                        )}
+                        
 
                         </div>
 
