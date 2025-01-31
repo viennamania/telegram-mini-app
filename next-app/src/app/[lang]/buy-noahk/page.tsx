@@ -721,7 +721,7 @@ export default function Index({ params }: any) {
 
 
 
-            fetch('/api/order/getAllSellOrdersForBuyer', {
+            fetch('/api/orderNoahk/getAllSellOrdersForBuyer', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -784,7 +784,7 @@ export default function Index({ params }: any) {
 
       setCancellings(cancellings.map((item, i) => i === index ? true : item));
 
-      const response = await fetch('/api/order/cancelTradeByBuyer', {
+      const response = await fetch('/api/orderNoahk/cancelTradeByBuyer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -804,7 +804,7 @@ export default function Index({ params }: any) {
         //toast.success(Order_has_been_cancelled);
         alert(Order_has_been_cancelled);
 
-        await fetch('/api/order/getAllSellOrdersForBuyer', {
+        await fetch('/api/orderNoahk/getAllSellOrdersForBuyer', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -983,7 +983,7 @@ export default function Index({ params }: any) {
                     <button
                       className="text-sm bg-zinc-800 text-white px-2 py-1 rounded-md hover:bg-zinc-900"
                       onClick={() => {
-                        fetch('/api/order/getAllSellOrdersForBuyer', {
+                        fetch('/api/orderNoahk/getAllSellOrdersForBuyer', {
                           method: 'POST',
                           headers: {
                             'Content-Type': 'application/json',
@@ -1814,7 +1814,7 @@ export default function Index({ params }: any) {
                                         {/* dot */}
                                         <div className="w-4 h-4 bg-green-500 rounded-full"></div>
                                         <span className="text-sm text-zinc-400">
-                                        판매자가 에스크로에 {item.sellAmount} NOAH-K를 입금하기를 기다리는 중입니다...
+                                        판매자가 에스크로에 {item.sellAmount} NOAH-K를 입금하기를 기다리는 중입니다.
                                         </span>
                                       </div>
 
