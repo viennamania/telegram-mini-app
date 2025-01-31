@@ -91,7 +91,9 @@ interface SellOrder {
 
 
 
-const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+//const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+
+const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAH-K on Polygon
 
 
 // get a contract
@@ -309,7 +311,12 @@ export default function Index({ params }: any) {
   
 
 
-      const address = account?.address;
+    const address = account?.address;
+
+    // test address
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+  
+
 
 
     const router = useRouter();
@@ -331,7 +338,7 @@ export default function Index({ params }: any) {
     
         //console.log(result);
     
-        setBalance( Number(result) / 10 ** 6 );
+        setBalance( Number(result) / 10 ** 18 );
   
       };
   
@@ -362,7 +369,7 @@ export default function Index({ params }: any) {
   
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch("/api/user/getUser", {
+            const response = await fetch("/api/userNoahk/getUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -466,7 +473,7 @@ export default function Index({ params }: any) {
     console.log('usdtAmount', usdtAmount);
 
 
-    const [rate, setRate] = useState(1400);
+    const [rate, setRate] = useState(100);
 
 
     useEffect(() => {
@@ -684,13 +691,14 @@ export default function Index({ params }: any) {
               <div className='flex flex-row items-center space-x-4'>
                   <Image
                     src="/trade-sell.png"
-                    alt="USDT"
+                    alt="sell"
                     width={35}
                     height={35}
                     className="rounded-lg"
                   />
                   <div className="text-2xl font-semibold">
-                    {Sell_USDT}
+                    {/*Sell_USDT*/}
+                    NOAH-K 포인트 판매하기
                   </div>
 
 
@@ -745,8 +753,8 @@ export default function Index({ params }: any) {
                       p-4 rounded-lg'>
 
                       <Image
-                          src="/logo-tether.png"
-                          alt="USDT"
+                          src="/logo-noahk-erc20.png"
+                          alt="noah-k"
                           width={30}
                           height={30}
                           className="rounded"
@@ -757,10 +765,10 @@ export default function Index({ params }: any) {
 
                           <span className="p-2 text-green-500 text-4xl font-semibold"> 
                               {
-                                  Number(balance).toFixed(6)
+                                  Number(balance).toFixed(0)
                               }
                           </span>
-                          <span className="p-2 text-gray-500 text-lg font-semibold">USDT</span>
+                          <span className="p-2 text-gray-500 text-lg font-semibold">NOAH-K</span>
 
                       </div>
                   </div>
@@ -817,43 +825,77 @@ export default function Index({ params }: any) {
                           {address && seller && (
 
 
+                            <div className="mt-4 flex flex-col gap-2 items-start">
 
-                            <div className="mt-4 flex flex-row items-center gap-2">
-                              <Image
-                                src={avatar || "/profile-default.png"}
-                                alt="Profile"
-                                width={24}
-                                height={24}
-                                className="rounded-full"
-                                style={{
-                                  objectFit: 'cover',
-                                  width: '24px',
-                                  height: '24px'
-                                }}
+                              <div className="flex flex-row items-center gap-2">
+                                <Image
+                                  src={avatar || "/profile-default.png"}
+                                  alt="Profile"
+                                  width={24}
+                                  height={24}
+                                  className="rounded-full"
+                                  style={{
+                                    objectFit: 'cover',
+                                    width: '24px',
+                                    height: '24px'
+                                  }}
 
-                              />
-                              <div className="text-lg font-semibold text-white">
-                                {nickname}
+                                />
+                                <div className="text-lg font-semibold text-white">
+                                  {nickname}
+                                </div>
+
+                                <Image
+                                  src="/verified.png"
+                                  alt="Verified"
+                                  width={24}
+                                  height={24}
+                                />
+                                <Image
+                                  src="/best-seller.png"
+                                  alt="Identity"
+                                  width={24}
+                                  height={24}
+                                />
                               </div>
 
-                              <Image
-                                src="/verified.png"
-                                alt="Verified"
-                                width={24}
-                                height={24}
-                              />
-                              <Image
-                                src="/best-seller.png"
-                                alt="Identity"
-                                width={24}
-                                height={24}
-                              />
+                              {/* seller bank info */}
+                              <div className="flex flex-row items-center gap-2">
+                                <span className="text-sm text-zinc-400">
+                                  결제:{Bank_Transfer} ({seller?.bankInfo.bankName}{' '}
+                                  {seller?.bankInfo.accountNumber}{' '}{seller?.bankInfo.accountHolder})
+                                </span>
+                              </div>
+
+                              </div>
+                          )}
+
+                          {address && !seller && (
+                            <div className="mt-4 flex flex-col gap-2 items-center justify-center">
+
+                              <div className="flex flex-row items-center gap-2">
+                                <div className="w-2 h-2 bg-red-500 rounded-full inline-block mr-2"></div>
+                                <div className="text-sm text-red-500">
+                                  프로필 설정에서 결제정보를 등록하세요.
+                                </div>
+                              </div>
+
+                              {/* go to profile */}
+                              <button
+                                className="text-sm text-blue-500
+                                border border-blue-500 rounded-md px-2 py-1"
+
+                                onClick={() => router.push('/my-profile-noahk')}
+                              >
+                                결제정보 등록하기
+                              </button>
+                              
                             </div>
                           )}
 
 
                           <p className="mt-4 text-xl font-bold text-zinc-400">
-                            환율: 1 USDT = {
+                            환율: 1 NOAH-K = {
                             // currency format
                             Number(rate).toLocaleString('ko-KR', {
                               style: 'currency',
@@ -892,7 +934,7 @@ export default function Index({ params }: any) {
 
 
                               />
-                              <span className="text-lg">USDT</span>
+                              <span className="text-lg">NOAH-K</span>
                             </div>
 
                             <div className=" text-xl text-zinc-400 font-bold">
@@ -931,7 +973,7 @@ export default function Index({ params }: any) {
                         {/* if - button change bg color red */}
                         {/* if + button change bg color */}
 
-                          <div className="mt-4  flex flex-row items-center justify-between gap-2">
+                          <div className="hidden mt-4 flex-row items-center justify-between gap-2">
 
 
                             <div className="flex flex-col gap-2">
@@ -1286,12 +1328,6 @@ export default function Index({ params }: any) {
 
                     {sellOrders.length === 0 && (
                       <div className="w-full flex flex-col items-center justify-center gap-4">
-                        <Image
-                          src="/no-data.png"
-                          alt="No Data"
-                          width={100}
-                          height={100}
-                        />
                         <div className="text-xl font-semibold text-gray-400">
                           퍈매주문한 내역이 없습니다.
                         </div>
