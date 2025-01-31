@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import {
 	insertBuyOrder,
-} from '@lib/api/order';
+} from '@lib/api/orderNoahk';
 
 
 
