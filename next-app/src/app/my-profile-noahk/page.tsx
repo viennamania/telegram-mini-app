@@ -1225,7 +1225,9 @@ function ProfilePage() {
 
                                 <div className='flex flex-row gap-2 items-center justify-between'>
                                     <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        {escrowWalletAddress}
+                                        {
+                                        escrowWalletAddress.slice(0, 6) + '...' + escrowWalletAddress.slice(-4)
+                                        }
                                     </div>
                                 </div>
 
