@@ -1778,8 +1778,15 @@ export default function Index({ params }: any) {
                                     />
 
                                     <div className="flex flex-col gap-2 items-start">
+                                      {/*
                                       <span>
                                         {Waiting_for_seller_to_deposit} {item.sellAmount} NOAH-K {to_escrow}...
+                                      </span>
+                                      */}
+                                      <span className="text-sm text-zinc-400">
+                                      판매자가 에스크로에 {item.sellAmount} NOAH-K를 입금하기를 기다리는 중입니다...
+                                      <br />
+                                      에스크로에 입급이 완료되면 거래가 시작되며 구매자에게 알림이 전송됩니다.
                                       </span>
 
                                       <span className="text-sm text-zinc-400">
@@ -1807,6 +1814,7 @@ export default function Index({ params }: any) {
                                     <div className="mt-4 flex flex-col items-center justify-center gap-2">
 
 
+                                    {/*
 
                                       <div className="flex flex-row items-center gap-2">
                                         <input
@@ -1873,6 +1881,8 @@ export default function Index({ params }: any) {
                                         
                                         </button>
                                       </div>
+
+                                      */}
 
                                     </div>
 
