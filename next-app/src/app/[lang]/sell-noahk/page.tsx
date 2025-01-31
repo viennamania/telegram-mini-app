@@ -660,6 +660,90 @@ export default function Index({ params }: any) {
 
 
 
+/*
+   const transaction = transfer({
+        contract,
+        to: escrowWalletAddress,
+        amount: amount,
+      });
+      
+
+
+      try {
+
+
+        const transactionResult = await sendAndConfirmTransaction({
+            transaction: transaction,
+            
+            account: activeAccount as any,
+        });
+*/
+
+    // requstPayment
+
+
+    const [requestingPaymentList, setRequestingPaymentList] = useState([] as boolean[]);
+
+    useEffect(() => {
+      setRequestingPaymentList(sellOrders.map(() => false));
+    }, [sellOrders]);
+
+
+    const requestPayment = async (index: number) => {
+
+      if (requestingPaymentList[index]) {
+        return;
+      }
+
+      setRequestingPaymentList(requestingPaymentList.map((item, i) => i === index ? true : item));
+
+
+      try {
+
+        const transaction = transfer({
+          contract,
+          to: escrowWalletAddress,
+          amount: sellOrders[index].sellAmount,
+        });
+
+
+        const transactionResult = await sendAndConfirmTransaction({
+          transaction: transaction,
+          account: account as any,
+        });
+
+
+        //console.log('transactionResult', transactionResult);
+
+        if (transactionResult) {
+
+          alert('에스크로 지갑으로 NOAH-K가 전송되었습니다.');
+
+        } else {
+
+          alert('에스크로 지갑으로 NOAH-K 전송이 실패했습니다.');
+
+        }
+
+      } catch (error) {
+        
+        //console.log('error', error);
+
+        alert('에스크로 지갑으로 NOAH-K 전송이 실패했습니다.');
+
+      }
+
+
+      setRequestingPaymentList(requestingPaymentList.map((item, i) => i === index ? false : item));
+
+    }
+
+
+
+
+
+
+
 
       
       //<main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
@@ -1597,7 +1681,7 @@ export default function Index({ params }: any) {
 
                               <div className="flex flex-row items-center gap-2">
 
-                                <p className="text-2xl font-semibold text-white">
+                                <p className="text-2xl font-semibold text-green-500">
                                   {item.sellAmount} NOAH-K
                                 </p>
 
@@ -1611,7 +1695,7 @@ export default function Index({ params }: any) {
 
 
 
-                              <p className="text-2xl text-zinc-400">
+                              <p className="text-2xl text-yellow-500 font-semibold">
                                 {Price}: {
                                   // currency
                                 
@@ -1640,7 +1724,7 @@ export default function Index({ params }: any) {
 
                        
 
-                            
+                            {/*
                             <div className="mt-4 flex text-lg font-semibold mb-2">
                               {
    
@@ -1650,10 +1734,6 @@ export default function Index({ params }: any) {
 
                                   <div className="flex flex-row items-center gap-2">
                                     <span>{Seller}: {item.nickname}</span>
-
-                                    {/*<span className="text-green-500">:{Me}</span>*/}
-                                    
-                                    {/* goto /sell-usdt/:id */}
 
                                     <div
                                       className="text-sm
@@ -1673,10 +1753,6 @@ export default function Index({ params }: any) {
 
                                   <div className="w-full flex flex-row items-center justify-end gap-2">
 
-                                    {/*
-                                    <span>{Seller}: {item.nickname}</span>
-                                    <span className="text-green-500">:{Me}</span>
-                                    */}
                                            
                                     <button
                                         disabled={cancellings[index]}
@@ -1716,7 +1792,6 @@ export default function Index({ params }: any) {
                                         )}
                                         <div className="flex flex-row xl:flex-col items-center gap-1">
                                           <span>
-                                            {/*Cancel_My_Order*/}
                 
                                             {cancellings[index] && (
                                               <span className="text-sm text-white">
@@ -1751,6 +1826,7 @@ export default function Index({ params }: any) {
 
                               }
                             </div>
+                            */}
 
    
 
@@ -1840,17 +1916,26 @@ export default function Index({ params }: any) {
                                   />
 
                                   <div className="flex flex-col gap-2 items-start">
-                                    <span>
+                                    {/*
+                                    <span className="text-lg text-green-500 font-semibold">
                                       {Waiting_for_seller_to_deposit}
-                                      {item.sellAmount} USDT
+
+                                      {item.sellAmount} NOAH-K
+
                                       {to_escrow}....
+                                    </span>
+                                    */}
+                                    <span className="text-lg text-green-500 font-semibold">
+                                    {item.sellAmount} NOAH-K 를 에스크로에 예치해야 합니다.
                                     </span>
 
                                     <span className="text-sm text-zinc-400">
 
-                                      {If_the_seller_does_not_deposit_the_USDT_to_escrow}
+                                      {/*If_the_seller_does_not_deposit_the_USDT_to_escrow*/}
 
-                                      {this_trade_will_be_cancelled_in}
+                                      {/*this_trade_will_be_cancelled_in*/}
+                                      
+                                      다음 시간이 지나면 거래가 취소됩니다.{': '}
 
                                       {
                                         (1 - Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60 / 60) - 1) > 0
@@ -1860,6 +1945,24 @@ export default function Index({ params }: any) {
                                       }
 
                                     </span>
+
+                                    {/* request payment button */}
+                                    {/* 에스크로에 예치하고 구매자에게 결제요청 */}
+                                    <button
+                                      disabled={requestingPaymentList[index]}
+                                      className={
+                                        `text-sm bg-green-500 text-white px-3 py-2 rounded-md
+                                        ${requestingPaymentList[index] ? 'bg-gray-500' : 'bg-green-500'}
+                                        `
+                                      }
+                                      onClick={() => {
+                                        // request payment
+                                        requestPayment(index);
+                                      }}
+                                    >
+                                      에스크로에 예치하고 결제요청하기
+                                    </button>
+
                                   </div>
                                 </div>
                             )}
@@ -1879,7 +1982,7 @@ export default function Index({ params }: any) {
                                       width={32}
                                       height={32}
                                     />
-                                    <div>Escrow: {item.sellAmount} USDT</div>
+                                    <div>에스크로: {item.sellAmount} NOAH-K</div>
                                     <button
                                       className="bg-white text-black px-2 py-2 rounded-md"
                                       onClick={() => {
