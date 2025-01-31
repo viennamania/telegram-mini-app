@@ -58,11 +58,11 @@ function HomeContent() {
 
 
 
-  ///const address = account?.address;
+  const address = account?.address;
 
 
   // test address
-  const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+  //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
 
 
 
@@ -288,6 +288,8 @@ function HomeContent() {
           }
 
           const data = await response.json();
+
+          //console.log("getAllUsersTelegramIdByCenter data", data);
 
           //console.log("getAllUsersTelegramIdByCenter data", data);
           //setAgentBotSummaryList(data.resultSummany);
@@ -700,6 +702,7 @@ function HomeContent() {
                                 <th className="p-2">TID</th>
                                 <th className="p-2">지갑주소</th>
                                 <th className="p-2">핸드폰번호</th>
+                                <th className="p-2">판매자정보</th>
                                 <th className="p-2">NFT</th>
                             </tr>
                         </thead>
@@ -729,18 +732,6 @@ function HomeContent() {
                                         <span className="text-sm">
                                           {user?.telegramId}
                                         </span>
-                                        <Button
-                                          onClick={() => {
-                                            (window as any).Telegram.WebApp.openLink(
-                                              "https://t.me/" + user?.telegramId
-                                            );
-                                          }}
-                                          className="
-                                            inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                          "
-                                        >
-                                          텔레그램
-                                        </Button>
                                       </div>
                                     </td>
 
@@ -769,6 +760,23 @@ function HomeContent() {
                                         {user?.mobile}
                                       </span>
                                     </td>
+
+                                    <td className="p-2 text-center">
+                                      <span className="text-sm">
+                                        {
+                                          user?.seller?.bankInfo?.bankName
+                                        }
+                                        <br />
+                                        {
+                                          user?.seller?.bankInfo?.accountNumber
+                                        }
+                                        <br />
+                                        {
+                                          user?.seller?.bankInfo?.accountHolder
+                                        }
+                                      </span>
+                                    </td>
+
                                     <td className="p-2 text-center">
                                       <input
                                         type="radio"

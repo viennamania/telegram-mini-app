@@ -621,6 +621,7 @@ export async function getAllUsersTelegramIdByCenter(
         nickname: 1,
         mobile: 1,
         walletAddress: 1,
+        seller: 1,
         createdAt: 1,
         avatar: 1,
         center: 1,
