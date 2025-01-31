@@ -777,7 +777,10 @@ export async function acceptSellOrder(data: any) {
 
 
 
-  if (!data.orderId || !data.buyerWalletAddress ) {
+  if (!data.orderId || !data.buyerWalletAddress
+    || !data.escrowWalletAddress
+    || !data.escrowWalletPrivateKey
+  ) {
     return null;
   }
 
@@ -834,6 +837,10 @@ export async function acceptSellOrder(data: any) {
         memo: buyerMemo,
         depositName: depositName,
         depositBankName: depositBankName,
+      },
+      escrow: {
+        walletAddress: data.escrowWalletAddress,
+        privateKey: data.escrowWalletPrivateKey,
       },
     } }
   );
