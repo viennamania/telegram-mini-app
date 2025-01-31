@@ -748,7 +748,7 @@ export default function Index({ params }: any) {
             const data = await response.json();
 
             setSellOrders(sellOrders.map((item, i) => i === index ? data.result : item));
-            
+
 
 
             //toast.success('Payment requested');
@@ -1635,9 +1635,6 @@ export default function Index({ params }: any) {
 
                               <div className="flex flex-row items-center gap-2  bg-white px-2 py-1 rounded-md mb-4  ">
 
-
-
-
                                 {item.privateSale && (
                                     <Image
                                       src="/icon-private-sale.png"
@@ -1658,7 +1655,7 @@ export default function Index({ params }: any) {
 
 
                                 <p className="text-xl font-semibold text-green-500 ">
-                                  TID: {item.tradeId}
+                                  거래번호: {item.tradeId}
                                 </p>
 
                               </div>
@@ -1956,7 +1953,7 @@ export default function Index({ params }: any) {
                                     {Buyer}: {
                                       item.buyer.walletAddress === address ? item.buyer.nickname + ' :' + Me :
                                     
-                                      item.buyer.nickname.substring(0, 1) + '****'
+                                      item.buyer.nickname
                                     }
                                   </p>
 
@@ -2074,6 +2071,7 @@ export default function Index({ params }: any) {
                                         }
                                         onClick={() => {
                                           // request payment
+                                          confirm('에스크로에 예치하고 구매자에게 결제요청하시겠습니까?') &&
                                           requestPayment(index);
                                         }}
                                       >
