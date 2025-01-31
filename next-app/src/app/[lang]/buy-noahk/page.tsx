@@ -1822,8 +1822,8 @@ export default function Index({ params }: any) {
 
                                       <div className="flex flex-row items-center gap-2">
                                         <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                                        <span>
-                                        에스크로에 입급이 완료되면 거래가 시작되며 구매자에게 알림이 전송됩니다.
+                                        <span className="text-sm text-zinc-400">
+                                        에스크로에 입급이 완료되면 거래가 시작되며 구매자에게 결제요청 알림이 전송됩니다.
                                         </span>
                                       </div>
 
