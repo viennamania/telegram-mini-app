@@ -1729,6 +1729,78 @@ export default function Index({ params }: any) {
 
 
 
+                            {item.walletAddress === address && item.status === 'ordered' && (
+
+                              <div className="w-full flex flex-row items-center justify-end gap-2">
+
+                                      
+                                <button
+                                    disabled={cancellings[index]}
+                                    className={`text-sm bg-red-500 text-white px-3 py-2 rounded-md ${cancellings[index] ? 'bg-gray-500' : ''}`}
+                                    onClick={() => {
+                                      // api call
+                                      // cancelSellOrder
+
+                                      confirm('주문을 취소하시겠습니까?') &&
+                                      cancelSellOrder(item._id, index);
+
+                                    }}
+                                >
+
+                                  <div className="flex flex-row text-xs items-center gap-2 ">
+                                    {cancellings[index] ? (
+                                      <div className="
+                                        w-4 h-4
+                                        border-2 border-zinc-800
+                                        rounded-full
+                                        animate-spin
+                                      ">
+                                        <Image
+                                          src="/loading.png"
+                                          alt="loading"
+                                          width={12}
+                                          height={12}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <Image
+                                        src="/icon-cancelled.png"
+                                        alt="Cancel"
+                                        width={12}
+                                        height={12}
+                                      />
+                                    )}
+                                    <div className="flex flex-row xl:flex-col items-center gap-1">
+                                      <span>
+
+                                        {cancellings[index] && (
+                                          <span className="text-sm text-white">
+                                            판매주문 취소중...
+                                          </span>
+                                        )}
+
+                                        {!cancellings[index] && (
+                                          <span className="text-sm text-white">
+                                            판매주문 취소하기
+                                          </span>
+                                        )}
+
+
+
+                                      </span>
+                                    </div>
+                                  </div>
+                                  
+                                </button>
+
+                              </div>
+
+                            )}
+
+
+
+
+
                        
 
                             {/*
