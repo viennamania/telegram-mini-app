@@ -275,36 +275,41 @@ export default function Index({ params }: any) {
 
 
 
-      const searchParams = useSearchParams();
+    const searchParams = useSearchParams();
+
+    const center = searchParams.get('center');
+
+    /*
+    const [params, setParams] = useState({ center: '' });
+
   
-      const center = searchParams.get('center');
+    useEffect(() => {
+        const center = searchParams.get('center') || '';
+        setParams({ center });
+    }, [searchParams]);
+    */
   
-      /*
-      const [params, setParams] = useState({ center: '' });
-  
-    
-      useEffect(() => {
-          const center = searchParams.get('center') || '';
-          setParams({ center });
-      }, [searchParams]);
-      */
-   
-  
-      const account = useActiveAccount() as any;
-  
-  
-      const contract = getContract({
-          client,
-          chain: polygon,
-          address: contractAddress,
-      });
+
+    const account = useActiveAccount() as any;
+
+
+    const contract = getContract({
+        client,
+        chain: polygon,
+        address: contractAddress,
+    });
       
   
       
   
 
 
-      const address = account?.address;
+    const address = account?.address;
+
+    // test address
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+  
+
 
 
     const router = useRouter();
@@ -312,6 +317,39 @@ export default function Index({ params }: any) {
 
 
 
+    const [balance, setBalance] = useState(0);
+
+
+    useEffect(() => {
+  
+      // get the balance
+      const getBalance = async () => {
+        const result = await balanceOf({
+          contract,
+          address: address,
+        });
+    
+        //console.log(result);
+    
+        setBalance( Number(result) / 10 ** 18 );
+  
+      };
+  
+      if (address) getBalance();
+  
+      const interval = setInterval(() => {
+        if (address) getBalance();
+      } , 1000);
+
+      return () => clearInterval(interval);
+  
+    } , [address, contract]);
+
+
+
+
+
+  /*
   const [nativeBalance, setNativeBalance] = useState(0);
   const [balance, setBalance] = useState(0);
   useEffect(() => {
@@ -363,6 +401,7 @@ export default function Index({ params }: any) {
     return () => clearInterval(interval);
 
   } , [address, contract, params.chain]);
+  */
 
 
 
@@ -845,7 +884,7 @@ export default function Index({ params }: any) {
 
                 <div className="w-full flex flex-row items-between justify-start gap-2">
 
-                  <div className="flex flex-row items-center  gap-2">
+                  <div className=" flex flex-row items-center justify-between gap-2">
 
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">{Total}</div>
@@ -899,6 +938,7 @@ export default function Index({ params }: any) {
                           </div>
                       </div>
                       {/* checkbox for search my trades */}
+                      {/*
                       <div className="flex flex-row items-center gap-2">
                         <input
                           disabled={!address}
@@ -909,6 +949,8 @@ export default function Index({ params }: any) {
                         />
                         <label className="text-sm text-zinc-400">{Search_my_trades}</label>
                       </div>
+                      */}
+
                     </div>
 
                   </div>
@@ -934,10 +976,11 @@ export default function Index({ params }: any) {
                         })
                       }}
                     >
-                      Reload
+                      새로고침
                     </button>
 
                     {/* select table view or card view */}
+                    {/*
                     <div className="flex flex-row items-center space-x-4">
                         <div className="text-sm">{Table_View}</div>
                         <input
@@ -947,6 +990,7 @@ export default function Index({ params }: any) {
                           className="w-5 h-5 rounded-full"
                         />
                     </div>
+                    */}
 
                   </div>
 
@@ -1226,13 +1270,15 @@ export default function Index({ params }: any) {
 
                 ) : (
 
-                  <div className="w-full grid gap-4 lg:grid-cols-2 xl:grid-cols-3 justify-center ">
+                  <div className="w-full grid gap-4 lg:grid-cols-2 xl:grid-cols-3 justify-center
+                    mt-4 p-4
+                  ">
 
                       {sellOrders.map((item, index) => (
           
                         <div
                           key={index}
-                          className="relative flex flex-col items-center justify-center"
+                          className="w-full flex flex-col items-center justify-center"
                         >
 
 
@@ -1267,7 +1313,7 @@ export default function Index({ params }: any) {
 
                           <article
                               //key={index}
-                              className={` w-96 xl:w-full h-full relative
+                              className={` w-72 xl:w-full h-full relative
                                 ${item.walletAddress === address ? 'border-green-500' : 'border-gray-200'}
 
                                 ${item.status === 'accepted' || item.status === 'paymentRequested' ? 'border-red-600' : 'border-gray-200'}
@@ -1528,7 +1574,7 @@ export default function Index({ params }: any) {
 
                                 <div className="mt-2 flex flex-row items-start gap-2">
 
-                                  <p className="text-4xl font-semibold text-white">
+                                  <p className="text-xl font-semibold text-white">
                                     {item.sellAmount}{' '}NOAH-K
                                   </p>
                                   <p className="text-lg font-semibold text-white">{Rate}: {
