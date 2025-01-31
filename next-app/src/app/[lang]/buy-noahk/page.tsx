@@ -1782,6 +1782,8 @@ export default function Index({ params }: any) {
                                     
                                     
                                   <div className="mt-4 flex flex-row gap-2 items-center justify-start">
+
+                                    {/*
                                     <Image
                                       src="/loading.png"
                                       alt="Escrow"
@@ -1789,6 +1791,7 @@ export default function Index({ params }: any) {
                                       height={32}
                                       className="animate-spin"
                                     />
+                                    */}
 
                                     <div className="flex flex-col gap-2 items-start">
                                       {/*
@@ -1796,12 +1799,23 @@ export default function Index({ params }: any) {
                                         {Waiting_for_seller_to_deposit} {item.sellAmount} NOAH-K {to_escrow}...
                                       </span>
                                       */}
-                                      <span className="text-sm text-zinc-400">
-                                      판매자가 에스크로에 {item.sellAmount} NOAH-K를 입금하기를 기다리는 중입니다...
-                                      <br />
-                                      에스크로에 입급이 완료되면 거래가 시작되며 구매자에게 알림이 전송됩니다.
-                                      </span>
 
+                                      <div className="flex flex-row items-center gap-2">
+                                        {/* dot */}
+                                        <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                                        <span className="text-sm text-zinc-400">
+                                        판매자가 에스크로에 {item.sellAmount} NOAH-K를 입금하기를 기다리는 중입니다...
+                                        </span>
+                                      </div>
+
+                                      <div className="flex flex-row items-center gap-2">
+                                        <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                                        <span>
+                                        에스크로에 입급이 완료되면 거래가 시작되며 구매자에게 알림이 전송됩니다.
+                                        </span>
+                                      </div>
+
+                                      {/*
                                       <span className="text-sm text-zinc-400">
 
                                         {If_the_seller_does_not_deposit_the_USDT_to_escrow},
@@ -1815,6 +1829,13 @@ export default function Index({ params }: any) {
                                         } 
 
                                       </span>
+                                      */}
+
+
+
+
+
+
                                     </div>
                                   </div>
 
