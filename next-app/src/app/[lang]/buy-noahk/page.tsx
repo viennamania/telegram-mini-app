@@ -1481,16 +1481,19 @@ export default function Index({ params }: any) {
                                 ${item.status !== 'cancelled' && 'h-16'}
 
                                 mb-4 flex flex-row items-center bg-zinc-800 px-2 py-1 rounded-md`}>
+                                  
+                                  {/*
                                   <Image
                                     src="/icon-trade.png"
                                     alt="Trade"
                                     width={32}
                                     height={32}
                                   />
+                                  */}
 
 
-                                  <p className="text-sm font-semibold text-green-500 ">
-                                    {item.tradeId}
+                                  <p className="text-lg font-semibold text-green-500 ">
+                                    거래번호:{' '}{item.tradeId}
                                   </p>
 
                                   {item.status === 'cancelled' ? (
