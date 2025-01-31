@@ -61,7 +61,7 @@ interface SellOrder {
   limit: string;
   paymentMethods: string[];
 
-  usdtAmount: number;
+  sellAmount: number;
   krwAmount: number;
   rate: number;
 
@@ -425,7 +425,7 @@ export default function Index({ params }: any) {
         
         const fetchSellOrders = async () => {
           // api call
-          const response = await fetch('/api/order/getAllSellOrders', {
+          const response = await fetch('/api/orderNoahk/getAllSellOrders', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -464,13 +464,12 @@ export default function Index({ params }: any) {
 
 
 
-    const [usdtAmount, setUsdtAmount] = useState(0);
+    const [sellAmount, setSellAmount] = useState(0);
 
     const [defaultKrWAmount, setDefaultKrwAmount] = useState(0);
 
     const [krwAmount, setKrwAmount] = useState(0);
 
-    console.log('usdtAmount', usdtAmount);
 
 
     const [rate, setRate] = useState(100);
@@ -478,7 +477,7 @@ export default function Index({ params }: any) {
 
     useEffect(() => {
 
-      if (usdtAmount === 0) {
+      if (sellAmount === 0) {
 
         setDefaultKrwAmount(0);
 
@@ -488,12 +487,12 @@ export default function Index({ params }: any) {
       }
     
         
-      setDefaultKrwAmount( Math.round(usdtAmount * rate) );
+      setDefaultKrwAmount( Math.round(sellAmount * rate) );
 
 
-      setKrwAmount( Math.round(usdtAmount * rate) );
+      setKrwAmount( Math.round(sellAmount * rate) );
 
-    } , [usdtAmount, rate]);
+    } , [sellAmount, rate]);
 
 
 
@@ -527,14 +526,14 @@ export default function Index({ params }: any) {
 
       
 
-      const response = await fetch('/api/order/setSellOrder', {
+      const response = await fetch('/api/orderNoahk/setSellOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           walletAddress: address,
-          usdtAmount: usdtAmount,
+          sellAmount: sellAmount,
           krwAmount: krwAmount,
           rate: rate,
           privateSale: privateSale,
@@ -553,14 +552,14 @@ export default function Index({ params }: any) {
         */
         alert(Order_has_been_placed);
 
-        setUsdtAmount(0);
+        setSellAmount(0);
         setprivateSale(false);
 
         setAgreementPlaceOrder(false);
      
 
 
-        await fetch('/api/order/getAllSellOrders', {
+        await fetch('/api/orderNoahk/getAllSellOrders', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -608,7 +607,7 @@ export default function Index({ params }: any) {
 
       setCancellings(cancellings.map((item, i) => i === index ? true : item));
 
-      const response = await fetch('/api/order/cancelSellOrder', {
+      const response = await fetch('/api/orderNoahk/cancelSellOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -629,7 +628,7 @@ export default function Index({ params }: any) {
         alert('Order has been cancelled');
 
 
-        await fetch('/api/order/getAllSellOrders', {
+        await fetch('/api/orderNoahk/getAllSellOrders', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -875,8 +874,8 @@ export default function Index({ params }: any) {
 
                               <div className="flex flex-row items-center gap-2">
                                 <div className="w-2 h-2 bg-red-500 rounded-full inline-block mr-2"></div>
-                                <div className="text-sm text-red-500">
-                                  프로필 설정에서 결제정보를 등록하세요.
+                                <div className="text-sm text-zinc-400">
+                                  프로필 설정에서 결제정보를 등록하세요. 결제정보가 없으면 거래가 불가능합니다.
                                 </div>
                               </div>
 
@@ -910,7 +909,7 @@ export default function Index({ params }: any) {
                                 type="number"
                                 className=" w-32 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
                                 placeholder="Amount"
-                                value={usdtAmount}
+                                value={sellAmount}
                                 onChange={(e) => {
                                   // check number
                                   e.target.value = e.target.value.replace(/[^0-9.]/g, '');
@@ -922,13 +921,13 @@ export default function Index({ params }: any) {
 
                                   
                                   if (e.target.value === '') {
-                                    setUsdtAmount(0);
+                                    setSellAmount(0);
                                     return;
                                   }
                                   
-                                  parseFloat(e.target.value) < 0 ? setUsdtAmount(0) : setUsdtAmount(parseFloat(e.target.value));
+                                  parseFloat(e.target.value) < 0 ? setSellAmount(0) : setSellAmount(parseFloat(e.target.value));
 
-                                  parseFloat(e.target.value) > 1000 ? setUsdtAmount(1000) : setUsdtAmount(parseFloat(e.target.value));
+                                  parseFloat(e.target.value) > 1000 ? setSellAmount(1000) : setSellAmount(parseFloat(e.target.value));
 
                                 } }
 
@@ -979,7 +978,7 @@ export default function Index({ params }: any) {
                             <div className="flex flex-col gap-2">
 
                               <button
-                                disabled={usdtAmount === 0}
+                                disabled={sellAmount === 0}
                                 className="bg-red-400 text-white px-2 py-2 rounded-md"
                                 onClick={() => {
                                   krwAmount > 0 && setKrwAmount(krwAmount - 1);
@@ -989,7 +988,7 @@ export default function Index({ params }: any) {
                               </button>
 
                               <button
-                                disabled={usdtAmount === 0}
+                                disabled={sellAmount === 0}
                                 className="bg-red-600 text-white px-2 py-2 rounded-md"
                                 onClick={() => {
                                   krwAmount > 10 && setKrwAmount(krwAmount - 10);
@@ -999,7 +998,7 @@ export default function Index({ params }: any) {
                               </button>
 
                               <button
-                                disabled={usdtAmount === 0}
+                                disabled={sellAmount === 0}
                                 className="bg-red-800 text-white px-2 py-2 rounded-md"
                                 onClick={() => {
                                   krwAmount > 100 && setKrwAmount(krwAmount - 100);
@@ -1009,7 +1008,7 @@ export default function Index({ params }: any) {
                               </button>
 
                               <button
-                                disabled={usdtAmount === 0}
+                                disabled={sellAmount === 0}
                                 className="bg-red-900 text-white px-2 py-2 rounded-md"
                                 onClick={() => {
                                   krwAmount > 1000 && setKrwAmount(krwAmount - 1000);
@@ -1057,7 +1056,7 @@ export default function Index({ params }: any) {
                                   {Rate}: {
 
                                     // currency format
-                                    Number((krwAmount / usdtAmount).toFixed(2)).toLocaleString('ko-KR', {
+                                    Number((krwAmount / sellAmount).toFixed(2)).toLocaleString('ko-KR', {
                                       style: 'currency',
                                       currency: 'KRW'
                                     })
@@ -1069,7 +1068,7 @@ export default function Index({ params }: any) {
 
                             <div className="flex flex-col gap-2">
                               <button
-                                disabled={usdtAmount === 0}
+                                disabled={sellAmount === 0}
                                 className="bg-green-400 text-white px-2 py-2 rounded-md"
                                 onClick={() => {
                                   setKrwAmount(krwAmount + 1);
@@ -1078,7 +1077,7 @@ export default function Index({ params }: any) {
                                 +1
                               </button>
                               <button
-                                disabled={usdtAmount === 0}
+                                disabled={sellAmount === 0}
                                 className="bg-green-600 text-white px-2 py-2 rounded-md"
                                 onClick={() => {
                                   setKrwAmount(krwAmount + 10);
@@ -1088,7 +1087,7 @@ export default function Index({ params }: any) {
                               </button>
 
                               <button
-                                disabled={usdtAmount === 0}
+                                disabled={sellAmount === 0}
                                 className="bg-green-800 text-white px-2 py-2 rounded-md"
                                 onClick={() => {
                                   setKrwAmount(krwAmount + 100);
@@ -1098,7 +1097,7 @@ export default function Index({ params }: any) {
                               </button>
 
                               <button
-                                disabled={usdtAmount === 0}
+                                disabled={sellAmount === 0}
                                 className="bg-green-900 text-white px-2 py-2 rounded-md"
                                 onClick={() => {
                                   setKrwAmount(krwAmount + 1000);
@@ -1121,7 +1120,7 @@ export default function Index({ params }: any) {
 
                         <div className="mt-4 flex flex-row items-center gap-2">
                           <input
-                            disabled={!address || usdtAmount === 0 || sellOrdering}
+                            disabled={!address || sellAmount === 0 || sellOrdering}
                             type="checkbox"
                             checked={agreementPlaceOrder}
                             onChange={(e) => setAgreementPlaceOrder(e.target.checked)}
@@ -1213,8 +1212,8 @@ export default function Index({ params }: any) {
 
                           ) : (
                               <button
-                                  disabled={usdtAmount === 0 || agreementPlaceOrder === false}
-                                  className={`text-lg text-white px-4 py-2 rounded-md ${usdtAmount === 0 || agreementPlaceOrder === false ? 'bg-gray-500' : 'bg-green-500'}`}
+                                  disabled={sellAmount === 0 || agreementPlaceOrder === false}
+                                  className={`text-lg text-white px-4 py-2 rounded-md ${sellAmount === 0 || agreementPlaceOrder === false ? 'bg-gray-500' : 'bg-green-500'}`}
                                   onClick={() => {
                                       console.log('Sell USDT');
                                       // open trade detail
@@ -1580,12 +1579,12 @@ export default function Index({ params }: any) {
                               <div className="flex flex-row items-start gap-2">
 
                                 <p className="text-2xl font-semibold text-white">
-                                  {item.usdtAmount} USDT
+                                  {item.sellAmount} USDT
                                 </p>
 
                                 <p className="text-lg font-semibold text-white">{Rate}: {
 
-                                  Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                  Number(item.krwAmount / item.sellAmount).toFixed(2)
 
                                 }</p>
 
@@ -1797,7 +1796,7 @@ export default function Index({ params }: any) {
                                   <div className="flex flex-col gap-2 items-start">
                                     <span>
                                       {Waiting_for_seller_to_deposit}
-                                      {item.usdtAmount} USDT
+                                      {item.sellAmount} USDT
                                       {to_escrow}....
                                     </span>
 
@@ -1834,7 +1833,7 @@ export default function Index({ params }: any) {
                                       width={32}
                                       height={32}
                                     />
-                                    <div>Escrow: {item.usdtAmount} USDT</div>
+                                    <div>Escrow: {item.sellAmount} USDT</div>
                                     <button
                                       className="bg-white text-black px-2 py-2 rounded-md"
                                       onClick={() => {
