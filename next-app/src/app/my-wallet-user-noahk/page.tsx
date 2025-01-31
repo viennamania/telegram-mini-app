@@ -65,6 +65,11 @@ import { updateUser } from "@/lib/api/user";
 import { send } from "@fal-ai/serverless-client/src/function";
 
 
+import { privateKeyToAccount } from 'thirdweb/wallets'
+import { createThirdwebClient } from 'thirdweb';
+
+
+
 //const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // NOAH-K 포인트 on Polygon
 
 const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAH-K on Polygon
@@ -822,6 +827,53 @@ function ProfilePage() {
 
 
 
+    /*
+
+
+      const center = ctx.me.username+"";
+      const username = ctx.from?.id+"";
+      const expiration = Date.now() + 6000_000; // valid for 100 minutes
+      const message = JSON.stringify({
+        username,
+        expiration,
+      });
+    
+      const authCode = await adminAccount.signMessage({
+        message,
+      });
+
+  
+      const urlOtc = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/otc`;
+
+      */
+
+    const connectTelegram = async () => {
+
+        const adminAccount = privateKeyToAccount({
+            privateKey: process.env.ADMIN_SECRET_KEY as string,
+            client: createThirdwebClient({ clientId: process.env.THIRDWEB_CLIENT_ID as string }),
+        })
+          
+
+
+        const username = telegramId;
+        const expiration = Date.now() + 6000_000; // valid for 100 minutes
+        const message = JSON.stringify({
+          username,
+          expiration,
+        });
+
+        const authCode = await adminAccount.signMessage({
+            message,
+        });
+      
+      
+        const url = `/login/telegram-noah?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet-user-noahk`;
+
+        window.location.href = url;
+
+    }
+
 
 
     return (
@@ -963,10 +1015,19 @@ function ProfilePage() {
                                 
                             </div>
                         ) : (
-                            <p className="text-sm text-zinc-800">
-                                로그인 후 지갑주소가 표시됩니다.<br />
-                                창을 닫고 메뉴에서 지갑을 다시 시작해주세요.
-                            </p>
+                            <div className="flex flex-row gap-2 items-center justify-between">
+                                <p className="text-sm text-zinc-800">
+                                    로그인 후 지갑주소가 표시됩니다.<br />
+                                    창을 닫고 메뉴에서 지갑을 다시 시작해주세요.
+                                </p>
+                                {/* connectTelegram */}
+                                <Button
+                                    onClick={connectTelegram}
+                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+                                >
+                                    지갑 연결
+                                </Button>
+                            </div>
                         )}      
                     </div>
 
