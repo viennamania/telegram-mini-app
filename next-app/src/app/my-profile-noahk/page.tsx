@@ -91,11 +91,11 @@ function ProfilePage() {
 
 
 
-    const address = account?.address;
+    //const address = account?.address;
   
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
     ///const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
   
 
@@ -197,6 +197,7 @@ function ProfilePage() {
 
     const [mobile, setMobile] = useState('');
 
+    const [escrowWalletAddress, setEscrowWalletAddress] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -229,6 +230,9 @@ function ProfilePage() {
                 setSeller(data.result.seller);
 
                 setIsAgent(data.result.agent);
+
+                setEscrowWalletAddress(data.result.escrowWalletAddress);
+                
 
                 ///setReferralCode(data.result.erc721ContractAddress);
                 setErc721ContractAddress(data.result.erc721ContractAddress);
@@ -1206,6 +1210,38 @@ function ProfilePage() {
                         </div>
 
 
+                        {/* escrowWalletAddress */}
+                        {address && escrowWalletAddress && (
+                            <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
+                            bg-zinc-800 bg-opacity-90
+                            '>
+                                <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <span className="text-sm font-semibold text-gray-200">
+                                        에스크로 지갑주소
+                                    </span>
+                                </div>
+
+                                <div className='flex flex-row gap-2 items-center justify-between'>
+                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                                        {escrowWalletAddress}
+                                    </div>
+                                </div>
+
+                                {/* 복사 버튼 */}
+                                <button
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(escrowWalletAddress as string);
+                                        alert('에스크로 지갑주소가 복사되었습니다.');
+                                    }}
+                                    className="p-2 bg-blue-500 text-zinc-100 rounded"
+                                >
+                                    복사
+                                </button>
+
+                            </div>
+                        )}
 
 
 

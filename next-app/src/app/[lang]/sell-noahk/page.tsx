@@ -365,6 +365,8 @@ export default function Index({ params }: any) {
 
 
     const [seller, setSeller] = useState(null) as any;
+
+    const [escrowWalletAddress, setEscrowWalletAddress] = useState("");
   
   
     useEffect(() => {
@@ -391,6 +393,8 @@ export default function Index({ params }: any) {
                 setUser(data.result);
   
                 setSeller(data.result.seller);
+
+                setEscrowWalletAddress(data.result.escrowWalletAddress);
   
             }
         };
@@ -861,6 +865,7 @@ export default function Index({ params }: any) {
 
                               {/* seller bank info */}
                               <div className="flex flex-row items-center gap-2">
+                                <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
                                 <span className="text-sm text-zinc-400">
                                   {Payment}: {Bank_Transfer} ({seller?.bankInfo.bankName}{' '}
                                   {seller?.bankInfo.accountNumber}{' '}{seller?.bankInfo.accountHolder})
@@ -869,6 +874,25 @@ export default function Index({ params }: any) {
 
                               </div>
                           )}
+
+                          {/* escrow wallet address */}
+                          {/* 에스크로 지갑주소 */}
+                          {address && seller && escrowWalletAddress && (
+                            <div className="mt-4 flex flex-col gap-2 items-start">
+                              <div className="flex flex-row items-center gap-2">
+                                <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
+                                <span className="text-sm text-zinc-400">
+                                  에스크로: {
+                                  escrowWalletAddress.slice(0, 6) + '...' + escrowWalletAddress.slice(-4)
+                                  }
+                                </span>
+                              </div>
+                            </div>
+                          )}
+
+
+
+
 
                           {address && !seller && (
                             <div className="mt-4 flex flex-col gap-2 items-center justify-center">
