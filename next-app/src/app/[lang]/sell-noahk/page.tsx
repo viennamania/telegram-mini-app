@@ -78,6 +78,7 @@ interface SellOrder {
   cancelledAt: string;
 
   paymentConfirmedAt: string;
+  escrowWalletAddress: string;
   escrowTransactionHash: string;
 
   tradeId: string;
@@ -366,7 +367,7 @@ export default function Index({ params }: any) {
 
     const [seller, setSeller] = useState(null) as any;
 
-    const [escrowWalletAddress, setEscrowWalletAddress] = useState("");
+    //const [escrowWalletAddress, setEscrowWalletAddress] = useState("");
   
   
     useEffect(() => {
@@ -394,7 +395,7 @@ export default function Index({ params }: any) {
   
                 setSeller(data.result.seller);
 
-                setEscrowWalletAddress(data.result.escrowWalletAddress);
+                //setEscrowWalletAddress(data.result.escrowWalletAddress);
   
             }
         };
@@ -702,7 +703,10 @@ export default function Index({ params }: any) {
 
         const transaction = transfer({
           contract,
-          to: escrowWalletAddress,
+          
+          //to: escrowWalletAddress,
+          to: sellOrders[index].escrowWalletAddress,
+
           amount: sellOrders[index].sellAmount,
         });
 
