@@ -472,7 +472,7 @@ export default function Index({ params }: any) {
 
 
 
-    const [rate, setRate] = useState(100);
+    const [rate, setRate] = useState(1000);
 
 
     useEffect(() => {
@@ -861,7 +861,7 @@ export default function Index({ params }: any) {
                               {/* seller bank info */}
                               <div className="flex flex-row items-center gap-2">
                                 <span className="text-sm text-zinc-400">
-                                  결제:{Bank_Transfer} ({seller?.bankInfo.bankName}{' '}
+                                  {Payment}: {Bank_Transfer} ({seller?.bankInfo.bankName}{' '}
                                   {seller?.bankInfo.accountNumber}{' '}{seller?.bankInfo.accountHolder})
                                 </span>
                               </div>
@@ -949,7 +949,7 @@ export default function Index({ params }: any) {
                           {/* 판매할 수량을 입력하세요. */}
                           <div className="flex flex-row items-center gap-2">
                             {/* dot */}
-                            <div className="w-2 h-2 bg-zinc-400 rounded-full inline-block mr-2"></div>
+                            <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
                             <span className="text-sm text-zinc-400">
                               판매할 수량을 입력하세요.
                             </span>
@@ -957,10 +957,8 @@ export default function Index({ params }: any) {
 
 
 
-                          {seller && (
-                          <p className=" text-sm text-zinc-400">
-                            {Payment}: {Bank_Transfer} ({seller?.bankInfo.bankName})
-                          </p>
+
+
                         )}
 
                         </div>
@@ -1576,10 +1574,10 @@ export default function Index({ params }: any) {
 
 
 
-                              <div className="flex flex-row items-start gap-2">
+                              <div className="flex flex-row items-center gap-2">
 
                                 <p className="text-2xl font-semibold text-white">
-                                  {item.sellAmount} USDT
+                                  {item.sellAmount} NOAH-K
                                 </p>
 
                                 <p className="text-lg font-semibold text-white">{Rate}: {
@@ -1609,7 +1607,12 @@ export default function Index({ params }: any) {
 
 
                             <p className="mt-2 text-sm text-zinc-400">
-                              {Payment}: {Bank_Transfer} ({item.seller?.bankInfo.bankName})
+
+                              {Payment}: {Bank_Transfer}{' '}
+                              ({item.seller?.bankInfo.bankName}{' '}
+                              {item.seller?.bankInfo.accountNumber}{' '}
+                              {item.seller?.bankInfo.accountHolder})
+                              
                             </p>
 
 
@@ -1626,7 +1629,8 @@ export default function Index({ params }: any) {
 
                                   <div className="flex flex-row items-center gap-2">
                                     <span>{Seller}: {item.nickname}</span>
-                                    <span className="text-green-500">:{Me}</span>
+
+                                    {/*<span className="text-green-500">:{Me}</span>*/}
                                     
                                     {/* goto /sell-usdt/:id */}
 
@@ -1636,7 +1640,7 @@ export default function Index({ params }: any) {
 
                                       onClick={() => {
                                         router.push(
-                                          "/" + params.lang + `/sell-usdt/${item._id}`);
+                                          "/" + params.lang + `/sell-noahk/${item._id}`);
                                       }}
                                     >
                                       {Go_Sell_USDT}
@@ -1646,9 +1650,12 @@ export default function Index({ params }: any) {
 
                                 ) : (item.walletAddress === address && item.status === 'ordered') ? (
 
-                                  <div className="flex flex-row items-center gap-2">
+                                  <div className="w-full flex flex-row items-center justify-end gap-2">
+
+                                    {/*
                                     <span>{Seller}: {item.nickname}</span>
                                     <span className="text-green-500">:{Me}</span>
+                                    */}
                                            
                                     <button
                                         disabled={cancellings[index]}
@@ -1657,6 +1664,7 @@ export default function Index({ params }: any) {
                                           // api call
                                           // cancelSellOrder
       
+                                          confirm('주문을 취소하시겠습니까?') &&
                                           cancelSellOrder(item._id, index);
       
                                         }}
@@ -1686,7 +1694,24 @@ export default function Index({ params }: any) {
                                           />
                                         )}
                                         <div className="flex flex-row xl:flex-col items-center gap-1">
-                                          <span>{Cancel_My_Order}</span>
+                                          <span>
+                                            {/*Cancel_My_Order*/}
+                
+                                            {cancellings[index] && (
+                                              <span className="text-sm text-white">
+                                                판매주문 취소중...
+                                              </span>
+                                            )}
+
+                                            {!cancellings[index] && (
+                                              <span className="text-sm text-white">
+                                                판매주문 취소하기
+                                              </span>
+                                            )}
+
+
+
+                                          </span>
                                         </div>
                                       </div>
                                       
