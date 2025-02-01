@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
   });
 
 
-  //console.log("result", JSON.stringify(result));
+  console.log("requestPayment result", JSON.stringify(result));
 
 
 
@@ -69,6 +69,11 @@ export async function POST(request: NextRequest) {
 
   const user = await getOneByWalletAddress(buyerWalletAddress);
 
+
+  console.log("requestPayment user", JSON.stringify(user));
+
+
+
   if (user) {
 
     const center = user.center;
@@ -83,6 +88,8 @@ export async function POST(request: NextRequest) {
         sellOrder: sellOrder,
         message: messagetext,
       } );
+
+      console.log("insertOtcMessageByWalletAddress result", JSON.stringify(result));
 
 
     }
