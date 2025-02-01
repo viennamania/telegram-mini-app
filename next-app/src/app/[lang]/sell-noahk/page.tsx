@@ -460,11 +460,13 @@ export default function Index({ params }: any) {
 
         // fetch sell orders every 10 seconds
 
+        /*
         const interval = setInterval(() => {
           fetchSellOrders();
         }, 10000);
 
         return () => clearInterval(interval);
+        */
   
     }, [address, searchMyOrders]);
 
