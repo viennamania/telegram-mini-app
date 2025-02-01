@@ -464,6 +464,39 @@ export async function getAllSellOrders(
 
 
 
+// get sell order for escrow info
+export async function getOneSellOrderForEscrow(
+
+  {
+    orderId,
+  }: {
+    orderId: string;
+  }
+
+): Promise<any> {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('ordersNoahk');
+
+  // check orderId is valid ObjectId
+  if (!ObjectId.isValid(orderId)) {
+    return null;
+  }
+
+  const result = await collection.findOne<UserProps>(
+    { _id: new ObjectId(orderId) }
+  );
+
+  if (result) {
+    return result;
+  } else {
+    return null;
+  }
+
+}
+
+
+
 
 export async function getOneSellOrder(
 
@@ -963,7 +996,7 @@ export async function confirmPayment(data: any) {
     return null;
   }
 
-  if (!data.transactionHash) {
+  if (!data.escrowTransactionHash) {
     return null;
   }
 
@@ -981,9 +1014,14 @@ export async function confirmPayment(data: any) {
 
     { $set: {
       status: 'paymentConfirmed',
-      paymentAmount: paymentAmount,
-      queueId: data.queueId,
-      transactionHash: data.transactionHash,
+      payment: {
+        method: data.paymentMethod,
+        amount: paymentAmount,
+        proof: data.paymentProof,
+        memo: data.paymentMemo,
+        escrowTransactionHash: data.escrowTransactionHash,
+      },
+
       paymentConfirmedAt: new Date().toISOString(),
     } }
   );

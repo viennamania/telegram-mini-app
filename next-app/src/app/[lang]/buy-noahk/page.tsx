@@ -1097,10 +1097,10 @@ export default function Index({ params }: any) {
                                 />
                                 <div className="flex flex-col gap-2 items-start">
                                   <div className="text-lg font-semibold text-white">
-                                    {item.walletAddress === address ? 'Me' : item.nickname}
+                                    {item.walletAddress === address ? '나' : item.nickname}
                                   </div>
                                   <div className="text-sm text-zinc-400">
-                                    {item.walletAddress === address ? 'Me' : item.tradeId ? item.tradeId : ''}
+                                    {item.walletAddress === address ? '나' : item.tradeId ? item.tradeId : ''}
                                   </div>
                                 </div>
                               </div>
@@ -1664,7 +1664,7 @@ export default function Index({ params }: any) {
                                   <h2 className="text-lg font-semibold
                                     text-white
                                   ">
-                                    {item.walletAddress === address ? 'Me' : item.nickname}
+                                    {item.walletAddress === address ? '나' : item.nickname}
                                   
                                   </h2>
 

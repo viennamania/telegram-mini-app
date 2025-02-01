@@ -780,7 +780,54 @@ export default function Index({ params }: any) {
 
 
 
+    // confirmPayment
+    const [confirmingPaymentList, setConfirmingPaymentList] = useState([] as boolean[]);
+    useEffect(() => {
+      setConfirmingPaymentList(sellOrders.map(() => false));
+    }, [sellOrders]);
 
+    const confirmPayment = async (index: number) => {
+
+      if (confirmingPaymentList[index]) {
+        return;
+      }
+
+      setConfirmingPaymentList(confirmingPaymentList.map((item, i) => i === index ? true : item));
+
+      // api/confirmPayment
+      const response = await fetch('/api/orderNoahk/confirmPayment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          orderId: sellOrders[index]._id,
+          paymentMethod: 'bank',
+          paymentAmount: sellOrders[index].sellAmount,
+          paymentProof: 'bank transfer',
+          paymentMemo: 'bank transfer',
+        })
+      });
+
+
+
+      if (response.ok) {
+
+        const data = await response.json();
+
+        setSellOrders(sellOrders.map((item, i) => i === index ? data.result : item));
+
+        //toast.success('Payment confirmed');
+        alert('거래를 완료했습니다.');
+
+      } else {
+        //toast.error('Payment confirmation failed');
+        alert('거래를 실패했습니다.');
+      }
+
+      setConfirmingPaymentList(confirmingPaymentList.map((item, i) => i === index ? false : item));
+
+    }
 
 
 
@@ -1650,12 +1697,13 @@ export default function Index({ params }: any) {
                                     alt="Trade"
                                     width={32}
                                     height={32}
+                                    className="rounded-full animate-pulse"
                                   />
                                 )}
 
 
                                 <p className="text-xl font-semibold text-green-500 ">
-                                  거래번호: {item.tradeId}
+                                  거래번호: #{item.tradeId}
                                 </p>
 
                               </div>
@@ -1675,7 +1723,7 @@ export default function Index({ params }: any) {
                                 />
 
                                 <p className="text-xl font-semibold text-green-500 ">
-                                  TID: {item.tradeId}
+                                  거래번호: #{item.tradeId}
                                 </p>
                               </div>
 
@@ -1758,6 +1806,29 @@ export default function Index({ params }: any) {
                               {item.seller?.bankInfo.accountHolder})
                               
                             </p>
+
+                            <div className="mt-2 flex flex-row items-center gap-2">
+                              <span className="text-sm text-zinc-400">
+                                에스크로 확인
+                              </span>
+                              <button
+                                className="bg-white text-black px-2 py-2 rounded-md"
+                                onClick={() => {
+                                    // new window for smart contract
+                                    //window.open(`https://polygonscan.com/tx/${item.escrowTransactionHash}`);
+                                    //https://polygonscan.com/address/0x4b27beba84cf5c340d409b268acb3fe309f4292b#tokentxns
+
+                                    window.open(`https://polygonscan.com/address/${item?.escrow?.walletAddress}#tokentxns`);
+                                }}
+                              >
+                                <Image
+                                  src="/logo-polygon.png"
+                                  alt="Polygon"
+                                  width={20}
+                                  height={20}
+                                />
+                              </button>
+                            </div>
 
 
 
@@ -2038,7 +2109,7 @@ export default function Index({ params }: any) {
                                       {to_escrow}....
                                     </span>
                                     */}
-                                    <span className="text-lg text-green-500 font-semibold">
+                                    <span className="text-lg text-blue-500 font-semibold">
                                     {item.sellAmount} NOAH-K 를 에스크로에 예치해야 합니다.
                                     </span>
 
@@ -2098,12 +2169,20 @@ export default function Index({ params }: any) {
                                       width={32}
                                       height={32}
                                     />
-                                    <div>에스크로: {item.sellAmount} NOAH-K</div>
+                                    <div className="flex flex-col gap-2 items-start">
+                                      <span className="text-lg text-blue-500 font-semibold">
+                                        에스크로: {item.sellAmount} NOAH-K
+                                      </span>
+                                    </div>
+                                    
                                     <button
                                       className="bg-white text-black px-2 py-2 rounded-md"
                                       onClick={() => {
                                           // new window for smart contract
-                                          window.open(`https://polygonscan.com/tx/${item.escrowTransactionHash}`);
+                                          //window.open(`https://polygonscan.com/tx/${item.escrowTransactionHash}`);
+                                          //https://polygonscan.com/address/0x4b27beba84cf5c340d409b268acb3fe309f4292b#tokentxns
+
+                                          window.open(`https://polygonscan.com/address/${item?.escrow?.walletAddress}#tokentxns`);
                                       }}
                                     >
                                       <Image
@@ -2113,12 +2192,13 @@ export default function Index({ params }: any) {
                                         height={20}
                                       />
                                     </button>
+                                    
                                   </div>
 
                                   <div className="flex flex-row gap-2 items-center justify-start">
 
                                     {/* rotate loading icon */}
-                                  
+                                    {/*
                                     <Image
                                       src="/loading.png"
                                       alt="Escrow"
@@ -2126,9 +2206,85 @@ export default function Index({ params }: any) {
                                       height={32}
                                       className="animate-spin"
                                     />
+                                    */}
 
-                                    <div>
-                                      {Waiting_for_seller_to_deposit} {item.krwAmount} KRW to {Seller}...
+                                    <div className="flex flex-col gap-2 items-start">
+                                      {/*
+                                      <span className="text-lg text-green-500 font-semibold">
+                                        {Waiting_for_seller_to_deposit} {item.krwAmount} KRW to {Seller}...
+                                      </span>
+                                      */}
+                                      <div className="flex flex-row items-center gap-2">
+                                        {/* dot */}
+                                        <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
+                                        <span className="text-sm text-green-500 font-semibold">
+                                          {item.buyer.nickname}님이 {item.krwAmount} KRW를 결제한것을 확인하고 완료를 눌러주세요.
+                                        </span>
+                                      </div>
+
+
+                                      {/* confirm payment button */}
+                                      <div className="mt-5 w-full flex flex-row items-center justify-end gap-2">
+                                        
+                                        <button
+                                          disabled={confirmingPaymentList[index]}
+                                          className={
+                                            `text-sm bg-green-500 text-white px-3 py-2 rounded-md
+                                            ${confirmingPaymentList[index] ? 'bg-gray-500' : 'bg-green-500'}
+                                            `
+                                          }
+                                          onClick={() => {
+                                            // confirm payment
+                                            confirm('결제를 확인하고 거래를 완료하시겠습니까?') &&
+                                            confirmPayment(index);
+                                          }}
+                                        >
+                                          {confirmingPaymentList[index] ? (
+
+                                            <div className="flex flex-row text-xs items-center gap-2 ">
+                                              <div className="
+                                                w-4 h-4
+                                                border-2 border-zinc-800
+                                                rounded-full
+                                                animate-spin
+                                              ">
+                                                <Image
+                                                  src="/loading.png"
+                                                  alt="loading"
+                                                  width={12}
+                                                  height={12}
+                                                />
+                                              </div>
+                                              <div className="flex flex-row xl:flex-col items-center gap-1">
+                                                <span>
+                                                  <span className="text-sm text-white">
+                                                    거래 완료중...
+                                                  </span>
+                                                </span>
+                                              </div>
+                                            </div>
+
+                                          ) : (
+                                            <div className="flex flex-row text-xs items-center gap-2 ">
+                                              <Image
+                                                src="/icon-confirm.png"
+                                                alt="Confirm"
+                                                width={12}
+                                                height={12}
+                                              />
+                                              <div className="flex flex-row xl:flex-col items-center gap-1">
+                                                <span>
+                                                  <span className="text-sm text-white">
+                                                    거래 완료하기
+                                                  </span>
+                                                </span>
+                                              </div>
+                                            </div>
+                                          )}
+                                        </button>
+
+                                      </div>
+
                                     </div>
 
                                   </div>
