@@ -86,61 +86,68 @@ export async function POST(request: NextRequest) {
 
   const tokenContractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAH-K on Polygon
 
-  const client = createThirdwebClient({
-    secretKey: process.env.THIRDWEB_SECRET_KEY || "",
-  });
-
-  
-  const contractToken = getContract(
-    {
-      client: client,
-      chain: polygon,
-      address: tokenContractAddress,
-    }
-  );
-
-
-  const personalAccount = privateKeyToAccount({
-    client,
-    privateKey: escrowWalletPrivateKey,
-  });
-
-  const wallet = smartWallet({
-    chain: polygon,
-    sponsorGas: true,
-  });
-
-  const account = await wallet.connect({
-    client: client,
-    personalAccount: personalAccount,
-  });
-
-  //const claimWalletAddress = account.address;
-
-  //console.log("claimWalletAddress: ", claimWalletAddress);
-  // 0x4EF39b249A165cdA40b9c7b5F64e79bAb78Ff0C2
-
-
-
-  let transactions = [] as any;
-
-  const transaction = transfer({
-    contract: contractToken,
-    to: toWalletAddress,
-    amount: amount,
-  });
-
-  transactions.push(transaction);
-
-
-
-  const batchOptions: SendBatchTransactionOptions = {
-    account: account,
-    transactions: transactions,
-  };
 
 
   try {
+
+
+    const client = createThirdwebClient({
+      secretKey: process.env.THIRDWEB_SECRET_KEY || "",
+    });
+
+    
+    const contractToken = getContract(
+      {
+        client: client,
+        chain: polygon,
+        address: tokenContractAddress,
+      }
+    );
+
+
+    const personalAccount = privateKeyToAccount({
+      client,
+      privateKey: escrowWalletPrivateKey,
+    });
+
+    const wallet = smartWallet({
+      chain: polygon,
+      sponsorGas: true,
+    });
+
+    const account = await wallet.connect({
+      client: client,
+      personalAccount: personalAccount,
+    });
+
+    //const claimWalletAddress = account.address;
+
+    //console.log("claimWalletAddress: ", claimWalletAddress);
+    // 0x4EF39b249A165cdA40b9c7b5F64e79bAb78Ff0C2
+
+
+
+    let transactions = [] as any;
+
+    const transaction = transfer({
+      contract: contractToken,
+      to: toWalletAddress,
+      amount: amount,
+    });
+
+    transactions.push(transaction);
+
+
+
+    const batchOptions: SendBatchTransactionOptions = {
+      account: account,
+      transactions: transactions,
+    };
+
+
+
+
+
     const batchResponse = await sendBatchTransaction(
       batchOptions
     );
@@ -176,10 +183,12 @@ export async function POST(request: NextRequest) {
 
 
   } catch (error) {
+
     console.error("sendBatchTransaction error", error);
     return NextResponse.json({
       result: null,
     });
+    
   }
 
 

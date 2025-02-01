@@ -815,6 +815,8 @@ export default function Index({ params }: any) {
 
         const data = await response.json();
 
+        console.log('confirmPayment data', data);
+
         setSellOrders(sellOrders.map((item, i) => i === index ? data.result : item));
 
         //toast.success('Payment confirmed');
