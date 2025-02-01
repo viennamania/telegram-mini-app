@@ -1829,28 +1829,30 @@ export default function Index({ params }: any) {
                               
                             </p>
 
-                            <div className="mt-2 flex flex-row items-center gap-2">
-                              <span className="text-sm text-zinc-400">
-                                에스크로 확인
-                              </span>
-                              <button
-                                className="bg-white text-black px-2 py-2 rounded-md"
-                                onClick={() => {
-                                    // new window for smart contract
-                                    //window.open(`https://polygonscan.com/tx/${item.escrowTransactionHash}`);
-                                    //https://polygonscan.com/address/0x4b27beba84cf5c340d409b268acb3fe309f4292b#tokentxns
+                            {item.walletAddress === address && item?.escrow?.walletAddress && (
+                              <div className="mt-2 flex flex-row items-center gap-2">
+                                <span className="text-sm text-zinc-400">
+                                  에스크로 확인
+                                </span>
+                                <button
+                                  className="bg-white text-black px-2 py-2 rounded-md"
+                                  onClick={() => {
+                                      // new window for smart contract
+                                      //window.open(`https://polygonscan.com/tx/${item.escrowTransactionHash}`);
+                                      //https://polygonscan.com/address/0x4b27beba84cf5c340d409b268acb3fe309f4292b#tokentxns
 
-                                    window.open(`https://polygonscan.com/address/${item?.escrow?.walletAddress}#tokentxns`);
-                                }}
-                              >
-                                <Image
-                                  src="/logo-polygon.png"
-                                  alt="Polygon"
-                                  width={20}
-                                  height={20}
-                                />
-                              </button>
-                            </div>
+                                      window.open(`https://polygonscan.com/address/${item?.escrow?.walletAddress}#tokentxns`);
+                                  }}
+                                >
+                                  <Image
+                                    src="/logo-polygon.png"
+                                    alt="Polygon"
+                                    width={20}
+                                    height={20}
+                                  />
+                                </button>
+                              </div>
+                            )}
 
 
 
