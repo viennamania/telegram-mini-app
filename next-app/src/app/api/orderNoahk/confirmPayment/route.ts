@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
   // getOneSellOrder
   // get escrow wallet private key, toWalletAddress, amount
   const sellOrder = await getOneSellOrderForEscrow({
-    orderId,
+    orderId: orderId,
   })
 
 

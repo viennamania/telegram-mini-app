@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
   const sellOrder = await getOneSellOrderForEscrow({
     orderId: orderId,
   });
-  
+
   if (!sellOrder) {
     return NextResponse.json({
       result: null,
@@ -54,20 +54,14 @@ export async function POST(request: NextRequest) {
 
   //console.log("result", JSON.stringify(result));
 
-  const {
-    mobile: mobile,
-    seller: seller,
-    buyer: buyer,
-    tradeId: tradeId,
-    krwAmount: krwAmount,
-  } = result as UserProps;
+
 
   
-  const bankName = seller.bankInfo.bankName;
-  const accountNumber = seller.bankInfo.accountNumber;
-  const accountHolder = seller.bankInfo.accountHolder;
-  const depositName = tradeId;
-  const amount = krwAmount;
+  const bankName = sellOrder.seller.bankInfo.bankName;
+  const accountNumber = sellOrder.seller.bankInfo.accountNumber;
+  const accountHolder = sellOrder.seller.bankInfo.accountHolder;
+  ///const depositName = sellOrder.tradeId;
+  const krwAmount = sellOrder.krwAmount;
 
 
 
@@ -81,10 +75,10 @@ export async function POST(request: NextRequest) {
     
     if (buyerWalletAddress) {
 
-      const messagetext = `입금액: ${amount}원\n은행명: ${bankName}\n계좌번호: ${accountNumber}\n예금주: ${accountHolder}\n입금자명: ${depositName}`;
+      const messagetext = `입금액: ${krwAmount}원\n은행명: ${bankName}\n계좌번호: ${accountNumber}\n예금주: ${accountHolder}\n입금자명: ${depositName}`;
 
       const result = await insertOtcMessageByWalletAddress({
-        center,
+        center: center,
         walletAddress: buyerWalletAddress,
         sellOrder: sellOrder,
         message: messagetext,
