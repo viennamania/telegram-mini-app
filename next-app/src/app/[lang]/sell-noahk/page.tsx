@@ -2146,7 +2146,49 @@ export default function Index({ params }: any) {
                                           requestPayment(index);
                                         }}
                                       >
-                                        에스크로에 예치하고 결제요청하기
+                                        {requestingPaymentList[index] ? (
+                                          
+                                          <div className="flex flex-row text-xs items-center gap-2 ">
+                                            <div className="
+                                              w-4 h-4
+                                              border-2 border-zinc-800
+                                              rounded-full
+                                              animate-spin
+                                            ">
+                                              <Image
+                                                src="/loading.png"
+                                                alt="loading"
+                                                width={12}
+                                                height={12}
+                                              />
+                                            </div>
+                                            <div className="flex flex-row xl:flex-col items-center gap-1">
+                                              <span>
+                                                <span className="text-sm text-white">
+                                                  에스크로에 예치하고 결제요청중...
+                                                </span>
+                                              </span>
+                                            </div>
+                                          </div>
+
+                                        ) : (
+                                          <div className="flex flex-row text-xs items-center gap-2 ">
+                                            <Image
+                                              src="/icon-confirm.png"
+                                              alt="Confirm"
+                                              width={12}
+                                              height={12}
+                                            />
+                                            <div className="flex flex-row xl:flex-col items-center gap-1">
+                                              <span>
+                                                <span className="text-sm text-white">
+                                                  에스크로에 예치하고 결제요청하기
+                                                </span>
+                                              </span>
+                                            </div>
+                                          </div>
+                                        )}
+
                                       </button>
                                     </div>
 
