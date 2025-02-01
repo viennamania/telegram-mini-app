@@ -815,9 +815,19 @@ export default function Index({ params }: any) {
 
         const data = await response.json();
 
-        console.log('confirmPayment data', data);
+        
 
+        if (!data.result) {
+
+          //toast.error('Payment confirmation failed');
+          alert('거래를 실패했습니다.'+ '-' + data?.error);
+          setConfirmingPaymentList(confirmingPaymentList.map((item, i) => i === index ? false : item));
+          return;
+        }
+
+        
         setSellOrders(sellOrders.map((item, i) => i === index ? data.result : item));
+
 
         //toast.success('Payment confirmed');
         alert('거래를 완료했습니다.');

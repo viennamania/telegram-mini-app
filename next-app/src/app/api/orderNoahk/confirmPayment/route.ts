@@ -42,6 +42,7 @@ import {
 	balanceOf,
   
 } from "thirdweb/extensions/erc20";
+import { error } from "console";
 
 
 
@@ -67,6 +68,7 @@ export async function POST(request: NextRequest) {
   if (!sellOrder) {
     return NextResponse.json({
       result: null,
+      error: "Sell order not found",
     });
   }
 
@@ -188,7 +190,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       result: null,
     });
-    
+
   }
 
 
