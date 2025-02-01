@@ -283,3 +283,57 @@ export async function insertAgentMessageByWalletAddress(
     };
 
 }
+
+
+
+
+
+
+
+
+
+// insertAgentMessageByWalletAddress
+export async function insertOtcMessageByWalletAddress(
+    {
+        center,
+        walletAddress,
+        sellOrder,
+        message,
+    }
+    :
+    {
+        center: string,
+        walletAddress: string,
+        sellOrder: object,
+        message: string,
+    }
+) {
+
+    const client = await clientPromise;
+
+    const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+
+    const user = await client.db('shinemywinter').collection('users').findOne(
+        { walletAddress },
+        { projection: { telegramId: 1 } }
+    );
+
+    if (user && user.telegramId) {
+
+        await collectionTelegramMessages.insertOne(
+            {
+                center,
+                category: "otc",
+                sellOrder: sellOrder,
+                telegramId: user.telegramId,
+                message,
+            }
+        );
+
+    }
+
+    return {
+        result: "success",
+    };
+
+}
