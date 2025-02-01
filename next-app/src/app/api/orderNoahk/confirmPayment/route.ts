@@ -56,11 +56,19 @@ export async function POST(request: NextRequest) {
 
   const { orderId, paymentMethod, paymentAmount, paymentProof, paymentMemo } = body;
 
+  if (!orderId) {
+    return NextResponse.json({
+      result: null,
+      error: "Missing orderId",
+    });
+  }
 
 
   // getOneSellOrder
   // get escrow wallet private key, toWalletAddress, amount
-  const sellOrder = await getOneSellOrderForEscrow(orderId);
+  const sellOrder = await getOneSellOrderForEscrow({
+    orderId,
+  })
 
 
 

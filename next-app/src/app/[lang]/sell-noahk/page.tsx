@@ -317,7 +317,7 @@ export default function Index({ params }: any) {
     const address = account?.address;
 
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -792,6 +792,16 @@ export default function Index({ params }: any) {
         return;
       }
 
+
+      const orderId = sellOrders[index]._id;
+
+      //console.log('orderId', orderId);
+
+      const paymentAmount = sellOrders[index].sellAmount;
+
+      //console.log('paymentAmount', paymentAmount);
+
+
       setConfirmingPaymentList(confirmingPaymentList.map((item, i) => i === index ? true : item));
 
       // api/confirmPayment
@@ -801,9 +811,9 @@ export default function Index({ params }: any) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          orderId: sellOrders[index]._id,
+          orderId: orderId,
           paymentMethod: 'bank',
-          paymentAmount: sellOrders[index].sellAmount,
+          paymentAmount: paymentAmount,
           paymentProof: 'bank transfer',
           paymentMemo: 'bank transfer',
         })
