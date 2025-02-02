@@ -1794,9 +1794,10 @@ export default function Index({ params }: any) {
                             )}
 
 
-                            { (item.status === 'paymentConfirmed') && (
+                            { item.status === 'paymentConfirmed' && (
 
-                              <div className="flex flex-row items-center gap-2  bg-white px-2 py-1 rounded-md mb-4">
+                              <div className="flex flex-row items-center justify-between
+                              gap-2 bg-white px-2 py-1 rounded-md mb-4">
 
                                 {/*
                                 <Image
