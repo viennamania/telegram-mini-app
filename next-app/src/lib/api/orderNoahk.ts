@@ -741,9 +741,17 @@ export async function getSellOrdersForBuyer(
 
     const results = await collection.find<UserProps>(
       {
+
+        // exclude when order walletAddress is not equal to walletAddress
+
+        walletAddress: { $ne: walletAddress },
+
+
+
+
         //status: 'ordered',
   
-        status: { $ne: 'paymentConfirmed' },
+        //status: { $ne: 'paymentConfirmed' },
   
         // exclude private sale
         privateSale: { $ne: true },

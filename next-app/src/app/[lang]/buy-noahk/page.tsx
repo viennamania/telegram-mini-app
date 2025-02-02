@@ -612,11 +612,11 @@ export default function Index({ params }: any) {
 
             const data = await response.json();
 
-
-            //setSellOrders(data.result.orders);
+            
+            setSellOrders(data.result.orders);
 
             // exclude my sell orders
-            setSellOrders(data.result.orders.filter((item: any) => item.walletAddress !== address));
+            //setSellOrders(data.result.orders.filter((item: any) => item.walletAddress !== address));
 
 
 
@@ -737,6 +737,10 @@ export default function Index({ params }: any) {
             .then(data => {
                 ///console.log('data', data);
                 setSellOrders(data.result.orders);
+
+                            // exclude my sell orders
+                ///setSellOrders(data.result.orders.filter((item: any) => item.walletAddress !== address));
+
             })
 
         })
