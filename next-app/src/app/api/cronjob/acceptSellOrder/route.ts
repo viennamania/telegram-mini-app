@@ -93,22 +93,28 @@ export async function GET(request: NextRequest) {
 
   const buyerWalletAddress = walletAddress;
 
+
+  let buyerNickname = "";
+  let buyerAvatar = "";
+  let buyerMobile = "";
+  let buyerMemo = "";
+  let depositName = "";
+  let depositBankName = "";
+
   // getOneByWalletAddress
   const user = await getOneByWalletAddress(buyerWalletAddress);
 
-  if (!user) {
-    return NextResponse.json({
-      result: null,
-    });
+  if (user) {
+    buyerNickname = user.nickname;
+    buyerAvatar = user.avatar;
+    buyerMobile = user.mobile;
+    buyerMemo = "";
+    depositName = "";
+    depositBankName = "";
   }
 
 
-  const buyerNickname = user.nickname;
-  const buyerAvatar = user.avatar;
-  const buyerMobile = user.mobile;
-  const buyerMemo = "";
-  const depositName = "";
-  const depositBankName = "";
+
 
 
   //console.log("sellOrders", sellOrders);
