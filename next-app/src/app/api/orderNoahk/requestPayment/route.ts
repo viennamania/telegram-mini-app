@@ -12,7 +12,7 @@ import {
 
 import {
 	insertOtcMessageByWalletAddress
-} from '@lib/api/telegram';
+} from '@lib/api/telegramNoahk';
 
 
 
