@@ -1604,7 +1604,7 @@ export default function Index({ params }: any) {
                                 </div>
                             )}
 
-                            {item.status === 'paymentCompleted' && (
+                            {item.status === 'paymentConfirmed' && (
                               <div className="mt-4 flex flex-row items-center justify-between gap-2
                                 bg-green-500 text-white p-2 rounded-md
                               ">
