@@ -97,7 +97,7 @@ interface SellOrder {
 
 //const contractAddressArbitrum = "0x2f2a2543B76A4166549F7aab2e75Bef0aefC5B0f"; // USDT on Arbitrum
 
-const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAH-K on Polygon
+//const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAH-K on Polygon
 
 
 
@@ -290,6 +290,7 @@ export default function Index({ params }: any) {
     */
   
 
+    /*
     const account = useActiveAccount() as any;
 
 
@@ -298,13 +299,19 @@ export default function Index({ params }: any) {
         chain: polygon,
         address: contractAddress,
     });
-      
-  
-      
-  
-
 
     const address = account?.address;
+    */
+   
+
+
+    const address = searchParams.get('walletAddress') || '';
+  
+      
+  
+
+
+
 
     // test address
     //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
@@ -316,7 +323,7 @@ export default function Index({ params }: any) {
 
 
 
-
+    /*
     const [balance, setBalance] = useState(0);
 
 
@@ -344,6 +351,7 @@ export default function Index({ params }: any) {
       return () => clearInterval(interval);
   
     } , [address, contract]);
+    */
 
 
 
@@ -455,7 +463,7 @@ export default function Index({ params }: any) {
   }
 
  
-  
+  /*
   const [escrowBalance, setEscrowBalance] = useState(0);
   const [escrowNativeBalance, setEscrowNativeBalance] = useState(0);
   useEffect(() => {
@@ -507,7 +515,7 @@ export default function Index({ params }: any) {
     return () => clearInterval(interval);
 
   } , [address, escrowWalletAddress, contract, params.chain]);
-  
+  */
 
 
 
@@ -857,11 +865,15 @@ export default function Index({ params }: any) {
 
       <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
 
+        {/*
         <AutoConnect
             client={client}
             wallets={[wallet]}
             timeout={15000}
         />
+        */}
+
+
 
         <div className="py-0 w-full">
 
@@ -883,9 +895,8 @@ export default function Index({ params }: any) {
 
               </div>
 
-
+              {/*
                 <div className="w-full flex flex-row items-center justify-between gap-2">
-                  {/* my usdt balance */}
                   <div className='w-full flex flex-row gap-2 items-center justify-between
                       border border-gray-800
                       p-4 rounded-lg'>
@@ -911,6 +922,7 @@ export default function Index({ params }: any) {
                       </div>
                   </div>
                 </div>
+                */}
 
 
 
