@@ -3,7 +3,18 @@ import { NextResponse, type NextRequest } from "next/server";
 import {
   UserProps,
 	acceptSellOrder,
+  getOneSellOrderForEscrow,
 } from '@lib/api/orderNoahk';
+
+
+import {
+  getOneByWalletAddress,
+} from '@lib/api/userNoahk';
+
+import {
+	insertOtcMessageByWalletAddress
+} from '@lib/api/telegramNoahk';
+
 
 
 
@@ -128,6 +139,48 @@ export async function POST(request: NextRequest) {
   ///console.log("result", result);
 
 
+  if (!result) {
+    return NextResponse.json({
+      result: null,
+    });
+  }
+
+  // telegram message to seller
+
+  const sellOrder = await getOneSellOrderForEscrow({
+    orderId: orderId,
+  });
+
+  if (sellOrder) {
+    
+    
+
+    const sellerWalletAddress = sellOrder.seller.walletAddress;
+
+    const user = await getOneByWalletAddress(sellerWalletAddress);
+
+    if (user) {
+      
+      const center = user.center;
+      
+      if (sellerWalletAddress) {
+
+        const messagetext = '판매자가 구매를 수락하였습니다.';
+
+        const result = await insertOtcMessageByWalletAddress({
+          center: center,
+          walletAddress: sellerWalletAddress,
+          sellOrder: sellOrder,
+          message: messagetext,
+        } );
+
+        //console.log("insertOtcMessageByWalletAddress result", JSON.stringify(result));
+
+      }
+
+    }
+
+  }
 
 
 
