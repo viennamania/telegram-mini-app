@@ -1604,6 +1604,22 @@ export default function Index({ params }: any) {
                                 </div>
                             )}
 
+                            {item.status === 'paymentCompleted' && (
+                              <div className="mt-4 flex flex-row items-center justify-start gap-2
+                                bg-green-500 text-white p-2 rounded-md
+                              ">
+                                <Image
+                                  src='/icon-completed.png'
+                                  alt='payment completed'
+                                  width={20}
+                                  height={20}
+                                />
+                                <p className="text-sm text-green-500">
+                                  Payment completed
+                                </p>
+                              </div>
+                            )}
+
 
                               {/*
                               
@@ -2124,14 +2140,14 @@ export default function Index({ params }: any) {
                                         ) ? (
 
                                           <>
-                                            {/*
+                                            
                                             <Image
                                               src="/icon-expired.png"
                                               alt="Expired"
                                               width={80}
                                               height={80}
                                             />
-                                            */}
+                                            
                                         
                                         </>
                                         ) : (
