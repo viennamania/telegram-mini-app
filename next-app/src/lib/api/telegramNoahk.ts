@@ -304,7 +304,7 @@ export async function insertOtcMessageByWalletAddress(
     {
         center: string,
         walletAddress: string,
-        sellOrder: object,
+        sellOrder: any,
         message: string,
     }
 ) {
@@ -322,7 +322,7 @@ export async function insertOtcMessageByWalletAddress(
 
         await collectionTelegramMessages.insertOne(
             {
-                center,
+                center: center,
                 category: "otc",
                 sellOrder: sellOrder,
                 telegramId: user.telegramId,
