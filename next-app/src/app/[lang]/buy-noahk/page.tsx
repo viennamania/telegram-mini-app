@@ -726,8 +726,12 @@ export default function Index({ params }: any) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                }),
+                body: JSON.stringify(
+                  {
+                    walletAddress: address,
+                    searchMyTrades: searchMyTrades,
+                  }
+                ),
             })
             .then(response => response.json())
             .then(data => {
@@ -809,8 +813,12 @@ export default function Index({ params }: any) {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-          })
+          body: JSON.stringify(
+            {
+              walletAddress: address,
+              searchMyTrades: searchMyTrades,
+            }
+          )
         }).then(async (response) => {
           const data = await response.json();
           //console.log('data', data);
@@ -988,8 +996,12 @@ export default function Index({ params }: any) {
                           headers: {
                             'Content-Type': 'application/json',
                           },
-                          body: JSON.stringify({
-                          }),
+                          body: JSON.stringify(
+                            {
+                              walletAddress: address,
+                              searchMyTrades: searchMyTrades,
+                            }
+                          ),
                         })
                         .then(response => response.json())
                         .then(data => {
