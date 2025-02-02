@@ -1000,9 +1000,11 @@ export default function Index({ params }: any) {
                 {/* if there is no sell orders, then show the message */}
 
 
-                  {address && !loadingSellOrders && sellOrders.filter((item) => item.status === 'ordered').length === 0 && (
-
-                    
+                  {address && !loadingSellOrders && sellOrders.filter((item) => item.status === 'ordered'
+                  || item.status === 'accepted'
+                  || item.status === 'paymentRequested'
+                  || item.status === 'paymentConfirmed').length === 0 && (
+                 
                     <div className=" w-full flex gap-4  justify-center">
 
 
