@@ -820,13 +820,13 @@ function HomeContent() {
 
               {/* 에어드롭 USDT */}
               {/* input amountAirDrop */}
-              {address && !loadingUsers && users.length > 0 && (
+              {address && !loadingUsers && users?.length > 0 && (
 
                 <div className="flex flex-row gap-2 items-center justify-between">
 
                   {/* 회원수 */}
                   <span className="text-lg text-gray-800 font-semibold bg-gray-100 p-2 rounded">
-                    회원수: {users.length}
+                    회원수: {users?.length}
                   </span>
 
                   <input
@@ -858,14 +858,17 @@ function HomeContent() {
                 </div>
               
               )}
-                
-
-
+              
             </div>
+
+
 
             <div className="w-full flex flex-col gap-2 items-start justify-between">
             
-              {address && (
+              {
+                address && (
+              
+
                 <>          
                   {loadingUsers ? (
                     <div className="flex flex-col items-center justify-center">
@@ -890,7 +893,9 @@ function HomeContent() {
                                   key={index}
                                   className={`${selectUser === user?.walletAddress ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}`}
                                 >
+
                                     <td className="p-2">
+                                      
                                       <div className="flex flex-row gap-2 items-center justify-start">
                                         <Image
                                           src={user?.avatar || "/icon-anonymous.png"}
@@ -903,9 +908,11 @@ function HomeContent() {
                                           {user?.nickname}
                                         </span>
                                       </div>
+                                    
                                     </td>
-                                    {/* telegram id */}
+
                                     <td className="p-2">
+                                      
                                       <div className="flex flex-row gap-2 items-center justify-start">
                                         <span className="text-sm">
                                           {user?.telegramId}
@@ -923,9 +930,11 @@ function HomeContent() {
                                           텔레그램
                                         </Button>
                                       </div>
+                                      
                                     </td>
 
                                     <td className="p-2">
+                                      
                                       <div className="flex flex-row gap-2 items-center justify-start">
                                         <span className="text-sm">
                                           {user?.walletAddress?.slice(0, 6) + "..."}
@@ -942,9 +951,13 @@ function HomeContent() {
                                           복사
                                         </Button>
                                       </div>
+                                      
                                     </td>
 
+
                                     <td className="p-2">
+
+                                      
                                       <div className="flex flex-row gap-2 items-center justify-start">
                                         <span className="text-sm">
                                           
@@ -965,11 +978,10 @@ function HomeContent() {
                                           복사
                                         </Button>
 
-                                        {/* opensea link */}
                                         <Button
                                           onClick={() => {
                                             (window as any).Telegram.WebApp.openLink(
-                                              "https://opensea.io/assets/matic/" + user?.referralCode.split("_")[0] + "/" + user?.referralCode.split("_")[1]
+                                              "https://opensea.io/assets/matic/" + user?.referralCode?.split("_")[0] + "/" + user?.referralCode?.split("_")[1]
                                             );
                                           }}
                                           className="
@@ -987,7 +999,11 @@ function HomeContent() {
                                           </div>
                                         </Button>
                                       </div>
+                                      
+
+
                                     </td>
+
                                     <td className="p-2 text-center">
                                       {user?.centerOwner && (
                                         <span className="text-white font-semibold bg-green-500 p-1 rounded">
@@ -1020,7 +1036,9 @@ function HomeContent() {
 
 
             
-              {selectUser && (
+              {
+                selectUser && (
+
                 <>
                   {loadingAgentNft ? (
                     <div className="flex flex-col items-center justify-center">
@@ -1051,10 +1069,10 @@ function HomeContent() {
 
                                         <div className="flex flex-col gap-2 items-start justify-between">
                                           <span className="text-sm">
-                                            {nft.name && nft.name.slice(0, 10) + "..."}
+                                            {nft.name && nft.name?.slice(0, 10) + "..."}
                                           </span>
                                           <span className="text-sm text-gray-400">
-                                            {nft.description && nft.description.slice(0, 10) + "..."}
+                                            {nft.description && nft.description?.slice(0, 10) + "..."}
                                           </span>
                                         </div>
 
@@ -1151,7 +1169,6 @@ function HomeContent() {
                 </div>
               </div>
 
-              {/* total trading account count and balance */}
               <div className='w-full flex flex-col gap-2 items-start justify-between'>
                   <div className="w-full flex flex-row items-center gap-2">
                       <span className='w-1/2 text-sm text-gray-800 font-semibold'>
@@ -1185,7 +1202,10 @@ function HomeContent() {
                   </div>
               </div>
 
-            {address && (
+            {
+              //address && (
+              false && (
+
               <>          
                 {loadingApplications ? (
                   <div className="w-full flex flex-col items-center justify-center">
@@ -1261,7 +1281,8 @@ function HomeContent() {
 
                                   </td>
                                   <td className="p-2 text-right">
-                                    {Number(application?.tradingAccountBalance?.balance).toLocaleString('en-US', {
+                                    {application?.tradingAccountBalance?.balance &&
+                                    Number(application?.tradingAccountBalance?.balance).toLocaleString('en-US', {
                                         style: 'currency',
                                         currency: 'USD'
                                     })}
@@ -1270,10 +1291,12 @@ function HomeContent() {
                                   {/* claimedTradingVolume */}
                                   <td className="p2 text-right flex flex-row gap-2 items-center justify-end pr-2">
                                     <span className="text-green-500">
-                                      {application?.claimedTradingVolume?.toFixed(0)}
+                                      {application?.claimedTradingVolume &&
+                                      application?.claimedTradingVolume?.toFixed(0)}
                                     </span>{' '}/{' '}
                                     <span className="text-red-500">
-                                      {Number(application?.affiliateInvitee?.data?.volMonth - application?.claimedTradingVolume)?.toFixed(0)}
+                                      {application?.affiliateInvitee?.data?.volMonth && application?.claimedTradingVolume &&
+                                      Number(application?.affiliateInvitee?.data?.volMonth - application?.claimedTradingVolume)?.toFixed(0)}
                                     </span>
                                     {/* button */}
                                     <Button

@@ -777,6 +777,16 @@ async function sendMessages() {
         */
 
 
+        // Error sending message: GrammyError: Call to 'sendVideo' failed! (403: Forbidden: bot was blocked by the user)
+
+        // check if the user blocked the bot
+
+        // if the user blocked the bot, the bot will not be able to send messages to the user
+
+        
+
+
+
         const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
         await botInstance.api.sendVideo(
           telegramId,
@@ -785,7 +795,14 @@ async function sendMessages() {
             caption: caption,
             reply_markup: keyboard,
           }
-        );
+        ).then(() => {
+        //console.log('Message sent');
+        }).catch((error) => {
+          console.error('Error sending video:', error+'');
+        })
+
+
+
 
         // send video to multiple users
 
