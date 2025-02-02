@@ -2117,7 +2117,9 @@ export default function Index({ params }: any) {
                                         {item.status === 'ordered' && (
                                           
                                           // check if the order is expired
-                                          new Date().getTime() - new Date(item.createdAt).getTime() > 1000 * 60 * 60 * 24
+                                          //new Date().getTime() - new Date(item.createdAt).getTime() > 1000 * 60 * 60 * 24
+
+                                          false
 
                                         ) ? (
 
