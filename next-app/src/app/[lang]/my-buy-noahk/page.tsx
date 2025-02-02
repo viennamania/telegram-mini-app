@@ -6,11 +6,11 @@ import { useState, useEffect } from "react";
 
 
 import {
-	accountAbstraction,
-	client,
+  accountAbstraction,
+  client,
   wallet,
-	editionDropContract,
-	editionDropTokenId,
+  editionDropContract,
+  editionDropTokenId,
 } from "../../constants";
 
 import {
@@ -1513,7 +1513,7 @@ export default function Index({ params }: any) {
                                 ${item.status !== 'cancelled' && 'h-16'}
 
                                 mb-4 flex flex-row items-center justify-between gap-2
-                                 bg-zinc-800 py-1 rounded-md
+                                 bg-white text-black p-2 rounded-md
 
                                 `}>
                                   
@@ -1540,7 +1540,7 @@ export default function Index({ params }: any) {
                                       <>
                                         {params.lang === 'kr' ? (
 
-                                          <p className="ml-2 text-sm text-zinc-400">
+                                          <p className="text-sm text-zinc-800">
 
                                           
                                             {new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 ? (
@@ -1670,18 +1670,37 @@ export default function Index({ params }: any) {
                               </div>
 
                       
+                              {address && item.buyer && item.buyer.walletAddress === address ? (
 
-                              <div className="mt-4 mb-4 flex flex-col items-start text-sm
-                                text-zinc-400
-                              ">
-                                {Payment}: {Bank_Transfer} (
-                                  {item.seller?.bankInfo.bankName}
-                                  {' '}{item.seller?.bankInfo.accountNumber.slice(0, 5)}****
-                                  {' '}{item.seller?.bankInfo.accountHolder.slice(0, 1)}**
-                                  )
-                              </div>
+                                <div className="mt-4 flex flex-col items-start justify-start gap-2">
+                                
+                                  <span className="text-sm font-semibold text-white">
+                                    {Payment}: {Bank_Transfer}
+                                  </span>
 
+                                  <span className="text-xl font-semibold text-yellow-500">
+                                    {item.seller?.bankInfo.bankName}
+                                    {' '}{item.seller?.bankInfo.accountNumber}
+                                    {' '}{item.seller?.bankInfo.accountHolder}
+                                  </span>
+                                    
+                                </div>
 
+                              ) : (
+
+                                <div className="mt-4 mb-4 flex flex-col items-start text-sm
+                                  text-zinc-400
+                                ">
+                                  {Payment}: {Bank_Transfer} (
+                                    {item.seller?.bankInfo.bankName}
+                                    {' '}{item.seller?.bankInfo.accountNumber.slice(0, 5)}****
+                                    {' '}{item.seller?.bankInfo.accountHolder.slice(0, 1)}**
+                                    )
+                                </div>
+
+                              )}
+
+                  
 
                               <div className="flex flex-col items-start justify-start gap-2">
                                 <p className="flex items-center gap-2">
@@ -1994,7 +2013,9 @@ export default function Index({ params }: any) {
                                         width={32}
                                         height={32}
                                       />
-                                      <div>{Escrow}: {item.sellAmount} NOAH-K</div>
+                                      <span className="text-sm text-zinc-400">
+                                        {Escrow}: {item.sellAmount} NOAH-K
+                                      </span>
                                       <button
                                         className="bg-white text-black px-2 py-2 rounded-md"
                                         onClick={() => {
@@ -2014,10 +2035,10 @@ export default function Index({ params }: any) {
                                       </button>
                                     </div>
 
-                                    <div className="flex flex-row gap-2 items-center justify-start">
+                                    <div className="flex flex-col gap-2 items-start justify-start">
 
                                       {/* rotate loading icon */}
-                                    
+                                      {/*
                                       <Image
                                         src="/loading.png"
                                         alt="Escrow"
@@ -2025,13 +2046,32 @@ export default function Index({ params }: any) {
                                         height={32}
                                         className="animate-spin"
                                       />
-
-                                      <div>Waiting for buyer to send {
+                                      */}
+                                      {/*
+                                      <div>
+                                        Waiting for buyer to send {
                                       item.krwAmount.toLocaleString('ko-KR', {
                                         style: 'currency',
                                         currency: 'KRW',
-                                      })} to seller...</div>
+                                      })} to seller...
+                                      </div>
+                                      */}
                                     
+                                      {/* 판매자가 입급을 확인중입니다. */}
+                                      {/* 판매자 결제계좌로 입금을 해야합니다. */}
+
+                                      <div className="flex flex-row items-center gap-2">
+                                        <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                                        <span className="text-sm text-zinc-400">
+                                          판매자가 입급을 확인중입니다.
+                                        </span>
+                                      </div>
+                                      <div className="flex flex-row items-center gap-2">
+                                        <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                                        <span className="text-sm text-zinc-400">
+                                          판매자 결제계좌로 입금을 해야합니다.
+                                        </span>
+                                      </div>
 
                                     </div>
 
