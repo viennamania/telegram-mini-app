@@ -1327,7 +1327,7 @@ export default function Index({ params }: any) {
                         >
 
 
-                          {item.status === 'ordered' && (new Date().getTime() - new Date(item.createdAt).getTime() > 1000 * 60 * 60 * 24) && (
+                          {/*item.status === 'ordered' && (new Date().getTime() - new Date(item.createdAt).getTime() > 1000 * 60 * 60 * 24) && (
                             <div className="absolute inset-0 flex justify-center items-center z-10
                               bg-black bg-opacity-50
                             ">
@@ -1339,7 +1339,7 @@ export default function Index({ params }: any) {
                                 className="opacity-20"
                               />
                             </div>
-                          )}
+                          )*/}
 
                           {item.status === 'cancelled' && (
                             <div className="absolute inset-0 flex justify-center items-center z-10
