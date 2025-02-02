@@ -7,6 +7,17 @@ import {
 } from '@lib/api/orderNoahk';
 
 
+
+import {
+  getOneByWalletAddress,
+} from '@lib/api/userNoahk';
+
+import {
+	insertOtcMessageByWalletAddress
+} from '@lib/api/telegramNoahk';
+
+
+
 import {
 	createThirdwebClient,
 
@@ -188,7 +199,45 @@ export async function POST(request: NextRequest) {
     }
 
 
+
+
     // telegram message
+
+
+    const buyerWalletAddress = buyer.walletAddress;
+
+    const user = await getOneByWalletAddress(buyerWalletAddress);
+  
+  
+    //console.log("requestPayment user", JSON.stringify(user));
+  
+  
+  
+    if (user) {
+  
+      const center = user.center;
+      
+      if (buyerWalletAddress) {
+  
+        const messagetext = '거래를 완료하였습니다.';
+  
+        const result = await insertOtcMessageByWalletAddress({
+          center: center,
+          walletAddress: buyerWalletAddress,
+          sellOrder: sellOrder,
+          message: messagetext,
+        } );
+  
+        //console.log("insertOtcMessageByWalletAddress result", JSON.stringify(result));
+  
+  
+      }
+  
+    }
+
+
+
+
 
 
     return NextResponse.json({
