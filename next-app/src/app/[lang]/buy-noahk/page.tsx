@@ -1523,6 +1523,7 @@ export default function Index({ params }: any) {
                                     alt="Trade"
                                     width={32}
                                     height={32}
+                                    className="rounded-lg animate-spin"
                                   />
                                   
                                   <div className="flex flex-col items-start justify-start gap-2">
