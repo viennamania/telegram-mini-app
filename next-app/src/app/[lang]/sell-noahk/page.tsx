@@ -1002,7 +1002,7 @@ export default function Index({ params }: any) {
 
                   {address && !loadingSellOrders && sellOrders.filter((item) => item.status === 'ordered'
                   || item.status === 'accepted'
-                  || item.status === 'paymentRequested').length > 0 && (
+                  || item.status === 'paymentRequested').length === 0 && (
                  
                     <div className=" w-full flex gap-4  justify-center">
 
