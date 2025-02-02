@@ -2135,7 +2135,10 @@ export default function Index({ params }: any) {
                                       height={35}
                                       className="animate-spin"
                                     />
-                                    <div>{Accepting_Order}...</div>
+                                
+                                    <span className="text-lg font-semibold text-green-500">
+                                      {Accepting_Order}...
+                                    </span>
                                   </div>
 
 
