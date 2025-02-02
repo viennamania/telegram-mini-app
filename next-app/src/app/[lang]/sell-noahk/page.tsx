@@ -1758,31 +1758,33 @@ export default function Index({ params }: any) {
 
                             { (item.status === 'accepted' || item.status === 'paymentRequested' || item.status === 'cancelled') && (
 
-                              <div className="flex flex-row items-center gap-2  bg-white px-2 py-1 rounded-md mb-4  ">
+                              <div className="flex flex-row items-center justify-between
+                              gap-2  bg-white px-2 py-1 rounded-md mb-4  ">
 
-                                {item.privateSale && (
+                                <div className="flex flex-row items-center gap-2">
+                                  {item.privateSale && (
+                                      <Image
+                                        src="/icon-private-sale.png"
+                                        alt="Private Sale"
+                                        width={32}
+                                        height={32}
+                                      />
+                                  ) }
+
+                                  { (item.status === 'accepted' || item.status === 'paymentRequested') && (
                                     <Image
-                                      src="/icon-private-sale.png"
-                                      alt="Private Sale"
+                                      src="/icon-trade.png"
+                                      alt="Trade"
                                       width={32}
                                       height={32}
+                                      className="rounded-full animate-spin"
                                     />
-                                ) }
+                                  )}
 
-                                { (item.status === 'accepted' || item.status === 'paymentRequested') && (
-                                  <Image
-                                    src="/icon-trade.png"
-                                    alt="Trade"
-                                    width={32}
-                                    height={32}
-                                    className="rounded-full animate-spin"
-                                  />
-                                )}
-
-
-                                <p className="text-xl font-semibold text-green-500 ">
-                                  거래번호: #{item.tradeId}
-                                </p>
+                                  <p className="text-xl font-semibold text-green-500 ">
+                                    거래번호: #{item.tradeId}
+                                  </p>
+                                </div>
 
                                 {item.status === 'accepted' && (
                                   <span className="bg-red-500 text-white px-2 py-1 rounded-md">
