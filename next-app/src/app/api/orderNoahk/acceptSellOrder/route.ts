@@ -1,7 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import {
-  UserProps,
 	acceptSellOrder,
   getOneSellOrderForEscrow,
 } from '@lib/api/orderNoahk';
@@ -38,11 +37,6 @@ import {
   
  } from "thirdweb/wallets";
 
-
-
-
-// Download the helper library from https://www.twilio.com/docs/node/install
-import twilio from "twilio";
 
 
 export async function POST(request: NextRequest) {
@@ -166,7 +160,7 @@ export async function POST(request: NextRequest) {
       if (sellerWalletAddress) {
 
         const messagetext = '겨래번호: ' + '#' + sellOrder.tradeId
-         '\n\n판매자가 구매를 수락하였습니다.';
+         '\n\n구매자가 구매를 신청하였습니다.';
 
         const result = await insertOtcMessageByWalletAddress({
           center: center,

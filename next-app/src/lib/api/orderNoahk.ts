@@ -420,7 +420,10 @@ export async function getAllSellOrders(
 
 
     )
+    
     .sort({ createdAt: -1 })
+
+
     .limit(limit).skip((page - 1) * limit).toArray();
 
     // get total count of orders
@@ -459,6 +462,46 @@ export async function getAllSellOrders(
 
   }
 
+
+}
+
+
+
+// getAllSellOpenOrders
+// exclude my orders
+export async function getAllSellOpenOrders(
+
+  {
+    limit,
+    page,
+    walletAddress,
+  }: {
+    limit: number;
+    page: number;
+    walletAddress: string;
+  
+  }
+
+): Promise<ResultProps> {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('ordersNoahk');
+
+  // status is 'ordered'
+  // exclude my orders
+
+  const results = await collection.find<UserProps>(
+    {
+      walletAddress: { $ne: walletAddress },
+      status: 'ordered',
+      privateSale: { $ne: true },
+    }
+  ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+
+  return {
+    totalCount: results.length,
+    orders: results,
+  };
 
 }
 
