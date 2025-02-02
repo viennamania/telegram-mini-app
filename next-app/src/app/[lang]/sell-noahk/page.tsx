@@ -1658,6 +1658,10 @@ export default function Index({ params }: any) {
 
                                ${item.status === 'ordered' && 'border-green-500 border-2'}
 
+                               ${item.status === 'accepted' && 'border-blue-500 border-2'}
+
+                               ${item.status === 'paymentRequested' && 'border-yellow-500 border-2'}
+
                             `}
                         >
 
