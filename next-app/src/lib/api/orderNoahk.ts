@@ -16,6 +16,8 @@ export interface UserProps {
   verified: boolean;
   */
 
+  _id: string,
+
   id: string,
   name: string,
   nickname: string,

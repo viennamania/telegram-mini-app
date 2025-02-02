@@ -1515,7 +1515,6 @@ export default function Index({ params }: any) {
                             { (item.status === 'accepted' || item.status === 'paymentRequested' || item.status === 'cancelled') && (
                                 
                               <div className={`
-                                ${item.status !== 'cancelled' && 'h-16'}
 
                                 mb-4 flex flex-row xl:flex-col items-center justify-between gap-2
                                  bg-white text-black p-2 rounded-md

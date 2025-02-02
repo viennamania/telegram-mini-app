@@ -127,7 +127,9 @@ export async function GET(request: NextRequest) {
     const user = await getOneByWalletAddress(buyerWalletAddress);
 
     if (!user) {
-      return;
+      return NextResponse.json({
+        result: null,
+      });
     }
 
 
@@ -143,7 +145,9 @@ export async function GET(request: NextRequest) {
     const escrowWalletPrivateKey = ethers.Wallet.createRandom().privateKey;
 
     if (!escrowWalletPrivateKey) {
-      return;
+      return NextResponse.json({
+        result: null,
+      });
     }
 
 
@@ -164,7 +168,9 @@ export async function GET(request: NextRequest) {
     });
 
     if (!account) {
-      return;
+      return NextResponse.json({
+        result: null,
+      });
     }
 
 
