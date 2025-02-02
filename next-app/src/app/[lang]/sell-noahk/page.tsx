@@ -2349,7 +2349,7 @@ export default function Index({ params }: any) {
 
 
                                       {/* confirm payment button */}
-                                      <div className="mt-5 w-full flex flex-row items-center justify-end gap-2">
+                                      <div className="mt-5 mb-5 w-full flex flex-row items-center justify-end gap-2">
                                         
                                         <button
                                           disabled={confirmingPaymentList[index]}
@@ -2383,7 +2383,7 @@ export default function Index({ params }: any) {
                                               <div className="flex flex-row xl:flex-col items-center gap-1">
                                                 <span>
                                                   <span className="text-sm text-white">
-                                                    거래 완료중...
+                                                    거래를 완료중입니다. 완료될때까지 기다려주세요.
                                                   </span>
                                                 </span>
                                               </div>
