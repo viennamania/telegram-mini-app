@@ -755,7 +755,7 @@ export default function Index({ params }: any) {
 
 
             //toast.success('Payment requested');
-            alert('에스크로 지갑으로 NOAH-K가 전송되었습니다.');
+            alert('판매자 지갑에서 에스크로 지갑으로 NOAH-K가 전송되었고 구매자에게 결제 요청을 하였습니다.');
           } else {
             //toast.error('Payment request failed');
             alert('에스크로 지갑으로 NOAH-K 전송이 실패했습니다.');
@@ -2248,7 +2248,7 @@ export default function Index({ params }: any) {
                                             <div className="flex flex-row xl:flex-col items-center gap-1">
                                               <span>
                                                 <span className="text-sm text-white">
-                                                  에스크로에 예치하고 결제요청중...
+                                                  에스크로에 예치하고 결제요청중입니다. 완료될때까지 기다려주세요.
                                                 </span>
                                               </span>
                                             </div>
