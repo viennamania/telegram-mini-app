@@ -1573,7 +1573,7 @@ export default function Index({ params }: any) {
                         className="relative flex flex-col items-center justify-center"
                       >
 
-
+                        {/*}
                         {item.status === 'ordered' && (new Date().getTime() - new Date(item.createdAt).getTime() > 1000 * 60 * 60 * 24) && (
                           <div className="absolute inset-0 flex justify-center items-center z-10
                             bg-black bg-opacity-50
@@ -1587,6 +1587,7 @@ export default function Index({ params }: any) {
                             />
                           </div>
                         )}
+                        */}
 
 
 
