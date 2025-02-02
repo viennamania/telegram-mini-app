@@ -1798,16 +1798,21 @@ export default function Index({ params }: any) {
 
                               <div className="flex flex-row items-center gap-2  bg-white px-2 py-1 rounded-md mb-4">
 
+                                {/*
                                 <Image
                                   src="/confirmed.png"
                                   alt="Payment Confirmed"
                                   width={50}
                                   height={50}
                                 />
+                                */}
 
                                 <p className="text-xl font-semibold text-green-500 ">
                                   거래번호: #{item.tradeId}
                                 </p>
+                                <span className="bg-green-500 text-white px-2 py-1 rounded-md">
+                                  거래완료
+                                </span>
                               </div>
 
                             )}
