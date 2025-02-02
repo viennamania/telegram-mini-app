@@ -1670,18 +1670,37 @@ export default function Index({ params }: any) {
                               </div>
 
                       
+                              {address && item.buyer && item.buyer.walletAddress === address ? (
 
-                              <div className="mt-4 mb-4 flex flex-col items-start text-sm
-                                text-zinc-400
-                              ">
-                                {Payment}: {Bank_Transfer} (
-                                  {item.seller?.bankInfo.bankName}
-                                  {' '}{item.seller?.bankInfo.accountNumber.slice(0, 5)}****
-                                  {' '}{item.seller?.bankInfo.accountHolder.slice(0, 1)}**
-                                  )
-                              </div>
+                                <div className="mt-4 flex flex-col items-start justify-start gap-2">
+                                
+                                  <span className="text-sm font-semibold text-white">
+                                    {Payment}: {Bank_Transfer}
+                                  </span>
 
+                                  <span className="text-xl font-semibold text-yellow-500">
+                                    {item.seller?.bankInfo.bankName}
+                                    {' '}{item.seller?.bankInfo.accountNumber}
+                                    {' '}{item.seller?.bankInfo.accountHolder}
+                                  </span>
+                                    
+                                </div>
 
+                              ) : (
+
+                                <div className="mt-4 mb-4 flex flex-col items-start text-sm
+                                  text-zinc-400
+                                ">
+                                  {Payment}: {Bank_Transfer} (
+                                    {item.seller?.bankInfo.bankName}
+                                    {' '}{item.seller?.bankInfo.accountNumber.slice(0, 5)}****
+                                    {' '}{item.seller?.bankInfo.accountHolder.slice(0, 1)}**
+                                    )
+                                </div>
+
+                              )}
+
+                  
 
                               <div className="flex flex-col items-start justify-start gap-2">
                                 <p className="flex items-center gap-2">
