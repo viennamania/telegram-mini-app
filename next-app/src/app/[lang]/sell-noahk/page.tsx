@@ -655,33 +655,36 @@ export default function Index({ params }: any) {
         //alert('Order has been cancelled');
         alert('판매주문이 취소되었습니다.');
 
-        setLoadingSellOrders(true);
-        await fetch('/api/orderNoahk/getAllSellOrders', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            walletAddress: address,
-            searchMyOrders: searchMyOrders
-          })
-        }).then(async (response) => {
-          const data = await response.json();
-          //console.log('data', data);
-          if (data.result) {
-            setSellOrders(data.result.orders);
-          }
-        });
-        setLoadingSellOrders(false);
-
       } else {
         
         //toast.error('Order has been failed');
-        alert('Order has been failed');
+        alert('판매주문 취소가 실패했습니다.');
 
       }
 
       setCancellings(cancellings.map((item, i) => i === index ? false : item));
+
+
+
+      setLoadingSellOrders(true);
+      await fetch('/api/orderNoahk/getAllSellOrders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          walletAddress: address,
+          searchMyOrders: searchMyOrders
+        })
+      }).then(async (response) => {
+        const data = await response.json();
+        //console.log('data', data);
+        if (data.result) {
+          setSellOrders(data.result.orders);
+        }
+      });
+      setLoadingSellOrders(false);
+
 
     }
 
