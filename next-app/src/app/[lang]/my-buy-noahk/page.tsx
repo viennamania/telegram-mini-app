@@ -1637,8 +1637,8 @@ export default function Index({ params }: any) {
                                 </div>
 
                                 {/* 거래완료 */}
-                                  <span className="text-lg font-semibold text-white">
-                                    거래완료
+                                  <span className="text-sm font-semibold text-white">
+                                    거래완료상태
                                   </span>
 
                               </div>

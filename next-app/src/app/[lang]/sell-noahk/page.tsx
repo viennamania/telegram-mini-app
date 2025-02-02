@@ -534,6 +534,14 @@ export default function Index({ params }: any) {
         return;
       }
 
+      // check the balance
+
+      if (sellAmount > balance) {
+        //toast.error('Insufficient balance');
+        alert('판매할수 있는 NOAH-K가 부족합니다.');
+        return;
+      }
+
 
       setSellOrdering(true);
 
