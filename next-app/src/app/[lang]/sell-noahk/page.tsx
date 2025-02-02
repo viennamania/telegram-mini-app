@@ -575,6 +575,8 @@ export default function Index({ params }: any) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
+            walletAddress: address,
+            searchMyOrders: searchMyOrders
           })
         }).then(async (response) => {
           const data = await response.json();
@@ -645,6 +647,8 @@ export default function Index({ params }: any) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
+            walletAddress: address,
+            searchMyOrders: searchMyOrders
           })
         }).then(async (response) => {
           const data = await response.json();
