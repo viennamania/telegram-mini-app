@@ -2351,6 +2351,15 @@ export default function Index({ params }: any) {
                                         </span>
                                       </div>
 
+                                      {/* 만약 구매자가 결제한것을 확인하고 완료를 하지 않으면 판매자 권한을 회수할 수 있습니다. */}
+                                      <div className="flex flex-row items-center gap-2">
+                                        {/* dot */}
+                                        <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
+                                        <span className="text-sm text-zinc-400">
+                                          {Buyer}가 결제한것을 확인하고 완료를 하지 않으면 판매자 권한을 회수할 수 있습니다.
+                                        </span>
+                                      </div>
+
 
                                       {/* confirm payment button */}
                                       <div className="mt-5 mb-5 w-full flex flex-row items-center justify-end gap-2">
