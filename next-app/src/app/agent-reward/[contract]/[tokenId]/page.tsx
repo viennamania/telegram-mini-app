@@ -1756,7 +1756,9 @@ export default function AgentPage({ params }: any) {
                                     OKX Funding Balance
                                 </span>
                                 <span className='text-sm text-gray-800'>
-                                    {htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.balance || 0} $(USD)
+                                    {
+                                        Number(htxAssetValuationForAgent.find((item) => item.applicationId === application.id)?.assetValuation?.balance || 0).toFixed(2)
+                                    } $(USD)
                                 </span>
                                 {/* convert timestamp to date */}
                                 <span className='text-xs text-gray-800'>
