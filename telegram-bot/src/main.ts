@@ -705,6 +705,10 @@ async function sendMessages() {
 
     const category = message.category; // "wallet", "settlement", "agent", "center"
 
+
+    const sellOrderStatus = message?.sellOrder?.status;
+
+
     try {
 
       if (category === 'wallet') {
@@ -1019,7 +1023,55 @@ async function sendMessages() {
           }
         )
 
+      } else if (category === 'otc') {
+
+
+
+        const username = telegramId;
+        const expiration = Date.now() + 6000_000; // valid for 100 minutes
+        const message = JSON.stringify({
+          username,
+          expiration,
+        });
+      
+        const authCode = await adminAccount.signMessage({
+          message,
+        });
+
+
+        if (sellOrderStatus === 'paymentRequested') {
+
+          const urlOtcBuy = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram-noah?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/buy-noahk`;
+
+          const keyboard = new InlineKeyboard()
+          .webApp('💰 NOAH-K 포인트 구매하기', urlOtcBuy)
+
+
+          const caption = '\n\n🚀 ' + messageText
+          + '\n\n' + '👇 아래 버튼을 눌러 확인하세요.';
+
+          //const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-otc.jpg`; // error
+
+          const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-otc.webp`;
+
+          ///const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-sports-game.jpg`;
+
+
+          await botInstance.api.sendPhoto(
+            telegramId,
+            photoUrl,
+            {
+              caption: caption,
+              reply_markup: keyboard,
+            }
+          )
+
+        }
+
+
+
       }
+
 
 
 
