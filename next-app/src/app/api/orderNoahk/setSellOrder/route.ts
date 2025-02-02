@@ -5,6 +5,21 @@ import {
 } from '@lib/api/orderNoahk';
 
 
+import {
+  UserProps,
+	requestPayment,
+  getOneSellOrderForEscrow,
+} from '@lib/api/orderNoahk';
+
+import {
+  getOneByWalletAddress,
+} from '@lib/api/userNoahk';
+
+import {
+	insertOtcMessageByWalletAddress
+} from '@lib/api/telegramNoahk';
+
+
 
 export async function POST(request: NextRequest) {
 
@@ -24,6 +39,25 @@ export async function POST(request: NextRequest) {
     rate: rate,
     privateSale: privateSale,
   });
+
+
+  // send message to seller telegram
+  /*
+
+  const user = await getOneByWalletAddress(walletAddress);
+
+  if (user) {
+
+    await insertOtcMessageByWalletAddress({
+      center: user.center,
+      walletAddress: walletAddress,
+      sellOrder: result,
+      message: '판매 요청이 등록되었습니다.',
+    });
+
+  }
+  */
+
 
 
  
