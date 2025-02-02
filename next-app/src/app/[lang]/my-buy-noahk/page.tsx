@@ -928,6 +928,7 @@ export default function Index({ params }: any) {
                       
                     </div>
 
+                    {/*}
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">{Sell}</div>
                       <div className="text-xl font-semibold text-gray-400">
@@ -947,6 +948,7 @@ export default function Index({ params }: any) {
 
                       </div>
                     </div>
+                    */}
 
 
 
