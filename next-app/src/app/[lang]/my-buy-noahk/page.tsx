@@ -1811,7 +1811,8 @@ export default function Index({ params }: any) {
 
 
 
-                              {item?.buyer && (item.status === 'accepted' || item.status === 'paymentRequested') && (
+                              {/*
+                              item?.buyer && (item.status === 'accepted' || item.status === 'paymentRequested') && (
                           
                                
                                 
@@ -1844,7 +1845,8 @@ export default function Index({ params }: any) {
                                   />
                                 </div>
                               
-                              )}
+                              )
+                                */}
                             
 
                               {/* waiting for escrow */}
