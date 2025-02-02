@@ -1649,6 +1649,8 @@ export default function Index({ params }: any) {
 
                                ${item.status === 'paymentConfirmed' ? 'bg-gray-900 border-gray-900' : ''}
 
+                               ${item.status === 'ordered' && 'border-green-500 border-2'}
+
                             `}
                         >
 
