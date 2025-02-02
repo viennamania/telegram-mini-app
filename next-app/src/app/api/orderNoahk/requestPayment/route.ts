@@ -52,11 +52,9 @@ export async function POST(request: NextRequest) {
   });
 
 
-  console.log("requestPayment result", JSON.stringify(result));
 
 
-
-  /*
+  
   const bankName = sellOrder.seller.bankInfo.bankName;
   const accountNumber = sellOrder.seller.bankInfo.accountNumber;
   const accountHolder = sellOrder.seller.bankInfo.accountHolder;
@@ -68,10 +66,6 @@ export async function POST(request: NextRequest) {
   const buyerWalletAddress = sellOrder.buyer.walletAddress;
 
   const user = await getOneByWalletAddress(buyerWalletAddress);
-
-
-  console.log("requestPayment user", JSON.stringify(user));
-
 
 
   if (user) {
@@ -95,17 +89,7 @@ export async function POST(request: NextRequest) {
     }
 
   }
-  */
-  const center = "noah_wallet_bot";
-  const buyerWalletAddress = "0x1234"
-  const messagetext = `거래가 완료되었습니다. 거래 ID: ${sellOrder.tradeId}`;
 
-  await insertOtcMessageByWalletAddress({
-    center: center,
-    walletAddress: buyerWalletAddress,
-    sellOrder: sellOrder,
-    message: messagetext,
-  } );
 
  
   return NextResponse.json({
