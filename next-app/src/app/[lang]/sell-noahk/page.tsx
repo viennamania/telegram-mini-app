@@ -1733,7 +1733,7 @@ export default function Index({ params }: any) {
                                     alt="Trade"
                                     width={32}
                                     height={32}
-                                    className="rounded-full animate-pulse"
+                                    className="rounded-full animate-spin"
                                   />
                                 )}
 
