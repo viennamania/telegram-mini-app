@@ -1512,7 +1512,10 @@ export default function Index({ params }: any) {
                               <div className={`
                                 ${item.status !== 'cancelled' && 'h-16'}
 
-                                mb-4 flex flex-row items-center bg-zinc-800 px-2 py-1 rounded-md`}>
+                                mb-4 flex flex-row items-center justify-between gap-2
+                                 bg-zinc-800 py-1 rounded-md
+
+                                `}>
                                   
                                   
                                   <Image
@@ -1584,13 +1587,13 @@ export default function Index({ params }: any) {
 
                                   {/* if status is accepted, show "구매신청상태" */}
                                   {item.status === 'accepted' && (
-                                    <div className="ml-2 text-sm text-green-500">
+                                    <div className="ml-2 text-sm bg-green-500 text-white px-2 py-1 rounded-md">
                                       구매신청상태
                                     </div>
                                   )}
 
                                   {item.status === 'paymentRequested' && (
-                                    <div className="ml-2 text-sm text-green-500">
+                                    <div className="ml-2 text-sm bg-green-500 text-white px-2 py-1 rounded-md">
                                       판매자입금대기
                                     </div>
                                   )}
