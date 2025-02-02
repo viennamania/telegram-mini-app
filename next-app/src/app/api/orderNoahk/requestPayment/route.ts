@@ -74,7 +74,8 @@ export async function POST(request: NextRequest) {
     
     if (buyerWalletAddress) {
 
-      const messagetext = `입금액: ${krwAmount}원\n은행명: ${bankName}\n계좌번호: ${accountNumber}\n예금주: ${accountHolder}`;
+      const messagetext = `아래 판매자 계좌로 입금해주세요.
+      \n\n입금액: ${krwAmount}원\n은행명: ${bankName}\n계좌번호: ${accountNumber}\n예금주: ${accountHolder}`;
 
       const result = await insertOtcMessageByWalletAddress({
         center: center,
