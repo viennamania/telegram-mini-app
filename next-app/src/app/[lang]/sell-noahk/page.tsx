@@ -466,7 +466,17 @@ export default function Index({ params }: any) {
 
         
         const interval = setInterval(() => {
-          fetchSellOrders();
+          
+          // check all requsting payment list is false
+          // and all confirming payment list is false
+
+          if (requestingPaymentList.every((item) => item === false)
+          && confirmingPaymentList.every((item) => item === false)) {
+            fetchSellOrders();
+          }
+          
+     
+
         }, 10000);
 
         return () => clearInterval(interval);
