@@ -1742,6 +1742,18 @@ export default function Index({ params }: any) {
                                   거래번호: #{item.tradeId}
                                 </p>
 
+                                {item.status === 'accepted' && (
+                                  <span className="bg-red-500 text-white px-2 py-1 rounded-md">
+                                    구매신청상태
+                                  </span>
+                                )}
+
+                                {item.status === 'paymentRequested' && (
+                                  <span className="bg-yellow-500 text-white px-2 py-1 rounded-md">
+                                    결제요청상태
+                                  </span>
+                                )}
+
                               </div>
 
                             )}
