@@ -206,9 +206,14 @@ export async function GET(request: NextRequest) {
     // telegram message to seller
 
 
-    const sellerWalletAddress = sellOrder.seller.walletAddress;
+    const sellerWalletAddress = sellOrder.walletAddress;
+
+    //console.log("sellerWalletAddress", sellerWalletAddress);
 
     const userSeller = await getOneByWalletAddress(sellerWalletAddress);
+
+    //console.log("userSeller", userSeller);
+
 
     if (userSeller) {
       
