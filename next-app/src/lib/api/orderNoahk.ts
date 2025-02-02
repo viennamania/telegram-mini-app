@@ -60,6 +60,7 @@ export interface UserProps {
   buyer: any,
 
   transactionHash: string,
+
 }
 
 export interface ResultProps {

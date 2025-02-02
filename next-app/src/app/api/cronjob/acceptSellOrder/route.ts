@@ -207,8 +207,9 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const tradeId = result.tradeId;
+    //const tradeId = result.tradeId;
 
+    const acceptedSellOrder = result;
 
 
     // telegram message to seller
@@ -229,12 +230,13 @@ export async function GET(request: NextRequest) {
       
       if (sellerWalletAddress) {
 
-        const messagetext = '겨래번호: ' + '#' + tradeId + ': 구매자가가 구매를 신청하였습니다.';
+        const messagetext = '구매자가가 구매를 신청하였습니다.';
 
         const result = await insertOtcMessageByWalletAddress({
           center: center,
           walletAddress: sellerWalletAddress,
-          sellOrder: sellOrder,
+          //sellOrder: sellOrder,
+          sellOrder: acceptedSellOrder,
           message: messagetext,
         } );
 
