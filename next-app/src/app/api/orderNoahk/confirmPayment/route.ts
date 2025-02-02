@@ -83,10 +83,10 @@ export async function POST(request: NextRequest) {
 
 
 
-  const { escrow, walletAddress, sellAmount, } = sellOrder;
+  const { escrow, walletAddress, sellAmount, buyer} = sellOrder;
 
   const escrowWalletPrivateKey = escrow.walletPrivateKey;
-  const toWalletAddress = walletAddress;
+  const toWalletAddress = buyer.walletAddress;
   const amount = sellAmount;
 
 
