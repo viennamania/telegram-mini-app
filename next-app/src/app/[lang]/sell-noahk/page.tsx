@@ -1341,10 +1341,14 @@ export default function Index({ params }: any) {
                             type="checkbox"
                             checked={agreementPlaceOrder}
                             onChange={(e) => setAgreementPlaceOrder(e.target.checked)}
+                            className="w-10 h-10
+                            border-2 border-zinc-800
+                            rounded-md"
                           />
-                          <p className="text-sm text-zinc-400">
+                          <p className="text-lg text-zinc-400">
                             
-                            {I_agree_to_the_terms_of_trade}
+                            {/*I_agree_to_the_terms_of_trade*/}
+                            거래조건에 동의하기 위해서 체크하세요.
 
                           </p>
                         </div>
