@@ -1994,7 +1994,9 @@ export default function Index({ params }: any) {
                                         width={32}
                                         height={32}
                                       />
-                                      <div>{Escrow}: {item.sellAmount} NOAH-K</div>
+                                      <span className="text-sm text-zinc-400">
+                                        {Escrow}: {item.sellAmount} NOAH-K
+                                      </span>
                                       <button
                                         className="bg-white text-black px-2 py-2 rounded-md"
                                         onClick={() => {
@@ -2017,7 +2019,7 @@ export default function Index({ params }: any) {
                                     <div className="flex flex-row gap-2 items-center justify-start">
 
                                       {/* rotate loading icon */}
-                                    
+                                      {/*
                                       <Image
                                         src="/loading.png"
                                         alt="Escrow"
@@ -2025,13 +2027,32 @@ export default function Index({ params }: any) {
                                         height={32}
                                         className="animate-spin"
                                       />
-
-                                      <div>Waiting for buyer to send {
+                                      */}
+                                      {/*
+                                      <div>
+                                        Waiting for buyer to send {
                                       item.krwAmount.toLocaleString('ko-KR', {
                                         style: 'currency',
                                         currency: 'KRW',
-                                      })} to seller...</div>
+                                      })} to seller...
+                                      </div>
+                                      */}
                                     
+                                      {/* 판매자가 입급을 확인중입니다. */}
+                                      {/* 판매자 결제계좌로 입금을 해야합니다. */}
+
+                                      <div className="flex flex-row items-center gap-2">
+                                        <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                                        <span className="text-sm text-zinc-400">
+                                          판매자가 입급을 확인중입니다.
+                                        </span>
+                                      </div>
+                                      <div className="flex flex-row items-center gap-2">
+                                        <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                                        <span className="text-sm text-zinc-400">
+                                          판매자 결제계좌로 입금을 해야합니다.
+                                        </span>
+                                      </div>
 
                                     </div>
 
