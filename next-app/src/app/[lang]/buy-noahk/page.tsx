@@ -1219,12 +1219,16 @@ export default function Index({ params }: any) {
                                         agreementForCancelTrade.map((item, idx) => idx === index ? e.target.checked : item)
                                       );
                                     }}
+                                    className="w-10 h-10
+                                      border border-gray-800 rounded-md
+                                    "
                                   />
                                   <button
                                     disabled={cancellings[index] || !agreementForCancelTrade[index]}
                                     className={`
                                       ${cancellings[index] || !agreementForCancelTrade[index] ?
-                                        'bg-zinc-800 text-zinc-400' : 'bg-red-500 text-white'}
+                                        'bg-zinc-800 text-zinc-400' : 'bg-red-500 text-white'
+                                      }
                                       px-2 py-1 rounded-md hover:bg-red-600
                                     `}
                                       
@@ -1258,6 +1262,9 @@ export default function Index({ params }: any) {
                                         agreementForTrade.map((item, idx) => idx === index ? e.target.checked : item)
                                       );
                                     }}
+                                    className="w-10 h-10
+                                      border border-gray-800 rounded-md
+                                    "
                                   />
                                   {/*
                                   <button
@@ -2085,9 +2092,15 @@ export default function Index({ params }: any) {
                                                         })
                                                     );
                                                 }}
+                                                className="w-10 h-10
+                                                  border border-gray-800 rounded-md
+                                                "
                                               />
                                               <label className="text-sm text-zinc-400">
-                                                {I_agree_to_the_terms_of_trade}
+                                                
+                                                {/*I_agree_to_the_terms_of_trade*/}
+                                                거래조건에 동의하면 체크해주세요
+
                                               </label>
                                             </div>
 
@@ -2098,12 +2111,13 @@ export default function Index({ params }: any) {
                                                 `}
                                               onClick={() => {
     
-                                                  acceptSellOrder(index, item._id, "");
+                                                confirm('구매거래를 시작하시겠습니까?') &&
+                                                acceptSellOrder(index, item._id, "");
                                             
 
                                               }}
                                             >
-                                              {Buy} {item.sellAmount} NOAH-K
+                                              {item.sellAmount} NOAH-K 구매하기
                                             </button>
 
 
