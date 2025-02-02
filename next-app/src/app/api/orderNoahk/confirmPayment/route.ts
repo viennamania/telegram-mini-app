@@ -216,7 +216,8 @@ export async function POST(request: NextRequest) {
       
       if (buyerWalletAddress) {
   
-        const messagetext = '거래를 완료하였습니다.';
+        const messagetext = '거래번호: ' + '#' + sellOrder.tradeId
+         + '\n\n거래를 완료하였습니다.';
   
         const result = await insertOtcMessageByWalletAddress({
           center: center,

@@ -165,7 +165,8 @@ export async function POST(request: NextRequest) {
       
       if (sellerWalletAddress) {
 
-        const messagetext = '판매자가 구매를 수락하였습니다.';
+        const messagetext = '겨래번호: ' + '#' + sellOrder.tradeId
+         '\n\n판매자가 구매를 수락하였습니다.';
 
         const result = await insertOtcMessageByWalletAddress({
           center: center,
