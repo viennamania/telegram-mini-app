@@ -2085,7 +2085,21 @@ export default function Index({ params }: any) {
 
                             {(item.status === 'accepted' || item.status === 'paymentRequested' || item.status === 'paymentConfirmed' || item.status === 'cancelled') 
                               && (
-                                <div className="w-full mt-4 mb-2 flex flex-col items-start ">
+                                <div className="w-full mt-4 mb-2 flex flex-row items-center justify-start gap-2">
+
+                                  <Image
+                                    src={item?.buyer?.avatar || "/profile-default.png"}
+                                    alt="Avatar"
+                                    width={32}
+                                    height={32}
+                                    priority={true} // Added priority property
+                                    className="rounded-full"
+                                    style={{
+                                        objectFit: 'cover',
+                                        width: '32px',
+                                        height: '32px',
+                                    }}
+                                  />
 
                                   <p className="text-xl text-green-500 font-semibold">
                                     {Buyer}: {
@@ -2094,6 +2108,8 @@ export default function Index({ params }: any) {
                                       item.buyer.nickname
                                     }
                                   </p>
+
+
 
                                 </div>
                             )}
