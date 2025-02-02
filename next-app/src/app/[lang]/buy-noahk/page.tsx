@@ -1605,18 +1605,32 @@ export default function Index({ params }: any) {
                             )}
 
                             {item.status === 'paymentCompleted' && (
-                              <div className="mt-4 flex flex-row items-center justify-start gap-2
+                              <div className="mt-4 flex flex-row items-center justify-between gap-2
                                 bg-green-500 text-white p-2 rounded-md
                               ">
-                                <Image
-                                  src='/icon-completed.png'
-                                  alt='payment completed'
-                                  width={20}
-                                  height={20}
-                                />
-                                <p className="text-sm text-green-500">
-                                  Payment completed
-                                </p>
+                                <div className="flex flex-row items-center gap-2">
+                                  <Image
+                                    src='/icon-completed.png'
+                                    alt='payment completed'
+                                    width={20}
+                                    height={20}
+                                  />
+                                  {/* 거래번호 */}
+                                  <span className="text-lg font-semibold">
+                                    거래번호: {' '}#{item.tradeId}
+                                  </span>
+                                </div>
+
+                                {/* 거래완료 */}
+                                <div className="flex flex-row items-center gap-2
+                                bg-green-500 text-white p-2 rounded-md
+                                ">
+                                  <span className="text-lg font-semibold text-white">
+                                    거래완료
+                                  </span>
+                                </div>
+
+
                               </div>
                             )}
 
