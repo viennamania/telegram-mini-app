@@ -2215,7 +2215,7 @@ export default function Index({ params }: any) {
 
                                     {/* request payment button */}
                                     {/* 에스크로에 예치하고 구매자에게 결제요청 */}
-                                    <div className="mt-5 w-full flex flex-row items-center justify-end gap-2">
+                                    <div className="mt-5 mb-5 w-full flex flex-row items-center justify-end gap-2">
                                       <button
                                         disabled={requestingPaymentList[index]}
                                         className={
