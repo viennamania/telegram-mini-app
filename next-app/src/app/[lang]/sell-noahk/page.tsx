@@ -1597,6 +1597,33 @@ export default function Index({ params }: any) {
 
                     </div>
 
+                    {/* 새로고침 버튼 */}
+                    <button
+                      className="text-sm text-white bg-gray-800 px-2 py-1 rounded-md"
+                      onClick={() => {
+                        setLoadingSellOrders(true);
+                        fetch('/api/orderNoahk/getAllSellOrders', {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json'
+                          },
+                          body: JSON.stringify({
+                            walletAddress: address,
+                            searchMyOrders: searchMyOrders
+                          })
+                        }).then(async (response) => {
+                          const data = await response.json();
+                          //console.log('data', data);
+                          if (data.result) {
+                            setSellOrders(data.result.orders);
+                          }
+                        });
+                        setLoadingSellOrders(false);
+                      }}
+                    >
+                      새로고침
+                    </button>
+
 
 
                   </div>
