@@ -559,7 +559,8 @@ export default function Index({ params }: any) {
           Order_has_been_placed
         );
         */
-        alert(Order_has_been_placed);
+        //alert(Order_has_been_placed);
+        alert('판매주문이 완료되었습니다.');
 
         setSellAmount(0);
         setprivateSale(false);
@@ -1420,7 +1421,7 @@ export default function Index({ params }: any) {
                                   />
                                 </div>
                                 <div className="text-white">
-                                  {Placing_Order}...
+                                  {/*Placing_Order*/}판매주문 중...
                                 </div>
                   
                             </div>
