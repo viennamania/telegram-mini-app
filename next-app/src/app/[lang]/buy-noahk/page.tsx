@@ -1522,42 +1522,24 @@ export default function Index({ params }: any) {
                                     height={32}
                                   />
                                   
-                                  <p className="text-lg font-semibold text-green-500 ">
-                                    거래번호:{' '}{item.tradeId}
-                                  </p>
-
-                                  {item.status === 'cancelled' ? (
-                                    <p className="ml-2 text-sm text-zinc-400">
-                                      {new Date(item.acceptedAt).toLocaleString()}
+                                  <div className="flex flex-col items-start justify-start gap-2">
+                                    <p className="text-lg font-semibold text-green-500 ">
+                                      거래번호:{' '}#{item.tradeId}
                                     </p>
-                                  ) : (
-                                    
-                                    <>
-                                      {params.lang === 'kr' ? (
 
-                                        <p className="ml-2 text-sm text-zinc-400">
+                                    {item.status === 'cancelled' ? (
+                                      <p className="ml-2 text-sm text-zinc-400">
+                                        {new Date(item.acceptedAt).toLocaleString()}
+                                      </p>
+                                    ) : (
+                                      
+                                      <>
+                                        {params.lang === 'kr' ? (
 
-                                        
-                                          {new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 ? (
-                                            ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000) + ' ' + seconds_ago
-                                          ) :
-                                          new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 * 60 ? (
-                                          ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
-                                          ) : (
-                                            ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
-                                          )
-                                          }{' '}{Trade_Started}
+                                          <p className="ml-2 text-sm text-zinc-400">
 
-                                        </p>
-
-
-
-                                      ) : (
-
-                                        <p className="ml-2 text-sm text-zinc-400">
-
-                                          {Trade_Started} {
-                                            new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 ? (
+                                          
+                                            {new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 ? (
                                               ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000) + ' ' + seconds_ago
                                             ) :
                                             new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 * 60 ? (
@@ -1565,19 +1547,55 @@ export default function Index({ params }: any) {
                                             ) : (
                                               ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
                                             )
-                                          }
+                                            }{' '}{Trade_Started}
 
-                                        </p>
-
-                                      )}
+                                          </p>
 
 
 
+                                        ) : (
 
-                                    </>
-                                  
+                                          <p className="ml-2 text-sm text-zinc-400">
+
+                                            {Trade_Started} {
+                                              new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 ? (
+                                                ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000) + ' ' + seconds_ago
+                                              ) :
+                                              new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 * 60 ? (
+                                              ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60) + ' ' + minutes_ago
+                                              ) : (
+                                                ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
+                                              )
+                                            }
+
+                                          </p>
+
+                                        )}
+
+
+
+
+                                      </>
+                                    
+                                    )}
+
+                                  </div>
+
+
+                                  {/* if status is accepted, show "구매신청상태" */}
+                                  {item.status === 'accepted' && (
+                                    <div className="ml-2 text-sm text-green-500">
+                                      구매신청상태
+                                    </div>
                                   )}
 
+                                  {item.status === 'paymentRequested' && (
+                                    <div className="ml-2 text-sm text-green-500">
+                                      판매자입금대기
+                                    </div>
+                                  )}
+
+                           
 
                                 </div>
                             )}
