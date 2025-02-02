@@ -1163,6 +1163,11 @@ export default function Index({ params }: any) {
                                     // check number
                                     e.target.value = e.target.value.replace(/[^0-9.]/g, '');
 
+                                    // prevent float number
+                                    if (e.target.value.includes('.')) {
+                                      e.target.value = e.target.value.split('.')[0];
+                                    }
+
                                     // if the value is start with 0, then remove 0
                                     if (e.target.value.startsWith('0')) {
                                       e.target.value = e.target.value.substring(1);
