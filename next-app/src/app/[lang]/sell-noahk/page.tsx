@@ -2303,7 +2303,7 @@ export default function Index({ params }: any) {
                                           }
                                           onClick={() => {
                                             // confirm payment
-                                            confirm('결제를 확인하고 거래를 완료하시겠습니까?') &&
+                                            confirm('거래를 완료하면 에스크로에서 NOAH-K가 구매자에게 전송됩니다. 거래를 완료하시겠습니까?') &&
                                             confirmPayment(index);
                                           }}
                                         >
