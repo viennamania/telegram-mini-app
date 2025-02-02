@@ -2016,7 +2016,7 @@ export default function Index({ params }: any) {
                                       </button>
                                     </div>
 
-                                    <div className="flex flex-row gap-2 items-center justify-start">
+                                    <div className="flex flex-col gap-2 items-start justify-start">
 
                                       {/* rotate loading icon */}
                                       {/*
