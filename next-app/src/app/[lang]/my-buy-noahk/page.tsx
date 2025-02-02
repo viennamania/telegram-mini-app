@@ -1524,7 +1524,7 @@ export default function Index({ params }: any) {
                             { (item.status === 'accepted' || item.status === 'paymentRequested' || item.status === 'cancelled') && (
                                 
                               <div className={`
-                                ${item.status !== 'cancelled' && 'h-16'}
+                                
 
                                 mb-4 flex flex-row items-center justify-between gap-2
                                  bg-white text-black p-2 rounded-md
@@ -1637,14 +1637,9 @@ export default function Index({ params }: any) {
                                 </div>
 
                                 {/* 거래완료 */}
-                                <div className="flex flex-row items-center gap-2
-                                bg-green-500 text-white p-2 rounded-md
-                                ">
                                   <span className="text-lg font-semibold text-white">
                                     거래완료
                                   </span>
-                                </div>
-
 
                               </div>
                             )}
