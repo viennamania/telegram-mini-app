@@ -596,7 +596,7 @@ export default function Index({ params }: any) {
 
                   {
                     walletAddress: address,
-                    searchMyTrades: searchMyTrades,
+                    searchMyTrades: true,
                   }
 
               ),
@@ -729,7 +729,7 @@ export default function Index({ params }: any) {
                 body: JSON.stringify(
                   {
                     walletAddress: address,
-                    searchMyTrades: searchMyTrades,
+                    searchMyTrades: true,
                   }
                 ),
             })
@@ -820,7 +820,7 @@ export default function Index({ params }: any) {
           body: JSON.stringify(
             {
               walletAddress: address,
-              searchMyTrades: searchMyTrades,
+              searchMyTrades: true,
             }
           )
         }).then(async (response) => {
@@ -877,7 +877,7 @@ export default function Index({ params }: any) {
                   />
 
                   <div className="text-2xl font-semibold">
-                    NOAH-K 포인트 구매하기
+                    NOAH-K 포인트 구매내역
 
                   </div>
 
@@ -1003,7 +1003,7 @@ export default function Index({ params }: any) {
                           body: JSON.stringify(
                             {
                               walletAddress: address,
-                              searchMyTrades: searchMyTrades,
+                              searchMyTrades: true,
                             }
                           ),
                         })
