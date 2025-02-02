@@ -2104,6 +2104,20 @@ export default function Index({ params }: any) {
                                               </label>
                                             </div>
 
+                                            <div className="w-full flex flex-row items-center justify-center gap-2">
+                                              {/* dot */}
+                                              <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                                              <span className="text-sm text-zinc-400">
+                                                구매자는 구매신청을 한후에 취소할수 없습니다.
+                                              </span>
+                                            </div>
+                                            <div className="w-full flex flex-row items-center justify-center gap-2">
+                                              <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                                              <span className="text-sm text-zinc-400">
+                                                구매신청후에 거래를 완료하지 않으면 판매자에게 부정거래 회원으로 표시됩니다.
+                                              </span>
+                                            </div>
+
                                             <button
                                               disabled={!address || !agreementForTrade[index]}
                                               className={`m-10 text-lg text-white px-4 py-2 rounded-md
@@ -2111,7 +2125,7 @@ export default function Index({ params }: any) {
                                                 `}
                                               onClick={() => {
     
-                                                confirm('구매거래를 시작하시겠습니까?') &&
+                                                confirm('구매신청을 한후에 취소할수 없으며 구매신청후에 거래를 완료하지 않으면 판매자에게 부정거래 회원으로 표시됩니다. 정말로 구매신청을 하시겠습니까?') &&
                                                 acceptSellOrder(index, item._id, "");
                                             
 
