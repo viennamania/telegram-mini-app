@@ -297,14 +297,14 @@ export async function insertOtcMessageByWalletAddress(
     {
         center,
         walletAddress,
-        sellOrder,
+        //sellOrder,
         message,
     }
     :
     {
         center: string,
         walletAddress: string,
-        sellOrder: any,
+        //sellOrder: any,
         message: string,
     }
 ) {
@@ -313,10 +313,35 @@ export async function insertOtcMessageByWalletAddress(
 
     const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
 
+    /*
     const user = await client.db('shinemywinter').collection('usersNoahk').findOne(
-        { walletAddress },
+        { walletAddress : walletAddress },
+
         { projection: { telegramId: 1 } }
     );
+    */
+    const result = await client.db('shinemywinter').collection('usersNoahk').aggregate([
+        {
+            $match: {
+                walletAddress: walletAddress,
+            },
+        },
+
+        {
+            $project: {
+                telegramId: 1,
+            },
+        },
+    ]).toArray();
+
+    if (!result) {
+        return {
+            result: "error",
+        };
+    }
+    
+
+    const user = result[0];
 
     if (user && user.telegramId) {
 
@@ -324,16 +349,25 @@ export async function insertOtcMessageByWalletAddress(
             {
                 center: center,
                 category: "otc",
-                sellOrder: sellOrder,
+                //sellOrder: sellOrder,
                 telegramId: user.telegramId,
                 message,
             }
         );
 
+        return {
+            result: "success",
+        };
+
+    } else {
+        
+        console.log("user not found", walletAddress);
+
+        return {
+            result: "error",
+        };
     }
 
-    return {
-        result: "success",
-    };
+
 
 }
