@@ -1513,7 +1513,7 @@ export default function Index({ params }: any) {
                                 ${item.status !== 'cancelled' && 'h-16'}
 
                                 mb-4 flex flex-row items-center justify-between gap-2
-                                 bg-zinc-800 py-1 rounded-md
+                                 bg-white text-black p-2 rounded-md
 
                                 `}>
                                   
@@ -1540,7 +1540,7 @@ export default function Index({ params }: any) {
                                       <>
                                         {params.lang === 'kr' ? (
 
-                                          <p className="ml-2 text-sm text-zinc-400">
+                                          <p className="text-sm text-zinc-800">
 
                                           
                                             {new Date().getTime() - new Date(item.acceptedAt).getTime() < 1000 * 60 ? (
