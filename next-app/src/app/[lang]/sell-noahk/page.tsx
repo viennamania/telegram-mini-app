@@ -415,7 +415,7 @@ export default function Index({ params }: any) {
 
 
 
-    
+    const [loadingSellOrders, setLoadingSellOrders] = useState(false);
     const [sellOrders, setSellOrders] = useState<SellOrder[]>([]);
 
     //const [searchMyOrders, setSearchMyOrders] = useState(false);
@@ -431,6 +431,9 @@ export default function Index({ params }: any) {
           */
         
         const fetchSellOrders = async () => {
+
+          setLoadingSellOrders(true);
+
           // api call
           const response = await fetch('/api/orderNoahk/getAllSellOrders', {
             method: 'POST',
@@ -454,6 +457,7 @@ export default function Index({ params }: any) {
             setSellOrders(data.result.orders);
           }
   
+          setLoadingSellOrders(false);
         };
   
         fetchSellOrders();
@@ -569,6 +573,7 @@ export default function Index({ params }: any) {
      
 
 
+        setLoadingSellOrders(true);
         await fetch('/api/orderNoahk/getAllSellOrders', {
           method: 'POST',
           headers: {
@@ -585,6 +590,8 @@ export default function Index({ params }: any) {
             setSellOrders(data.result.orders);
           }
         });
+        setLoadingSellOrders(false);
+
 
 
 
@@ -640,7 +647,7 @@ export default function Index({ params }: any) {
         //alert('Order has been cancelled');
         alert('판매주문이 취소되었습니다.');
 
-
+        setLoadingSellOrders(true);
         await fetch('/api/orderNoahk/getAllSellOrders', {
           method: 'POST',
           headers: {
@@ -657,6 +664,7 @@ export default function Index({ params }: any) {
             setSellOrders(data.result.orders);
           }
         });
+        setLoadingSellOrders(false);
 
       } else {
         
@@ -981,7 +989,7 @@ export default function Index({ params }: any) {
                 {/* if there is no sell orders, then show the message */}
 
 
-                  {address && sellOrders.filter((item) => item.status === 'ordered').length === 0 && (
+                  {address && !loadingSellOrders && sellOrders.filter((item) => item.status === 'ordered').length === 0 && (
 
                     
                     <div className=" w-full flex gap-4  justify-center">
