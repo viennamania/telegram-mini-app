@@ -1096,7 +1096,7 @@ function ProfilePage() {
                         )}
 
       
-                        {/* 판매자 가상계좌 정보 virtualAccount */}
+                        {/* 구매자 가상계좌 정보 virtualAccount */}
                         {address && seller && (
                             <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
                             bg-zinc-800 bg-opacity-90
@@ -1105,7 +1105,7 @@ function ProfilePage() {
                                     {/* dot */}
                                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                     <span className="text-sm font-semibold text-gray-200">
-                                        판매자 가상계좌 정보
+                                        구매자 가상계좌 정보
                                     </span>
                                 </div>
 
@@ -1125,7 +1125,7 @@ function ProfilePage() {
                                 ) : (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-gray-500'>
-                                            판매자 가상계좌 정보가 없습니다.
+                                            구매자 가상계좌 정보가 없습니다.
                                         </span>
                                     </div>
                                 )}
@@ -1134,7 +1134,7 @@ function ProfilePage() {
                                 {seller?.status === 'confirmed' && (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-green-500'>
-                                            판매자 가상계좌 정보가 확인되었습니다.
+                                            구매자 가상계좌 정보가 확인되었습니다.
                                         </span>
                                     </div>
                                 )}
@@ -1143,7 +1143,7 @@ function ProfilePage() {
                                 {seller?.status === 'pending' && (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-gray-500'>
-                                            판매자 가상계좌 정보를 확인중입니다.
+                                            구매자 가상계좌 정보를 확인중입니다.
                                         </span>
                                     </div>
                                 )}
@@ -1152,11 +1152,12 @@ function ProfilePage() {
                                 {seller?.status === 'rejected' && (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-red-500'>
-                                            판매자 가상계좌 정보가 거절되었습니다.
+                                            구매자 가상계좌 정보가 거절되었습니다.
                                         </span>
                                     </div>
                                 )}
 
+                         
                             </div>
 
                         )}
@@ -1172,7 +1173,7 @@ function ProfilePage() {
                                 {/* dot */}
                                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                 <span className="text-sm font-semibold text-gray-200">
-                                    판매자 정보 저장하기
+                                    판매자 은행정보 저장하기
                                 </span>
                             </div>
 
