@@ -2203,9 +2203,10 @@ export default function Index({ params }: any) {
 
                                     <p className="text-xl text-green-500 font-semibold">
                                       {Buyer}: {
-                                        item.buyer.walletAddress === address ? item.buyer.nickname + ' :' + Me :
-                                      
-                                        item.buyer.nickname
+
+                                        item.buyer.walletAddress === address
+                                        ? item.buyer.nickname + ' :' + Me :
+                                        item.buyer.nickname ? item.buyer.nickname : item.buyer.walletAddress.slice(0, 6) + '...' + item.buyer.walletAddress.slice(-4)
                                       }
                                     </p>
 
