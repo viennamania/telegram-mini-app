@@ -1110,14 +1110,14 @@ export default function Index({ params }: any) {
                                   {user?.virtualAccount ? (
 
                                     <span className="text-sm text-zinc-400">
-                                      {Payment}:{' '}{Bank_Transfer}{' '}제주은행{' '}
+                                      {Payment}:{' '}제주은행{' '}
                                       {user?.virtualAccount}{' '}스타디움엑스 (가상)
                                     </span>
 
                                   ) : (
 
                                     <span className="text-sm text-zinc-400">
-                                      {Payment}:{' '}{Bank_Transfer}{' '}({seller?.bankInfo.bankName}{' '}
+                                      {Payment}:{' '}({seller?.bankInfo.bankName}{' '}
                                       {seller?.bankInfo.accountNumber}{' '}{seller?.bankInfo.accountHolder})
                                     </span>
 
