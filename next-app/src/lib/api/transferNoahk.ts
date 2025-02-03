@@ -1,5 +1,6 @@
 import { transfer } from 'thirdweb/extensions/erc20';
 import clientPromise from '../mongodb';
+import { wallet } from '@/app/constants';
 
 /*
   console.log("transactionHash", transactionHash, "transactionIndex", transactionIndex,
@@ -99,8 +100,10 @@ export async function insertOne(data: any) {
         }
         );
 
-
     }
+
+
+
 
 
 
@@ -159,11 +162,94 @@ export async function insertOne(data: any) {
 
         }
 
-        
-
-
+    
         
     }
+
+
+
+
+
+
+
+
+
+    // ordersNoahk collection
+    const collectionOrders = client.db('shinemywinter').collection('ordersNoahk');
+
+
+    // if escrow.walletAddress is fromAddress
+    // and buyer.walletAddress is toAddress
+    // then send message to seller
+
+    const sellOrder = await collectionOrders.findOne(
+        {
+            $and: [
+                { "escrow.walletAddress": data.fromAddress },
+                { "buyer.walletAddress": data.toAddress }
+            ]
+        },
+        { projection: {
+                walletAddress: 1,
+            }
+        }
+    );
+
+    const sellerWalletAddress = sellOrder?.walletAddress;
+
+
+
+    const userSeller = await collectionUsers.findOne(
+        {
+            walletAddress: sellerWalletAddress
+        },
+        { projection: {
+                nickname: 1,
+                mobile: 1,
+                telegramId: 1,
+                walletAddress: 1,
+                center: 1
+            }
+        }
+    );
+
+
+    if (userSeller) {
+        
+
+        const walletAddress = userSeller.walletAddress;
+        const telegramId = userSeller.telegramId;
+        const center = userSeller.center;
+
+        if (telegramId) {
+
+            // divide by 1e18
+            const amount = parseFloat(data.value) / 1e18;
+
+            ///const message = "You have received " + Number(amount).toFixed(6) + " USDT";
+            const message = "판매가 완료되었습니다.";
+
+            const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+
+            await collectionTelegramMessages.insertOne(
+            {
+                center: center,
+                category: "otc",
+                walletAddress: walletAddress,
+                telegramId: telegramId,
+                message: message,
+                timestamp: data.timestamp,
+            }
+            );
+
+        }
+
+    }
+    
+
+
+
+
 
 
 
