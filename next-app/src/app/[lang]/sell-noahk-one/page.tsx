@@ -1529,12 +1529,14 @@ export default function Index({ params }: any) {
                   {/* total sell orders */}
                   <div className="p-2 xl:p-0  flex flex-row items-center justify-between gap-2">
 
+                    {/*
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">{Total}</div>
                       <div className="text-xl font-semibold text-gray-400">
                         {sellOrders.length}
                       </div>
                     </div>
+                    */}
 
                     {/*
                     <div className="flex flex-col gap-2 items-center">
