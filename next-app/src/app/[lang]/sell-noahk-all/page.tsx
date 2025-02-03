@@ -88,6 +88,8 @@ interface SellOrder {
   privateSale: boolean;
 
   escrow: any;
+
+  virtualAccount: string;
 }
 
 
@@ -1952,14 +1954,31 @@ export default function Index({ params }: any) {
                               </div>
 
 
-                              <p className="mt-2 text-sm text-zinc-400">
+                              {item?.virtualAccount ? (
+                                <div className="mt-2 flex flex-row items-center gap-2">
+                                  <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
+                                  <p className="text-sm text-zinc-400">
+                                    {Payment}:{' '}제주은행{' '}
+                                    {item?.virtualAccount}{' '}스타디움엑스 (가상)
+                                  </p>
+                                </div>
+                              ) : (
+                                <div className="mt-2 flex flex-row items-center gap-2">
+                                  <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
+                                  <p className="text-sm text-zinc-400">
+                                    {Payment}:{' '}
+                                    ({item.seller?.bankInfo.bankName}{' '}
+                                    {item.seller?.bankInfo.accountNumber}{' '}
+                                    {item.seller?.bankInfo.accountHolder})
+                                  </p>
+                                </div>
+                              )}
 
-                                {Payment}: {Bank_Transfer}{' '}
-                                ({item.seller?.bankInfo.bankName}{' '}
-                                {item.seller?.bankInfo.accountNumber}{' '}
-                                {item.seller?.bankInfo.accountHolder})
-                                
-                              </p>
+                              {/* 입금자명 depositName */}
+                              <span className="text-sm text-zinc-400">
+                                입금자명: {item?.buyer?.depositName}
+                              </span>
+                              
 
                               {item.walletAddress === address && item?.escrow?.walletAddress && (
                                 <div className="mt-2 flex flex-row items-center gap-2">
