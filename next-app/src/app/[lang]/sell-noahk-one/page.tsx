@@ -2475,30 +2475,30 @@ export default function Index({ params }: any) {
 
 
                                         {/* confirm payment button */}
-                                        <div className="mt-5 mb-5 w-full flex flex-row items-center justify-end gap-2">
+                                        <div className="mt-5 mb-5 w-full flex flex-col items-center justify-center gap-2">
                                           
-                                          <span className="text-sm text-zinc-400">
-                                            결제금액
-                                          </span>
+                                          <div className="flex flex-row items-center gap-2">
+                                            <span className="text-sm text-zinc-400">
+                                              결제금액
+                                            </span>
 
-                                          {/* input for payment amount */}
-                                          <input
-                                            disabled={true}
-                                            type="text"
-                                            
-                                            className="bg-white text-black px-2 py-1 rounded-md text-right
-                                            w-28"
+                                            {/* input for payment amount */}
+                                            <input
+                                              disabled={true}
+                                              type="text"
+                                              
+                                              className="bg-white text-black px-2 py-1 rounded-md text-right
+                                              w-28"
 
-                                            placeholder="결제금액"
-                                            value={
-                                              Number(paymentAmountList[index]).toLocaleString('ko-KR', {
-                                                style: 'currency',
-                                                currency: 'KRW',
-                                              })
-                                            }
-                                          />
-
-
+                                              placeholder="결제금액"
+                                              value={
+                                                Number(paymentAmountList[index]).toLocaleString('ko-KR', {
+                                                  style: 'currency',
+                                                  currency: 'KRW',
+                                                })
+                                              }
+                                            />
+                                          </div>
 
 
                                           <button
