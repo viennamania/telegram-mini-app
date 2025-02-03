@@ -98,7 +98,7 @@ export async function GET(request: NextRequest) {
   let buyerAvatar = "";
   let buyerMobile = "";
   let buyerMemo = "";
-  let depositName = "";
+  let depositName = "김석렬";
   let depositBankName = "";
 
   // getOneByWalletAddress

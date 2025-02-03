@@ -1794,6 +1794,11 @@ export default function Index({ params }: any) {
                                     )}
 
                                   </span>
+
+                                  {/* 입금자명 depositName */}
+                                  <span className="text-sm text-zinc-400">
+                                    입금자명: {item?.buyer?.depositName}
+                                  </span>
                                     
                                 </div>
 
