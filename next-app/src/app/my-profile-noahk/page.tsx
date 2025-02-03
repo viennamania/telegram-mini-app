@@ -1262,26 +1262,57 @@ function ProfilePage() {
                                         });
                                     }}
                                 >
-                                    <option value="">은행선택</option>
-                                    <option value="090">카카오뱅크</option>
-                                    <option value="089">케이뱅크</option>
-                                    <option value="088">토스뱅크</option>
-                                    <option value="004">국민은행</option>
-                                    <option value="020">우리은행</option>
-                                    <option value="088">신한은행</option>
-                                    <option value="011">농협</option>
-                                    <option value="003">기업은행</option>
-                                    <option value="081">하나은행</option>
-                                    <option value="002">외환은행</option>
-                                    <option value="032">부산은행</option>
-                                    <option value="031">대구은행</option>
-                                    <option value="037">전북은행</option>
-                                    <option value="071">경북은행</option>
-                                    <option value="034">광주은행</option>
-                                    <option value="007">수협</option>
-                                    <option value="027">씨티은행</option>
-                                    <option value="055">대신은행</option>
-                                    <option value="054">동양종합금융</option>
+                                    <option value="" selected={seller?.bankInfo?.bankName === ""}>
+                                        은행선택
+                                    </option>
+                                    <option value="004" selected={seller?.bankInfo?.bankName === "004"}>
+                                        국민은행
+                                    </option>
+                                    <option value="020" selected={seller?.bankInfo?.bankName === "020"}>
+                                        우리은행
+                                    </option>
+                                    <option value="088" selected={seller?.bankInfo?.bankName === "088"}>
+                                        신한은행
+                                    </option>
+                                    <option value="011" selected={seller?.bankInfo?.bankName === "011"}>
+                                        농협
+                                    </option>
+                                    <option value="003" selected={seller?.bankInfo?.bankName === "003"}>
+                                        기업은행
+                                    </option>
+                                    <option value="081" selected={seller?.bankInfo?.bankName === "081"}>
+                                        하나은행
+                                    </option>
+                                    <option value="002" selected={seller?.bankInfo?.bankName === "002"}>
+                                        외환은행
+                                    </option>
+                                    <option value="032" selected={seller?.bankInfo?.bankName === "032"}>
+                                        부산은행
+                                    </option>
+                                    <option value="031" selected={seller?.bankInfo?.bankName === "031"}>
+                                        대구은행
+                                    </option>
+                                    <option value="037" selected={seller?.bankInfo?.bankName === "037"}>
+                                        전북은행
+                                    </option>
+                                    <option value="071" selected={seller?.bankInfo?.bankName === "071"}>
+                                        경북은행
+                                    </option>
+                                    <option value="034" selected={seller?.bankInfo?.bankName === "034"}>
+                                        광주은행
+                                    </option>
+                                    <option value="007" selected={seller?.bankInfo?.bankName === "007"}>
+                                        수협
+                                    </option>
+                                    <option value="027" selected={seller?.bankInfo?.bankName === "027"}>
+                                        씨티은행
+                                    </option>
+                                    <option value="055" selected={seller?.bankInfo?.bankName === "055"}>
+                                        대신은행
+                                    </option>
+                                    <option value="054" selected={seller?.bankInfo?.bankName === "054"}>
+                                        동양종합금융
+                                    </option>
 
 
                                 </select>
