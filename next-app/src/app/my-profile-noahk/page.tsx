@@ -1352,7 +1352,7 @@ function ProfilePage() {
                                     
                                     value={seller?.bankInfo?.phoneNum}
 
-                                    type='text'
+                                    type='number'
                                     onChange={(e) => {
                                         setSeller({
                                             ...seller,
