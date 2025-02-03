@@ -51,7 +51,7 @@ export async function insertOne(data: any) {
 
 
     
-
+    /*
     const user = await collectionUsers.findOne(
         { $or: [ { walletAddress: data.fromAddress }, { walletAddress: data.toAddress } ] },
         { projection: { walletAddress: 1 } }
@@ -60,6 +60,8 @@ export async function insertOne(data: any) {
     if (!user) {
         return null;
     }
+    */
+   
     
 
     const result = await collection.insertOne(transferData);
