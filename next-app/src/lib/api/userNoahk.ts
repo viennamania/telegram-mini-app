@@ -565,10 +565,12 @@ export async function getAllUsersTelegramIdByCenter(
     limit,
     page,
     center,
+    searchNickname,
   }: {
     limit: number;
     page: number;
     center: string;
+    searchNickname: string;
   }
 ): Promise<any> {
 
@@ -597,6 +599,8 @@ export async function getAllUsersTelegramIdByCenter(
   // join with referrals collection and get referralCode
 
 
+  // if searchNickname is not empty, search by nickname
+
   const referralsCollection = client.db('shinemywinter').collection('referrals');
 
   const users = await collection.aggregate([
@@ -604,8 +608,15 @@ export async function getAllUsersTelegramIdByCenter(
       $match: {
         center: center,
         telegramId: { $exists: true, $ne: '' },
+
+        // search by nickname
+
+
+        nickname: { $regex: searchNickname, $options: 'i' },
       }
     },
+
+
     {
       $lookup: {
         from: 'referrals',

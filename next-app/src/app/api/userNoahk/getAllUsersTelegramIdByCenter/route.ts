@@ -3,7 +3,6 @@ import { NextResponse, type NextRequest } from "next/server";
 import {
 	getAllUsersTelegramIdByCenter,
 } from '@lib/api/userNoahk';
-import { get } from "http";
 
 
 
@@ -11,7 +10,10 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
-  const { center } = body;
+  const {
+    center,
+    searchNickname,
+  } = body;
 
 
   //console.log("walletAddress", walletAddress);
@@ -21,6 +23,7 @@ export async function POST(request: NextRequest) {
     limit: 100,
     page: 1,
     center,
+    searchNickname,
   });
 
  

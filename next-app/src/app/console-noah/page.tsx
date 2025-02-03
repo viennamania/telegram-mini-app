@@ -263,6 +263,7 @@ function HomeContent() {
 
 
 
+  const [searchNickname, setSearchNickname] = useState("");
 
   // getAllUsersTelegramIdByCenter
 
@@ -278,6 +279,7 @@ function HomeContent() {
               },
               body: JSON.stringify({
                   center: selectCenter,
+                  searchNickname: searchNickname,
               }),
           });
 
@@ -306,6 +308,9 @@ function HomeContent() {
       }
 
   }, [selectCenter]);
+
+
+
 
 
   // airDrop
@@ -393,8 +398,14 @@ function HomeContent() {
    
     <main
       className="
-        p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-lg mx-auto
-        bg-cover bg-center bg-no-repeat
+        w-full
+        min-h-screen
+        flex flex-col
+        items-center
+        justify-start
+        bg-zinc-900
+        gap-10
+        px-5
         "
     >
       <div className="py-20 w-full flex flex-col gap-10 items-center justify-center">
@@ -515,6 +526,7 @@ function HomeContent() {
 
 
         {/* if marketingCenter is "owin", link to @magic_wallet_cs */}
+        {/*
         {marketingCenter === "owin" && (
           <div className=" w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg">
             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
@@ -529,7 +541,7 @@ function HomeContent() {
               >
                 @magic_wallet_cs 텔레그램
               </Button>
-              {/* copy telegram link */}
+
               <Button
                 onClick={() => {
                   navigator.clipboard.writeText(`https://t.me/magic_wallet_cs`);
@@ -544,8 +556,12 @@ function HomeContent() {
             </div>
           </div>
         )}
+        */}
+
+
 
         {/* if marketingCenter is "exms", link to @exms_cs */}
+        {/*
         {marketingCenter === "exms" && (
           <div className=" w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg">
             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
@@ -560,7 +576,7 @@ function HomeContent() {
               >
                 @exms_cs 텔레그램
               </Button>
-              {/* copy telegram link */}
+
               <Button
                 onClick={() => {
                   navigator.clipboard.writeText(`https://t.me/exms_cs`);
@@ -575,6 +591,7 @@ function HomeContent() {
             </div>
           </div>
         )}
+        */}
         
   
 
@@ -642,6 +659,68 @@ function HomeContent() {
               <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                   텔레그램 회원 목록
               </div>
+
+              {/* searchNickname */}
+              <input
+                disabled={loadingUsers}
+                onChange={(e) => {
+                  setSearchNickname(e.target.value);
+                }}
+                type="text"
+                placeholder="닉네임 검색"
+                className="w-36 p-2 rounded border border-gray-300"
+              />
+              {/* search button */}
+              <Button
+                disabled={loadingUsers}
+                onClick={() => {
+                  
+                  const getUsers = async () => {
+                    setLoadingUsers(true);
+                    const response = await fetch("/api/userNoahk/getAllUsersTelegramIdByCenter", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            center: selectCenter,
+                            searchNickname: searchNickname,
+                        }),
+                    });
+
+                    if (!response.ok) {
+                        console.error("Error fetching users");
+                        setLoadingUsers(false);
+                        return;
+                    }
+
+                    const data = await response.json();
+
+                    //console.log("getAllUsersTelegramIdByCenter data", data);
+
+                    //console.log("getAllUsersTelegramIdByCenter data", data);
+                    //setAgentBotSummaryList(data.resultSummany);
+
+
+                    setUsers(data?.result);
+
+                    setLoadingUsers(false);
+
+                  };
+
+                  getUsers();
+
+
+
+                }}
+                className={`${loadingUsers ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
+              >
+                
+                {loadingUsers ? "로딩중..." : "검색"}
+              </Button>
+
+
+
 
               {/* 에어드롭 USDT */}
               {/* input amountAirDrop */}
