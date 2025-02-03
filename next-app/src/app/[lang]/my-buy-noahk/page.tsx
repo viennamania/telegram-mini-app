@@ -902,11 +902,23 @@ export default function Index({ params }: any) {
                   p-4 rounded-lg">
 
                   {/* wallet address 지갑주소 */}
-                  <span className="text-sm text-gray-400">
-                    {
-                      address
-                    }
-                  </span>
+                  <div className="flex flex-row items-center gap-2">
+                    <span className="text-sm text-gray-400">
+                      {
+                        address.substring(0, 6) + '...' + address.substring(address.length - 4, address.length)
+                      }
+                    </span>
+                    {/* copy button */}
+                    <button
+                      className="text-sm bg-zinc-800 text-white px-2 py-1 rounded-md hover:bg-zinc-900"
+                      onClick={() => {
+                        navigator.clipboard.writeText(address);
+                        alert('지갑주소가 복사되었습니다');
+                      }}
+                    >
+                      복사
+                    </button>
+                  </div>
 
                   <div className='flex flex-row items-center justify-between gap-2'>
 
@@ -938,7 +950,7 @@ export default function Index({ params }: any) {
 
 
 
-                <div className="w-full flex flex-row items-between justify-start gap-2">
+                <div className="w-full flex flex-row items-center justify-between gap-2">
 
                   <div className=" flex flex-row items-center justify-between gap-2">
 
