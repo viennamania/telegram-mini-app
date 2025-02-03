@@ -827,7 +827,7 @@ export default function Index({ params }: any) {
     useEffect(() => {
       setPaymentAmountList(sellOrders.map((
         item
-      ) => item.sellAmount));
+      ) => item.krwAmount));
     }, [sellOrders]);
 
 
@@ -2456,7 +2456,11 @@ export default function Index({ params }: any) {
                                           {/* dot */}
                                           <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
                                           <span className="text-sm text-green-500 font-semibold">
-                                            {item.buyer.nickname}님이 {item.krwAmount} KRW를 결제한것을 확인하고 완료를 눌러주세요.
+                                            {Buyer}가 {
+                                            Number(item.krwAmount).toLocaleString('ko-KR', {
+                                              style: 'currency',
+                                              currency: 'KRW',
+                                            })}을 결제한것을 확인하고 완료를 눌러주세요.
                                           </span>
                                         </div>
 
@@ -2473,14 +2477,17 @@ export default function Index({ params }: any) {
                                         {/* confirm payment button */}
                                         <div className="mt-5 mb-5 w-full flex flex-row items-center justify-end gap-2">
                                           
+                                          <span className="text-sm text-zinc-400">
+                                            결제금액
+                                          </span>
 
                                           {/* input for payment amount */}
                                           <input
                                             disabled={true}
                                             type="text"
                                             
-                                            className="bg-white text-black px-2 py-2 rounded-md
-                                            w-40"
+                                            className="bg-white text-black px-2 py-1 rounded-md text-right
+                                            w-28"
 
                                             placeholder="결제금액"
                                             value={
@@ -2544,7 +2551,7 @@ export default function Index({ params }: any) {
                                                 <div className="flex flex-row xl:flex-col items-center gap-1">
                                                   <span>
                                                     <span className="text-sm text-white">
-                                                      거래 완료하기
+                                                      거래완료하기
                                                     </span>
                                                   </span>
                                                 </div>
