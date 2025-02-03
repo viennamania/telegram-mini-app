@@ -88,6 +88,8 @@ interface SellOrder {
 
   escrowTransactionHash: string;
   transactionHash: string;
+
+  virtualAccount: string;
 }
 
 
@@ -1771,9 +1773,26 @@ export default function Index({ params }: any) {
                                   </span>
 
                                   <span className="text-xl font-semibold text-yellow-500">
+
+                                    {item?.virtualAccount ? (
+                                      <>
+
+                                      제주은행{' '}{item.virtualAccount}{' '}스타디움엑스 (가상)
+
+                                      </>
+
+                                    ) : (
+
+                                    <>
+
                                     {item.seller?.bankInfo.bankName}
                                     {' '}{item.seller?.bankInfo.accountNumber}
                                     {' '}{item.seller?.bankInfo.accountHolder}
+
+                                    </>
+
+                                    )}
+
                                   </span>
                                     
                                 </div>

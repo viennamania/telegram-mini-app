@@ -1105,11 +1105,26 @@ export default function Index({ params }: any) {
                                 {/* seller bank info */}
                                 <div className="flex flex-row items-center gap-2">
                                   <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
-                                  <span className="text-sm text-zinc-400">
-                                    {Payment}: {Bank_Transfer} ({seller?.bankInfo.bankName}{' '}
-                                    {seller?.bankInfo.accountNumber}{' '}{seller?.bankInfo.accountHolder})
-                                  </span>
+
+
+                                  {user?.virtualAccount ? (
+
+                                    <span className="text-sm text-zinc-400">
+                                      {Payment}:{' '}{Bank_Transfer}{' '}제주은행{' '}
+                                      {user?.virtualAccount}{' '}스타디움엑스 (가상)
+                                    </span>
+
+                                  ) : (
+
+                                    <span className="text-sm text-zinc-400">
+                                      {Payment}:{' '}{Bank_Transfer}{' '}({seller?.bankInfo.bankName}{' '}
+                                      {seller?.bankInfo.accountNumber}{' '}{seller?.bankInfo.accountHolder})
+                                    </span>
+
+                                  )}
+
                                 </div>
+
 
                                 <div className="flex flex-row items-center gap-2">
                                   <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>

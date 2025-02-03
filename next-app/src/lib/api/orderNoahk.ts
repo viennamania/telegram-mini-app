@@ -61,6 +61,7 @@ export interface UserProps {
 
   transactionHash: string,
 
+  virtualAccount: string,
 }
 
 export interface ResultProps {
@@ -202,6 +203,8 @@ export async function insertSellOrder(data: any) {
 
   const seller = user.seller;
 
+  const virtualAccount = user.virtualAccount;
+
 
 
   const collection = client.db('shinemywinter').collection('ordersNoahk');
@@ -223,6 +226,7 @@ export async function insertSellOrder(data: any) {
       createdAt: new Date().toISOString(),
       status: 'ordered',
       privateSale: data.privateSale,
+      virtualAccount: virtualAccount,
     }
   );
 
