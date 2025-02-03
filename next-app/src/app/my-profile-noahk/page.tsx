@@ -95,7 +95,7 @@ function ProfilePage() {
   
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
     ///const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
   
 
@@ -213,7 +213,9 @@ function ProfilePage() {
 
             const data = await response.json();
 
-            //console.log("data", data);
+            console.log("getUser data", data);
+
+
 
             if (data.result) {
 
@@ -1095,7 +1097,7 @@ function ProfilePage() {
 
       
                         {/* 판매자 가상계좌 정보 virtualAccount */}
-                        {address && seller && seller && (
+                        {address && seller && (
                             <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
                             bg-zinc-800 bg-opacity-90
                             '>
@@ -1109,8 +1111,15 @@ function ProfilePage() {
 
                                 {seller?.virtualAccount ? (
                                 <div className='flex flex-row gap-2 items-center justify-between'>
+                                    {/* 제주은행 */}
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        제주은행
+                                    </span>
                                     <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        {seller?.virtualAccount}
+                                        {
+                                            //seller?.virtualAccount
+                                            user?.virtualAccount
+                                        }
                                     </div>
                                 </div>
                                 ) : (
