@@ -1060,7 +1060,45 @@ function ProfilePage() {
 
                                 <div className='flex flex-row gap-2 items-center justify-between'>
                                     <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        {seller?.bankInfo?.bankName} {seller?.bankInfo?.accountNumber} {seller?.bankInfo?.accountHolder}
+                                        {/*
+                                           
+                                            카카오뱅크: 090, 케이뱅크: 089, 토스뱅크: 088,
+
+                                          국민은행: 004, 우리은행: 020, 신한은행: 088, 농협: 011, 기업은행: 003, 하나은행: 081, 외환은행: 002, 부산은행: 032, 대구은행: 031, 전북은행: 037, 경북은행: 071,
+                                           광주은행: 034, 우체국: 071, 수협: 007, 씨티은행: 027, 대신은행: 055, 동양종합금융: 054, 
+
+                                        */}  
+                                        
+                                        {
+                                            seller?.bankInfo?.bankName === "090" ? "카카오뱅크" :
+                                            seller?.bankInfo?.bankName === "089" ? "케이뱅크" :
+                                            seller?.bankInfo?.bankName === "088" ? "토스뱅크" :
+                                            seller?.bankInfo?.bankName === "004" ? "국민은행" :
+                                            seller?.bankInfo?.bankName === "020" ? "우리은행" :
+                                            seller?.bankInfo?.bankName === "088" ? "신한은행" :
+                                            seller?.bankInfo?.bankName === "011" ? "농협" :
+                                            seller?.bankInfo?.bankName === "003" ? "기업은행" :
+                                            seller?.bankInfo?.bankName === "081" ? "하나은행" :
+                                            seller?.bankInfo?.bankName === "002" ? "외환은행" :
+                                            seller?.bankInfo?.bankName === "032" ? "부산은행" :
+                                            seller?.bankInfo?.bankName === "031" ? "대구은행" :
+                                            seller?.bankInfo?.bankName === "037" ? "전북은행" :
+                                            seller?.bankInfo?.bankName === "071" ? "경북은행" :
+                                            seller?.bankInfo?.bankName === "034" ? "광주은행" :
+                                            seller?.bankInfo?.bankName === "071" ? "우체국" :
+                                            seller?.bankInfo?.bankName === "007" ? "수협" :
+                                            seller?.bankInfo?.bankName === "027" ? "씨티은행" :
+                                            seller?.bankInfo?.bankName === "055" ? "대신은행" :
+                                            seller?.bankInfo?.bankName === "054" ? "동양종합금융" :
+                                            "기타"
+
+       
+
+
+
+
+                                        }
+                                        {' '}{seller?.bankInfo?.accountNumber} {seller?.bankInfo?.accountHolder}
                                     </div>
                                 </div>
 
@@ -1112,7 +1150,7 @@ function ProfilePage() {
                                 {user?.virtualAccount ? (
                                 <div className='flex flex-row gap-2 items-center justify-between'>
                                     {/* 제주은행 */}
-                                    <span className='text-sm font-semibold text-gray-500'>
+                                    <span className='text-lg font-semibold text-yellow-500'>
                                         제주은행
                                     </span>
                                     <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
@@ -1225,6 +1263,9 @@ function ProfilePage() {
                                     }}
                                 >
                                     <option value="">은행선택</option>
+                                    <option value="090">카카오뱅크</option>
+                                    <option value="089">케이뱅크</option>
+                                    <option value="088">토스뱅크</option>
                                     <option value="004">국민은행</option>
                                     <option value="020">우리은행</option>
                                     <option value="088">신한은행</option>

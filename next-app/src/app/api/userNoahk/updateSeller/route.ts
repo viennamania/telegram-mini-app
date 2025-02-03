@@ -149,12 +149,16 @@ export async function POST(request: NextRequest) {
 
   국민은행: 004, 우리은행: 020, 신한은행: 088, 농협: 011, 기업은행: 003, 하나은행: 081, 외환은행: 002, 부산은행: 032, 대구은행: 031, 전북은행: 037, 경북은행: 071, 부산은행: 032, 광주은행: 034, 우체국: 071, 수협: 007, 씨티은행: 027, 대신은행: 055, 동양종합금융: 054, 롯데카드: 062, 삼성카드: 029, 현대카드: 048, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카
 
-
+  카카오뱅크: 090, 케이뱅크: 089, 토스뱅크: 088,
   */
 
   //const bankCd = '035';
 
   const bankCd =
+    seller?.bankInfo?.bankName === '카카오뱅크' ? '090' :
+    seller?.bankInfo?.bankName === '케이뱅크' ? '089' :
+    seller?.bankInfo?.bankName === '토스뱅크' ? '088' :
+
     seller?.bankInfo?.bankName === '국민은행' ? '004' :
     seller?.bankInfo?.bankName === '우리은행' ? '020' :
     seller?.bankInfo?.bankName === '신한은행' ? '088' :
@@ -166,7 +170,6 @@ export async function POST(request: NextRequest) {
     seller?.bankInfo?.bankName === '대구은행' ? '031' :
     seller?.bankInfo?.bankName === '전북은행' ? '037' :
     seller?.bankInfo?.bankName === '경북은행' ? '071' :
-    seller?.bankInfo?.bankName === '부산은행' ? '032' :
     seller?.bankInfo?.bankName === '광주은행' ? '034' :
     seller?.bankInfo?.bankName === '우체국' ? '071' :
     seller?.bankInfo?.bankName === '수협' ? '007' :
