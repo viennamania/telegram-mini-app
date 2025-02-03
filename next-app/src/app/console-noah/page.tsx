@@ -580,6 +580,7 @@ function HomeContent() {
 
         {/* send to user telegramId */}
         {/* input amountSend */}
+        {/*
         {address && (
           <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
@@ -617,6 +618,9 @@ function HomeContent() {
             </div>
           </div>
         )}
+        */}
+
+      
 
 
 
