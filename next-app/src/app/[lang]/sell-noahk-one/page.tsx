@@ -823,6 +823,14 @@ export default function Index({ params }: any) {
 
 
 
+    const [paymentAmountList, setPaymentAmountList] = useState([] as number[]);
+    useEffect(() => {
+      setPaymentAmountList(sellOrders.map((
+        item
+      ) => item.sellAmount));
+    }, [sellOrders]);
+
+
 
     // confirmPayment
     const [confirmingPaymentList, setConfirmingPaymentList] = useState([] as boolean[]);
@@ -841,7 +849,9 @@ export default function Index({ params }: any) {
 
       //console.log('orderId', orderId);
 
-      const paymentAmount = sellOrders[index].sellAmount;
+      ////const paymentAmount = sellOrders[index].sellAmount;
+
+      const paymentAmount = paymentAmountList[index];
 
       //console.log('paymentAmount', paymentAmount);
 
@@ -2463,6 +2473,27 @@ export default function Index({ params }: any) {
                                         {/* confirm payment button */}
                                         <div className="mt-5 mb-5 w-full flex flex-row items-center justify-end gap-2">
                                           
+
+                                          {/* input for payment amount */}
+                                          <input
+                                            disabled={true}
+                                            type="text"
+                                            
+                                            className="bg-white text-black px-2 py-2 rounded-md
+                                            w-40"
+
+                                            placeholder="결제금액"
+                                            value={
+                                              Number(paymentAmountList[index]).toLocaleString('ko-KR', {
+                                                style: 'currency',
+                                                currency: 'KRW',
+                                              })
+                                            }
+                                          />
+
+
+
+
                                           <button
                                             disabled={confirmingPaymentList[index]}
                                             className={
@@ -2502,6 +2533,7 @@ export default function Index({ params }: any) {
                                               </div>
 
                                             ) : (
+
                                               <div className="flex flex-row text-xs items-center gap-2 ">
                                                 <Image
                                                   src="/icon-confirm.png"
