@@ -818,6 +818,12 @@ export default function Index({ params }: any) {
 
 
 
+    const [paymentAmountList, setPaymentAmountList] = useState([] as number[]);
+    useEffect(() => {
+      setPaymentAmountList(sellOrders.map((
+        item
+      ) => item.krwAmount));
+    }, [sellOrders]);
 
     // confirmPayment
     const [confirmingPaymentList, setConfirmingPaymentList] = useState([] as boolean[]);
@@ -836,7 +842,9 @@ export default function Index({ params }: any) {
 
       //console.log('orderId', orderId);
 
-      const paymentAmount = sellOrders[index].sellAmount;
+      //const paymentAmount = sellOrders[index].sellAmount;
+
+      const paymentAmount = paymentAmountList[index];
 
       //console.log('paymentAmount', paymentAmount);
 
@@ -2203,7 +2211,7 @@ export default function Index({ params }: any) {
                                       {Buyer}: {
                                         item.buyer.walletAddress === address ? item.buyer.nickname + ' :' + Me :
                                       
-                                        item.buyer.nickname
+                                        item.buyer.nickname ? item.buyer.nickname : item.buyer.walletAddress.slice(0, 6) + '...' + item.buyer.walletAddress.slice(-4)
                                       }
                                     </p>
 
@@ -2441,7 +2449,12 @@ export default function Index({ params }: any) {
                                           {/* dot */}
                                           <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
                                           <span className="text-sm text-green-500 font-semibold">
-                                            {item.buyer.nickname}님이 {item.krwAmount} KRW를 결제한것을 확인하고 완료를 눌러주세요.
+                                            {Buyer}가 {
+                                            Number(item.krwAmount).toLocaleString('ko-KR', {
+                                              style: 'currency',
+                                              currency: 'KRW',
+                                            })
+                                            }을 결제한것을 확인하고 완료를 눌러주세요.
                                           </span>
                                         </div>
 

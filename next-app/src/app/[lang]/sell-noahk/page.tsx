@@ -2447,7 +2447,11 @@ export default function Index({ params }: any) {
                                           {/* dot */}
                                           <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
                                           <span className="text-sm text-green-500 font-semibold">
-                                            {item.buyer.nickname}님이 {item.krwAmount} KRW를 결제한것을 확인하고 완료를 눌러주세요.
+                                            {Buyer}가 {
+                                            Number(item.krwAmount).toLocaleString('ko-KR', {
+                                              style: 'currency',
+                                              currency: 'KRW',
+                                            })}을 결제한것을 확인하고 완료를 눌러주세요.
                                           </span>
                                         </div>
 
