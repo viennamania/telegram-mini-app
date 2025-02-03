@@ -95,7 +95,7 @@ function ProfilePage() {
   
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
     ///const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
   
 
@@ -213,7 +213,7 @@ function ProfilePage() {
 
             const data = await response.json();
 
-            //console.log("getUser data", data);
+            console.log("getUser data", data);
 
 
 

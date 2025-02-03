@@ -377,12 +377,12 @@ response2Json:  {
     //console.log("account: ", response2Json.vact.account);
 
 
-    const virtaulAccount = response2Json.vact.account;
+    const virtualAccount = response2Json.vact.account;
 
     const result = await updateSeller({
       walletAddress: walletAddress,
       seller: seller,
-      virtaulAccount: virtaulAccount,
+      virtualAccount: virtualAccount,
     });
 
     return NextResponse.json({
@@ -396,5 +396,5 @@ response2Json:  {
     result: null,
   });
 
-  
+
 }
