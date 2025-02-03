@@ -233,12 +233,12 @@ export async function insertOne(data: any) {
 
             await collectionTelegramMessages.insertOne(
             {
+
                 center: center,
                 category: "otc",
-                walletAddress: walletAddress,
-                telegramId: telegramId,
+                sellOrder: sellOrder,
+                telegramId: user.telegramId,
                 message: message,
-                timestamp: data.timestamp,
             }
             );
 
