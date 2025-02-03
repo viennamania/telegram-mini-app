@@ -435,10 +435,40 @@ function HomeContent() {
         px-5
         "
     >
-      <div className="py-20 w-full flex flex-col gap-10 items-center justify-center">
+      <div className="py-10 w-full flex flex-col gap-10 items-center justify-center">
         {/*
         <Header />
         */}
+
+          {/* 메뉴선택 */}
+          {/* 회원관리 / 거래관리 */}
+          {/* 회원관리 /console-noah */}
+          {/* 거래관리: /kr/my-buy-noahk?walletAddress=0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C */}
+
+          <div className="flex flex-row gap-2 items-center justify-between">
+            <Link href="/console-noah?center=noah_wallet_bot">
+              
+              <Button
+                className="bg-green-500 text-zinc-100 p-2 rounded"
+              >
+                회원관리
+              </Button>
+
+            </Link>
+
+            <Link href="/kr/my-buy-noahk?walletAddress=0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C">
+              
+              <Button
+                className="bg-gray-700 text-zinc-100 p-2 rounded"
+              >
+                거래관리
+              </Button>
+
+            </Link>
+
+          </div>
+
+
         {/*
         <AutoConnect
           client={client}
@@ -817,7 +847,7 @@ function HomeContent() {
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map((user, index) => (
+                            {users?.map((user, index) => (
                                 <tr
                                   key={index}
                                   className={`${selectUser === user?.walletAddress ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}`}

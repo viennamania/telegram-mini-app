@@ -50,6 +50,9 @@ import { getDictionary } from "../../dictionaries";
 
 
 
+import Link from "next/link";
+import { Button } from "@headlessui/react";
+
 
 interface SellOrder {
   _id: string;
@@ -876,9 +879,36 @@ export default function Index({ params }: any) {
 
 
 
+
+
         <div className="py-0 w-full">
 
-          <div className="flex flex-col items-start justify-center space-y-4">
+          <div className="w-full flex flex-col items-center justify-center space-y-4">
+
+
+            <div className="mt-5 flex flex-row gap-2 items-center justify-between">
+              <Link href="/console-noah?center=noah_wallet_bot">
+                
+                <Button
+                  className="bg-gray-700 text-zinc-100 p-2 rounded"
+                >
+                  회원관리
+                </Button>
+
+              </Link>
+
+              <Link href="/kr/my-buy-noahk?walletAddress=0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C">
+                
+                <Button
+                  className="bg-green-500 text-white p-2 rounded"
+                >
+                  거래관리
+                </Button>
+
+              </Link>
+
+            </div>
+
 
               <div className='flex flex-row items-center space-x-4'>
                   <Image
