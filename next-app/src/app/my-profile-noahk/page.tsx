@@ -840,7 +840,7 @@ function ProfilePage() {
                                         className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
                                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
 
-                                        placeholder="회원아이디"
+                                        placeholder="영문 소문자와 숫자"
                                         
                                         //value={nickname}
                                         value={editedNickname}
