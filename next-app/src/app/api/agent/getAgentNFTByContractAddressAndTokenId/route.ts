@@ -87,6 +87,67 @@ export async function POST(request: NextRequest) {
 
 
 
+
+
+  // https://na.winglobalpay.com/api/v1/reqUserAccountInfo
+  // *헤더에 content-type: application/json; charset=utf-8
+  // Authorization
+  // *가맹점 api key는 윈글로벌페이 관리자에게 요청
+  /*
+  가맹점 아이디 : w63791online
+API KEY : pk_ee40-3825fb-38a-a5395
+
+가맹점 아이디 : w63792online
+API KEY : pk_096e-0d7e93-200-a34f0
+  */
+ /*
+ {
+    "bankCd": "034"
+  }
+    034:광주은행, 039:경남은행
+  */
+
+  const response2 = await fetch('https://na.winglobalpay.com/api/v1/reqUserAccountInfo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Authorization': process.env.WINGLOBALPAY_API_KEY || '',
+    },
+    body: JSON.stringify({
+      bankCd: '034',
+      //bankCd: '',
+    })
+  });
+
+  const response2Json = await response2.json();
+
+
+  console.log("response2Json: ", response2Json);
+  // response2Json:  { msg: '키를 확인해주세요.', flag: 'fail' }
+
+  /*
+  response2Json:  {
+    msg: '조회가 성공하였습니다.',
+    flag: 'success',
+    data: {
+      holderName: '(주)앳게이트',
+      possibleAmt: 0,
+      transferLimit: '10,000,000',
+      realPossibleAmt: 0,
+      transferFee: 1000,
+      bankName: '하나은행',
+      holdAmt: 0,
+      afterOneHourAmt: 0,
+      account: '27991002361104'
+    }
+  }
+  */
+
+
+
+
+
+
   return NextResponse.json({
 
     result: response,
