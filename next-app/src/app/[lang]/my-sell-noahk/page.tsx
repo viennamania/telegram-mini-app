@@ -1021,7 +1021,7 @@ export default function Index({ params }: any) {
                       </div>
                     </div>
 
-                    
+                    {/*
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">{Orders}</div>
                       <div className="text-xl font-semibold text-gray-400">
@@ -1039,6 +1039,34 @@ export default function Index({ params }: any) {
 
                         }
 
+                      </div>
+                    </div>
+                    */}
+                    {/* sum of sellAmount */}
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">NOAH-K</div>
+                      <div className="text-xl font-semibold text-gray-400">
+                        {
+                          sellOrders.reduce((acc, item) => acc + item.sellAmount, 0)
+                          
+                        }
+                      </div>
+                    </div>
+
+                    {/* sum of krwAmount */}
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">KRW</div>
+                      <div className="text-xl font-semibold text-gray-400">
+                        {
+                          sellOrders.reduce((acc, item) => acc + item.krwAmount, 0)
+                          .toLocaleString(
+                            'ko-KR',
+                            {
+                              style: 'currency',
+                              currency: 'KRW',
+                            }
+                          )
+                        }
                       </div>
                     </div>
                     
@@ -1686,7 +1714,7 @@ export default function Index({ params }: any) {
                                     {Buyer}: {
                                       item.buyer.walletAddress === address ? item.buyer.nickname + ' :' + Me :
                                     
-                                      item.buyer.nickname
+                                      item.buyer.nickname ? item.buyer.nickname : item.buyer.walletAddress.slice(0, 6) + '...' + item.buyer.walletAddress.slice(-4)
                                     }
                                   </p>
 
