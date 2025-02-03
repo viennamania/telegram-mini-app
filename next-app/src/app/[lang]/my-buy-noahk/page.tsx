@@ -97,7 +97,7 @@ interface SellOrder {
 
 //const contractAddressArbitrum = "0x2f2a2543B76A4166549F7aab2e75Bef0aefC5B0f"; // USDT on Arbitrum
 
-//const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAH-K on Polygon
+const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAH-K on Polygon
 
 
 
@@ -292,7 +292,7 @@ export default function Index({ params }: any) {
 
     /*
     const account = useActiveAccount() as any;
-
+    */
 
     const contract = getContract({
         client,
@@ -300,6 +300,7 @@ export default function Index({ params }: any) {
         address: contractAddress,
     });
 
+    /*
     const address = account?.address;
     */
    
@@ -323,7 +324,7 @@ export default function Index({ params }: any) {
 
 
 
-    /*
+    
     const [balance, setBalance] = useState(0);
 
 
@@ -351,7 +352,7 @@ export default function Index({ params }: any) {
       return () => clearInterval(interval);
   
     } , [address, contract]);
-    */
+    
 
 
 
@@ -895,11 +896,19 @@ export default function Index({ params }: any) {
 
               </div>
 
-              {/*
-                <div className="w-full flex flex-row items-center justify-between gap-2">
-                  <div className='w-full flex flex-row gap-2 items-center justify-between
-                      border border-gray-800
-                      p-4 rounded-lg'>
+              
+                <div className="w-full flex flex-col items-center justify-between gap-2
+                  border border-gray-800
+                  p-4 rounded-lg">
+
+                  {/* wallet address 지갑주소 */}
+                  <span className="text-sm text-gray-400">
+                    {
+                      address
+                    }
+                  </span>
+
+                  <div className='flex flex-row items-center justify-between gap-2'>
 
                       <Image
                           src="/logo-noahk-erc20.png"
@@ -921,8 +930,9 @@ export default function Index({ params }: any) {
 
                       </div>
                   </div>
+
                 </div>
-                */}
+                
 
 
 
