@@ -1253,7 +1253,7 @@ function ProfilePage() {
                                     
                                     value={seller?.bankInfo?.accountNumber}
 
-                                    type='text'
+                                    type='number'
                                     onChange={(e) => {
                                         setSeller({
                                             ...seller,
@@ -1301,7 +1301,7 @@ function ProfilePage() {
                                     
                                     value={seller?.bankInfo?.birth}
 
-                                    type='text'
+                                    type='number'
                                     onChange={(e) => {
                                         setSeller({
                                             ...seller,
