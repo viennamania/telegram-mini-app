@@ -317,15 +317,22 @@ response2Json:  {
 }
   */
 
+  //console.log("resultCd: ", response2Json.result.resultCd);
+
+
   // 성공
   let virtaulAccount = '';
-  if (response2Json.result.resultCd !== '0000') {
+  if (response2Json.result.resultCd === '0000') {
+
+    //console.log("account: ", response2Json.vact.account);
+
 
     virtaulAccount = response2Json.vact.account;
 
   }
 
 
+  //console.log("virtaulAccount: ", virtaulAccount);
 
 
   const result = await updateSeller({
