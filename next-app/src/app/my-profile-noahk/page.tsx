@@ -1455,12 +1455,12 @@ function ProfilePage() {
 
 
                         {/* escrowWalletAddress */}
+                        {/*
                         {address && escrowWalletAddress && (
                             <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
                             bg-zinc-800 bg-opacity-90
                             '>
                                 <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                    {/* dot */}
                                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                     <span className="text-sm font-semibold text-gray-200">
                                         에스크로 지갑주소
@@ -1475,7 +1475,6 @@ function ProfilePage() {
                                     </div>
                                 </div>
 
-                                {/* 복사 버튼 */}
                                 <button
                                     onClick={() => {
                                         navigator.clipboard.writeText(escrowWalletAddress as string);
@@ -1488,7 +1487,7 @@ function ProfilePage() {
 
                             </div>
                         )}
-
+                        */}
 
 
 
