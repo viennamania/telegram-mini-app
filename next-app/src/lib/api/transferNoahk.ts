@@ -217,14 +217,14 @@ export async function insertOne(data: any) {
     if (userSeller) {
         
 
-        const walletAddress = userSeller.walletAddress;
+        ///const walletAddress = userSeller.walletAddress;
         const telegramId = userSeller.telegramId;
         const center = userSeller.center;
 
         if (telegramId) {
 
             // divide by 1e18
-            const amount = parseFloat(data.value) / 1e18;
+            ////const amount = parseFloat(data.value) / 1e18;
 
             ///const message = "You have received " + Number(amount).toFixed(6) + " USDT";
             const message = "판매가 완료되었습니다.";
@@ -237,7 +237,7 @@ export async function insertOne(data: any) {
                 center: center,
                 category: "otc",
                 sellOrder: sellOrder,
-                telegramId: user.telegramId,
+                telegramId: telegramId,
                 message: message,
             }
             );
