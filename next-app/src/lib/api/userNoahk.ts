@@ -637,6 +637,7 @@ export async function getAllUsersTelegramIdByCenter(
         avatar: 1,
         center: 1,
         centerOwner: 1,
+        virtualAccount: 1,
 
         referralCode: { $arrayElemAt: ['$referral.referralCode', 0] }
       }

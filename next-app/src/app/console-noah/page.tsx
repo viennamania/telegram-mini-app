@@ -843,6 +843,7 @@ function HomeContent() {
                                 <th className="p-2">지갑주소</th>
                                 <th className="p-2">핸드폰번호</th>
                                 <th className="p-2">판매자정보</th>
+                                <th className="p-2">가상계좌</th>
                                 <th className="p-2">자산</th>
                             </tr>
                         </thead>
@@ -913,6 +914,24 @@ function HomeContent() {
                                         <br />
                                         {
                                           user?.seller?.bankInfo?.accountHolder
+                                        }
+                                      </span>
+                                    </td>
+
+                                    <td className="p-2 text-center">
+                                      <span className="text-sm">
+                                        {
+                                          user?.virtualAccount ? (
+                                            <>
+                                              제주은행<br />
+                                              {user?.virtualAccount}<br />
+                                              스타이움엑스 (가상)
+                                            </>
+                                          ) : (
+                                            <>
+                                            가상계좌 없음
+                                            </>
+                                          )
                                         }
                                       </span>
                                     </td>
