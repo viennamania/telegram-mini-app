@@ -1557,7 +1557,7 @@ export default function Index({ params }: any) {
 
 
 
-                    <div className="ml-5 flex flex-col gap-2 items-start justify-end">
+                    <div className="ml-5 flex flex-col gap-2 items-between justify-center">
                       
                       {/*
                       <div className="flex flex-row items-center gap-2">
