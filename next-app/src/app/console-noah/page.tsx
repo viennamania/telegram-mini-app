@@ -32,7 +32,9 @@ import { add } from "thirdweb/extensions/thirdweb";
 
 
 
-const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+//const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+
+const contractAddress = "0x542197103Ca1398db86026Be0a85bc8DcE83e440"; // NOAH-K on Polygon
 
 
 function HomeContent() {
@@ -93,7 +95,7 @@ function HomeContent() {
 
       if (!result) return;
   
-      setBalance( Number(result) / 10 ** 6 );
+      setBalance( Number(result) / 10 ** 18 );
 
     };
 
@@ -174,6 +176,9 @@ function HomeContent() {
 
   const [applicationData, setApplicationData] = useState(null);
 
+  const [userBalance, setUserBalance] = useState(0);
+
+
   useEffect(() => {
 
       const fetchNfts = async () => {
@@ -247,6 +252,26 @@ function HomeContent() {
 
 
 
+      const getBalance = async () => {
+        
+        if (!selectUser) {
+            return;
+        }
+        
+        const result = await balanceOf({
+          contract,
+          address: selectUser,
+        });
+
+    
+        console.log(result);
+
+        if (!result) return;
+    
+        setUserBalance( Number(result) / 10 ** 18 );
+
+      }
+
 
 
 
@@ -255,7 +280,9 @@ function HomeContent() {
 
         fetchNfts();
 
-        fetchApplication();
+        //fetchApplication();
+
+        getBalance();
 
       }
 
@@ -786,7 +813,7 @@ function HomeContent() {
                                 <th className="p-2">지갑주소</th>
                                 <th className="p-2">핸드폰번호</th>
                                 <th className="p-2">판매자정보</th>
-                                <th className="p-2">NFT</th>
+                                <th className="p-2">자산</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -886,7 +913,17 @@ function HomeContent() {
 
             
               {selectUser && (
-                <>
+                <div className="w-full flex flex-col gap-2 items-start justify-between">
+
+                  {/* user balance */}
+                  <div className="w-full flex flex-row gap-2 items-center justify-start">
+                    <span className="text-2xl text-green-500 font-semibold">
+                      잔고: {
+                        Number(userBalance).toFixed(0)
+                      } NOAH-K
+                    </span>
+                  </div>
+
                   {loadingAgentNft ? (
                     <div className="flex flex-col items-center justify-center">
                         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
@@ -997,7 +1034,7 @@ function HomeContent() {
                         </div>
                     </div>
                   )}
-                </>
+                </div>
 
               )}
 
