@@ -1618,9 +1618,11 @@ export async function getCenterOwnerByCenter(
 export async function updateSeller({
   walletAddress,
   seller,
+  virtaulAccount,
 }: {
   walletAddress: string;
   seller: any;
+  virtaulAccount: string;
 }) {
 
   console.log('updateSeller walletAddress: ' + walletAddress + ' seller: ' + JSON.stringify(seller));
@@ -1633,6 +1635,7 @@ export async function updateSeller({
     {
       $set: {
         seller,
+        virtaulAccount,
       }
     }
   );

@@ -134,11 +134,204 @@ export async function POST(request: NextRequest) {
 
 
 
+  // https://na.winglobalpay.com/api/v1/vactFcs
+  /*
+  mchtId : 가맹점 ID
+  bankCd : 실명인증 은행코드
+  account : 실명인증 계좌번호
+  payerName : 발급요청자 실명
+  payerTel : 발급요청자 연락처
+  dob : 발급요청자 생년월일
+  gender : 발급요청자 성별, 0:여성, 1:남성
+
+  recvBankCd : 수취은행코드, 비어있을 경우 광주은행으로 발급됩니다.
+  //광주은행:034, 경남은행:039, 제주은행:035, 신한은행: 088
+  */
+
+  const bankCd = '035';
+  //const bankCd = '034';
+  const recvBankCd = '035';
+
+
+  const bankAccount = '110019648787';
+  const payerName = '박승현';
+  const payerTel = '01098551647';
+  const dob = '691120';
+  const gender = '1';
+
+  /*
+  {
+	"vact":{
+			"tmnId":"sorhkrj",
+			"mchtId":"sorhkrj",
+			"trackId":"",
+			"bankCd":"004",
+			"account":"111122223333",
+			"payerName":"홍길동",
+			"payerTel":"01012345678",
+			"dob":"880101",
+			"gender":"1",
+			"recvBankCd":"",
+      "itndAmount":"20000",
+			"holderName":""
+			}
+}
+  */
+
+  const response2 = await fetch('https://na.winglobalpay.com/api/v1/vactFcs', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Authorization': process.env.WINGLOBALPAY_API_KEY || '',
+    },
+    body: JSON.stringify({
+      "vact": {
+        tmnId: '',
+        mchtId: 'w63791online',
+        trackId: '',
+        bankCd: bankCd,
+        account: bankAccount,
+        payerName: payerName,
+        payerTel: payerTel,
+        dob: dob,
+        gender: gender,
+        recvBankCd: recvBankCd,
+        itndAmount: '20000',
+        holderName: '',
+
+      },
+    })
+  });
+
+  const response2Json = await response2.json();
+  
+
+  console.log("response2Json: ", response2Json);
+
+  /*
+response2Json:  {
+  timestamp: '2025-02-03T06:44:02.186+00:00',
+  status: 500,
+  error: 'Internal Server Error',
+  path: '/api/v1/vactFcs'
+}
+  */
+ /*
+ response2Json:  {
+  result: {
+    resultCd: '9999',
+    advanceMsg: '올바르지 않은 생년월일(예:YYMMDD)입니다.',
+    create: '20250203154959',
+    resultMsg: '입력값 오류'
+  },
+  vact: {
+    holderName: '',
+    gender: '1',
+    tmnId: '',
+    trackId: '',
+    itndAmount: '20000',
+    recvBankCd: '034',
+    dob: '19601120',
+    bankCd: '088',
+    payerTel: '01098551647',
+    mchtId: 'w63791online',
+    payerName: '박승현',
+    account: '110019648787'
+  }
+    */
+
+  /*
+  response2Json:  {
+  result: {
+    resultCd: '9999',
+    advanceMsg: '계좌인증 실패 - 실명번호 오류',
+    create: '20250203155041',
+    resultMsg: '조회 오류'
+  },
+  vact: {
+    holderName: '',
+    gender: '1',
+    tmnId: '',
+    trackId: '',
+    itndAmount: '20000',
+    recvBankCd: '034',
+    dob: '601120',
+    bankCd: '088',
+    payerTel: '01098551647',
+    mchtId: 'w63791online',
+    payerName: '박승현',
+    account: '110019648787'
+  }
+}
+  */
+
+  /*
+  response2Json:  {
+  result: {
+    resultCd: '9999',
+    advanceMsg: '해당 상점의 가상계좌 개수가 부족합니다.',
+    create: '20250203155607',
+    resultMsg: '계좌 부족'
+  },
+  vact: {
+    holderName: '',
+    gender: '1',
+    tmnId: '',
+    trackId: '',
+    itndAmount: '20000',
+    recvBankCd: '088',
+    dob: '691120',
+    bankCd: '088',
+    payerTel: '01098551647',
+    mchtId: 'w63791online',
+    payerName: '박승현',
+    account: '110019648787'
+  }
+}
+  */
+
+
+
+  /*
+  response2Json:  {
+  result: {
+    resultCd: '0000',
+    advanceMsg: '기존 발행된 가상계좌가 있습니다.',
+    create: '20250203155848',
+    resultMsg: '정상처리'
+  },
+  vact: {
+    holderName: '박승현',
+    gender: '1',
+    tmnId: '',
+    trackId: '',
+    itndAmount: '20000',
+    recvBankCd: '035',
+    dob: '691120',
+    bankCd: '035',
+    payerTel: '01098551647',
+    mchtId: 'w63791online',
+    payerName: '박승현',
+    account: '50902006423904'
+  }
+}
+  */
+
+  // 성공
+  let virtaulAccount = '';
+  if (response2Json.result.resultCd !== '0000') {
+
+    virtaulAccount = response2Json.vact.account;
+
+  }
+
+
 
 
   const result = await updateSeller({
     walletAddress: walletAddress,
     seller: seller,
+    virtaulAccount: virtaulAccount,
   });
 
 
