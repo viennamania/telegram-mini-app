@@ -85,6 +85,8 @@ interface SellOrder {
 
   escrowTransactionHash: string;
   transactionHash: string;
+
+  virtualAccount: string;
 }
 
 
@@ -1705,14 +1707,34 @@ export default function Index({ params }: any) {
                                 <div className="mt-4 flex flex-col items-start justify-start gap-2">
                                 
                                   <span className="text-sm font-semibold text-white">
-                                    {Payment}: {Bank_Transfer}
+                                    {Payment}:
                                   </span>
 
-                                  <span className="text-xl font-semibold text-yellow-500">
-                                    {item.seller?.bankInfo.bankName}
-                                    {' '}{item.seller?.bankInfo.accountNumber}
-                                    {' '}{item.seller?.bankInfo.accountHolder}
+                                  {item?.virtualAccount ? (
+                                    <div className="mt-2 flex flex-row items-center gap-2">
+                                      <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
+                                      <p className="text-sm text-zinc-400">
+                                        {Payment}:{' '}제주은행{' '}
+                                        {item?.virtualAccount}{' '}스타디움엑스 (가상)
+                                      </p>
+                                    </div>
+                                  ) : (
+                                    <div className="mt-2 flex flex-row items-center gap-2">
+                                      <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
+                                      <p className="text-sm text-zinc-400">
+                                        {Payment}:{' '}
+                                        ({item.seller?.bankInfo.bankName}{' '}
+                                        {item.seller?.bankInfo.accountNumber}{' '}
+                                        {item.seller?.bankInfo.accountHolder})
+                                      </p>
+                                    </div>
+                                  )}
+
+                                  {/* 입금자명 depositName */}
+                                  <span className="text-sm text-zinc-400">
+                                    입금자명: {item?.buyer?.depositName}
                                   </span>
+
                                     
                                 </div>
 
