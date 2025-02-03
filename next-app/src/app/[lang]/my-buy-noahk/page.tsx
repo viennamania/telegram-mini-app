@@ -1776,7 +1776,7 @@ export default function Index({ params }: any) {
                                     <div className="mt-2 flex flex-row items-center gap-2">
                                       <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
                                       <p className="text-sm text-zinc-400">
-                                        {Payment}:{' '}제주은행{' '}
+                                        은행:{' '}제주은행{' '}
                                         {item?.virtualAccount}{' '}스타디움엑스 (가상)
                                       </p>
                                     </div>
@@ -1784,18 +1784,21 @@ export default function Index({ params }: any) {
                                     <div className="mt-2 flex flex-row items-center gap-2">
                                       <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
                                       <p className="text-sm text-zinc-400">
-                                        {Payment}:{' '}
-                                        ({item.seller?.bankInfo.bankName}{' '}
+                                        은행:{' '}
+                                        {item.seller?.bankInfo.bankName}{' '}
                                         {item.seller?.bankInfo.accountNumber}{' '}
-                                        {item.seller?.bankInfo.accountHolder})
+                                        {item.seller?.bankInfo.accountHolder}
                                       </p>
                                     </div>
                                   )}
 
                                   {/* 입금자명 depositName */}
-                                  <span className="text-sm text-zinc-400">
-                                    입금자명: {item?.buyer?.depositName}
-                                  </span>
+                                  <div className="mt-2 flex flex-row items-center gap-2">
+                                    <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
+                                    <p className="text-sm text-zinc-400">
+                                      입금자명:{' '}{item?.buyer?.depositName}
+                                    </p>
+                                  </div>
                                     
                                 </div>
 
@@ -1815,14 +1818,14 @@ export default function Index({ params }: any) {
 
                   
 
-                              <div className="flex flex-col items-start justify-start gap-2">
+                              <div className="mt-5 flex flex-col items-start justify-start gap-2">
                                 <p className="flex items-center gap-2">
 
                                   <Image
                                       src={item.avatar || '/profile-default.png'}
                                       alt="Avatar"
-                                      width={32}
-                                      height={32}
+                                      width={25}
+                                      height={25}
                                       priority={true} // Added priority property
                                       className="rounded-full"
                                       style={{
