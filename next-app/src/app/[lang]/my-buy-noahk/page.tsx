@@ -1620,7 +1620,7 @@ export default function Index({ params }: any) {
 
 
                             {item.status === 'paymentConfirmed' && (
-                              <div className="flex flex-row items-center justify-between gap-2
+                              <div className="flex flex-row xl:flex-col items-center justify-between gap-2
                                 bg-green-500 text-white p-2 rounded-md
                               ">
                                 <div className="flex flex-row items-center gap-2">
