@@ -314,11 +314,12 @@ export default function Index({ params }: any) {
   
 
 
-    const address = account?.address;
+    //const address = account?.address;
 
     // test address
     //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
+    const address = searchParams.get('walletAddress');
 
 
 
@@ -326,7 +327,7 @@ export default function Index({ params }: any) {
 
 
 
-  
+    /*
     const [balance, setBalance] = useState(0);
 
 
@@ -354,7 +355,7 @@ export default function Index({ params }: any) {
       return () => clearInterval(interval);
   
     } , [address, contract]);
-
+    */
 
 
 
@@ -529,7 +530,7 @@ export default function Index({ params }: any) {
 
     const [agreementPlaceOrder, setAgreementPlaceOrder] = useState(false);
 
-
+    /*
     const sellOrder = async () => {
       // api call
       // set sell order
@@ -579,11 +580,7 @@ export default function Index({ params }: any) {
       //console.log('data', data);
 
       if (data.result) {
-        /*
-        toast.success(
-          Order_has_been_placed
-        );
-        */
+
         //alert(Order_has_been_placed);
         alert('판매주문이 완료되었습니다.');
 
@@ -629,6 +626,8 @@ export default function Index({ params }: any) {
       
 
     };
+
+    */
 
 
     // cancel sell order state
@@ -903,12 +902,13 @@ export default function Index({ params }: any) {
         className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto"
       >
 
-
+        {/*
         <AutoConnect
             client={client}
             wallets={[wallet]}
             timeout={15000}
         />
+        */}
 
         <div className="py-0 w-full">
   
@@ -932,7 +932,7 @@ export default function Index({ params }: any) {
                   />
                   <div className="text-2xl font-semibold">
                     {/*Sell_USDT*/}
-                    NOAH-K 포인트 판매하기
+                    NOAH-K 포인트 판매내역
                   </div>
 
 
@@ -979,9 +979,9 @@ export default function Index({ params }: any) {
 
               </div>
 
-
+                {/*
                 <div className="w-full flex flex-row items-center justify-between gap-2">
-                  {/* my usdt balance */}
+
                   <div className='w-full flex flex-row gap-2 items-center justify-between
                       border border-gray-800
                       p-4 rounded-lg'>
@@ -1007,521 +1007,9 @@ export default function Index({ params }: any) {
                       </div>
                   </div>
                 </div>
+                */}
 
 
-                {/* check my sell orders status is ordered
-                {/* if there is no sell orders, then show the message */}
-
-
-                  {address && !loadingSellOrders && sellOrders.filter((item) => item.status === 'ordered'
-                  || item.status === 'accepted'
-                  || item.status === 'paymentRequested').length === 0 && (
-                 
-                    <div className=" w-full flex gap-4  justify-center">
-
-
-                      {/* sell order is different border color
-                      */}
-
-                      <div
-                        className="w-full bg-black p-4 rounded-md border-2 border-green-500"
-                      >
-
-                        <div className="flex flex-col xl:flex-row gap-5 xl:gap-10 items-center">
-
-
-                          <div className="flex flex-col gap-2 items-start">
-                            
-                            {/*
-                            <div className=" flex flex-row items-center justify-between gap-4">
-                    
-                              <div className=" flex flex-row items-center gap-2">
-                                <h2 className="text-lg font-semibold text-white">{Order}</h2>
-                              </div>
-
-                              <div className="flex flex-row items-center gap-2">
-
-                                <Image
-                                  src="/icon-private-sale.png"
-                                  alt="Private Sale"
-                                  width={32}
-                                  height={32}
-                                />
-
-                                <div className="text-sm text-zinc-400">
-                                  {Private_Sale}
-                                </div>
-                                <input
-                                  className="w-6 h-6"
-                                  type="checkbox"
-                                  checked={privateSale}
-                                  onChange={(e) => setprivateSale(e.target.checked)}
-                                />
-                              </div>
-
-                            </div>
-                            */}
-
-
-                            {/* my seller info */}
-
-                            {address && seller && (
-
-
-                              <div className="mt-4 flex flex-col gap-2 items-start">
-
-                                <div className="flex flex-row items-center gap-2">
-                                  <Image
-                                    src={avatar || "/profile-default.png"}
-                                    alt="Profile"
-                                    width={24}
-                                    height={24}
-                                    className="rounded-full"
-                                    style={{
-                                      objectFit: 'cover',
-                                      width: '24px',
-                                      height: '24px'
-                                    }}
-
-                                  />
-                                  <div className="text-lg font-semibold text-white">
-                                    {nickname}
-                                  </div>
-
-                                  <Image
-                                    src="/verified.png"
-                                    alt="Verified"
-                                    width={24}
-                                    height={24}
-                                  />
-                                  <Image
-                                    src="/best-seller.png"
-                                    alt="Identity"
-                                    width={24}
-                                    height={24}
-                                  />
-                                </div>
-
-                                {/* seller bank info */}
-                                <div className="flex flex-row items-center gap-2">
-                                  <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
-                                  <span className="text-sm text-zinc-400">
-                                    {Payment}: {Bank_Transfer} ({seller?.bankInfo.bankName}{' '}
-                                    {seller?.bankInfo.accountNumber}{' '}{seller?.bankInfo.accountHolder})
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-row items-center gap-2">
-                                  <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
-                                  <span className="text-sm text-zinc-400">
-                                    구매자가 구매신청을 하고 입금할 은행정보입니다.
-                                  </span>
-                                </div>
-
-                                </div>
-                            )}
-
-                            {/* escrow wallet address */}
-                            {/* 에스크로 지갑주소 */}
-                            {/*}
-                            {address && seller && escrowWalletAddress && (
-                              <div className="mt-4 flex flex-col gap-2 items-start">
-                                <div className="flex flex-row items-center gap-2">
-                                  <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
-                                  <span className="text-sm text-zinc-400">
-                                    에스크로: {
-                                    escrowWalletAddress.slice(0, 6) + '...' + escrowWalletAddress.slice(-4)
-                                    }
-                                  </span>
-                                </div>
-                              </div>
-                            )}
-                            */}
-
-                  
-
-
-
-
-                            {address && !seller && (
-                              <div className="mt-4 flex flex-col gap-2 items-center justify-center">
-
-                                <div className="flex flex-row items-center gap-2">
-                                  <div className="w-2 h-2 bg-red-500 rounded-full inline-block mr-2"></div>
-                                  <div className="text-sm text-zinc-400">
-                                    프로필 설정에서 결제정보를 등록하세요. 결제정보가 없으면 거래가 불가능합니다.
-                                  </div>
-                                </div>
-
-                                {/* go to profile */}
-                                <button
-                                  className="text-sm text-blue-500
-                                  border border-blue-500 rounded-md px-2 py-1"
-
-                                  onClick={() => router.push('/my-profile-noahk')}
-                                >
-                                  결제정보 등록하기
-                                </button>
-                                
-                              </div>
-                            )}
-
-
-                            <p className="mt-4 text-xl font-bold text-zinc-400">
-                              환율: 1 NOAH-K = {
-                              // currency format
-                              Number(rate).toLocaleString('ko-KR', {
-                                style: 'currency',
-                                currency: 'KRW'
-                              })
-                            }</p>
-                            
-                            <div className=" flex flex-row items-center gap-2">
-
-                              <div className="flex flex-row items-center gap-2 text-4xl text-blue-500 font-bold ">
-                                <input 
-                                  type="number"
-                                  className=" w-32 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
-                                  placeholder="Amount"
-                                  value={sellAmount}
-                                  onChange={(e) => {
-                                    // check number
-                                    e.target.value = e.target.value.replace(/[^0-9.]/g, '');
-
-                                    // prevent float number
-                                    if (e.target.value.includes('.')) {
-                                      e.target.value = e.target.value.split('.')[0];
-                                    }
-
-                                    // if the value is start with 0, then remove 0
-                                    if (e.target.value.startsWith('0')) {
-                                      e.target.value = e.target.value.substring(1);
-                                    }
-
-                                    
-                                    if (e.target.value === '') {
-                                      setSellAmount(0);
-                                      return;
-                                    }
-                                    
-                                    parseFloat(e.target.value) < 0 ? setSellAmount(0) : setSellAmount(parseFloat(e.target.value));
-
-                                    parseFloat(e.target.value) > 1000 ? setSellAmount(1000) : setSellAmount(parseFloat(e.target.value));
-
-                                  } }
-
-
-                                />
-                                <span className="text-lg">NOAH-K</span>
-                              </div>
-
-                              <div className=" text-xl text-zinc-400 font-bold">
-                                = {
-                                Number(defaultKrWAmount).toLocaleString('ko-KR', {
-                                  style: 'currency',
-                                  currency: 'KRW'
-                                })
-                                }
-                              </div>
-                            </div>
-
-                            {/* 판매할 수량을 입력하세요. */}
-                            <div className="flex flex-row items-center gap-2">
-                              {/* dot */}
-                              <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
-                              <span className="text-sm text-zinc-400">
-                                판매할 수량을 입력하세요.
-                              </span>
-                            </div>
-
-                          
-
-                          </div>
-
-
-                          {/* input krw amount */}
-                          {/* left side decrease button and center is input and  right side increase button */}
-                          {/* -1, -10, -100, +1, +10, +100 */}
-                          {/* if - button change bg color red */}
-                          {/* if + button change bg color */}
-
-                            <div className="hidden mt-4 flex-row items-center justify-between gap-2">
-
-
-                              <div className="flex flex-col gap-2">
-
-                                <button
-                                  disabled={sellAmount === 0}
-                                  className="bg-red-400 text-white px-2 py-2 rounded-md"
-                                  onClick={() => {
-                                    krwAmount > 0 && setKrwAmount(krwAmount - 1);
-                                  }}
-                                >
-                                  -1
-                                </button>
-
-                                <button
-                                  disabled={sellAmount === 0}
-                                  className="bg-red-600 text-white px-2 py-2 rounded-md"
-                                  onClick={() => {
-                                    krwAmount > 10 && setKrwAmount(krwAmount - 10);
-                                  }}
-                                >
-                                  -10
-                                </button>
-
-                                <button
-                                  disabled={sellAmount === 0}
-                                  className="bg-red-800 text-white px-2 py-2 rounded-md"
-                                  onClick={() => {
-                                    krwAmount > 100 && setKrwAmount(krwAmount - 100);
-                                  }}
-                                >
-                                  -100
-                                </button>
-
-                                <button
-                                  disabled={sellAmount === 0}
-                                  className="bg-red-900 text-white px-2 py-2 rounded-md"
-                                  onClick={() => {
-                                    krwAmount > 1000 && setKrwAmount(krwAmount - 1000);
-                                  }}
-                                >
-                                  -1000
-                                </button>
-
-                              </div>
-
-                              <div className="w-full flex flex-col items-center justify-center gap-2">
-                                {/* 판매할 금액을 변경하세요 */}
-                                <div className="flex flex-row items-center gap-2">
-                                  <div className="w-2 h-2 bg-zinc-400 rounded-full inline-block mr-2"></div>
-                                  <span className="text-sm text-zinc-400">
-                                    판매할 금액을 변경하세요
-                                  </span>
-                                </div>
-                                <div className="flex flex-row items-center gap-2"> 
-      
-                                  <input 
-                                    disabled
-                                    type="number"
-                                    className=" w-36  px-3 py-2 text-black bg-white text-xl font-bold border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 "
-                                    value={krwAmount}
-                                    onChange={(e) => {
-                                      // check number
-                                      e.target.value = e.target.value.replace(/[^0-9.]/g, '');
-
-                                      if (e.target.value === '') {
-                                        setKrwAmount(0);
-                                        return;
-                                      }
-
-                                      parseFloat(e.target.value) < 0 ? setKrwAmount(0) : setKrwAmount(parseFloat(e.target.value));
-
-                                      parseFloat(e.target.value) > 1000 ? setKrwAmount(1000) : setKrwAmount(parseFloat(e.target.value));
-
-                                    } }
-                                  />
-                                </div>
-
-                                {krwAmount > 0 && (
-                                  <div className="text-lg font-semibold text-zinc-400">
-                                    {Rate}: {
-
-                                      // currency format
-                                      Number((krwAmount / sellAmount).toFixed(2)).toLocaleString('ko-KR', {
-                                        style: 'currency',
-                                        currency: 'KRW'
-                                      })
-
-                                    } 
-                                  </div>
-                                )}
-                              </div>
-
-                              <div className="flex flex-col gap-2">
-                                <button
-                                  disabled={sellAmount === 0}
-                                  className="bg-green-400 text-white px-2 py-2 rounded-md"
-                                  onClick={() => {
-                                    setKrwAmount(krwAmount + 1);
-                                  }}
-                                >
-                                  +1
-                                </button>
-                                <button
-                                  disabled={sellAmount === 0}
-                                  className="bg-green-600 text-white px-2 py-2 rounded-md"
-                                  onClick={() => {
-                                    setKrwAmount(krwAmount + 10);
-                                  }}
-                                >
-                                  +10
-                                </button>
-
-                                <button
-                                  disabled={sellAmount === 0}
-                                  className="bg-green-800 text-white px-2 py-2 rounded-md"
-                                  onClick={() => {
-                                    setKrwAmount(krwAmount + 100);
-                                  }}
-                                >
-                                  +100
-                                </button>
-
-                                <button
-                                  disabled={sellAmount === 0}
-                                  className="bg-green-900 text-white px-2 py-2 rounded-md"
-                                  onClick={() => {
-                                    setKrwAmount(krwAmount + 1000);
-                                  }}
-                                >
-                                  +1000
-                                </button>
-
-                              </div>
-
-
-                            </div>
-
-                          </div>
-
-
-                          {/* aggremment */}
-                          {/* After you place order and the buyer accepts the order, you can not cancel the order. */}
-
-
-                          <div className="mt-4 flex flex-row items-center gap-2">
-                            <input
-                              disabled={!address || sellAmount === 0 || sellOrdering}
-                              type="checkbox"
-                              checked={agreementPlaceOrder}
-                              onChange={(e) => setAgreementPlaceOrder(e.target.checked)}
-                              className="w-10 h-10
-                              border-2 border-zinc-800
-                              rounded-md"
-                            />
-                            <p className="text-sm text-zinc-400">
-                              
-                              {/*I_agree_to_the_terms_of_trade*/}
-                              거래조건에 동의하기 위해서 체크하세요.
-
-                            </p>
-                          </div>
-
-
-                          {/* terms and conditions */}
-                          {/* text area */}
-                          {/*
-                          <textarea
-                            className="w-full h-32 p-2 border border-gray-300 rounded-md text-sm text-black"
-                            placeholder="
-                              After you place order, the buyer has 24 hours to accept the order.
-                              If the buyer does not accept the order within 24 hours, the order will be expired.
-                              After the buyer accepts the order, you can not cancel the order.
-                              After the buyer accepts the order, you must deposit the USDT to escrow within 1 hour.
-                              If you do not deposit the USDT to escrow within 1 hour, the order will be expired.
-                              If you want to cancel the order, you must contact the buyer and request to cancel the order.
-                              If the buyer agrees to cancel the order, the order will be cancelled.
-                            "
-                          ></textarea>
-                          */}
-
-
-
-                          {/*
-                          <div className="mt-4 text-sm text-zinc-400">
-
-                            <div className="h-2 w-2 bg-zinc-400 rounded-full inline-block mr-2"></div>
-                            <span>After you place order, the buyer has 24 hours to accept the order.
-                              If the buyer does not accept the order within 24 hours, the order will be expired.
-                            </span>
-                          </div>
-                          <div className="mt-4 text-sm text-zinc-400">
-
-                            <div className="h-2 w-2 bg-zinc-400 rounded-full inline-block mr-2"></div>
-                            <span>After the buyer accepts the order, you can not cancel the order.</span>
-                          </div>
-                          <div className="mt-4 text-sm text-zinc-400">
-
-                            <div className="h-2 w-2 bg-zinc-400 rounded-full inline-block mr-2"></div>
-                            <span>After the buyer accepts the order, you must deposit the USDT to escrow within 1 hour.
-                              If you do not deposit the USDT to escrow within 1 hour, the order will be expired.
-                            </span>
-                          </div>
-                          <div className="mt-4 text-sm text-zinc-400">
-
-                            <div className="h-2 w-2 bg-zinc-400 rounded-full inline-block mr-2"></div>
-                            <span>If you want to cancel the order, you must contact the buyer and request to cancel the order.
-                              If the buyer agrees to cancel the order, the order will be cancelled.
-                            </span>
-                          </div>
-                          */}
-
-
-
-
-
-                          <div className="mt-4 flex flex-col gap-2">
-                    
-                            {sellOrdering ? (
-
-                              <div className="flex flex-row items-center gap-2">
-                                  <div className="
-                                    w-6 h-6
-                                    border-2 border-zinc-800
-                                    rounded-full
-                                    animate-spin
-                                  ">
-                                    <Image
-                                      src="/loading.png"
-                                      alt="loading"
-                                      width={24}
-                                      height={24}
-                                    />
-                                  </div>
-                                  <div className="text-white">
-                                    {/*Placing_Order*/}판매주문 중...
-                                  </div>
-                    
-                              </div>
-
-
-                            ) : (
-                                <button
-                                    disabled={sellAmount === 0 || agreementPlaceOrder === false}
-                                    className={`text-lg text-white px-4 py-2 rounded-md ${sellAmount === 0 || agreementPlaceOrder === false ? 'bg-gray-500' : 'bg-green-500'}`}
-                                    onClick={() => {
-                                        console.log('Sell USDT');
-                                        // open trade detail
-                                        // open modal of trade detail
-                                        ///openModal();
-
-                                        sellOrder();
-                                    }}
-                                >
-                                  {/*Place_Order*/}
-                                  판매주문하기
-                                </button>
-                            )}
-
-                          </div>
-
-
-                      </div>
-
-                      <article
-                        className="hidden xl:block"
-                      ></article>
-
-                      <article
-                        className="hidden xl:block"
-                      ></article>
-
-
-                    </div>
-
-                  )}
 
                   {/* total sell orders */}
                   <div className="p-2 xl:p-0  flex flex-row items-center justify-between gap-2">
@@ -1533,7 +1021,7 @@ export default function Index({ params }: any) {
                       </div>
                     </div>
 
-                    {/*
+                    
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">{Orders}</div>
                       <div className="text-xl font-semibold text-gray-400">
@@ -1553,7 +1041,7 @@ export default function Index({ params }: any) {
 
                       </div>
                     </div>
-                    */}
+                    
 
 
 
