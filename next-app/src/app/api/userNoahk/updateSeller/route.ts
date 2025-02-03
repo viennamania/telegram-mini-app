@@ -145,19 +145,70 @@ export async function POST(request: NextRequest) {
   gender : 발급요청자 성별, 0:여성, 1:남성
 
   recvBankCd : 수취은행코드, 비어있을 경우 광주은행으로 발급됩니다.
-  //광주은행:034, 경남은행:039, 제주은행:035, 신한은행: 088
+  //광주은행:034, 경남은행:039, 제주은행:035
+
+  국민은행: 004, 우리은행: 020, 신한은행: 088, 농협: 011, 기업은행: 003, 하나은행: 081, 외환은행: 002, 부산은행: 032, 대구은행: 031, 전북은행: 037, 경북은행: 071, 부산은행: 032, 광주은행: 034, 우체국: 071, 수협: 007, 씨티은행: 027, 대신은행: 055, 동양종합금융: 054, 롯데카드: 062, 삼성카드: 029, 현대카드: 048, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카
+
+
   */
 
-  const bankCd = '035';
+  //const bankCd = '035';
+
+  const bankCd =
+    seller?.bankInfo?.bankName === '국민은행' ? '004' :
+    seller?.bankInfo?.bankName === '우리은행' ? '020' :
+    seller?.bankInfo?.bankName === '신한은행' ? '088' :
+    seller?.bankInfo?.bankName === '농협' ? '011' :
+    seller?.bankInfo?.bankName === '기업은행' ? '003' :
+    seller?.bankInfo?.bankName === '하나은행' ? '081' :
+    seller?.bankInfo?.bankName === '외환은행' ? '002' :
+    seller?.bankInfo?.bankName === '부산은행' ? '032' :
+    seller?.bankInfo?.bankName === '대구은행' ? '031' :
+    seller?.bankInfo?.bankName === '전북은행' ? '037' :
+    seller?.bankInfo?.bankName === '경북은행' ? '071' :
+    seller?.bankInfo?.bankName === '부산은행' ? '032' :
+    seller?.bankInfo?.bankName === '광주은행' ? '034' :
+    seller?.bankInfo?.bankName === '우체국' ? '071' :
+    seller?.bankInfo?.bankName === '수협' ? '007' :
+    seller?.bankInfo?.bankName === '씨티은행' ? '027' :
+    seller?.bankInfo?.bankName === '대신은행' ? '055' :
+    seller?.bankInfo?.bankName === '동양종합금융' ? '054'
+    : '034';
+
+
+
+
+
   //const bankCd = '034';
   const recvBankCd = '035';
 
 
-  const bankAccount = '110019648787';
-  const payerName = '박승현';
-  const payerTel = '01098551647';
-  const dob = '691120';
-  const gender = '1';
+  //const bankAccount = '110019648787';
+
+  const bankAccount = seller?.bankInfo?.accountNumber || '';
+
+
+
+  //const payerName = '박승현';
+
+  const payerName = seller?.bankInfo?.accountHolder || '';
+
+
+  //const payerTel = '01098551647';
+
+  const payerTel = seller?.bankInfo?.phoneNum || '';
+
+
+  //const dob = '691120';
+
+  const dob = seller?.bankInfo?.birth || '';
+
+
+
+  ///const gender = '1';
+
+  const gender = seller?.bankInfo?.gender || '1';
+
 
   /*
   {
@@ -321,32 +372,29 @@ response2Json:  {
 
 
   // 성공
-  let virtaulAccount = '';
   if (response2Json.result.resultCd === '0000') {
 
     //console.log("account: ", response2Json.vact.account);
 
 
-    virtaulAccount = response2Json.vact.account;
+    const virtaulAccount = response2Json.vact.account;
+
+    const result = await updateSeller({
+      walletAddress: walletAddress,
+      seller: seller,
+      virtaulAccount: virtaulAccount,
+    });
+
+    return NextResponse.json({
+      result,
+    });
 
   }
 
 
-  //console.log("virtaulAccount: ", virtaulAccount);
-
-
-  const result = await updateSeller({
-    walletAddress: walletAddress,
-    seller: seller,
-    virtaulAccount: virtaulAccount,
-  });
-
-
- 
   return NextResponse.json({
-
-    result,
-    
+    result: null,
   });
+
   
 }

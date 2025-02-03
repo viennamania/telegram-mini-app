@@ -95,7 +95,7 @@ function ProfilePage() {
   
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
     ///const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
   
 
@@ -1093,6 +1093,66 @@ function ProfilePage() {
 
                         )}
 
+      
+                        {/* 판매자 가상계좌 정보 virtualAccount */}
+                        {address && seller && seller && (
+                            <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
+                            bg-zinc-800 bg-opacity-90
+                            '>
+                                <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <span className="text-sm font-semibold text-gray-200">
+                                        판매자 가상계좌 정보
+                                    </span>
+                                </div>
+
+                                {seller?.virtualAccount ? (
+                                <div className='flex flex-row gap-2 items-center justify-between'>
+                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                                        {seller?.virtualAccount}
+                                    </div>
+                                </div>
+                                ) : (
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <span className='text-sm font-semibold text-gray-500'>
+                                            판매자 가상계좌 정보가 없습니다.
+                                        </span>
+                                    </div>
+                                )}
+
+                                {/* seller.status === 'confirmed' */}
+                                {seller?.status === 'confirmed' && (
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <span className='text-sm font-semibold text-green-500'>
+                                            판매자 가상계좌 정보가 확인되었습니다.
+                                        </span>
+                                    </div>
+                                )}
+
+                                {/* seller.status === 'pending' */}
+                                {seller?.status === 'pending' && (
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <span className='text-sm font-semibold text-gray-500'>
+                                            판매자 가상계좌 정보를 확인중입니다.
+                                        </span>
+                                    </div>
+                                )}
+
+                                {/* seller.status === 'rejected' */}
+                                {seller?.status === 'rejected' && (
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <span className='text-sm font-semibold text-red-500'>
+                                            판매자 가상계좌 정보가 거절되었습니다.
+                                        </span>
+                                    </div>
+                                )}
+
+                            </div>
+
+                        )}
+                     
+
 
 
                         {/* 판매자 정보 저장하기 */}
@@ -1108,6 +1168,8 @@ function ProfilePage() {
                             </div>
 
                             <div className='flex flex-row gap-2 items-center justify-between'>
+
+                                {/*
                                 <input
                                     disabled={!address}
                                     className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
@@ -1128,6 +1190,56 @@ function ProfilePage() {
                                         });
                                     } }
                                 />
+                                */}
+
+                                {/*
+                                  국민은행: 004, 우리은행: 020, 신한은행: 088, 농협: 011, 기업은행: 003, 하나은행: 081, 외환은행: 002, 부산은행: 032, 대구은행: 031, 전북은행: 037, 경북은행: 071, 부산은행: 032, 광주은행: 034, 우체국: 071, 수협: 007, 씨티은행: 027, 대신은행: 055, 동양종합금융: 054, 롯데카드: 062, 삼성카드: 029, 현대카드: 048, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카
+
+                                
+                                */}
+
+                                {/* select bank */}
+
+                                <select
+                                    disabled={!address}
+                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                                    value={seller?.bankInfo?.bankName}
+                                    onChange={(e) => {
+                                        setSeller({
+                                            ...seller,
+                                            bankInfo: {
+                                                ...seller.bankInfo,
+                                                bankName: e.target.value,
+                                            }
+                                        });
+                                    }}
+                                >
+                                    <option value="">은행선택</option>
+                                    <option value="004">국민은행</option>
+                                    <option value="020">우리은행</option>
+                                    <option value="088">신한은행</option>
+                                    <option value="011">농협</option>
+                                    <option value="003">기업은행</option>
+                                    <option value="081">하나은행</option>
+                                    <option value="002">외환은행</option>
+                                    <option value="032">부산은행</option>
+                                    <option value="031">대구은행</option>
+                                    <option value="037">전북은행</option>
+                                    <option value="071">경북은행</option>
+                                    <option value="034">광주은행</option>
+                                    <option value="007">수협</option>
+                                    <option value="027">씨티은행</option>
+                                    <option value="055">대신은행</option>
+                                    <option value="054">동양종합금융</option>
+
+
+                                </select>
+                            
+
+
+
+
                             </div>
                                     
 
@@ -1177,6 +1289,88 @@ function ProfilePage() {
                                     } }
                                 />
                             </div>
+
+                            {/* 생년월일 941109 */}
+                            <div className='flex flex-row gap-2 items-center justify-between'>
+                                <input
+                                    disabled={!address}
+                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+
+                                    placeholder="생년월일(6자리)"
+                                    
+                                    value={seller?.bankInfo?.birth}
+
+                                    type='text'
+                                    onChange={(e) => {
+                                        setSeller({
+                                            ...seller,
+                                            bankInfo:
+                                            {
+                                                ...seller.bankInfo,
+                                                birth: e.target.value,
+                                            }
+                                        });
+                                    } }
+                                />
+                            </div>
+
+                            {/* gender 남성/여성 */}
+                            <div className='flex flex-row gap-2 items-center justify-between'>
+                                <select
+                                    disabled={!address}
+                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                                    value={seller?.bankInfo?.gender}
+
+                                    onChange={(e) => {
+                                        setSeller({
+                                            ...seller,
+                                            bankInfo:
+                                            {
+                                                ...seller.bankInfo,
+                                                gender: e.target.value,
+                                            }
+                                        });
+                                    } }
+                                >
+                                    <option value="">성별선택</option>
+                                    <option value="1">남성</option>
+                                    <option value="0">여성</option>
+                                </select>
+
+                            </div>
+
+                            {/* phoneNum */}
+                            <div className='flex flex-row gap-2 items-center justify-between'>
+                                <input
+                                    disabled={!address}
+                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+
+                                    placeholder="전화번호"
+                                    
+                                    value={seller?.bankInfo?.phoneNum}
+
+                                    type='text'
+                                    onChange={(e) => {
+                                        setSeller({
+                                            ...seller,
+                                            bankInfo:
+                                            {
+                                                ...seller.bankInfo,
+                                                phoneNum: e.target.value,
+                                            }
+                                        });
+                                    } }
+                                />
+                            </div>
+
+
+
+
+
+
 
                             <button
                                 disabled={
