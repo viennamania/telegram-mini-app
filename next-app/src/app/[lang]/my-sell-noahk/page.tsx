@@ -1013,7 +1013,7 @@ export default function Index({ params }: any) {
 
 
                   {/* total sell orders */}
-                  <div className="p-2 xl:p-0  flex flex-row items-center justify-between gap-2">
+                  <div className="p-2 xl:p-0  flex flex-row items-between justify-center gap-2">
 
                     <div className="flex flex-col gap-2 items-center">
                       <div className="text-sm">{Total}</div>

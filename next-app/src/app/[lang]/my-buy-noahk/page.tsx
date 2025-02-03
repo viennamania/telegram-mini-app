@@ -950,7 +950,7 @@ export default function Index({ params }: any) {
 
 
 
-                <div className="w-full flex flex-row items-center justify-between gap-2">
+                <div className="w-full flex flex-row items-between justify-center gap-2">
 
                   <div className=" flex flex-row items-center justify-between gap-2">
 
