@@ -1645,17 +1645,7 @@ export default function Index({ params }: any) {
                     {sellOrders.map((item, index) => (
 
                       <>
-                      {
-                      (
-                        /*
-                        item.status === 'ordered'
-                      || item.status === 'accepted'
-                      || item.status === 'paymentRequested'
-                      */
-                        item.status === 'ordered'
-                      || item.status === 'accepted'
-                      || item.status === 'paymentRequested'
-                      ) && (
+                      {true && (
 
                         <div
                           key={index}
@@ -1679,7 +1669,7 @@ export default function Index({ params }: any) {
                           */}
 
 
-                          {/*
+                          
                           {item.status === 'cancelled' && (
                             <div className="absolute inset-0 flex justify-center items-center z-10
                               bg-black bg-opacity-50
@@ -1693,7 +1683,6 @@ export default function Index({ params }: any) {
                               />
                             </div>
                           )}
-                          */}
 
 
 
@@ -1708,8 +1697,9 @@ export default function Index({ params }: any) {
                                 
                                 ${item.walletAddress === address ? 'border-green-500' : 'border-gray-200'}
                                 
-                                
-                           
+
+                                ${item.status === 'paymentConfirmed' ? 'bg-gray-900 border-gray-900' : ''}
+
                                 ${item.status === 'ordered' && 'border-green-500 border-2'}
 
                                 ${item.status === 'accepted' && 'border-blue-500 border-2'}
@@ -1814,7 +1804,7 @@ export default function Index({ params }: any) {
 
 
 
-                              { (item.status === 'accepted' || item.status === 'paymentRequested' ) && (
+                              { (item.status === 'accepted' || item.status === 'paymentRequested' || item.status === 'cancelled') && (
 
                                 <div className="flex flex-row items-center justify-between
                                 gap-2  bg-white px-2 py-1 rounded-md mb-4  ">
@@ -1861,13 +1851,19 @@ export default function Index({ params }: any) {
                               )}
 
 
-                              {/*
                               { item.status === 'paymentConfirmed' && (
 
                                 <div className="flex flex-row items-center justify-between
                                 gap-2 bg-white px-2 py-1 rounded-md mb-4">
 
-
+                                  {/*
+                                  <Image
+                                    src="/confirmed.png"
+                                    alt="Payment Confirmed"
+                                    width={50}
+                                    height={50}
+                                  />
+                                  */}
 
                                   <p className="text-xl font-semibold text-green-500 ">
                                     거래번호: #{item.tradeId}
@@ -1878,7 +1874,6 @@ export default function Index({ params }: any) {
                                 </div>
 
                               )}
-                              */}
 
 
                               {item.acceptedAt && (
@@ -1889,7 +1884,7 @@ export default function Index({ params }: any) {
                               )}
 
 
-                              {/*
+
                               {item.status === 'cancelled' && (
 
                                   <p className="text-sm text-zinc-400"> 
@@ -1898,7 +1893,6 @@ export default function Index({ params }: any) {
                                   </p>
                       
                               )}
-                              */}
 
 
 
@@ -2187,7 +2181,7 @@ export default function Index({ params }: any) {
 
                               {/* accept order button for seller */}
 
-                              {(item.status === 'accepted' || item.status === 'paymentRequested' ) 
+                              {(item.status === 'accepted' || item.status === 'paymentRequested' || item.status === 'paymentConfirmed' || item.status === 'cancelled') 
                                 && (
                                   <div className="w-full mt-4 mb-2 flex flex-row items-center justify-start gap-2">
 
