@@ -549,6 +549,14 @@ export default function Index({ params }: any) {
         return;
       }
 
+
+      // if seller is not exist
+      if (!seller) {
+        //toast.error('Seller is not exist');
+        alert('판매자 정보가 없습니다. 나의 프로필에서 판매자로 등록하세요.');
+        return;
+      }
+
       // check the balance
 
       if (sellAmount > balance) {
