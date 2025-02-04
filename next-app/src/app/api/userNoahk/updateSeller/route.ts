@@ -27,6 +27,7 @@ import {
   getWalletBalance,
   
  } from "thirdweb/wallets";
+import { error } from "console";
 
 
 
@@ -183,7 +184,7 @@ export async function POST(request: NextRequest) {
 
 
   //const bankCd = '034';
-  const recvBankCd = '035';
+  const recvBankCd = '035'; // 제주은행
 
 
   //const bankAccount = '110019648787';
@@ -382,6 +383,18 @@ response2Json:  {
 
     const virtualAccount = response2Json.vact.account;
 
+    if (virtualAccount) {
+
+
+      /*
+      return NextResponse.json({
+        result: null,
+        error: response2Json.result.advanceMsg,
+      });
+      */
+
+    }
+
     const result = await updateSeller({
       walletAddress: walletAddress,
       seller: seller,
@@ -390,6 +403,7 @@ response2Json:  {
 
     return NextResponse.json({
       result,
+      error: "",
     });
 
   }
@@ -397,6 +411,7 @@ response2Json:  {
 
   return NextResponse.json({
     result: null,
+    error: response2Json.result.advanceMsg,
   });
 
 

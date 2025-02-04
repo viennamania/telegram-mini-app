@@ -95,8 +95,8 @@ function ProfilePage() {
   
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
-    ///const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
   
 
     const [balance, setBalance] = useState(0);
@@ -532,6 +532,9 @@ function ProfilePage() {
 
 
     // setSeller
+
+    const [errorMsgForSetSeller, setErrorMsgForSetSeller] = useState("");
+
     const [loadingSetSeller, setLoadingSetSeller] = useState(false);
     const setSellerInfo = async () => {
 
@@ -579,6 +582,8 @@ function ProfilePage() {
                 const data = await response.json();
 
                 if (data.result) {
+                    setErrorMsgForSetSeller("");
+
                     setUser(data.result);
 
                     setSeller(data.result.seller);
@@ -590,6 +595,9 @@ function ProfilePage() {
 
 
         } else {
+
+            setErrorMsgForSetSeller(data.error);
+
             //toast.error('Error saving Seller info');
             alert('판매자 정보 저장에 실패했습니다.');
         }
@@ -1135,7 +1143,7 @@ function ProfilePage() {
 
       
                         {/* 판매자 가상계좌 정보 virtualAccount */}
-                        {address && seller && (
+                        {address && (
                             <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
                             bg-zinc-800 bg-opacity-90
                             '>
@@ -1150,7 +1158,7 @@ function ProfilePage() {
                                 {user?.virtualAccount ? (
                                 <div className='flex flex-row gap-2 items-center justify-between'>
                                     {/* 제주은행 */}
-                                    <span className='text-lg font-semibold text-yellow-500'>
+                                    <span className='text-lg font-semibold text-yellow-200'>
                                         제주은행
                                     </span>
                                     <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
@@ -1161,7 +1169,7 @@ function ProfilePage() {
                                 </div>
                                 ) : (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
-                                        <span className='text-sm font-semibold text-gray-500'>
+                                        <span className='text-sm font-semibold text-gray-200'>
                                         판매자 가상계좌 정보가 없습니다.
                                         </span>
                                     </div>
@@ -1256,7 +1264,7 @@ function ProfilePage() {
                                         setSeller({
                                             ...seller,
                                             bankInfo: {
-                                                ...seller.bankInfo,
+                                                ...seller?.bankInfo,
                                                 bankName: e.target.value,
                                             }
                                         });
@@ -1339,7 +1347,7 @@ function ProfilePage() {
                                         setSeller({
                                             ...seller,
                                             bankInfo: {
-                                                ...seller.bankInfo,
+                                                ...seller?.bankInfo,
                                                 accountNumber: e.target.value,
                                             }
                                         });
@@ -1363,7 +1371,7 @@ function ProfilePage() {
                                             ...seller,
                                             bankInfo:
                                             {
-                                                ...seller.bankInfo,
+                                                ...seller?.bankInfo,
                                                 accountHolder: e.target.value,
                                             }
                                         });
@@ -1388,7 +1396,7 @@ function ProfilePage() {
                                             ...seller,
                                             bankInfo:
                                             {
-                                                ...seller.bankInfo,
+                                                ...seller?.bankInfo,
                                                 birth: e.target.value,
                                             }
                                         });
@@ -1409,7 +1417,7 @@ function ProfilePage() {
                                             ...seller,
                                             bankInfo:
                                             {
-                                                ...seller.bankInfo,
+                                                ...seller?.bankInfo,
                                                 gender: e.target.value,
                                             }
                                         });
@@ -1439,7 +1447,7 @@ function ProfilePage() {
                                             ...seller,
                                             bankInfo:
                                             {
-                                                ...seller.bankInfo,
+                                                ...seller?.bankInfo,
                                                 phoneNum: e.target.value,
                                             }
                                         });
@@ -1459,6 +1467,9 @@ function ProfilePage() {
                                     || !seller?.bankInfo?.bankName
                                     || !seller?.bankInfo?.accountNumber
                                     || !seller?.bankInfo?.accountHolder
+                                    || !seller?.bankInfo?.birth
+                                    || !seller?.bankInfo?.gender
+                                    || !seller?.bankInfo?.phoneNum
                                     || loadingSetSeller
                                 }
                                 className={`
@@ -1466,6 +1477,9 @@ function ProfilePage() {
                                     || !seller?.bankInfo?.bankName
                                     || !seller?.bankInfo?.accountNumber
                                     || !seller?.bankInfo?.accountHolder
+                                    || !seller?.bankInfo?.birth
+                                    || !seller?.bankInfo?.gender
+                                    || !seller?.bankInfo?.phoneNum
                                     || loadingSetSeller
                                     ? 'bg-gray-500 text-zinc-100'
                                     : 'bg-blue-500 text-zinc-100'}
@@ -1480,6 +1494,14 @@ function ProfilePage() {
                                 {loadingSetSeller ? "저장중..." : "저장"}
                             </button>
 
+                            {/* error message */}
+                            {errorMsgForSetSeller && (
+                                <div className='flex flex-row gap-2 items-center justify-between'>
+                                    <span className='text-sm font-semibold text-red-500'>
+                                        {errorMsgForSetSeller}
+                                    </span>
+                                </div>
+                            )}
                         
 
                         </div>
