@@ -46,13 +46,6 @@ import Image from 'next/image';
 import { balanceOf, transfer } from "thirdweb/extensions/erc20";
  
 
-import {
-	accountAbstraction,
-	client,
-    wallet,
-	editionDropContract,
-	editionDropTokenId,
-} from "../constants";
 
 import {
     useRouter,
@@ -64,6 +57,34 @@ import Uploader from '../components/uploader';
 import { updateUser } from "@/lib/api/userNoahk";
 
 
+
+
+import {
+	accountAbstraction,
+	//client,
+    clientForWeb3,
+    wallet,
+	editionDropContract,
+	editionDropTokenId,
+} from "../constants";
+
+
+
+import { inAppWallet } from "thirdweb/wallets";
+
+const wallets = [
+    inAppWallet({
+      auth: {
+        options: [
+          "phone",
+           
+        ],
+      },
+    }),
+  ];
+
+
+
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
 
 
@@ -71,9 +92,12 @@ function ProfilePage() {
 
     const searchParams = useSearchParams();
 
-    const center = searchParams.get("center");
+    const center = searchParams.get("center") || 'songpa';
     
     const paramTelegramId = searchParams.get("telegramId");
+
+
+    const activeWallet = useActiveWallet();
 
 
 
@@ -81,7 +105,8 @@ function ProfilePage() {
 
 
     const contract = getContract({
-        client,
+        //client,
+        client: clientForWeb3,
         chain: polygon,
         address: contractAddress,
     });
@@ -619,11 +644,22 @@ function ProfilePage() {
               }}
         >
 
+            {/*
             <AutoConnect
                 client={client}
                 wallets={[wallet]}
                 timeout={15000}
             />
+            */}
+
+
+
+
+
+
+
+
+
 
 
             <div className="py-0 w-full">
@@ -637,7 +673,7 @@ function ProfilePage() {
 
                     {/* title */}
                     <div className="text-2xl font-semibold text-zinc-100">
-                        나의 프로필
+                        가상계좌 관리
                     </div>
                 </div>
 
@@ -646,59 +682,61 @@ function ProfilePage() {
 
                 <div className="flex flex-col items-start justify-center space-y-4">
 
-                   <div className="flex justify-center mt-5">
-                        {address ? (
-                            <div className="flex flex-row gap-2 items-center justify-between">
 
-                                <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
-                                    <Image
-                                    src="/icon-wallet-live.gif"
-                                    alt="Wallet"
-                                    width={50}
-                                    height={25}
-                                    className="rounded"
-                                    />
-                                </div>
 
-                                
-                                <Button
-                                    onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
-                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                                >
-                                    내 지갑주소: {shortenAddress(address)}
-                                </Button>
-                                <Button
-                                    onClick={() => {
-                                        navigator.clipboard.writeText(address);
-                                        alert('지갑주소가 복사되었습니다.');
-                                    }}
-                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                                >
-                                    복사
-                                </Button>
 
-                                {/* polygon scan */}
-                                <Button
-                                    onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
-                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                                >
-                                    <Image
-                                        src="/logo-polygon.png"
-                                        alt="Polygon"
-                                        width={20}
-                                        height={20}
-                                        className="rounded"
-                                    />
-                                </Button>
-                                
-                            </div>
-                        ) : (
-                            <p className="text-sm text-zinc-800">
-                                로그인 후 지갑주소가 표시됩니다.<br />
-                                창을 닫고 메뉴에서 지갑을 다시 시작해주세요.
-                            </p>
-                        )}      
+                {!address && (
+
+                    <div className="w-full flex flex-col justify-center items-start gap-2 p-2">
+
+                        <ConnectButton
+                            client={clientForWeb3}
+                            wallets={wallets}
+                            accountAbstraction={{
+                            chain: polygon,
+                            sponsorGas: true
+                            }}
+                            theme={"light"}
+                            connectButton={{
+                            label: "Sign in with OWIN Magic Wallet",
+                            }}
+                            connectModal={{
+                            size: "wide", 
+                            titleIcon: "https://shinemywinter.vercel.app/verified.png",                       
+                            showThirdwebBranding: false,
+
+                            }}
+                            locale={"ko_KR"}
+                            //locale={"en_US"}
+                        />
+
                     </div>
+
+                    )}
+
+                    {address && (
+                        <div className="mt-0 w-full flex items-center justify-between gap-5">
+                            <Image
+                                src="/icon-wallet-live.gif"
+                                alt="Wallet"
+                                width={65}
+                                height={25}
+                                className="rounded"
+                            />
+                            <div className="flex flex-col gap-2">
+                                {/* disconnect button */}
+                                <button
+                                    onClick={() => {
+                                        confirm("지갑 연결을 해제하시겠습니까?") && activeWallet?.disconnect();
+                                    }}
+                                    className="bg-zinc-800 text-white p-2 rounded-lg"
+                                >
+                                지갑 연결 해제
+                                </button>
+                            </div>
+
+                        </div>
+                    )}
 
 
 
@@ -1285,15 +1323,6 @@ function ProfilePage() {
                                     >
                                         <option value="" selected={seller?.bankInfo?.bankName === ""}>
                                             은행선택
-                                        </option>
-                                        <option value="090" selected={seller?.bankInfo?.bankName === "090"}>
-                                            카카오뱅크
-                                        </option>
-                                        <option value="089" selected={seller?.bankInfo?.bankName === "089"}>
-                                            케이뱅크
-                                        </option>
-                                        <option value="092" selected={seller?.bankInfo?.bankName === "092"}>
-                                            토스뱅크
                                         </option>
                                         <option value="004" selected={seller?.bankInfo?.bankName === "004"}>
                                             국민은행

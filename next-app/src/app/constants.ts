@@ -13,15 +13,25 @@ import { inAppWallet, SmartWalletOptions } from "thirdweb/wallets";
 
 const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
 
-
-
-
 if (!clientId) {
 	throw new Error("No client ID provided");
 }
 
 export const client = createThirdwebClient({
 	clientId: clientId,
+});
+
+
+
+
+const clientIdForSongpa = process.env.SONGPA_THIRDWEB_CLIENT_ID;
+
+if (!clientIdForSongpa) {
+	throw new Error("No clientIdForSongpa provided");
+}
+
+export const clientForWeb3 = createThirdwebClient({
+	clientId: clientIdForSongpa,
 });
 
 
@@ -35,6 +45,10 @@ export const wallet = inAppWallet({
 		chain: chain
 	}
 });
+
+
+
+
 
 
 
