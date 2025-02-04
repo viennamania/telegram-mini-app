@@ -1217,11 +1217,23 @@ function ProfilePage() {
                                         <span className='text-sm font-semibold text-gray-200'>
                                             은행: 제주은행
                                         </span>
-                                        <span className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                            게좌번호:{' '}{
-                                                user.virtualAccount
-                                            }
-                                        </span>
+                                        <div className="flex flex-row gap-2 items-center justify-between">
+                                            <span className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                                                게좌번호:{' '}{
+                                                    user.virtualAccount
+                                                }
+                                            </span>
+                                            {/* 복사 버튼 */}
+                                            <button
+                                                onClick={() => {
+                                                    navigator.clipboard.writeText(user.virtualAccount as string);
+                                                    alert('가상계좌번호가 복사되었습니다.');
+                                                }}
+                                                className="p-2 bg-blue-500 text-zinc-100 rounded"
+                                            >
+                                                복사
+                                            </button>
+                                        </div>
                                         <span className='text-sm font-semibold text-gray-200'>
                                             예금주: 스타디움엑스 (가상)
                                         </span>
