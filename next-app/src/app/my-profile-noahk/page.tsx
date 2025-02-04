@@ -1156,17 +1156,26 @@ function ProfilePage() {
                                 </div>
 
                                 {user?.virtualAccount ? (
-                                <div className='flex flex-row gap-2 items-center justify-between'>
-                                    {/* 제주은행 */}
-                                    <span className='text-lg font-semibold text-yellow-200'>
-                                        제주은행
-                                    </span>
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                        {
-                                            user.virtualAccount
-                                        }
+                                    <div className='flex flex-col gap-2 items-center justify-between'>
+                                        {/* 제주은행 */}
+                                        <span className='text-lg font-semibold text-yellow-200'>
+                                            제주은행
+                                        </span>
+                                        <span className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                                            {
+                                                user.virtualAccount
+                                            }{' '}스타디움엑스 (가상)
+                                        </span>
+
+                                        <div className='flex flex-row gap-2 items-center justify-between'>
+                                            {/* dot */}
+                                            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                            <span className='text-sm font-semibold text-gray-200'>
+                                                가상계좌는 입금전용이며 출금은 지갑에서 가능합니다.
+                                            </span>
+                                        </div>
+                                        
                                     </div>
-                                </div>
                                 ) : (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-gray-200'>
