@@ -23,18 +23,6 @@ export const client = createThirdwebClient({
 
 
 
-
-const clientIdForSongpa = process.env.SONGPA_THIRDWEB_CLIENT_ID;
-
-if (!clientIdForSongpa) {
-	throw new Error("No clientIdForSongpa provided");
-}
-
-export const clientForWeb3 = createThirdwebClient({
-	clientId: clientIdForSongpa,
-});
-
-
 //export const chain = baseSepolia;
 export const chain = polygon;
 

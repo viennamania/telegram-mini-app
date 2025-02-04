@@ -4,11 +4,11 @@ import React, { useEffect, useState, Suspense } from "react";
 
 import { toast } from 'react-toastify';
 
-
 import {
     getContract,
     sendTransaction,
     sendAndConfirmTransaction,
+    createThirdwebClient,
 } from "thirdweb";
 
 import { deployERC721Contract } from 'thirdweb/deploys';
@@ -58,19 +58,25 @@ import { updateUser } from "@/lib/api/userNoahk";
 
 
 
-
+/*
 import {
 	accountAbstraction,
-	//client,
-    clientForWeb3,
+	client,
     wallet,
 	editionDropContract,
 	editionDropTokenId,
 } from "../constants";
-
+*/
 
 
 import { inAppWallet } from "thirdweb/wallets";
+
+
+const clientForWeb3 = createThirdwebClient({
+    clientId: "dfb94ef692c2f754a60d35aeb8604f3d",
+});
+
+
 
 const wallets = [
     inAppWallet({
@@ -680,7 +686,7 @@ function ProfilePage() {
         
  
 
-                <div className="flex flex-col items-start justify-center space-y-4">
+                <div className="mt-5 flex flex-col items-start justify-center space-y-4">
 
 
 
@@ -698,7 +704,7 @@ function ProfilePage() {
                             }}
                             theme={"light"}
                             connectButton={{
-                            label: "Sign in with OWIN Magic Wallet",
+                            label: "지갑 연결",
                             }}
                             connectModal={{
                             size: "wide", 
@@ -715,7 +721,7 @@ function ProfilePage() {
                     )}
 
                     {address && (
-                        <div className="mt-0 w-full flex items-center justify-between gap-5">
+                        <div className="w-full flex items-center justify-between gap-5">
                             <Image
                                 src="/icon-wallet-live.gif"
                                 alt="Wallet"
@@ -723,6 +729,18 @@ function ProfilePage() {
                                 height={25}
                                 className="rounded"
                             />
+                            {/* wallet address */}
+                            <div className="flex flex-col gap-2
+                            bg-zinc-800 bg-opacity-90
+                            p-4 rounded-lg
+                            ">
+                                <span className="text-sm font-semibold text-gray-500">
+                                    지갑주소
+                                </span>
+                                <span className="text-sm font-semibold text-gray-200">
+                                    {shortenAddress(address)}
+                                </span>
+                            </div>
                             <div className="flex flex-col gap-2">
                                 {/* disconnect button */}
                                 <button
@@ -1323,6 +1341,15 @@ function ProfilePage() {
                                     >
                                         <option value="" selected={seller?.bankInfo?.bankName === ""}>
                                             은행선택
+                                        </option>
+                                        <option value="090" selected={seller?.bankInfo?.bankName === "090"}>
+                                            카카오뱅크
+                                        </option>
+                                        <option value="089" selected={seller?.bankInfo?.bankName === "089"}>
+                                            케이뱅크
+                                        </option>
+                                        <option value="092" selected={seller?.bankInfo?.bankName === "092"}>
+                                            토스뱅크
                                         </option>
                                         <option value="004" selected={seller?.bankInfo?.bankName === "004"}>
                                             국민은행
