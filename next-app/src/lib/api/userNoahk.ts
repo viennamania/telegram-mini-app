@@ -607,7 +607,7 @@ export async function getAllUsersTelegramIdByCenter(
     {
       $match: {
         center: center,
-        telegramId: { $exists: true, $ne: '' },
+        //telegramId: { $exists: true, $ne: '' },
 
         // search by nickname
 
