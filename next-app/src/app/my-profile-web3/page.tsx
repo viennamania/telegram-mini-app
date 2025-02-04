@@ -1132,7 +1132,7 @@ function ProfilePage() {
                                            
                                             카카오뱅크: 090, 케이뱅크: 089, 토스뱅크: 092,
 
-                                          국민은행: 004, 우리은행: 020, 신한은행: 088, 농협: 011, 기업은행: 003, 하나은행: 081, 외환은행: 002, 부산은행: 032, 대구은행: 031, 전북은행: 037, 경북은행: 071,
+                                          : 004, 우리은행: 020, 신한은행: 088, 농협: 011, 기업은행: 003, 하나은행: 081, 외환은행: 002, 부산은행: 032, 대구은행: 031, 전북은행: 037, 경북은행: 071,
                                            광주은행: 034, 우체국: 071, 수협: 007, 씨티은행: 027, 대신은행: 055, 동양종합금융: 054, 
 
                                         */}  
@@ -1141,7 +1141,7 @@ function ProfilePage() {
                                             seller?.bankInfo?.bankName === "090" ? "카카오뱅크" :
                                             seller?.bankInfo?.bankName === "089" ? "케이뱅크" :
                                             seller?.bankInfo?.bankName === "092" ? "토스뱅크" :
-                                            seller?.bankInfo?.bankName === "004" ? "국민은행" :
+                                            seller?.bankInfo?.bankName === "004" ? "" :
                                             seller?.bankInfo?.bankName === "020" ? "우리은행" :
                                             seller?.bankInfo?.bankName === "088" ? "신한은행" :
                                             seller?.bankInfo?.bankName === "011" ? "농협" :

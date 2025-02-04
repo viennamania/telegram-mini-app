@@ -1978,6 +1978,10 @@ export default function Index({ params }: any) {
                                 <p className="text-sm text-zinc-400">
                                   {Payment}:{' '}
                                   
+                                  {item.seller?.bankInfo.bankName === '090' && '카카오뱅크'}
+                                  {item.seller?.bankInfo.bankName === '089' && '케이뱅크'}
+                                  {item.seller?.bankInfo.bankName === '092' && '토스뱅크'}
+                                  
                                   {item.seller?.bankInfo.bankName === '004' && '국민은행'}
                                   {item.seller?.bankInfo.bankName === '020' && '우리은행'}
                                   {item.seller?.bankInfo.bankName === '088' && '신한은행'}
