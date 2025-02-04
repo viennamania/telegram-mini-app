@@ -1960,30 +1960,46 @@ export default function Index({ params }: any) {
                               </div>
 
 
-                              {item?.virtualAccount ? (
-                                  <div className="mt-2 flex flex-row items-center gap-2">
-                                    <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
-                                    <p className="text-sm text-zinc-400">
-                                      {Payment}:{' '}제주은행{' '}
-                                      {item?.virtualAccount}{' '}스타디움엑스 (가상)
-                                    </p>
-                                  </div>
-                                ) : (
-                                  <div className="mt-2 flex flex-row items-center gap-2">
-                                    <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
-                                    <p className="text-sm text-zinc-400">
-                                      {Payment}:{' '}
-                                      ({item.seller?.bankInfo.bankName}{' '}
-                                      {item.seller?.bankInfo.accountNumber}{' '}
-                                      {item.seller?.bankInfo.accountHolder})
-                                    </p>
-                                  </div>
-                                )}
+
+                              <div className="mt-2 flex flex-row items-center gap-2">
+                                <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
+                                <p className="text-sm text-zinc-400">
+                                  {Payment}:{' '}
+                                  
+                                  {item.seller?.bankInfo.bankName === '004' && '국민은행'}
+                                  {item.seller?.bankInfo.bankName === '020' && '우리은행'}
+                                  {item.seller?.bankInfo.bankName === '088' && '신한은행'}
+                                  {item.seller?.bankInfo.bankName === '011' && '농협'}
+                                  {item.seller?.bankInfo.bankName === '003' && '기업은행'}
+                                  {item.seller?.bankInfo.bankName === '081' && '하나은행'}
+                                  {item.seller?.bankInfo.bankName === '002' && '외환은행'}
+                                  {item.seller?.bankInfo.bankName === '032' && '부산은행'}
+                                  {item.seller?.bankInfo.bankName === '031' && '대구은행'}
+                                  {item.seller?.bankInfo.bankName === '037' && '전북은행'}
+                                  {item.seller?.bankInfo.bankName === '071' && '경북은행'}
+                                  {item.seller?.bankInfo.bankName === '034' && '광주은행'}
+                                  {item.seller?.bankInfo.bankName === '071' && '우체국'}
+                                  {item.seller?.bankInfo.bankName === '007' && '수협'}
+                                  {item.seller?.bankInfo.bankName === '027' && '씨티은행'}
+                                  {item.seller?.bankInfo.bankName === '055' && '대신은행'}
+                                  {item.seller?.bankInfo.bankName === '054' && '동양종합금융'}
+                                  {item.seller?.bankInfo.bankName === '090' && '카카오뱅크'}
+                                  {item.seller?.bankInfo.bankName === '089' && '케이뱅크'}
+                                  {item.seller?.bankInfo.bankName === '092' && '토스뱅크'}
+                                  {' '}
+
+                                  {item.seller?.bankInfo.accountNumber}{' '}
+                                  {item.seller?.bankInfo.accountHolder}
+                                </p>
+                              </div>
+                           
 
                                 {/* 입금자명 depositName */}
-                                <span className="text-sm text-zinc-400">
+                                {item?.buyer?.depositName && (
+                                <span className="text-lg text-yellow-500 font-semibold">
                                   입금자명: {item?.buyer?.depositName}
                                 </span>
+                                )}
 
 
 
