@@ -2264,7 +2264,7 @@ export default function Index({ params }: any) {
                                       {Buyer}: {
                                         item.buyer.walletAddress === address ? item.buyer.nickname + ' :' + Me :
                                       
-                                        item.buyer.nickname
+                                        item.buyer.nickname ? item.buyer.nickname : item.buyer.walletAddress.substring(0, 6) + '...' + item.buyer.walletAddress.substring(item.buyer.walletAddress.length - 4)
                                       }
                                     </p>
 
