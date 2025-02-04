@@ -1158,13 +1158,16 @@ function ProfilePage() {
                                 {user?.virtualAccount ? (
                                     <div className='flex flex-col gap-2 items-center justify-between'>
                                         {/* 제주은행 */}
-                                        <span className='text-lg font-semibold text-yellow-200'>
-                                            제주은행
+                                        <span className='text-sm font-semibold text-gray-200'>
+                                            은행: 제주은행
                                         </span>
                                         <span className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                            {
+                                            게좌번호:{' '}{
                                                 user.virtualAccount
-                                            }{' '}스타디움엑스 (가상)
+                                            }
+                                        </span>
+                                        <span className='text-sm font-semibold text-gray-200'>
+                                            예금주: 스타디움엑스 (가상)
                                         </span>
 
                                         <div className='flex flex-row gap-2 items-center justify-between'>
@@ -1220,300 +1223,302 @@ function ProfilePage() {
 
 
                         {/* 판매자 정보 저장하기 */}
-                        <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
-                        bg-zinc-800 bg-opacity-90
-                        '>
-                            <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                {/* dot */}
-                                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                <span className="text-sm font-semibold text-gray-200">
-                                    판매자 은행정보 저장하기
-                                </span>
-                            </div>
-
-                            <div className='flex flex-row gap-2 items-center justify-between'>
-
-                                {/*
-                                <input
-                                    disabled={!address}
-                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
-                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-
-                                    placeholder="은행명"
-                                    
-                                    value={seller?.bankInfo?.bankName}
-
-                                    type='text'
-                                    onChange={(e) => {
-                                        setSeller({
-                                            ...seller,
-                                            bankInfo: {
-                                                ...seller?.bankInfo,
-                                                bankName: e.target.value,
-                                            }
-                                        });
-                                    } }
-                                />
-                                */}
-
-                                {/*
-                                  국민은행: 004, 우리은행: 020, 신한은행: 088, 농협: 011, 기업은행: 003, 하나은행: 081, 외환은행: 002, 부산은행: 032, 대구은행: 031, 전북은행: 037, 경북은행: 071, 부산은행: 032, 광주은행: 034, 우체국: 071, 수협: 007, 씨티은행: 027, 대신은행: 055, 동양종합금융: 054, 롯데카드: 062, 삼성카드: 029, 현대카드: 048, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카
-
-                                
-                                */}
-
-                                {/* select bank */}
-
-                                <select
-                                    disabled={!address}
-                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
-                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                                    value={seller?.bankInfo?.bankName}
-                                    onChange={(e) => {
-                                        setSeller({
-                                            ...seller,
-                                            bankInfo: {
-                                                ...seller?.bankInfo,
-                                                bankName: e.target.value,
-                                            }
-                                        });
-                                    }}
-                                >
-                                    <option value="" selected={seller?.bankInfo?.bankName === ""}>
-                                        은행선택
-                                    </option>
-                                    <option value="004" selected={seller?.bankInfo?.bankName === "004"}>
-                                        국민은행
-                                    </option>
-                                    <option value="020" selected={seller?.bankInfo?.bankName === "020"}>
-                                        우리은행
-                                    </option>
-                                    <option value="088" selected={seller?.bankInfo?.bankName === "088"}>
-                                        신한은행
-                                    </option>
-                                    <option value="011" selected={seller?.bankInfo?.bankName === "011"}>
-                                        농협
-                                    </option>
-                                    <option value="003" selected={seller?.bankInfo?.bankName === "003"}>
-                                        기업은행
-                                    </option>
-                                    <option value="081" selected={seller?.bankInfo?.bankName === "081"}>
-                                        하나은행
-                                    </option>
-                                    <option value="002" selected={seller?.bankInfo?.bankName === "002"}>
-                                        외환은행
-                                    </option>
-                                    <option value="032" selected={seller?.bankInfo?.bankName === "032"}>
-                                        부산은행
-                                    </option>
-                                    <option value="031" selected={seller?.bankInfo?.bankName === "031"}>
-                                        대구은행
-                                    </option>
-                                    <option value="037" selected={seller?.bankInfo?.bankName === "037"}>
-                                        전북은행
-                                    </option>
-                                    <option value="071" selected={seller?.bankInfo?.bankName === "071"}>
-                                        경북은행
-                                    </option>
-                                    <option value="034" selected={seller?.bankInfo?.bankName === "034"}>
-                                        광주은행
-                                    </option>
-                                    <option value="007" selected={seller?.bankInfo?.bankName === "007"}>
-                                        수협
-                                    </option>
-                                    <option value="027" selected={seller?.bankInfo?.bankName === "027"}>
-                                        씨티은행
-                                    </option>
-                                    <option value="055" selected={seller?.bankInfo?.bankName === "055"}>
-                                        대신은행
-                                    </option>
-                                    <option value="054" selected={seller?.bankInfo?.bankName === "054"}>
-                                        동양종합금융
-                                    </option>
-
-
-                                </select>
-                            
-
-
-
-
-                            </div>
-                                    
-
-                            <div className='flex flex-row gap-2 items-center justify-between'>
-                                <input
-                                    disabled={!address}
-                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
-                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-
-                                    placeholder="계좌번호"
-                                    
-                                    value={seller?.bankInfo?.accountNumber}
-
-                                    type='number'
-                                    onChange={(e) => {
-                                        setSeller({
-                                            ...seller,
-                                            bankInfo: {
-                                                ...seller?.bankInfo,
-                                                accountNumber: e.target.value,
-                                            }
-                                        });
-                                    } }
-                                />
-                            </div>
-
-                            <div className='flex flex-row gap-2 items-center justify-between'>
-                                <input
-                                    disabled={!address}
-                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
-                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-
-                                    placeholder="예금주"
-                                    
-                                    value={seller?.bankInfo?.accountHolder}
-
-                                    type='text'
-                                    onChange={(e) => {
-                                        setSeller({
-                                            ...seller,
-                                            bankInfo:
-                                            {
-                                                ...seller?.bankInfo,
-                                                accountHolder: e.target.value,
-                                            }
-                                        });
-                                    } }
-                                />
-                            </div>
-
-                            {/* 생년월일 941109 */}
-                            <div className='flex flex-row gap-2 items-center justify-between'>
-                                <input
-                                    disabled={!address}
-                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
-                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-
-                                    placeholder="생년월일(6자리)"
-                                    
-                                    value={seller?.bankInfo?.birth}
-
-                                    type='number'
-                                    onChange={(e) => {
-                                        setSeller({
-                                            ...seller,
-                                            bankInfo:
-                                            {
-                                                ...seller?.bankInfo,
-                                                birth: e.target.value,
-                                            }
-                                        });
-                                    } }
-                                />
-                            </div>
-
-                            {/* gender 남성/여성 */}
-                            <div className='flex flex-row gap-2 items-center justify-between'>
-                                <select
-                                    disabled={!address}
-                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
-                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                                    value={seller?.bankInfo?.gender}
-
-                                    onChange={(e) => {
-                                        setSeller({
-                                            ...seller,
-                                            bankInfo:
-                                            {
-                                                ...seller?.bankInfo,
-                                                gender: e.target.value,
-                                            }
-                                        });
-                                    } }
-                                >
-                                    <option value="">성별선택</option>
-                                    <option value="1">남성</option>
-                                    <option value="0">여성</option>
-                                </select>
-
-                            </div>
-
-                            {/* phoneNum */}
-                            <div className='flex flex-row gap-2 items-center justify-between'>
-                                <input
-                                    disabled={!address}
-                                    className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
-                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-
-                                    placeholder="전화번호"
-                                    
-                                    value={seller?.bankInfo?.phoneNum}
-
-                                    type='number'
-                                    onChange={(e) => {
-                                        setSeller({
-                                            ...seller,
-                                            bankInfo:
-                                            {
-                                                ...seller?.bankInfo,
-                                                phoneNum: e.target.value,
-                                            }
-                                        });
-                                    } }
-                                />
-                            </div>
-
-
-
-
-
-
-
-                            <button
-                                disabled={
-                                    !address
-                                    || !seller?.bankInfo?.bankName
-                                    || !seller?.bankInfo?.accountNumber
-                                    || !seller?.bankInfo?.accountHolder
-                                    || !seller?.bankInfo?.birth
-                                    || !seller?.bankInfo?.gender
-                                    || !seller?.bankInfo?.phoneNum
-                                    || loadingSetSeller
-                                }
-                                className={`
-                                    ${!address
-                                    || !seller?.bankInfo?.bankName
-                                    || !seller?.bankInfo?.accountNumber
-                                    || !seller?.bankInfo?.accountHolder
-                                    || !seller?.bankInfo?.birth
-                                    || !seller?.bankInfo?.gender
-                                    || !seller?.bankInfo?.phoneNum
-                                    || loadingSetSeller
-                                    ? 'bg-gray-500 text-zinc-100'
-                                    : 'bg-blue-500 text-zinc-100'}
-
-                                    p-2 rounded-lg text-sm font-semibold
-                                    w-full mt-5
-                                `}
-                                onClick={() => {
-                                    confirm('판매자 정보를 저장하시겠습니까?') && setSellerInfo();
-                                }}
-                            >
-                                {loadingSetSeller ? "저장중..." : "저장"}
-                            </button>
-
-                            {/* error message */}
-                            {errorMsgForSetSeller && (
-                                <div className='flex flex-row gap-2 items-center justify-between'>
-                                    <span className='text-sm font-semibold text-red-500'>
-                                        {errorMsgForSetSeller}
+                        {address && !user?.virtualAccount && (
+                            <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
+                            bg-zinc-800 bg-opacity-90
+                            '>
+                                <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <span className="text-sm font-semibold text-gray-200">
+                                        판매자 은행정보 저장하기
                                     </span>
                                 </div>
-                            )}
-                        
 
-                        </div>
+                                <div className='flex flex-row gap-2 items-center justify-between'>
+
+                                    {/*
+                                    <input
+                                        disabled={!address}
+                                        className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+
+                                        placeholder="은행명"
+                                        
+                                        value={seller?.bankInfo?.bankName}
+
+                                        type='text'
+                                        onChange={(e) => {
+                                            setSeller({
+                                                ...seller,
+                                                bankInfo: {
+                                                    ...seller?.bankInfo,
+                                                    bankName: e.target.value,
+                                                }
+                                            });
+                                        } }
+                                    />
+                                    */}
+
+                                    {/*
+                                    국민은행: 004, 우리은행: 020, 신한은행: 088, 농협: 011, 기업은행: 003, 하나은행: 081, 외환은행: 002, 부산은행: 032, 대구은행: 031, 전북은행: 037, 경북은행: 071, 부산은행: 032, 광주은행: 034, 우체국: 071, 수협: 007, 씨티은행: 027, 대신은행: 055, 동양종합금융: 054, 롯데카드: 062, 삼성카드: 029, 현대카드: 048, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카
+
+                                    
+                                    */}
+
+                                    {/* select bank */}
+
+                                    <select
+                                        disabled={!address}
+                                        className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                                        value={seller?.bankInfo?.bankName}
+                                        onChange={(e) => {
+                                            setSeller({
+                                                ...seller,
+                                                bankInfo: {
+                                                    ...seller?.bankInfo,
+                                                    bankName: e.target.value,
+                                                }
+                                            });
+                                        }}
+                                    >
+                                        <option value="" selected={seller?.bankInfo?.bankName === ""}>
+                                            은행선택
+                                        </option>
+                                        <option value="004" selected={seller?.bankInfo?.bankName === "004"}>
+                                            국민은행
+                                        </option>
+                                        <option value="020" selected={seller?.bankInfo?.bankName === "020"}>
+                                            우리은행
+                                        </option>
+                                        <option value="088" selected={seller?.bankInfo?.bankName === "088"}>
+                                            신한은행
+                                        </option>
+                                        <option value="011" selected={seller?.bankInfo?.bankName === "011"}>
+                                            농협
+                                        </option>
+                                        <option value="003" selected={seller?.bankInfo?.bankName === "003"}>
+                                            기업은행
+                                        </option>
+                                        <option value="081" selected={seller?.bankInfo?.bankName === "081"}>
+                                            하나은행
+                                        </option>
+                                        <option value="002" selected={seller?.bankInfo?.bankName === "002"}>
+                                            외환은행
+                                        </option>
+                                        <option value="032" selected={seller?.bankInfo?.bankName === "032"}>
+                                            부산은행
+                                        </option>
+                                        <option value="031" selected={seller?.bankInfo?.bankName === "031"}>
+                                            대구은행
+                                        </option>
+                                        <option value="037" selected={seller?.bankInfo?.bankName === "037"}>
+                                            전북은행
+                                        </option>
+                                        <option value="071" selected={seller?.bankInfo?.bankName === "071"}>
+                                            경북은행
+                                        </option>
+                                        <option value="034" selected={seller?.bankInfo?.bankName === "034"}>
+                                            광주은행
+                                        </option>
+                                        <option value="007" selected={seller?.bankInfo?.bankName === "007"}>
+                                            수협
+                                        </option>
+                                        <option value="027" selected={seller?.bankInfo?.bankName === "027"}>
+                                            씨티은행
+                                        </option>
+                                        <option value="055" selected={seller?.bankInfo?.bankName === "055"}>
+                                            대신은행
+                                        </option>
+                                        <option value="054" selected={seller?.bankInfo?.bankName === "054"}>
+                                            동양종합금융
+                                        </option>
+
+
+                                    </select>
+                                
+
+
+
+
+                                </div>
+                                        
+
+                                <div className='flex flex-row gap-2 items-center justify-between'>
+                                    <input
+                                        disabled={!address}
+                                        className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+
+                                        placeholder="계좌번호"
+                                        
+                                        value={seller?.bankInfo?.accountNumber}
+
+                                        type='number'
+                                        onChange={(e) => {
+                                            setSeller({
+                                                ...seller,
+                                                bankInfo: {
+                                                    ...seller?.bankInfo,
+                                                    accountNumber: e.target.value,
+                                                }
+                                            });
+                                        } }
+                                    />
+                                </div>
+
+                                <div className='flex flex-row gap-2 items-center justify-between'>
+                                    <input
+                                        disabled={!address}
+                                        className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+
+                                        placeholder="예금주"
+                                        
+                                        value={seller?.bankInfo?.accountHolder}
+
+                                        type='text'
+                                        onChange={(e) => {
+                                            setSeller({
+                                                ...seller,
+                                                bankInfo:
+                                                {
+                                                    ...seller?.bankInfo,
+                                                    accountHolder: e.target.value,
+                                                }
+                                            });
+                                        } }
+                                    />
+                                </div>
+
+                                {/* 생년월일 941109 */}
+                                <div className='flex flex-row gap-2 items-center justify-between'>
+                                    <input
+                                        disabled={!address}
+                                        className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+
+                                        placeholder="생년월일(6자리)"
+                                        
+                                        value={seller?.bankInfo?.birth}
+
+                                        type='number'
+                                        onChange={(e) => {
+                                            setSeller({
+                                                ...seller,
+                                                bankInfo:
+                                                {
+                                                    ...seller?.bankInfo,
+                                                    birth: e.target.value,
+                                                }
+                                            });
+                                        } }
+                                    />
+                                </div>
+
+                                {/* gender 남성/여성 */}
+                                <div className='flex flex-row gap-2 items-center justify-between'>
+                                    <select
+                                        disabled={!address}
+                                        className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                                        value={seller?.bankInfo?.gender}
+
+                                        onChange={(e) => {
+                                            setSeller({
+                                                ...seller,
+                                                bankInfo:
+                                                {
+                                                    ...seller?.bankInfo,
+                                                    gender: e.target.value,
+                                                }
+                                            });
+                                        } }
+                                    >
+                                        <option value="">성별선택</option>
+                                        <option value="1">남성</option>
+                                        <option value="0">여성</option>
+                                    </select>
+
+                                </div>
+
+                                {/* phoneNum */}
+                                <div className='flex flex-row gap-2 items-center justify-between'>
+                                    <input
+                                        disabled={!address}
+                                        className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+
+                                        placeholder="전화번호"
+                                        
+                                        value={seller?.bankInfo?.phoneNum}
+
+                                        type='number'
+                                        onChange={(e) => {
+                                            setSeller({
+                                                ...seller,
+                                                bankInfo:
+                                                {
+                                                    ...seller?.bankInfo,
+                                                    phoneNum: e.target.value,
+                                                }
+                                            });
+                                        } }
+                                    />
+                                </div>
+
+
+
+
+
+
+
+                                <button
+                                    disabled={
+                                        !address
+                                        || !seller?.bankInfo?.bankName
+                                        || !seller?.bankInfo?.accountNumber
+                                        || !seller?.bankInfo?.accountHolder
+                                        || !seller?.bankInfo?.birth
+                                        || !seller?.bankInfo?.gender
+                                        || !seller?.bankInfo?.phoneNum
+                                        || loadingSetSeller
+                                    }
+                                    className={`
+                                        ${!address
+                                        || !seller?.bankInfo?.bankName
+                                        || !seller?.bankInfo?.accountNumber
+                                        || !seller?.bankInfo?.accountHolder
+                                        || !seller?.bankInfo?.birth
+                                        || !seller?.bankInfo?.gender
+                                        || !seller?.bankInfo?.phoneNum
+                                        || loadingSetSeller
+                                        ? 'bg-gray-500 text-zinc-100'
+                                        : 'bg-blue-500 text-zinc-100'}
+
+                                        p-2 rounded-lg text-sm font-semibold
+                                        w-full mt-5
+                                    `}
+                                    onClick={() => {
+                                        confirm('판매자 정보를 저장하시겠습니까?') && setSellerInfo();
+                                    }}
+                                >
+                                    {loadingSetSeller ? "저장중..." : "저장"}
+                                </button>
+
+                                {/* error message */}
+                                {errorMsgForSetSeller && (
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <span className='text-sm font-semibold text-red-500'>
+                                            {errorMsgForSetSeller}
+                                        </span>
+                                    </div>
+                                )}
+                            
+
+                            </div>
+                        )}
 
 
                         {/* escrowWalletAddress */}
