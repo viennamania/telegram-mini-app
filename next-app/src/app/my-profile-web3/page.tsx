@@ -594,6 +594,10 @@ function ProfilePage() {
         //console.log("data", data);
 
         if (data.result) {
+
+            setErrorMsgForSetSeller("");
+
+            
             //toast.success('Seller info saved');
             alert('판매자 정보가 저장되었습니다.');
 
@@ -613,7 +617,7 @@ function ProfilePage() {
                 const data = await response.json();
 
                 if (data.result) {
-                    setErrorMsgForSetSeller("");
+                    
 
                     setUser(data.result);
 
@@ -1305,28 +1309,6 @@ function ProfilePage() {
 
                                 <div className='flex flex-row gap-2 items-center justify-between'>
 
-                                    {/*
-                                    <input
-                                        disabled={!address}
-                                        className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
-                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-
-                                        placeholder="은행명"
-                                        
-                                        value={seller?.bankInfo?.bankName}
-
-                                        type='text'
-                                        onChange={(e) => {
-                                            setSeller({
-                                                ...seller,
-                                                bankInfo: {
-                                                    ...seller?.bankInfo,
-                                                    bankName: e.target.value,
-                                                }
-                                            });
-                                        } }
-                                    />
-                                    */}
 
                                     {/*
                                     국민은행: 004, 우리은행: 020, 신한은행: 088, 농협: 011, 기업은행: 003, 하나은행: 081, 외환은행: 002, 부산은행: 032, 대구은행: 031, 전북은행: 037, 경북은행: 071, 부산은행: 032, 광주은행: 034, 우체국: 071, 수협: 007, 씨티은행: 027, 대신은행: 055, 동양종합금융: 054, 롯데카드: 062, 삼성카드: 029, 현대카드: 048, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카드: 002, 씨티카드: 027, 현대카드: 048, 롯데카드: 062, 삼성카드: 029, 신한카드: 016, 국민카드: 020, 하나카드: 081, 외환카
