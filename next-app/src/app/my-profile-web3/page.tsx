@@ -1535,7 +1535,14 @@ function ProfilePage() {
 
 
 
-
+                                {/* error message */}
+                                {errorMsgForSetSeller && (
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <span className='text-sm font-semibold text-red-500'>
+                                            {errorMsgForSetSeller}
+                                        </span>
+                                    </div>
+                                )}
 
 
 
@@ -1572,14 +1579,7 @@ function ProfilePage() {
                                     {loadingSetSeller ? "저장중..." : "저장"}
                                 </button>
 
-                                {/* error message */}
-                                {errorMsgForSetSeller && (
-                                    <div className='flex flex-row gap-2 items-center justify-between'>
-                                        <span className='text-sm font-semibold text-red-500'>
-                                            {errorMsgForSetSeller}
-                                        </span>
-                                    </div>
-                                )}
+
                             
 
                             </div>
