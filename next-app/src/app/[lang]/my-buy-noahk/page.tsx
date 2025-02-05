@@ -1619,7 +1619,7 @@ export default function Index({ params }: any) {
                                             ) : (
                                               ' ' + Math.floor((new Date().getTime() - new Date(item.acceptedAt).getTime()) / 1000 / 60 / 60) + ' ' + hours_ago
                                             )
-                                            }{' '}{Trade_Started}
+                                            }{' '}{/*Trade_Started*/}
 
                                           </p>
 
@@ -1656,14 +1656,29 @@ export default function Index({ params }: any) {
 
                                   {/* if status is accepted, show "구매신청상태" */}
                                   {item.status === 'accepted' && (
-                                    <div className="ml-2 text-sm bg-green-500 text-white px-2 py-1 rounded-md">
-                                      구매신청상태
-                                    </div>
+                                    <span className=" w-36 text-sm bg-green-500 text-white px-2 py-1 rounded-md">
+                                      판매자<br />에스크로진행중
+                                    </span>
                                   )}
 
                                   {item.status === 'paymentRequested' && (
-                                    <div className="ml-2 text-sm bg-green-500 text-white px-2 py-1 rounded-md">
-                                      판매자입금대기
+                                    <div className="w-36 flex flex-col items-start justify-start gap-2">
+                                      
+                                      <div className="flex flex-row items-center gap-2">
+                                        <Image
+                                          src="/verified.png"
+                                          alt="Verified"
+                                          width={20}
+                                          height={20}
+                                        />
+                                        <span className="text-sm text-red-500">
+                                          에스크로완료
+                                        </span>
+                                      </div>
+
+                                      <span className="w-full text-sm bg-green-500 text-white px-2 py-1 rounded-md">
+                                        판매자<br />입금확인중
+                                      </span>
                                     </div>
                                   )}
 
@@ -1822,8 +1837,8 @@ export default function Index({ params }: any) {
                                       className="rounded-full"
                                       style={{
                                           objectFit: 'cover',
-                                          width: '32px',
-                                          height: '32px',
+                                          width: '25px',
+                                          height: '25px',
                                       }}
                                   />
 
