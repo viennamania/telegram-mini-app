@@ -1110,10 +1110,10 @@ function ProfilePage() {
 
                                         }
                                     </span>
-                                    <span className='text-sm font-semibold text-gray-200'>
+                                    <span className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
                                         계좌번호:{' '}{seller?.bankInfo?.accountNumber}
                                     </span>
-                                    <span className='text-sm font-semibold text-gray-200'>
+                                    <span className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
                                         예금주:{' '}{seller?.bankInfo?.accountHolder}
                                     </span>
 
