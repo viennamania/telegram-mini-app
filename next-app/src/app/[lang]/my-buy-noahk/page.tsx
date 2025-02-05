@@ -984,42 +984,15 @@ export default function Index({ params }: any) {
 
                 <div className="w-full flex flex-row items-between justify-center gap-2">
 
-                  <div className=" flex flex-row items-center justify-between gap-2">
+                  <div className=" flex flex-row items-center justify-between gap-5">
 
-                    <div className="flex flex-col gap-2 items-center">
-                      <div className="text-sm">{Total}</div>
-                      <div className="text-xl font-semibold text-gray-400">
-                        {sellOrders.length} 
-                      </div>
-                      
-                    </div>
 
-                    {/*}
-                    <div className="flex flex-col gap-2 items-center">
-                      <div className="text-sm">{Sell}</div>
-                      <div className="text-xl font-semibold text-gray-400">
-                        {sellOrders.filter((item) => item.status === 'ordered').length}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-2 items-center">
-                      <div className="text-sm">{Trades}</div>
-                      <div className="text-xl font-semibold text-gray-400">
-
-                        {
-                          //sellOrders.filter((item) => item.status === 'accepted').length
-                          sellOrders.filter((item) => item.status === 'accepted' || item.status === 'paymentRequested').length
-
-                        }
-
-                      </div>
-                    </div>
-                    */}
 
 
 
                     <div className="ml-5 flex flex-col gap-2 items-start justify-end">
                       <div className="flex flex-row items-center gap-2">
+                        {Buyer}{' '}
                         <Image
                           src={user?.avatar || "/profile-default.png"}
                           alt="Avatar"
@@ -1054,6 +1027,41 @@ export default function Index({ params }: any) {
                       */}
 
                     </div>
+
+
+
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">{Total}</div>
+                      <div className="text-xl font-semibold text-gray-400">
+                        {sellOrders.length} 
+                      </div>
+                      
+                    </div>
+
+                    {/*}
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">{Sell}</div>
+                      <div className="text-xl font-semibold text-gray-400">
+                        {sellOrders.filter((item) => item.status === 'ordered').length}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2 items-center">
+                      <div className="text-sm">{Trades}</div>
+                      <div className="text-xl font-semibold text-gray-400">
+
+                        {
+                          //sellOrders.filter((item) => item.status === 'accepted').length
+                          sellOrders.filter((item) => item.status === 'accepted' || item.status === 'paymentRequested').length
+
+                        }
+
+                      </div>
+                    </div>
+                    */}
+
+
+
 
                   </div>
 
