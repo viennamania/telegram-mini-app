@@ -908,7 +908,7 @@ function HomeContent() {
 
                                     <td className="p-2 text-center">
                                       <span className="text-sm">
-                                        {user?.mobile}
+                                        {user?.mobile?.slice(0, 3) + "****" + user?.mobile?.slice(7, 11)}
                                       </span>
                                     </td>
 
