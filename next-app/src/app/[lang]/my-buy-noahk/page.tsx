@@ -1772,15 +1772,7 @@ export default function Index({ params }: any) {
                                     {Payment}:
                                   </span>
 
-                                  {item?.virtualAccount ? (
-                                    <div className="mt-2 flex flex-row items-center gap-2">
-                                      <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
-                                      <p className="text-sm text-zinc-400">
-                                        은행:{' '}제주은행{' '}
-                                        {item?.virtualAccount}{' '}스타디움엑스 (가상)
-                                      </p>
-                                    </div>
-                                  ) : (
+
                                     <div className="mt-2 flex flex-row items-center gap-2">
                                       <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
                                       <p className="text-sm text-zinc-400">
@@ -1790,7 +1782,7 @@ export default function Index({ params }: any) {
                                         {item.seller?.bankInfo.accountHolder}
                                       </p>
                                     </div>
-                                  )}
+                                  
 
                                   {/* 입금자명 depositName */}
                                   <div className="mt-2 flex flex-row items-center gap-2">
