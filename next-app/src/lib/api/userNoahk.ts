@@ -641,7 +641,19 @@ export async function getAllUsersTelegramIdByCenter(
 
         referralCode: { $arrayElemAt: ['$referral.referralCode', 0] }
       }
+    },
+    {
+      $sort: {
+        createdAt: -1
+      }
+    },
+    {
+      $limit: limit,
+    },
+    {
+      $skip: (page - 1) * limit,
     }
+
   ]).toArray();
 
   

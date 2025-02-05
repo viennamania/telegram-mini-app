@@ -176,10 +176,15 @@ export async function POST(request: NextRequest) {
     seller?.bankInfo?.bankName === '수협' ? '007' :
     seller?.bankInfo?.bankName === '씨티은행' ? '027' :
     seller?.bankInfo?.bankName === '대신은행' ? '055' :
-    seller?.bankInfo?.bankName === '동양종합금융' ? '054'
-    : '034';
+    seller?.bankInfo?.bankName === '동양종합금융' ? '054' :
+    seller?.bankInfo?.bankName === '미래에셋증권' ? '230'
+    
+    : seller?.bankInfo?.bankName;
+    
+    //: '034';
 
 
+    console.log("bankCd: ", bankCd);
 
 
 
@@ -370,6 +375,31 @@ response2Json:  {
     account: '50902006423904'
   }
 }
+
+ {
+  result: {
+    resultCd: '9999',
+    advanceMsg: '계좌인증 실패 - 입금계좌 오류',
+    create: '20250205091812',
+    resultMsg: '조회 오류'
+  },
+  vact: {
+    holderName: '',
+    gender: '1',
+    tmnId: '',
+    trackId: '',
+    itndAmount: '20000',
+    recvBankCd: '035',
+    dob: '701111',
+    bankCd: '090',
+    payerTel: '01098551647',
+    mchtId: 'w63791online',
+    payerName: '박승현',
+    account: '110019648787'
+  }
+}
+
+
   */
 
   //console.log("resultCd: ", response2Json.result.resultCd);

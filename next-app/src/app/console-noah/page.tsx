@@ -81,21 +81,20 @@ function HomeContent() {
     // get the balance
     const getBalance = async () => {
 
-      if (!address) {
-          return;
+      try {
+        const result = await balanceOf({
+          contract,
+          address: address,
+        });
+    
+        //console.log(result);
+    
+        setBalance( Number(result) / 10 ** 18 );
+
+      } catch (error) {
+        console.error("Error getting balance", error);
       }
       
-      const result = await balanceOf({
-        contract,
-        address: address,
-      });
-
-  
-      //console.log(result);
-
-      if (!result) return;
-  
-      setBalance( Number(result) / 10 ** 18 );
 
     };
 
@@ -839,6 +838,7 @@ function HomeContent() {
                         <thead>
                             <tr className="bg-zinc-800 text-zinc-100">
                                 <th className="p-2">회원아이디</th>
+                                <th className="p-2">등록일</th>
                                 <th className="p-2">TID</th>
                                 <th className="p-2">지갑주소</th>
                                 <th className="p-2">핸드폰번호</th>
@@ -858,12 +858,22 @@ function HomeContent() {
                                         <Image
                                           src={user?.avatar || "/icon-anonymous.png"}
                                           alt={user?.nickname}
-                                          width={50}
-                                          height={50}
+                                          width={28}
+                                          height={28}
                                           className="rounded w-10 h-10"
                                         />
                                         <span className="text-sm">
                                           {user?.nickname}
+                                        </span>
+                                      </div>
+                                    </td>
+                                    {/* created */}
+                                    <td className="p-2">
+                                      <div className="flex flex-row gap-2 items-center justify-start">
+                                        <span className="text-sm">
+                                          {
+                                            user?.createdAt && new Date(user?.createdAt).toLocaleString()
+                                          }
                                         </span>
                                       </div>
                                     </td>
@@ -907,11 +917,11 @@ function HomeContent() {
                                         {
                                           user?.seller?.bankInfo?.bankName
                                         }
-                                        <br />
+                                        {' '}
                                         {
                                           user?.seller?.bankInfo?.accountNumber
                                         }
-                                        <br />
+                                        {' '}
                                         {
                                           user?.seller?.bankInfo?.accountHolder
                                         }

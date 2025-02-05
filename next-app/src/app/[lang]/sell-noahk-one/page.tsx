@@ -1987,9 +1987,9 @@ export default function Index({ params }: any) {
                                   {item.seller?.bankInfo.bankName === '027' && '씨티은행'}
                                   {item.seller?.bankInfo.bankName === '055' && '대신은행'}
                                   {item.seller?.bankInfo.bankName === '054' && '동양종합금융'}
-                                  {item.seller?.bankInfo.bankName === '090' && '카카오뱅크'}
-                                  {item.seller?.bankInfo.bankName === '089' && '케이뱅크'}
-                                  {item.seller?.bankInfo.bankName === '092' && '토스뱅크'}
+                                  
+                                  {item.seller?.bankInfo.bankName === '230' && '미래에셋증권'}
+
                                   {' '}
 
                                   {item.seller?.bankInfo.accountNumber}{' '}

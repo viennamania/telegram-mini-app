@@ -95,7 +95,8 @@ function ProfilePage() {
   
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    
     //const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
   
 
@@ -1075,6 +1076,8 @@ function ProfilePage() {
                                           국민은행: 004, 우리은행: 020, 신한은행: 088, 농협: 011, 기업은행: 003, 하나은행: 081, 외환은행: 002, 부산은행: 032, 대구은행: 031, 전북은행: 037, 경북은행: 071,
                                            광주은행: 034, 우체국: 071, 수협: 007, 씨티은행: 027, 대신은행: 055, 동양종합금융: 054, 
 
+                                        
+                                           미래에셋증권 230
                                         */}  
                                         
                                         {
@@ -1099,6 +1102,7 @@ function ProfilePage() {
                                             seller?.bankInfo?.bankName === "027" ? "씨티은행" :
                                             seller?.bankInfo?.bankName === "055" ? "대신은행" :
                                             seller?.bankInfo?.bankName === "054" ? "동양종합금융" :
+                                            seller?.bankInfo?.bankName === "230" ? "미래에셋증권" :
                                             "기타"
 
        
@@ -1109,6 +1113,14 @@ function ProfilePage() {
                                         }
                                         {' '}{seller?.bankInfo?.accountNumber} {seller?.bankInfo?.accountHolder}
                                     </div>
+                                </div>
+
+                                <div className='flex flex-row gap-2 items-center justify-between'>
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <span className='text-sm font-semibold text-gray-200'>
+                                        포인트를 판매할 때 결제용으로 사용할 은행계좌 정보입니다.
+                                    </span>
                                 </div>
 
                                 {/* seller.status === 'confirmed' */}
@@ -1152,7 +1164,7 @@ function ProfilePage() {
                                     {/* dot */}
                                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                     <span className="text-sm font-semibold text-gray-200">
-                                        판매자 가상계좌 정보
+                                        가상계좌 정보
                                     </span>
                                 </div>
 
@@ -1183,7 +1195,7 @@ function ProfilePage() {
                                 ) : (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-gray-200'>
-                                        판매자 가상계좌 정보가 없습니다.
+                                        가상계좌 정보가 없습니다.
                                         </span>
                                     </div>
                                 )}
@@ -1192,7 +1204,7 @@ function ProfilePage() {
                                 {seller?.status === 'confirmed' && (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-green-500'>
-                                        판매자 가상계좌 정보가 확인되었습니다.
+                                        가상계좌 정보가 확인되었습니다.
                                         </span>
                                     </div>
                                 )}
@@ -1201,7 +1213,7 @@ function ProfilePage() {
                                 {seller?.status === 'pending' && (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-gray-500'>
-                                        판매자 가상계좌 정보를 확인중입니다.
+                                        가상계좌 정보를 확인중입니다.
                                         </span>
                                     </div>
                                 )}
@@ -1210,7 +1222,7 @@ function ProfilePage() {
                                 {seller?.status === 'rejected' && (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-red-500'>
-                                        판매자 가상계좌 정보가 거절되었습니다.
+                                        가상계좌 정보가 거절되었습니다.
                                         </span>
                                     </div>
                                 )}
@@ -1343,6 +1355,9 @@ function ProfilePage() {
                                         </option>
                                         <option value="054" selected={seller?.bankInfo?.bankName === "054"}>
                                             동양종합금융
+                                        </option>
+                                        <option value="230" selected={seller?.bankInfo?.bankName === "230"}>
+                                            미래에셋증권
                                         </option>
 
 
@@ -1480,9 +1495,14 @@ function ProfilePage() {
 
 
 
-
-
-
+                                {/* error message */}
+                                {errorMsgForSetSeller && (
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <span className='text-sm font-semibold text-red-500'>
+                                            {errorMsgForSetSeller}
+                                        </span>
+                                    </div>
+                                )}
 
                                 <button
                                     disabled={
@@ -1517,14 +1537,7 @@ function ProfilePage() {
                                     {loadingSetSeller ? "저장중..." : "저장"}
                                 </button>
 
-                                {/* error message */}
-                                {errorMsgForSetSeller && (
-                                    <div className='flex flex-row gap-2 items-center justify-between'>
-                                        <span className='text-sm font-semibold text-red-500'>
-                                            {errorMsgForSetSeller}
-                                        </span>
-                                    </div>
-                                )}
+
                             
 
                             </div>
