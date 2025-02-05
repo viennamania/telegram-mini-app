@@ -1067,8 +1067,10 @@ function ProfilePage() {
                                     </span>
                                 </div>
 
-                                <div className='flex flex-row gap-2 items-center justify-between'>
-                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                                <div className='flex flex-col gap-2 items-center justify-between'>
+
+
+                                    <span className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
                                         {/*
                                            
                                             카카오뱅크: 090, 케이뱅크: 089, 토스뱅크: 092,
@@ -1079,7 +1081,7 @@ function ProfilePage() {
                                         
                                            미래에셋증권 230
                                         */}  
-                                        
+                                        은행이름:{' '}
                                         {
                                             seller?.bankInfo?.bankName === "090" ? "카카오뱅크" :
                                             seller?.bankInfo?.bankName === "089" ? "케이뱅크" :
@@ -1103,17 +1105,18 @@ function ProfilePage() {
                                             seller?.bankInfo?.bankName === "055" ? "대신은행" :
                                             seller?.bankInfo?.bankName === "054" ? "동양종합금융" :
                                             seller?.bankInfo?.bankName === "230" ? "미래에셋증권" :
-                                            
+
                                             seller?.bankInfo?.bankName
 
-       
-
-
-
-
                                         }
-                                        {' '}{seller?.bankInfo?.accountNumber} {seller?.bankInfo?.accountHolder}
-                                    </div>
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-200'>
+                                        계좌번호:{' '}{seller?.bankInfo?.accountNumber}
+                                    </span>
+                                    <span className='text-sm font-semibold text-gray-200'>
+                                        예금주:{' '}{seller?.bankInfo?.accountHolder}
+                                    </span>
+
                                 </div>
 
                                 <div className='flex flex-row gap-2 items-center justify-between'>
@@ -1157,12 +1160,12 @@ function ProfilePage() {
 
       
                         {/* 판매자 가상계좌 정보 virtualAccount */}
-                        {address && (
+                        {/*address && (
                             <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
                             bg-zinc-800 bg-opacity-90
                             '>
                                 <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                    {/* dot */}
+                                
                                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                     <span className="text-sm font-semibold text-gray-200">
                                         가상계좌 정보
@@ -1171,7 +1174,7 @@ function ProfilePage() {
 
                                 {user?.virtualAccount ? (
                                     <div className='flex flex-col gap-2 items-center justify-between'>
-                                        {/* 제주은행 */}
+                                      
                                         <span className='text-sm font-semibold text-gray-200'>
                                             은행: 제주은행
                                         </span>
@@ -1185,7 +1188,7 @@ function ProfilePage() {
                                         </span>
 
                                         <div className='flex flex-row gap-2 items-center justify-between'>
-                                            {/* dot */}
+                                   
                                             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                             <span className='text-sm font-semibold text-gray-200'>
                                                 가상계좌는 입금전용이며 출금은 지갑에서 가능합니다.
@@ -1201,7 +1204,6 @@ function ProfilePage() {
                                     </div>
                                 )}
 
-                                {/* seller.status === 'confirmed' */}
                                 {seller?.status === 'confirmed' && (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-green-500'>
@@ -1210,7 +1212,7 @@ function ProfilePage() {
                                     </div>
                                 )}
 
-                                {/* seller.status === 'pending' */}
+                               
                                 {seller?.status === 'pending' && (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-gray-500'>
@@ -1219,7 +1221,7 @@ function ProfilePage() {
                                     </div>
                                 )}
 
-                                {/* seller.status === 'rejected' */}
+                               
                                 {seller?.status === 'rejected' && (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-red-500'>
@@ -1231,7 +1233,7 @@ function ProfilePage() {
                          
                             </div>
 
-                        )}
+                        )*/}
                      
 
 
