@@ -1103,7 +1103,8 @@ function ProfilePage() {
                                             seller?.bankInfo?.bankName === "055" ? "대신은행" :
                                             seller?.bankInfo?.bankName === "054" ? "동양종합금융" :
                                             seller?.bankInfo?.bankName === "230" ? "미래에셋증권" :
-                                            "기타"
+                                            
+                                            seller?.bankInfo?.bankName
 
        
 
