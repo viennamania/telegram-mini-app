@@ -1710,25 +1710,19 @@ export default function Index({ params }: any) {
                                     {Payment}:
                                   </span>
 
-                                  {item?.virtualAccount ? (
-                                    <div className="mt-2 flex flex-row items-center gap-2">
-                                      <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
-                                      <p className="text-sm text-zinc-400">
-                                        {Payment}:{' '}제주은행{' '}
-                                        {item?.virtualAccount}{' '}스타디움엑스 (가상)
-                                      </p>
-                                    </div>
-                                  ) : (
+
                                     <div className="mt-2 flex flex-row items-center gap-2">
                                       <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
                                       <p className="text-sm text-zinc-400">
                                         {Payment}:{' '}
+                                        
                                         ({item.seller?.bankInfo.bankName}{' '}
+
                                         {item.seller?.bankInfo.accountNumber}{' '}
                                         {item.seller?.bankInfo.accountHolder})
                                       </p>
                                     </div>
-                                  )}
+                                  
 
                                   {/* 입금자명 depositName */}
                                   <span className="text-sm text-zinc-400">
@@ -1740,14 +1734,45 @@ export default function Index({ params }: any) {
 
                               ) : (
 
-                                <div className="mt-4 mb-4 flex flex-col items-start text-sm
+                                <div className="mt-4 mb-4 flex flex-col items-start text-lg
                                   text-zinc-400
                                 ">
-                                  {Payment}: {Bank_Transfer} (
-                                    {item.seller?.bankInfo.bankName}
+
+
+
+
+                                  {Payment}:{' '}
+
+                                    {
+                                    item.seller?.bankInfo.bankName === '090' ? '카카오뱅크' :
+                                    item.seller?.bankInfo.bankName === '089' ? '케이뱅크' :
+                                    item.seller?.bankInfo.bankName === '092' ? '토스뱅크' :
+
+                                    item.seller?.bankInfo.bankName === '004' ? '국민은행' :
+                                    item.seller?.bankInfo.bankName === '020' ? '우리은행' :
+                                    item.seller?.bankInfo.bankName === '088' ? '신한은행' :
+                                    item.seller?.bankInfo.bankName === '011' ? '농협' :
+                                    item.seller?.bankInfo.bankName === '003' ? '기업은행' :
+                                    item.seller?.bankInfo.bankName === '081' ? '하나은행' :
+                                    item.seller?.bankInfo.bankName === '002' ? '외환은행' :
+                                    item.seller?.bankInfo.bankName === '032' ? '부산은행' :
+                                    item.seller?.bankInfo.bankName === '031' ? '대구은행' :
+                                    item.seller?.bankInfo.bankName === '037' ? '전북은행' :
+                                    item.seller?.bankInfo.bankName === '071' ? '경북은행' :
+                                    item.seller?.bankInfo.bankName === '034' ? '광주은행' :
+                                    item.seller?.bankInfo.bankName === '071' ? '우체국' :
+                                    item.seller?.bankInfo.bankName === '007' ? '수협' :
+                                    item.seller?.bankInfo.bankName === '027' ? '씨티은행' :
+                                    item.seller?.bankInfo.bankName === '055' ? '대신은행' :
+                                    item.seller?.bankInfo.bankName === '054' ? '동양종합금융' :
+                                    item.seller?.bankInfo.bankName === '230' ? '미래에셋증권' :
+
+                                    item.seller?.bankInfo.bankName
+                                    }
+
                                     {' '}{item.seller?.bankInfo.accountNumber.slice(0, 5)}****
                                     {' '}{item.seller?.bankInfo.accountHolder.slice(0, 1)}**
-                                    )
+                                    
                                 </div>
 
                               )}
@@ -1760,14 +1785,14 @@ export default function Index({ params }: any) {
                                   <Image
                                       src={item.avatar || '/profile-default.png'}
                                       alt="Avatar"
-                                      width={32}
-                                      height={32}
+                                      width={25}
+                                      height={25}
                                       priority={true} // Added priority property
                                       className="rounded-full"
                                       style={{
                                           objectFit: 'cover',
-                                          width: '32px',
-                                          height: '32px',
+                                          width: '25px',
+                                          height: '26px',
                                       }}
                                   />
 
