@@ -11,16 +11,17 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
-  const { center } = body;
+  const { limit, page, center, searchNickname } = body;
 
 
   //console.log("walletAddress", walletAddress);
 
 
   const result = await getAllUsersTelegramIdByCenter({
-    limit: 100,
-    page: 1,
-    center,
+    limit: limit || 100,
+    page: page || 1,
+    center: center || "",
+    searchNickname: searchNickname || "",
   });
 
  

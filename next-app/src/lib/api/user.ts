@@ -565,10 +565,12 @@ export async function getAllUsersTelegramIdByCenter(
     limit,
     page,
     center,
+    searchNickname,
   }: {
     limit: number;
     page: number;
     center: string;
+    searchNickname: string;
   }
 ): Promise<any> {
 
@@ -604,6 +606,13 @@ export async function getAllUsersTelegramIdByCenter(
       $match: {
         center: center,
         telegramId: { $exists: true, $ne: '' },
+
+        // errmsg: '$regex has to be a string',
+
+        nickname: { $regex: searchNickname, $options: 'i' },
+
+      
+
       }
     },
     {
@@ -627,6 +636,16 @@ export async function getAllUsersTelegramIdByCenter(
 
         referralCode: { $arrayElemAt: ['$referral.referralCode', 0] }
       }
+    },
+    {
+      $limit: limit,
+    },
+    {
+      $skip: (page - 1) * limit,
+    },
+    // order by createdAt desc
+    {
+      $sort: { createdAt: -1 }
     }
   ]).toArray();
 

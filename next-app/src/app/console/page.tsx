@@ -356,6 +356,10 @@ function HomeContent() {
 
   // getAllUsersTelegramIdByCenter
 
+
+  const [searchNickname, setSearchNickname] = useState("");
+  
+
   const [users, setUsers] = useState([] as any[]);
   const [loadingUsers, setLoadingUsers] = useState(false);
   useEffect(() => {
@@ -367,7 +371,10 @@ function HomeContent() {
                   "Content-Type": "application/json",
               },
               body: JSON.stringify({
+                  limit: 100,
+                  page: 1,
                   center: selectCenter,
+                  //searchNickname: searchNickname,
               }),
           });
 
@@ -393,7 +400,7 @@ function HomeContent() {
           fetchData();
       }
 
-  }, [selectCenter]);
+  }, [selectCenter, ]);
 
 
   // airDrop
@@ -481,7 +488,7 @@ function HomeContent() {
    
     <main
       className="
-        p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-lg mx-auto
+        p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-xl mx-auto
         bg-cover bg-center bg-no-repeat
         "
     >
@@ -814,8 +821,12 @@ function HomeContent() {
             
             <div className="flex flex-row gap-2 items-center justify-between">
 
-              <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                  텔레그램 회원 목록
+              <div className="flex flex-row gap-2 items-center justify-start">
+                {/* dot */}
+                <div className="w-2 h-2 bg-green-500 rounded"></div>
+                <span className="text-sm text-gray-800 font-semibold">
+                    텔레그램 회원 목록
+                </span>
               </div>
 
               {/* 에어드롭 USDT */}
@@ -829,7 +840,72 @@ function HomeContent() {
                     회원수: {users?.length}
                   </span>
 
-                  <input
+                </div>
+              
+              )}
+
+              {/* searchNickname */}
+              <div className="flex flex-row gap-2 items-center justify-end">
+                <input
+                  disabled={loadingUsers}
+                  onChange={(e) => {
+                    setSearchNickname(e.target.value);
+                  }}
+                  type="text"
+                  placeholder="회원아이디"
+                  className="w-36 p-2 rounded border border-gray-300"
+                />
+                <Button
+                  disabled={loadingUsers}
+                  onClick={() => {
+                    // search
+                    //setSelectUser(null);
+                    //setUsers([]);
+
+                    const fetchData = async () => {
+                      setLoadingUsers(true);
+                      const response = await fetch("/api/user/getAllUsersTelegramIdByCenter", {
+                          method: "POST",
+                          headers: {
+                              "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                              limit: 100,
+                              page: 1,
+                              center: selectCenter,
+                              searchNickname,
+                          }),
+                      });
+
+                      if (!response.ok) {
+                          console.error("Error fetching users");
+                          setLoadingUsers(false);
+                          return;
+                      }
+
+                      const data = await response.json();
+
+                      setUsers(data?.result);
+
+                      setLoadingUsers(false);
+
+                    };
+
+                    fetchData();
+
+                  }}
+                  className={`${loadingUsers ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
+                >
+                  {loadingUsers ? "로딩중..." : "검색"}
+                </Button>
+              </div>
+        
+
+         
+            </div>
+
+            <div className="w-full flex flex-row gap-2 items-start justify-end">
+                <input
                     disabled={loadingAirDrop}
 
                     onChange={(e) => {
@@ -855,12 +931,7 @@ function HomeContent() {
                   >
                     {loadingAirDrop ? "로딩중..." : "에어드롭"}
                   </Button>
-                </div>
-              
-              )}
-              
-            </div>
-
+              </div>
 
 
             <div className="w-full flex flex-col gap-2 items-start justify-between">
@@ -880,6 +951,7 @@ function HomeContent() {
                         <thead>
                             <tr className="bg-zinc-800 text-zinc-100">
                                 <th className="p-2">회원아이디</th>
+                                <th className="p-2">등록일</th>
                                 <th className="p-2">TID</th>
                                 <th className="p-2">지갑주소</th>
                                 <th className="p-2">레퍼럴코드</th>
@@ -902,7 +974,7 @@ function HomeContent() {
                                           alt={user?.nickname}
                                           width={50}
                                           height={50}
-                                          className="rounded w-10 h-10"
+                                          className="rounded w-6 h-6"
                                         />
                                         <span className="text-sm">
                                           {user?.nickname}
@@ -915,8 +987,21 @@ function HomeContent() {
                                       
                                       <div className="flex flex-row gap-2 items-center justify-start">
                                         <span className="text-sm">
+                                          {
+                                            //user?.createdAt
+                                            new Date(user?.createdAt).toLocaleString()
+                                          }
+                                        </span>
+                                      </div>
+                                    </td>
+
+                                    <td className="p-2">
+                                      
+                                      <div className="flex flex-row gap-2 items-center justify-start">
+                                        <span className="text-sm">
                                           {user?.telegramId}
                                         </span>
+                                        {/*
                                         <Button
                                           onClick={() => {
                                             (window as any).Telegram.WebApp.openLink(
@@ -929,6 +1014,7 @@ function HomeContent() {
                                         >
                                           텔레그램
                                         </Button>
+                                        */}
                                       </div>
                                       
                                     </td>
