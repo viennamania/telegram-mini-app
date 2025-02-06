@@ -1041,11 +1041,11 @@ function HomeContent() {
                                       flex flex-col gap-1 items-center justify-start">
 
                                         <div className="flex flex-col gap-2 items-start justify-between">
-                                          <span className="text-sm">
-                                            {nft.name && nft.name.slice(0, 10) + "..."}
+                                          <span className="text-sm text-gray-200">
+                                            {nft.name}
                                           </span>
-                                          <span className="text-sm text-gray-400">
-                                            {nft.description && nft.description.slice(0, 10) + "..."}
+                                          <span className="text-sm text-gray-200">
+                                            {nft.description}
                                           </span>
                                         </div>
 
