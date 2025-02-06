@@ -1057,7 +1057,7 @@ function HomeContent() {
                                             alt={nft?.name}
                                             width={200}
                                             height={200}
-                                            className="rounded w-10 h-10"
+                                            className="rounded w-40 h-40"
                                           />
                                         
                                           <Button
