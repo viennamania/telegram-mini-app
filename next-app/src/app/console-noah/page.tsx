@@ -912,32 +912,6 @@ function HomeContent() {
                                       </span>
                                     </td>
 
-                                    {/*
-                                            seller?.bankInfo?.bankName === "090" ? "카카오뱅크" :
-                                            seller?.bankInfo?.bankName === "089" ? "케이뱅크" :
-                                            seller?.bankInfo?.bankName === "092" ? "토스뱅크" :
-                                            
-                                            seller?.bankInfo?.bankName === "004" ? "국민은행" :
-                                            seller?.bankInfo?.bankName === "020" ? "우리은행" :
-                                            seller?.bankInfo?.bankName === "088" ? "신한은행" :
-                                            seller?.bankInfo?.bankName === "011" ? "농협" :
-                                            seller?.bankInfo?.bankName === "003" ? "기업은행" :
-                                            seller?.bankInfo?.bankName === "081" ? "하나은행" :
-                                            seller?.bankInfo?.bankName === "002" ? "외환은행" :
-                                            seller?.bankInfo?.bankName === "032" ? "부산은행" :
-                                            seller?.bankInfo?.bankName === "031" ? "대구은행" :
-                                            seller?.bankInfo?.bankName === "037" ? "전북은행" :
-                                            seller?.bankInfo?.bankName === "071" ? "경북은행" :
-                                            seller?.bankInfo?.bankName === "034" ? "광주은행" :
-                                            seller?.bankInfo?.bankName === "071" ? "우체국" :
-                                            seller?.bankInfo?.bankName === "007" ? "수협" :
-                                            seller?.bankInfo?.bankName === "027" ? "씨티은행" :
-                                            seller?.bankInfo?.bankName === "055" ? "대신은행" :
-                                            seller?.bankInfo?.bankName === "054" ? "동양종합금융" :
-                                            seller?.bankInfo?.bankName === "230" ? "미래에셋증권" :
-
-                                            seller?.bankInfo?.bankName
-                                            */} 
 
                                     <td className="p-2 text-center">
                                       <span className="text-sm">
@@ -1046,14 +1020,16 @@ function HomeContent() {
                         <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                             에이전트 NFT 목록
                         </div>
-                        <div className="w-full flex flex-col gap-2 items-start justify-between">
-                            {agentNft && agentNft.length === 0 && (
-                                <div className="w-full flex flex-col items-center justify-center">
-                                    <span className="text-sm text-gray-400">
-                                        NFT가 없습니다.
-                                    </span>
-                                </div>
-                            )}
+
+                          {agentNft && agentNft.length === 0 && (
+                              <div className="w-full flex flex-col items-center justify-center">
+                                  <span className="text-sm text-gray-400">
+                                      NFT가 없습니다.
+                                  </span>
+                              </div>
+                          )}
+
+                          <div className="w-full grid grid-cols-4 xl:grid-cols-8 gap-2 items-start justify-between">
 
                             {agentNft && agentNft.map((nft : any, index : number) => (
                                 <div
@@ -1079,8 +1055,8 @@ function HomeContent() {
                                           <Image
                                             src={nft?.image?.thumbnailUrl || "/icon-nft.png"}
                                             alt={nft?.name}
-                                            width={100}
-                                            height={100}
+                                            width={200}
+                                            height={200}
                                             className="rounded w-10 h-10"
                                           />
                                         
