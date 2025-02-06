@@ -1000,7 +1000,7 @@ function HomeContent() {
 
             
               {selectUser && (
-                <div className="w-full flex flex-col gap-2 items-start justify-between">
+                <div className="mt-10 w-full flex flex-col gap-2 items-start justify-between">
 
                   {/* user balance */}
                   <div className="w-full flex flex-row gap-2 items-center justify-start">
