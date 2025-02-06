@@ -972,14 +972,17 @@ function HomeContent() {
                         <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                             에이전트 NFT 목록
                         </div>
-                        <div className="w-full flex flex-col gap-2 items-start justify-between">
-                            {agentNft && agentNft.length === 0 && (
-                                <div className="w-full flex flex-col items-center justify-center">
-                                    <span className="text-sm text-gray-400">
-                                        NFT가 없습니다.
-                                    </span>
-                                </div>
-                            )}
+
+                          {agentNft && agentNft.length === 0 && (
+                              <div className="w-full flex flex-col items-center justify-center">
+                                  <span className="text-sm text-gray-400">
+                                      NFT가 없습니다.
+                                  </span>
+                              </div>
+                          )}
+
+                          <div className="w-full grid grid-cols-2 xl:grid-cols-8 gap-2 items-start justify-between">
+                          
 
                             {agentNft && agentNft.map((nft : any, index : number) => (
                                 <div
@@ -1005,8 +1008,8 @@ function HomeContent() {
                                           <Image
                                             src={nft?.image?.thumbnailUrl || "/icon-nft.png"}
                                             alt={nft?.name}
-                                            width={100}
-                                            height={100}
+                                            width={200}
+                                            height={200}
                                             className="rounded w-10 h-10"
                                           />
                                         
