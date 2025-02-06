@@ -440,9 +440,9 @@ function HomeContent() {
         */}
 
           {/* 메뉴선택 */}
-          {/* 회원관리 / 거래관리 */}
+          {/* 회원관리 / 구매관리 */}
           {/* 회원관리 /console-noah */}
-          {/* 거래관리: /kr/my-buy-noahk?walletAddress=0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C */}
+          {/* 구매관리: /kr/my-buy-noahk?walletAddress=0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C */}
 
           <div className="flex flex-row gap-2 items-center justify-between">
             <Link href="/console-noah?center=noah_wallet_bot">
@@ -460,7 +460,7 @@ function HomeContent() {
               <Button
                 className="bg-gray-700 text-zinc-100 p-2 rounded"
               >
-                거래관리
+                구매관리
               </Button>
 
             </Link>

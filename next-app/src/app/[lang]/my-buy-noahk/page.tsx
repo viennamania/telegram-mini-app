@@ -904,7 +904,7 @@ export default function Index({ params }: any) {
                 <Button
                   className="bg-green-500 text-white p-2 rounded"
                 >
-                  거래관리
+                  구매관리
                 </Button>
 
               </Link>
