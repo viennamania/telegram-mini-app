@@ -108,10 +108,10 @@ function AgentPage() {
 
 
 
-    const address = account?.address;
+    //const address = account?.address;
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -1605,7 +1605,7 @@ function AgentPage() {
                                                 <div className="flex flex-row gap-2 items-center justify-between">
                                                     
                                                     <input
-                                                        className="flex-1 p-2 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold text-center"
+                                                        className=" w-48 flex p-2 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold text-center"
                                                         placeholder="수량"
                                                         type='number'
 
@@ -1639,7 +1639,9 @@ function AgentPage() {
                                                         onClick={() => {
                                                             transferNft(nft.contract.address, nft.tokenId);
                                                         }}
-                                                        className={`p-2 bg-blue-500 text-zinc-100 rounded
+                                                        className={`
+                                                            
+                                                            flex p-2 bg-blue-500 text-zinc-100 rounded
                                                         ${transferingNftList.find((item) => 
                                                             item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
                                                         )?.transferring ? 'opacity-50' : ''}
@@ -1665,15 +1667,14 @@ function AgentPage() {
 
                                                     </button>
 
+                                                </div>
+
+                                    
                                             </div>
-                                            
-                                            
-
-
-
-
 
                                         </div>
+
+
                                     ))}
                                 </div>
 
