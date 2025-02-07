@@ -1012,7 +1012,7 @@ function AgentPage() {
         <main
             className="p-4 pb-28 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto"
             style={{
-                backgroundImage: "url('/mobile-background-nft.jpg')",
+                backgroundImage: "url('/noah100.png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
