@@ -63,6 +63,42 @@ const adminAccount = privateKeyToAccount({
 
 
 
+feature.on("callback_query:data", async (ctx) => {
+  const data = ctx.callbackQuery.data;
+  if (data === "leaderboard") {
+
+    const center = ctx.me.username+"";
+    const url = `${process.env.FRONTEND_APP_ORIGIN}/leaderboard?center=${center}`;
+
+    return ctx.answerCallbackQuery({ url });
+    
+  } else if (data === "my-profile") {
+    
+    const center = ctx.me.username+"";
+    const telegramId = ctx.from?.id+"";
+
+    const username = ctx.from?.id+"";
+    const expiration = Date.now() + 6000_000; // valid for 100 minutes
+    const message = JSON.stringify({
+      username,
+      expiration,
+    });
+
+    const authCode = await adminAccount.signMessage({
+      message,
+    });
+
+    const url = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/my-profile`;
+
+    return ctx.answerCallbackQuery({ url });
+  }
+
+  return ctx.answerCallbackQuery("Not implemented");
+
+})
+
+
+
 
 
 // show otc
@@ -259,6 +295,14 @@ feature.command('game', async (ctx) => {
         .webApp('💰 게임하러가기', urlGame)
         // english
         //.webApp('💰 Go to the game', urlGame)
+        .row()
+        // command
+        //.text('🎲 룰렛', 'roulette')
+
+
+        
+       
+
 
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-sports-game.jpg`;
 
