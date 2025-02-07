@@ -866,6 +866,21 @@ function AgentPage() {
     ///console.log("transferingNftList", transferingNftList);
 
 
+    const [sendAmountList, setSendAmountList] = useState([] as any[]);
+    useEffect(() => {
+        if (myNfts) {
+            setSendAmountList(myNfts.map((nft) => {
+                return {
+                    contractAddress: nft.contract.address,
+                    tokenId: nft.tokenId,
+                    amount: 0,
+                };
+            }));
+        }
+    }, [myNfts]);
+
+
+
     // toAddress array
     const [toAddressList, setToAddressList] = useState([] as any[]);
     useEffect(() => {
@@ -941,6 +956,10 @@ function AgentPage() {
               });
             */
 
+            const value = sendAmountList.find((item) =>
+                item.contractAddress === contractAddress && item.tokenId === tokenId
+            ).amount;
+
             const optionalData = "0x";
 
             const transaction = safeTransferFrom({
@@ -948,7 +967,12 @@ function AgentPage() {
                 from: address as string,
                 to: to,
                 tokenId: BigInt(tokenId),
-                value: 1n,
+                
+                //value: 1n,
+
+                value: BigInt(value),
+
+
                 data: optionalData,
             });
 
@@ -976,6 +1000,8 @@ function AgentPage() {
             }));
 
             alert('NFT 전송 완료');
+
+
 
 
             // fetch the NFTs again
@@ -1574,6 +1600,32 @@ function AgentPage() {
                                                         }));
                                                     }}
                                                 />
+                                                {/* 수량 */}
+                                                <input
+                                                    className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                                    placeholder="수량"
+                                                    type='number'
+
+                                                    value={sendAmountList.find((item) =>
+                                                        item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                    )?.amount}
+
+                                                    onChange={(e) => {
+                                                        setSendAmountList(sendAmountList.map((item) => {
+
+                                                            if (item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId) {
+                                                                return {
+                                                                    ...item,
+                                                                    amount: e.target.value,
+                                                                };
+                                                            } else {
+                                                                return item;
+                                                            }
+                                                        }));
+                                                    }}
+                                                />
+
+
                                                 <button
                                                     
                                                     disabled={transferingNftList.find((item) => 
