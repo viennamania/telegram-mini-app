@@ -35,6 +35,7 @@ export async function insertOne(data: any) {
         toAddress: data.toAddress,
         contractAddress: data.contractAddress,
         tokenId: data.tokenId,
+        amount: data.amount,
         nftInfo: data.nftInfo,
         timestamp: data.timestamp,
     };
@@ -139,6 +140,10 @@ export async function insertOne(data: any) {
             + "NFT Name: " + data.nftInfo.name
             + "\n"
             + "NFT Desc: " + data.nftInfo.description
+            + "\n"
+            + "NFT Amount: " + data.amount
+
+
             // NFT 이름: data.nftInfo.name
             // NFT 설명: data.nftInfo.description
 
@@ -154,6 +159,7 @@ export async function insertOne(data: any) {
                 telegramId: telegramId,
                 message: message,
                 nftInfo: data.nftInfo,
+                amount: data.amount,
                 timestamp: data.timestamp,
             }
             );
