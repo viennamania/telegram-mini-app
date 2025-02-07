@@ -143,7 +143,7 @@ export async function POST(request: NextRequest) {
     */
 
     if (nft.tokenType === 'ERC1155'
-      && nft.contract.address === "0x09DDf16Fc678fa6fE8e961FdF0a4885B5cF379F3"
+      && nft.contract.address === "0xd1FAE297D2E28Fc7e4a6333A8E60Aff7603D1B04"
     ) {
 
       finalResult.push(nft);
