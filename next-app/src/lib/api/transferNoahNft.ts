@@ -136,7 +136,7 @@ export async function insertOne(data: any) {
             //const message = Number(amount).toFixed(6) + " USDT 를 받았습니다";
 
             const message = "NFT를 받았습니다"
-            + "\n"
+            + "\n\n"
             + "NFT 이름: " + data.nftInfo.name
             + "\n"
             + "NFT 수량: " + data.amount
