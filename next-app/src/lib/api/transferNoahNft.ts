@@ -51,7 +51,7 @@ export async function insertOne(data: any) {
     // if toAddress is user wallet address, then insert into userTransfers collection
 
 
-    const collectionUsers = client.db('shinemywinter').collection('users');
+    const collectionUsers = client.db('shinemywinter').collection('usersNoahk');
 
     const collectionUserTransfers = client.db('shinemywinter').collection('userTransfersNoahNft');
 
@@ -192,7 +192,7 @@ export async function getTransferByWalletAddress(data: any) {
 
     const client = await clientPromise;
 
-    const collectionUsers = client.db('shinemywinter').collection('users');
+    const collectionUsers = client.db('shinemywinter').collection('usersNoahk');
 
     
     const user = await collectionUsers.findOne(
