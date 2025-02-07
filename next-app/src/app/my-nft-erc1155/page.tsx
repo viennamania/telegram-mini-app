@@ -1005,7 +1005,7 @@ function AgentPage() {
 
 
             // fetch the NFTs again
-            const response = await fetch("/api/nft/getNFTByWalletAddress", {
+            const response = await fetch("/api/nftNoah/getNFTByWalletAddress", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
