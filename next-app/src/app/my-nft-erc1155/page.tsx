@@ -1601,65 +1601,69 @@ function AgentPage() {
                                                     }}
                                                 />
                                                 {/* 수량 */}
-                                                <input
-                                                    className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                                    placeholder="수량"
-                                                    type='number'
 
-                                                    value={sendAmountList.find((item) =>
-                                                        item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                    )?.amount}
-
-                                                    onChange={(e) => {
-                                                        setSendAmountList(sendAmountList.map((item) => {
-
-                                                            if (item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId) {
-                                                                return {
-                                                                    ...item,
-                                                                    amount: e.target.value,
-                                                                };
-                                                            } else {
-                                                                return item;
-                                                            }
-                                                        }));
-                                                    }}
-                                                />
-
-
-                                                <button
+                                                <div className="flex flex-row gap-2 items-center justify-between">
                                                     
-                                                    disabled={transferingNftList.find((item) => 
-                                                        item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                    )?.transferring}
+                                                    <input
+                                                        className="flex-1 p-2 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold text-center"
+                                                        placeholder="수량"
+                                                        type='number'
 
-                                                    onClick={() => {
-                                                        transferNft(nft.contract.address, nft.tokenId);
-                                                    }}
-                                                    className={`p-2 bg-blue-500 text-zinc-100 rounded
-                                                    ${transferingNftList.find((item) => 
-                                                        item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                    )?.transferring ? 'opacity-50' : ''}
-                                                    `}
-                                                >
-                                                    <div className='flex flex-row gap-2 items-center justify-between'>
-                                                        {transferingNftList.find((item) =>
+                                                        value={sendAmountList.find((item) =>
                                                             item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.transferring && (
+                                                        )?.amount}
 
-                                                            <Image
-                                                                src="/loading.png"
-                                                                alt="Send"
-                                                                width={25}
-                                                                height={25}
-                                                                className="animate-spin"
-                                                            />
-                                                        )}
-                                                        <span className='text-lg font-semibold'>
-                                                            NFT 전송하기
-                                                        </span>
-                                                    </div>
+                                                        onChange={(e) => {
 
-                                                </button>
+                                                            setSendAmountList(sendAmountList.map((item) => {
+
+                                                                if (item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId) {
+                                                                    return {
+                                                                        ...item,
+                                                                        amount: e.target.value,
+                                                                    };
+                                                                } else {
+                                                                    return item;
+                                                                }
+                                                            }));
+                                                        }}
+                                                    />
+
+
+                                                    <button
+                                                        
+                                                        disabled={transferingNftList.find((item) => 
+                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        )?.transferring}
+
+                                                        onClick={() => {
+                                                            transferNft(nft.contract.address, nft.tokenId);
+                                                        }}
+                                                        className={`p-2 bg-blue-500 text-zinc-100 rounded
+                                                        ${transferingNftList.find((item) => 
+                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                        )?.transferring ? 'opacity-50' : ''}
+                                                        `}
+                                                    >
+                                                        <div className='flex flex-row gap-2 items-center justify-between'>
+                                                            {transferingNftList.find((item) =>
+                                                                item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                            )?.transferring && (
+
+                                                                <Image
+                                                                    src="/loading.png"
+                                                                    alt="Send"
+                                                                    width={25}
+                                                                    height={25}
+                                                                    className="animate-spin"
+                                                                />
+                                                            )}
+                                                            <span className='text-lg font-semibold'>
+                                                                NFT 전송하기
+                                                            </span>
+                                                        </div>
+
+                                                    </button>
 
                                             </div>
                                             
