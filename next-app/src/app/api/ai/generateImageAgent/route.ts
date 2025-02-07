@@ -78,8 +78,11 @@ export async function POST(request: NextRequest) {
     }
     */
 
-    hosting = "fal";
-    model = "fal-ai/flux-realism";
+    //hosting = "fal";
+    //model = "fal-ai/flux-realism";
+
+    hosting = "replicate";
+    model = "black-forest-labs/flux-dev";
 
 
     try {
