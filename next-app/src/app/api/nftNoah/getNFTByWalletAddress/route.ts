@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
 
   const {
+    tokenId,
     walletAddress,
     ///erc721ContractAddress,
   } = body;
@@ -144,6 +145,7 @@ export async function POST(request: NextRequest) {
 
     if (nft.tokenType === 'ERC1155'
       && nft.contract.address === "0xd1FAE297D2E28Fc7e4a6333A8E60Aff7603D1B04"
+      && nft.tokenId === tokenId
     ) {
 
       finalResult.push(nft);

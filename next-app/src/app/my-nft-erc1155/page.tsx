@@ -69,6 +69,7 @@ import {
     useRouter,
     useSearchParams,
 } from "next//navigation";
+import { token } from "thirdweb/extensions/vote";
 
 
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
@@ -80,15 +81,8 @@ function AgentPage() {
 
     const center = searchParams.get('center');
 
-    /*
-    const [params, setParams] = useState({ center: '' });
 
-  
-    useEffect(() => {
-        const center = searchParams.get('center') || '';
-        setParams({ center });
-    }, [searchParams]);
-    */
+    const tokenId = searchParams.get('tokenId');
  
 
     const account = useActiveAccount();
@@ -581,12 +575,13 @@ function AgentPage() {
 
                 // api /api/agent/getAgentNFTByWalletAddress
                 
-                const response = await fetch("/api/nft/getNFTByWalletAddress", {
+                const response = await fetch("/api/nftNoah/getNFTByWalletAddress", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
+                        tokenId: tokenId,
                         walletAddress: address,
                     }),
                 });
@@ -646,7 +641,9 @@ function AgentPage() {
        }
 
    }
-   , [ address ]);
+   , [ address, tokenId ]);
+
+   
 
    
     const [agentName, setAgentName] = useState("");
@@ -1011,6 +1008,7 @@ function AgentPage() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
+                    tokenId: tokenId,
                     walletAddress: address,
                 }),
             });
@@ -1390,12 +1388,13 @@ function AgentPage() {
 
                                                     setLoadingMyNfts(true);
                                                     try {
-                                                        const response = await fetch("/api/nft/getNFTByWalletAddress", {
+                                                        const response = await fetch("/api/nftNoah/getNFTByWalletAddress", {
                                                             method: "POST",
                                                             headers: {
                                                                 "Content-Type": "application/json",
                                                             },
                                                             body: JSON.stringify({
+                                                                tokenId: tokenId,
                                                                 walletAddress: address,
                                                             }),
                                                         });
