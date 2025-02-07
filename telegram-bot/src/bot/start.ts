@@ -65,13 +65,24 @@ const adminAccount = privateKeyToAccount({
 
 feature.on("callback_query:data", async (ctx) => {
   const data = ctx.callbackQuery.data;
+
+  // random number game 0 or 1
+  if (data === "odd" || data === "even") {
+    const randomNumber = Math.floor(Math.random() * 2);
+    const result = randomNumber === 0 ? "짝" : "홀";
+    const win = (data === "odd" && randomNumber === 1) || (data === "even" && randomNumber === 0);
+    return ctx.answerCallbackQuery(`랜덤 숫자: ${randomNumber}\n결과: ${result}\n${win ? "당첨" : "꽝"}`);
+
+  } else
+
+
   if (data === "leaderboard") {
 
     const center = ctx.me.username+"";
     const url = `${process.env.FRONTEND_APP_ORIGIN}/leaderboard?center=${center}`;
 
     return ctx.answerCallbackQuery({ url });
-    
+
   } else if (data === "my-profile") {
     
     const center = ctx.me.username+"";
