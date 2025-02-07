@@ -82,7 +82,8 @@ function AgentPage() {
     const center = searchParams.get('center');
 
 
-    const tokenId = searchParams.get('tokenId');
+    ////const tokenId = searchParams.get('tokenId');
+    const tokenId = "0";
  
 
     const account = useActiveAccount();
