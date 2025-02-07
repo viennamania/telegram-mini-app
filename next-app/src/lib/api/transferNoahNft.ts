@@ -139,7 +139,7 @@ export async function insertOne(data: any) {
             + "\n"
             + "NFT 이름: " + data.nftInfo.name
             + "\n"
-            + "NFT Amount: " + data.amount
+            + "NFT 수량: " + data.amount
 
 
             // NFT 이름: data.nftInfo.name
