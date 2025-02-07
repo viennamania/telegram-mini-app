@@ -1101,48 +1101,6 @@ function AgentPage() {
 
 
 
-                    <div className='w-full  flex flex-col gap-5 '>
-
-                        {/* profile picture */}
-      
-
-                        {address && userCode && (
-                            <div className='flex flex-row gap-2 items-center justify-between
-                            border border-gray-800
-                            p-4 rounded-lg'>
-
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    회원아이디
-                                </div>
-
-                                <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                    {nickname}
-                                </div>
-
-                                {isCenterOwner && (
-                                    <div className="p-2 bg-green-500 rounded text-zinc-100 text-xl font-semibold">
-                                        센터장
-                                    </div>
-                                )}
-
-                                <Image
-                                    src="/verified.png"
-                                    alt="Verified"
-                                    width={20}
-                                    height={20}
-                                    className="rounded-lg"
-                                />
-
-
-                                
-                            </div>
-                        )}
-
-
-                    </div>
-
-
-
                     {/* if not centerOwner show message */}
                     {/* NFT를 발행받을려면 센터장에게 문의하세요. */}
                     {/*
@@ -1534,7 +1492,7 @@ function AgentPage() {
 
                                             {/* balance */}
                                             {/* 수량 */}
-                                            <div className='w-full flex flex-col gap-2 items-end justify-between'>
+                                            <div className='mt-5 w-full flex flex-col gap-2 items-end justify-between'>
                                                 <span className='text-4xl font-semibold text-green-500'>
                                                     수량: {
                                                         Number(nft?.balance).toLocaleString()
