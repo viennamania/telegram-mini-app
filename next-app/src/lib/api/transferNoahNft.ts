@@ -137,9 +137,9 @@ export async function insertOne(data: any) {
 
             const message = "NFT를 받았습니다"
             + "\n"
-            + "NFT Name: " + data.nftInfo.name
+            + "NFT 이름: " + data.nftInfo.name
             + "\n"
-            + "NFT Desc: " + data.nftInfo.description
+            + "NFT 설명: " + data.nftInfo.description ? data.nftInfo.description : ""
             + "\n"
             + "NFT Amount: " + data.amount
 
