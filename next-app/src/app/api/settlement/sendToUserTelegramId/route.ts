@@ -155,10 +155,15 @@ export async function POST(request: NextRequest) {
 
   let transactions = [] as any;
 
+  // transfer USDT to user and memo
+
   const transaction = transfer({
     contract: contractUSDT,
     to: toWalletAddress,
     amount: amount,
+    
+    //memo: "From Thirdweb",
+
   });
 
   transactions.push(transaction);

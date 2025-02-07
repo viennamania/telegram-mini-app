@@ -173,6 +173,7 @@ export async function POST(request: NextRequest) {
   const batchOptions: SendBatchTransactionOptions = {
     account: account,
     transactions: transactions,
+    
   };
 
   const batchResponse = await sendBatchTransaction(
