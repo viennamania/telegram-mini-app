@@ -1552,23 +1552,7 @@ function AgentPage() {
                                         >
 
                                             <div className='w-full flex flex-row gap-2 items-center justify-between'>
-                                                {/* goto button for detail page */}
-                                                
 
-
-                                                <button
-                                                    onClick={() => {
-                                                        router.push('/my-nft-erc1155/' + nft.contract.address + '/' + nft.tokenId);
-                                                    }}
-                                                    className="flex flex-row gap-2 items-center justify-center p-2 bg-green-500 text-zinc-100 rounded
-                                                    hover:bg-green-700 text-sm font-semibold"
-                                                >
-                                                        상세보기
-                                                </button>
-
-
-
-  
                                                 <button
                                                     onClick={() => {
                                                         window.open('https://opensea.io/assets/matic/' + nft.contract.address + '/' + nft.tokenId);
@@ -1619,14 +1603,49 @@ function AgentPage() {
 
                                             </div>
 
-                                            
-                                            <Image
-                                                src={nft?.image?.pngUrl}
-                                                alt="NFT"
-                                                width={500}
-                                                height={500}
-                                                className="w-full rounded-lg border border-gray-300"
-                                            />
+
+                                            {/* raw: {
+    tokenUri: 'ipfs://QmbNFNUVRd5bazcyD4sRQMUc7viRUFbTGbu78YBnqUhb1D/0',
+    metadata: {
+      image: 'ipfs://QmcCLL23zDwsEMwCTnLYmzPCEAhjn9Bp9Ckh7Wkpn4sHZi/1.png',
+      external_url: '',
+      animation_url: 'ipfs://QmcCLL23zDwsEMwCTnLYmzPCEAhjn9Bp9Ckh7Wkpn4sHZi/0.mp4',
+      background_color: '',
+      name: '100 NOAH',
+      description: '',
+      customImage: '',
+      customAnimationUrl: ''
+    },
+    error: undefined
+  },}
+    */}
+                                            {/* raw.metadata.animation_url */}
+                                            {/* ipfs to https://ipfs.io/ipfs/ */}
+
+                                            {nft?.raw?.metadata?.animation_url ? (
+                                                <div className='w-full flex flex-col gap-2 items-center justify-between'>
+                                                    <video
+                                                        src={
+                                                            nft?.raw?.metadata?.animation_url.startsWith('ipfs://') ?
+                                                            'https://ipfs.io/ipfs/' + nft?.raw?.metadata?.animation_url.slice(7) :
+                                                            nft?.raw?.metadata?.animation_url
+                                                        }
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        controls
+                                                        className="w-full rounded-lg border border-gray-300"
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <Image
+                                                    src={nft?.image?.pngUrl}
+                                                    alt="NFT"
+                                                    width={500}
+                                                    height={500}
+                                                    className="w-full rounded-lg border border-gray-300"
+                                                />
+                                            )}
 
 
                                             {/* balance */}
@@ -1780,10 +1799,13 @@ function AgentPage() {
                     {address && userTransferHistory && userTransferHistory.length > 0 && (
                         <div className='w-full flex flex-col gap-2 items-start justify-between'>
 
-                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                            <div className='w-full flex flex-row gap-2 items-center justify-start'>
+                                {/* dot */}
+                                <div className='w-3 h-3 bg-green-500 rounded-full'></div>
+                                {/* title */}
+                                <span className='text-sm font-semibold text-green-500'>
                                     전송 기록
-                                </div>
+                                </span>
                             </div>
 
                             <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2'>
@@ -1800,13 +1822,19 @@ function AgentPage() {
                                             <div className='text-sm font-semibold'>
                                                 {
                                                     transfer.sendOrReceive === 'send' ? (
-                                                        <span className='text-red-500 text-sm font-semibold'>
-                                                            보내기
-                                                        </span>
+                                                        <div className="flex flex-row gap-2 items-center justify-start">
+                                                            <div className='w-3 h-3 bg-red-500 rounded-full'></div>
+                                                            <span className='text-red-500 text-sm font-semibold'>
+                                                                보내기
+                                                            </span>
+                                                        </div>
                                                     ) : (
-                                                        <span className='text-green-500 text-sm font-semibold'>
-                                                            받기
-                                                        </span>
+                                                        <div className="flex flex-row gap-2 items-center justify-start">
+                                                            <div className='w-3 h-3 bg-green-500 rounded-full'></div>
+                                                            <span className='text-green-500 text-sm font-semibold'>
+                                                                받기
+                                                            </span>
+                                                        </div>
                                                     )
                                                 }
                                             </div>

@@ -107,7 +107,10 @@ export async function POST(request: NextRequest) {
 
   const response = await alchemy.nft.getNftsForOwner(
     walletAddress, {
-    omitMetadata: false, // // Flag to omit metadata
+    
+     omitMetadata: false, // // Flag to omit metadata
+
+
   });
 
   ///console.log("response?.ownedNfts", response?.ownedNfts);
@@ -148,7 +151,10 @@ export async function POST(request: NextRequest) {
       && nft.tokenId === tokenId
     ) {
 
+      ///console.log("nft", nft);
+      
       finalResult.push(nft);
+
 
     }
 

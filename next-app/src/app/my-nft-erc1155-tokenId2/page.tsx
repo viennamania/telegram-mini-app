@@ -58,11 +58,11 @@ import { balanceOf } from "thirdweb/extensions/erc20";
 
 
 import {
-	accountAbstraction,
-	client,
+    accountAbstraction,
+    client,
     wallet,
-	editionDropContract,
-	editionDropTokenId,
+    editionDropContract,
+    editionDropTokenId,
 } from "../constants";
 
 import {
@@ -1051,6 +1051,86 @@ function AgentPage() {
     }
 
 
+
+    // userTransferHistory
+    // /api/transferNoahNft/getAllTransferByWalletAddress
+    const [userTransferHistory, setUserTransferHistory] = useState([] as any[]);
+    const [loadingUserTransferHistory, setLoadingUserTransferHistory] = useState(false);
+    useEffect(() => {
+        
+        const getUserTransferHistory = async () => {
+
+            if (!address) {
+                return;
+            }
+
+            setLoadingUserTransferHistory(true);
+
+            try {
+
+                const response = await fetch("/api/nftNoah/getAllTransferByWalletAddress", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        walletAddress: address,
+                        tokenId: tokenId,
+                    }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    ///console.log("data", data);
+
+                    if (data.transfers) {
+                        setUserTransferHistory(data.transfers);
+                    } else {
+                        setUserTransferHistory([]);
+                    }
+
+                } else {
+                    setUserTransferHistory([]);
+                }
+
+            } catch (error) {
+                console.error("getUserTransferHistory error", error);
+            }
+
+            setLoadingUserTransferHistory(false);
+
+        };
+
+        if (address) {
+            getUserTransferHistory();
+        }
+
+    } , [address, tokenId]);
+
+
+    //console.log("userTransferHistory", userTransferHistory);
+
+
+
+    /*
+    {
+    "sendOrReceive": "receive",
+    "transferData": {
+        "transactionHash": "0xb36df6f32163328db5d6d406f6d694288fcc762b2c8818ac0131e60b2b7ee6cb",
+        "transactionIndex": 38,
+        "fromAddress": "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C",
+        "toAddress": "0x542197103Ca1398db86026Be0a85bc8DcE83e440",
+        
+    },
+        "timestamp": 1738913143000,
+        "_id": "67a5b57f925df6708de2dd88"
+    }    
+    */
+
+
+
+
     // background image
 
     return (
@@ -1472,23 +1552,7 @@ function AgentPage() {
                                         >
 
                                             <div className='w-full flex flex-row gap-2 items-center justify-between'>
-                                                {/* goto button for detail page */}
-                                                
 
-
-                                                <button
-                                                    onClick={() => {
-                                                        router.push('/my-nft-erc1155/' + nft.contract.address + '/' + nft.tokenId);
-                                                    }}
-                                                    className="flex flex-row gap-2 items-center justify-center p-2 bg-green-500 text-zinc-100 rounded
-                                                    hover:bg-green-700 text-sm font-semibold"
-                                                >
-                                                        상세보기
-                                                </button>
-
-
-
-  
                                                 <button
                                                     onClick={() => {
                                                         window.open('https://opensea.io/assets/matic/' + nft.contract.address + '/' + nft.tokenId);
@@ -1539,14 +1603,49 @@ function AgentPage() {
 
                                             </div>
 
-                                            
-                                            <Image
-                                                src={nft?.image?.pngUrl}
-                                                alt="NFT"
-                                                width={500}
-                                                height={500}
-                                                className="w-full rounded-lg border border-gray-300"
-                                            />
+
+                                            {/* raw: {
+    tokenUri: 'ipfs://QmbNFNUVRd5bazcyD4sRQMUc7viRUFbTGbu78YBnqUhb1D/0',
+    metadata: {
+      image: 'ipfs://QmcCLL23zDwsEMwCTnLYmzPCEAhjn9Bp9Ckh7Wkpn4sHZi/1.png',
+      external_url: '',
+      animation_url: 'ipfs://QmcCLL23zDwsEMwCTnLYmzPCEAhjn9Bp9Ckh7Wkpn4sHZi/0.mp4',
+      background_color: '',
+      name: '100 NOAH',
+      description: '',
+      customImage: '',
+      customAnimationUrl: ''
+    },
+    error: undefined
+  },}
+    */}
+                                            {/* raw.metadata.animation_url */}
+                                            {/* ipfs to https://ipfs.io/ipfs/ */}
+
+                                            {nft?.raw?.metadata?.animation_url ? (
+                                                <div className='w-full flex flex-col gap-2 items-center justify-between'>
+                                                    <video
+                                                        src={
+                                                            nft?.raw?.metadata?.animation_url.startsWith('ipfs://') ?
+                                                            'https://ipfs.io/ipfs/' + nft?.raw?.metadata?.animation_url.slice(7) :
+                                                            nft?.raw?.metadata?.animation_url
+                                                        }
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        controls
+                                                        className="w-full rounded-lg border border-gray-300"
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <Image
+                                                    src={nft?.image?.pngUrl}
+                                                    alt="NFT"
+                                                    width={500}
+                                                    height={500}
+                                                    className="w-full rounded-lg border border-gray-300"
+                                                />
+                                            )}
 
 
                                             {/* balance */}
@@ -1687,6 +1786,102 @@ function AgentPage() {
                     )}
 
 
+
+                    {/* userTransferHistory */}
+                    {address && loadingUserTransferHistory && (
+                        <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                            <span className='text-lg font-semibold text-green-500'>
+                                전송 기록을 불러오는 중입니다.
+                            </span>
+                        </div>
+                    )}
+
+                    {address && userTransferHistory && userTransferHistory.length > 0 && (
+                        <div className='w-full flex flex-col gap-2 items-start justify-between'>
+
+                            <div className='w-full flex flex-row gap-2 items-center justify-start'>
+                                {/* dot */}
+                                <div className='w-3 h-3 bg-green-500 rounded-full'></div>
+                                {/* title */}
+                                <span className='text-sm font-semibold text-green-500'>
+                                    전송 기록
+                                </span>
+                            </div>
+
+                            <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2'>
+
+                                {userTransferHistory.map((transfer, index) => (
+                                    <div
+                                        key={index}
+                                        className={`w-full flex flex-col gap-2 items-start justify-between
+                                            ${transfer.sendOrReceive === 'send' ? 'bg-red-100' : 'bg-green-100'}
+                                            border border-gray-300 p-4 rounded-lg`}
+                                    >
+
+                                        <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                            <div className='text-sm font-semibold'>
+                                                {
+                                                    transfer.sendOrReceive === 'send' ? (
+                                                        <div className="flex flex-row gap-2 items-center justify-start">
+                                                            <div className='w-3 h-3 bg-red-500 rounded-full'></div>
+                                                            <span className='text-red-500 text-sm font-semibold'>
+                                                                보내기
+                                                            </span>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex flex-row gap-2 items-center justify-start">
+                                                            <div className='w-3 h-3 bg-green-500 rounded-full'></div>
+                                                            <span className='text-green-500 text-sm font-semibold'>
+                                                                받기
+                                                            </span>
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                            <div className='text-sm font-semibold'>
+                                                {
+                                                    //transfer.transferData.timestamp
+                                                    new Date(transfer.transferData.timestamp).toLocaleString()
+                                                }
+                                            </div>
+                                        </div>
+
+                                        {transfer.sendOrReceive === 'send' && (
+                                            <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                                                <div className='text-sm font-semibold'>
+                                                    받은사람: {transfer.transferData.toAddress.slice(0, 6) + '...' + transfer.transferData.toAddress.slice(transfer.transferData.toAddress.length - 4)}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {transfer.sendOrReceive === 'receive' && (
+                                            <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                                                <div className='text-sm font-semibold'>
+                                                    보낸사람: {transfer.transferData.fromAddress.slice(0, 6) + '...' + transfer.transferData.fromAddress.slice(transfer.transferData.fromAddress.length - 4)}
+                                                </div>
+                                            </div>
+                                        )}
+                                        {/* amount */}
+                                        {/* 수량 */}
+                                        <div className='w-full flex flex-col gap-2 items-end justify-between'>
+                                            <span className='text-4xl font-semibold text-green-500'>
+                                                {
+                                                    //transfer.transferData.amount.toLocaleString()
+                                                    transfer.transferData?.amount
+                                                    ? Number(transfer.transferData.amount).toLocaleString()
+                                                    : 0
+                                                }
+                                            </span>
+                                        </div>
+
+
+                                    </div>
+                                ))}
+
+                            </div>
+
+                        </div>
+                    )}     
 
 
 
