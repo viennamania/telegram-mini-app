@@ -1027,6 +1027,28 @@ function AgentPage() {
                 }
             }
 
+           // fetch the user transfer history
+           const responseUserTransferHistory = await fetch("/api/nftNoah/getAllTransferByWalletAddress", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    walletAddress: address,
+                    tokenId: tokenId,
+                }),
+            });
+
+            if (responseUserTransferHistory.ok) {
+                const dataUserTransferHistory = await responseUserTransferHistory.json();
+                if (dataUserTransferHistory.transfers) {
+                    setUserTransferHistory(dataUserTransferHistory.transfers);
+                }
+            }
+
+
+
+
         } catch (error) {
             console.error("transferNft error", error);
 
