@@ -1051,6 +1051,86 @@ function AgentPage() {
     }
 
 
+
+    // userTransferHistory
+    // /api/transferNoahNft/getAllTransferByWalletAddress
+    const [userTransferHistory, setUserTransferHistory] = useState([] as any[]);
+    const [loadingUserTransferHistory, setLoadingUserTransferHistory] = useState(false);
+    useEffect(() => {
+        
+        const getUserTransferHistory = async () => {
+
+            if (!address) {
+                return;
+            }
+
+            setLoadingUserTransferHistory(true);
+
+            try {
+
+                const response = await fetch("/api/nftNoah/getAllTransferByWalletAddress", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        walletAddress: address,
+                        tokenId: tokenId,
+                    }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    ///console.log("data", data);
+
+                    if (data.transfers) {
+                        setUserTransferHistory(data.transfers);
+                    } else {
+                        setUserTransferHistory([]);
+                    }
+
+                } else {
+                    setUserTransferHistory([]);
+                }
+
+            } catch (error) {
+                console.error("getUserTransferHistory error", error);
+            }
+
+            setLoadingUserTransferHistory(false);
+
+        };
+
+        if (address) {
+            getUserTransferHistory();
+        }
+
+    } , [address, tokenId]);
+
+
+    //console.log("userTransferHistory", userTransferHistory);
+
+
+
+    /*
+    {
+    "sendOrReceive": "receive",
+    "transferData": {
+        "transactionHash": "0xb36df6f32163328db5d6d406f6d694288fcc762b2c8818ac0131e60b2b7ee6cb",
+        "transactionIndex": 38,
+        "fromAddress": "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C",
+        "toAddress": "0x542197103Ca1398db86026Be0a85bc8DcE83e440",
+        
+    },
+        "timestamp": 1738913143000,
+        "_id": "67a5b57f925df6708de2dd88"
+    }    
+    */
+
+
+
+
     // background image
 
     return (
@@ -1687,6 +1767,93 @@ function AgentPage() {
                     )}
 
 
+
+                    {/* userTransferHistory */}
+                    {address && loadingUserTransferHistory && (
+                        <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                            <span className='text-lg font-semibold text-green-500'>
+                                전송 기록을 불러오는 중입니다.
+                            </span>
+                        </div>
+                    )}
+
+                    {address && userTransferHistory && userTransferHistory.length > 0 && (
+                        <div className='w-full flex flex-col gap-2 items-start justify-between'>
+
+                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                                    전송 기록
+                                </div>
+                            </div>
+
+                            <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2'>
+
+                                {userTransferHistory.map((transfer, index) => (
+                                    <div
+                                        key={index}
+                                        className={`w-full flex flex-col gap-2 items-start justify-between
+                                            ${transfer.sendOrReceive === 'send' ? 'bg-red-100' : 'bg-green-100'}
+                                            border border-gray-300 p-4 rounded-lg`}
+                                    >
+
+                                        <div className='w-full flex flex-row gap-2 items-center justify-between'>
+                                            <div className='text-sm font-semibold'>
+                                                {
+                                                    transfer.sendOrReceive === 'send' ? (
+                                                        <span className='text-red-500 text-sm font-semibold'>
+                                                            보내기
+                                                        </span>
+                                                    ) : (
+                                                        <span className='text-green-500 text-sm font-semibold'>
+                                                            받기
+                                                        </span>
+                                                    )
+                                                }
+                                            </div>
+                                            <div className='text-sm font-semibold'>
+                                                {
+                                                    //transfer.transferData.timestamp
+                                                    new Date(transfer.transferData.timestamp).toLocaleString()
+                                                }
+                                            </div>
+                                        </div>
+
+                                        {transfer.sendOrReceive === 'send' && (
+                                            <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                                                <div className='text-sm font-semibold'>
+                                                    받은사람: {transfer.transferData.toAddress.slice(0, 6) + '...' + transfer.transferData.toAddress.slice(transfer.transferData.toAddress.length - 4)}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {transfer.sendOrReceive === 'receive' && (
+                                            <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                                                <div className='text-sm font-semibold'>
+                                                    보낸사람: {transfer.transferData.fromAddress.slice(0, 6) + '...' + transfer.transferData.fromAddress.slice(transfer.transferData.fromAddress.length - 4)}
+                                                </div>
+                                            </div>
+                                        )}
+                                        {/* amount */}
+                                        {/* 수량 */}
+                                        <div className='w-full flex flex-col gap-2 items-end justify-between'>
+                                            <span className='text-4xl font-semibold text-green-500'>
+                                                {
+                                                    //transfer.transferData.amount.toLocaleString()
+                                                    transfer.transferData?.amount
+                                                    ? Number(transfer.transferData.amount).toLocaleString()
+                                                    : 0
+                                                }
+                                            </span>
+                                        </div>
+
+
+                                    </div>
+                                ))}
+
+                            </div>
+
+                        </div>
+                    )}     
 
 
 
