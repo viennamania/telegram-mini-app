@@ -74,6 +74,8 @@ export async function POST(request: NextRequest) {
   */
 
 
+
+
   //console.log("status", status);
 
   /*
@@ -151,17 +153,29 @@ export async function POST(request: NextRequest) {
   decodedLog {"to":{"type":"address","value":"0x542197103Ca1398db86026Be0a85bc8DcE83e440"},"from":{"type":"address","value":"0x57793d5584cdD42D3e76B9d210015060e3cc2fc2"},"tokenId":{"type":"uint256","value":"1014"}}
   */
 
+    /* ERC721 Transfer 
 
-  console.log("to", decodedLog.to, "from", decodedLog.from, "tokenId", decodedLog.tokenId);
+  {"id":{"type":"uint256","value":"0"},
+  "to":{"type":"address","value":"0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C"},
+  "from":{"type":"address","value":"0x542197103Ca1398db86026Be0a85bc8DcE83e440"},
+  "value":{"type":"uint256","value":"1"},
+  "operator":{"type":"address","value":"0x542197103Ca1398db86026Be0a85bc8DcE83e440"}}
+
+  */
+
+
+  //console.log("to", decodedLog.to, "from", decodedLog.from, "tokenId", decodedLog.id, "value", decodedLog.value, "operator", decodedLog.operator);
 
 
 
   const toAddress = decodedLog?.to?.value;
   const fromAddress = decodedLog?.from?.value;
 
-  const tokenId = decodedLog?.tokenId?.value;
+  const tokenId = decodedLog?.id?.value;
 
-  console.log("toAddress", toAddress, "fromAddress", fromAddress, "tokenId", tokenId);
+  const amount = decodedLog?.value?.value;
+
+  console.log("toAddress", toAddress, "fromAddress", fromAddress, "tokenId", tokenId, "amount", amount);
 
 
 
@@ -205,6 +219,7 @@ export async function POST(request: NextRequest) {
     toAddress,
     contractAddress,
     tokenId,
+    amount,
     nftInfo: nftInfo,
     timestamp,
   });
