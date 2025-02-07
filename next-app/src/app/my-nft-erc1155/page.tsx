@@ -12,12 +12,17 @@ import {
 
 import { deployERC721Contract } from 'thirdweb/deploys';
 
+/*
 import {
     getOwnedNFTs,
     mintTo,
     transferFrom,
 } from "thirdweb/extensions/erc721";
-
+*/
+// erc1155
+import {
+    safeTransferFrom,
+} from "thirdweb/extensions/erc1155";
 
 import {
     polygon,
@@ -651,7 +656,7 @@ function AgentPage() {
     const [agentImage, setAgentImage] = useState("");
     const [ganeratingAgentImage, setGeneratingAgentImage] = useState(false);
 
-
+   /*
     const [mintingAgentNft, setMintingAgentNft] = useState(false);
     const [messageMintingAgentNft, setMessageMintingAgentNft] = useState("");
     const mintAgentNft = async () => {
@@ -836,6 +841,7 @@ function AgentPage() {
         setAgentImage("");
 
     }
+        */
 
 
 
@@ -888,7 +894,7 @@ function AgentPage() {
 
 
         if (confirm(
-            "AI 에이전트 NFT를 다른 사용자에게 전송하시겠습니까?"
+            "NFT를 다른 사용자에게 전송하시겠습니까?"
         ) === false) {
             return;
         }
@@ -916,12 +922,39 @@ function AgentPage() {
                 address: contractAddress,
             });
 
+            /*
             const transaction = transferFrom({
                 contract: contract,
                 from: address as string,
                 to: to,
                 tokenId: BigInt(tokenId),
             });
+            */
+            /*
+            const transaction = safeTransferFrom({
+                contract, // the erc1155 contract
+                from: "0x...", // owner's wallet address
+                to: "0x...", // recipient address
+                tokenId: 0n,
+                value: quantity,
+                data: optionalData,
+              });
+            */
+
+            const optionalData = "0x";
+
+            const transaction = safeTransferFrom({
+                contract: contract,
+                from: address as string,
+                to: to,
+                tokenId: BigInt(tokenId),
+                value: 1n,
+                data: optionalData,
+            });
+
+
+
+
 
             const transactionResult = await sendAndConfirmTransaction({
                 account: account as any,
@@ -942,11 +975,11 @@ function AgentPage() {
                 }
             }));
 
-            alert('AI 에이전트 NFT 전송 완료');
+            alert('NFT 전송 완료');
 
 
             // fetch the NFTs again
-            const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
+            const response = await fetch("/api/nft/getNFTByWalletAddress", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -960,19 +993,7 @@ function AgentPage() {
                 const data = await response.json();
                 if (data.result) {
                     
-                    //setMyNfts(data.result.ownedNfts);
-                    // exclude name is "MasgerBot"
-                    const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
-                        
-
-                        if (nft.name === "MasterBot") {
-                            return false;
-                        }
-
-                        return true;
-                    });
-
-                    setMyNfts(filteredNfts);
+                    setMyNfts(data.result.ownedNfts);
 
 
 
@@ -1514,7 +1535,7 @@ function AgentPage() {
 
                                             {/* transfer NFT */}
                                             
-                                            {/*
+                                            
                                             <div className='w-full flex flex-col gap-2 items-end justify-between'>
                                                 
                                                 <div className='w-full flex flex-col gap-2 items-start justify-between'>
@@ -1589,7 +1610,7 @@ function AgentPage() {
                                                 </button>
 
                                             </div>
-                                            */}
+                                            
                                             
 
 
