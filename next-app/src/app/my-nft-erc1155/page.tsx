@@ -1661,7 +1661,9 @@ function AgentPage() {
                                                                 />
                                                             )}
                                                             <span className='text-lg font-semibold'>
-                                                                NFT 전송하기
+                                                                {transferingNftList.find((item) =>
+                                                                    item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
+                                                                )?.transferring ? '전송중...' : '전송하기'}
                                                             </span>
                                                         </div>
 
