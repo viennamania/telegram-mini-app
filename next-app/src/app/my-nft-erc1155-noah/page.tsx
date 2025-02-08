@@ -25,6 +25,8 @@ import {
     claimTo,
 } from "thirdweb/extensions/erc1155";
 
+
+
 import {
     polygon,
     arbitrum,
@@ -1090,9 +1092,18 @@ function AgentPage() {
 
             const transaction = claimTo({
                 contract: erc1155Contract,
+
+
+                //tokenId: BigInt(tokenId),
+
+                tokenId: 0n,
+
+                
                 to: address as string,
-                tokenId: BigInt(tokenId),
+                ///amount: 1n,
+
                 quantity: 1n,
+
             });
 
             const transactionResult = await sendAndConfirmTransaction({
