@@ -1262,6 +1262,34 @@ function AgentPage() {
                     </div>
 
 
+                    {/* usdt balance */}
+                    {address && (
+                        <div className="w-full flex flex-col gap-2 items-center justify-between
+                            border border-gray-800
+                            p-4 rounded-lg"
+                        >
+
+                            <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                {/* dot */}
+                                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                <div className="text-sm text-zinc-100 font-semibold">
+                                    USDT 잔액
+                                </div>
+                            </div>
+                            <span className="text-4xl text-zinc-400 font-semibold">
+                                {
+                                    balance.toLocaleString(undefined, {
+                                        maximumFractionDigits: 6,
+                                    })
+                                }
+                            </span>
+
+                        </div>
+                    )}
+
+                
+
+
 
 
                     {/* claim NFT */}
