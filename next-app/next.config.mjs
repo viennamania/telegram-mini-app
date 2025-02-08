@@ -20,6 +20,9 @@ const nextConfig = {
  
       "t.me",
 
+
+      "ipfs.io",
+
     ],
   },
 
