@@ -482,31 +482,66 @@ async function fetchAccountData() {
             const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/claim`;
             */
 
-            const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/claim?walletAddress=${user.walletAddress}`;
-            const keyboard = new InlineKeyboard()
-            .webApp('나의 마스터봇 보상 보러가기', urlMySettement)
+
+            if (tradingVolume >= 1000) {
 
 
-            // description: 'Forbidden: bot was blocked by the user',
-            // check if the user blocked the bot
-            // if the user blocked the bot, the bot will not be able to send messages to the user
+              /*
+                      // update application status to "claimSettlement"
+                const response = await fetch("/api/settlement/claim", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        applicationId: applicationId,
+                    }),
+                });*/
+
+              const url = `https://owinwallet.com/api/settlement/claim`;
+
+              const responseClaim = await fetch(url, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  applicationId: application._id,
+                }),
+              });
+        
+              if (responseClaim.status === 200) {
+
+                const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/claim?walletAddress=${user.walletAddress}`;
+                const keyboard = new InlineKeyboard()
+                .webApp('나의 마스터봇 보상 보러가기', urlMySettement)
+
+
+                // description: 'Forbidden: bot was blocked by the user',
+                // check if the user blocked the bot
+                // if the user blocked the bot, the bot will not be able to send messages to the user
 
 
 
-            await botInstance.api.sendPhoto(
-              telegramId,
-              masterBotImageUrl,
-              {
-                caption: '🔥 나의 마스터봇 채굴량: ' + tradingVolume
-                + '\n\n💪 나의 마스터봇 거래잔고: ' + tradingAccountBalance
-                + '\n\n' + '👇 아래 버튼을 눌러 나의 마스터봇 보상으로 이동하세요.'
-                //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
-                //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
-                ,
+                await botInstance.api.sendPhoto(
+                  telegramId,
+                  masterBotImageUrl,
+                  {
+                    caption: '🔥 나의 마스터봇 채굴량: ' + tradingVolume
+                    + '\n\n💪 나의 마스터봇 거래잔고: ' + tradingAccountBalance
+                    + '\n\n' + '👇 아래 버튼을 눌러 나의 마스터봇 보상으로 이동하세요.'
+                    //+ '💪 Total Account Count: ' + totalAccountCount + '\n'
+                    //+ '🔥 Total Trading Account Balance: ' + totalTradingAccountBalance
+                    ,
 
-                reply_markup: keyboard,
+                    reply_markup: keyboard,
+                  }
+                )
+
               }
-            )
+
+
+            }
 
 
           } catch (error) {
@@ -705,10 +740,6 @@ async function sendMessages() {
 
     const category = message.category; // "wallet", "settlement", "agent", "center"
 
-
-    const sellOrderStatus = message?.sellOrder?.status;
-
-
     try {
 
       if (category === 'wallet') {
@@ -729,20 +760,26 @@ async function sendMessages() {
 
         const urlGame = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/game`;
 
+        const urlGameGranderby = `${process.env.FRONTEND_APP_ORIGIN}/en/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/en/granderby`;
+
 
         const urlOtc = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/otc`;
 
         const urlSellUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/sell-usdt`;
 
 
-    
-
         const keyboard = new InlineKeyboard()
         .webApp('💰 나의 지갑 보러가기', urlMyWallet)
         // english
         //.webApp('💰 Go to My Wallet', urlMyWallet)
         .row()
-        .webApp('🎮 게임 하러가기', urlGame)
+        
+        //.webApp('🎮 게임 하러가기', urlGame)
+
+        .webApp('🎮 Go to Tap to Earn Game', urlGame)
+        .row()
+        .webApp('🎮 Go to Granderby Game', urlGameGranderby)
+
         // english
         //.webApp('🎮 Go to Game', urlGame);
         .row()
@@ -780,15 +817,17 @@ async function sendMessages() {
 
         */
 
-
-        // Error sending message: GrammyError: Call to 'sendVideo' failed! (403: Forbidden: bot was blocked by the user)
-
-        // check if the user blocked the bot
-
-        // if the user blocked the bot, the bot will not be able to send messages to the user
-
-        
-
+        /*
+        const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
+        await botInstance.api.sendVideo(
+          telegramId,
+          videoFile,
+          {
+            caption: caption,
+            reply_markup: keyboard,
+          }
+        );
+        */
 
 
         const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
@@ -805,15 +844,6 @@ async function sendMessages() {
           console.error('Error sending video:', error+'');
         })
 
-
-
-
-        // send video to multiple users
-
-
-
-        // send to Group
-        //await botInstance.api.sendMessage(
 
      
 
@@ -979,7 +1009,11 @@ async function sendMessages() {
             caption: caption,
             reply_markup: keyboard,
           }
-        )
+        ).then(() => {
+        //console.log('Message sent');
+        }).catch((error) => {
+          console.error('Error sending photo:', error+'');
+        })
 
       } else if (category === 'center') {
 
@@ -1021,57 +1055,14 @@ async function sendMessages() {
             caption: caption,
             reply_markup: keyboard,
           }
-        )
-
-      } else if (category === 'otc') {
-
-
-
-        const username = telegramId;
-        const expiration = Date.now() + 6000_000; // valid for 100 minutes
-        const message = JSON.stringify({
-          username,
-          expiration,
-        });
-      
-        const authCode = await adminAccount.signMessage({
-          message,
-        });
-
-
-        if (sellOrderStatus === 'paymentRequested') {
-
-          const urlOtcBuy = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram-noah?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/buy-noahk`;
-
-          const keyboard = new InlineKeyboard()
-          .webApp('💰 NOAH-K 포인트 구매하기', urlOtcBuy)
-
-
-          const caption = '\n\n🚀 ' + messageText
-          + '\n\n' + '👇 아래 버튼을 눌러 확인하세요.';
-
-          //const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-otc.jpg`; // error
-
-          const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-otc.webp`;
-
-          ///const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-sports-game.jpg`;
-
-
-          await botInstance.api.sendPhoto(
-            telegramId,
-            photoUrl,
-            {
-              caption: caption,
-              reply_markup: keyboard,
-            }
-          )
-
-        }
-
+        ).then(() => {
+        //console.log('Message sent');
+        }).catch((error) => {
+          console.error('Error sending photo:', error+'');
+        })
 
 
       }
-
 
 
 
@@ -1090,6 +1081,7 @@ async function sendMessages() {
 
 
     } catch (error) {
+      
       console.error('Error sending message:', error)
 
       // delete message
@@ -1124,6 +1116,7 @@ function sleep(ms: number) {
 
 // fetch account data after 5 seconds
 
+/*
 sleep(5000).then(() => {
   
   fetchAccountData()
@@ -1133,7 +1126,7 @@ sleep(5000).then(() => {
   ////sendStartMessageToAllUsers()
 
 })
-
+*/
 
 
 // fetch account data every 3600 seconds

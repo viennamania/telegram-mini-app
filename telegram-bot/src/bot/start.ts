@@ -35,7 +35,10 @@ const feature = composer.chatType('private')
 
 
 // if feature is not command, reply with the help message
+/*
 feature.use((ctx, next) => {
+
+  
   if (!ctx.message?.text?.startsWith('/')) {
 
     // 일반 대화는 할수 없습니다.
@@ -49,8 +52,10 @@ feature.use((ctx, next) => {
     // english
     //return ctx.reply('🚫 You cannot chat.\n\n👉 Please use the menu on the bottom left.\n\n🔜 General chat will be available soon')
   }
+
   return next()
 })
+  */
 
 
 
@@ -63,26 +68,82 @@ const adminAccount = privateKeyToAccount({
 
 
 
+
 feature.on("callback_query:data", async (ctx) => {
   const data = ctx.callbackQuery.data;
 
-  // random number game 0 or 1
-  if (data === "odd" || data === "even") {
+  ////return ctx.reply(data);
+  
+
+  if (data === "roulette") {
+
+    //const center = ctx.me.username+"";
+    //const url = `${process.env.FRONTEND_APP_ORIGIN}/leaderboard?center=${center}`;
+
+    //return ctx.answerCallbackQuery({ url });
+
+    /*
+    await ctx.reply("Hi! I can only read messages that explicitly reply to me!", {
+      // Make Telegram clients automatically show a reply interface to the user.
+      reply_markup: { force_reply: true },
+    });
+    */
+
+    //return ctx.reply("안녕");
+
+
+
+    const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-wins.jpg`;
+    const text = '\n\n✅ 홀짝';
+    const keyboard = new InlineKeyboard()
+      .text('🎲 홀', 'roulette-odd').text('🎲 짝', 'roulette-even')
+
+
+    return ctx.replyWithPhoto(
+      photoUrl,
+      {
+        caption: text,
+        reply_markup: keyboard
+      }
+    )
+
+  } else if (data === "roulette-odd" || data === "roulette-even") {
+
+
     const randomNumber = Math.floor(Math.random() * 2);
     const result = randomNumber === 0 ? "짝" : "홀";
-    const win = (data === "odd" && randomNumber === 1) || (data === "even" && randomNumber === 0);
-    return ctx.answerCallbackQuery(`랜덤 숫자: ${randomNumber}\n결과: ${result}\n${win ? "당첨" : "꽝"}`);
+    const win = (data === "roulette-odd" && randomNumber === 1) || (data === "roulette-even" && randomNumber === 0);
 
-  } else
+    //return ctx.answerCallbackQuery(`랜덤 숫자: ${randomNumber}\n결과: ${result}\n${win ? "당첨" : "꽝"}`);
+
+    let photoUrl = '';
+    let text = '';
+
+    if (win) {
+
+      photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-wins.jpg`;
+      text = '결과: ' + randomNumber + ', ' + result + '\n\n✅ 당첨!!!';
+
+    } else {
+
+      photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-lose.jpg`;
+      text = '결과: ' + randomNumber + ', ' + result + '\n\n✅ 꽝!!!';
+
+    }
+
+    const keyboard = new InlineKeyboard()
+      .text('🎲 홀', 'roulette-odd').text('🎲 짝', 'roulette-even')
 
 
-  if (data === "leaderboard") {
+    return ctx.replyWithPhoto(
+      photoUrl,
+      {
+        caption: text,
+        reply_markup: keyboard
+      }
+    )
 
-    const center = ctx.me.username+"";
-    const url = `${process.env.FRONTEND_APP_ORIGIN}/leaderboard?center=${center}`;
-
-    return ctx.answerCallbackQuery({ url });
-
+    
   } else if (data === "my-profile") {
     
     const center = ctx.me.username+"";
@@ -107,6 +168,7 @@ feature.on("callback_query:data", async (ctx) => {
   return ctx.answerCallbackQuery("Not implemented");
 
 })
+
 
 
 
@@ -295,6 +357,8 @@ feature.command('game', async (ctx) => {
 
       const urlGame = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/game`;
 
+      const urlGameGranderby = `${process.env.FRONTEND_APP_ORIGIN}/en/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/en/granderby`;
+
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
       + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 게임으로 이동하세요.';
@@ -303,17 +367,15 @@ feature.command('game', async (ctx) => {
       //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to go to the game.';
 
       const keyboard = new InlineKeyboard()
-        .webApp('💰 게임하러가기', urlGame)
+        //.webApp('💰 게임하러가기', urlGame)
         // english
         //.webApp('💰 Go to the game', urlGame)
+
+        .webApp('🎮 Go to Tap to Earn Game', urlGame)
         .row()
-        // command
-        //.text('🎲 룰렛', 'roulette')
-
-
-        
-       
-
+        .webApp('🎮 Go to Granderby Game', urlGameGranderby)
+        .row()
+        .text('🎲 룰렛', 'roulette')
 
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-sports-game.jpg`;
 
@@ -326,7 +388,7 @@ feature.command('game', async (ctx) => {
           reply_markup: keyboard
         }
       )
-    
+      
 
       /*
       const videoUrl = `${process.env.FRONTEND_APP_ORIGIN}/connecting.gif`;
@@ -340,7 +402,6 @@ feature.command('game', async (ctx) => {
         }
       )
       */
-
 
 
 
@@ -869,74 +930,104 @@ feature.command('start', async (ctx) => {
 
 
 
-  /*
-  {
-    message_id: 1043,
-    from: {
-      id: 441516803,
-      is_bot: false,
-      first_name: 'Wayne',
-      last_name: 'Park',
-      username: 'waynepark',
-      language_code: 'ko'
-    },
-    chat: {
-      id: -4641266454,
-      title: '복권방',
-      type: 'group',
-      all_members_are_administrators: true
-    },
-    date: 1738135270,
-    text: '/start@ppump_songpa_bot',
-    entities: [ { offset: 0, length: 23, type: 'bot_command' } ]
-  }
-  */
 
 // public chat
 const publicChat = composer.chatType('group');
 
-
-publicChat.hears('hello', async (ctx) => {
-  return ctx.reply('Hello!')
-})
-
-
-
 // if feature is not command, reply with the help message
 
+/*
 publicChat.use((ctx, next) => {
+
 
   console.log('public chat');
   console.log('ctx.message', ctx.message);
 
 
 
-  if (!ctx.message?.text?.startsWith('/')) {
-
-    // 일반 대화는 할수 없습니다.
-    // 좌측 하단의 메뉴를 이용해주세요.
-    // 곧 일반 대화도 가능하게 업데이트 될 예정입니다.
-    /*
-    return ctx.reply(
-      '🚫 일반 대화는 할수 없습니다.\n\n'
-      + '👉 좌측 하단의 메뉴를 이용해주세요.\n\n'
-      + '🔜 곧 일반 대화도 가능하게 업데이트 될 예정입니다.'
-    )
-    // english
-    //return ctx.reply('🚫 You cannot chat.\n\n👉 Please use the menu on the bottom left.\n\n🔜 General chat will be available soon')
-    */
-
-    // reply public chat message
-    // return ctx.reply(ctx.message.text);
-
-    if (ctx.message && ctx.message.text) {
-      return ctx.reply(ctx.message.text);
-    }
-
+  if (ctx.message && ctx.message.text) {
+    return ctx.reply(ctx.message.text);
   }
-  
+
 
   return next()
+})
+*/
+
+
+
+// show game
+publicChat.command('game', async (ctx) => {
+
+  const text = "복권방";
+  const urlGame = "https://naver.com";
+
+  const keyboard = new InlineKeyboard()
+    .webApp('💰 게임하러가기', urlGame)
+    // english
+    //.webApp('💰 Go to the game', urlGame)
+
+
+  return ctx.reply(
+    '🚫 준비중입니다.'
+  )
+
+
+})
+
+
+publicChat.command('wallet', async (ctx) => {
+
+  const text = "복권방";
+  const urlGame = "https://naver.com";
+
+  const keyboard = new InlineKeyboard()
+    .webApp('💰 게임하러가기', urlGame)
+    // english
+    //.webApp('💰 Go to the game', urlGame)
+
+
+  return ctx.reply(
+    '🚫 준비중입니다.'
+  )
+
+
+})
+
+publicChat.command('otc', async (ctx) => {
+
+  const text = "복권방";
+  const urlGame = "https://naver.com";
+
+  const keyboard = new InlineKeyboard()
+    .webApp('💰 게임하러가기', urlGame)
+    // english
+    //.webApp('💰 Go to the game', urlGame)
+
+
+  return ctx.reply(
+    '🚫 준비중입니다.'
+  )
+
+
+})
+
+publicChat.command('start', async (ctx) => {
+
+  const text = "복권방";
+  const urlGame = "https://naver.com";
+
+  const keyboard = new InlineKeyboard()
+    .webApp('💰 게임하러가기', urlGame)
+    // english
+    //.webApp('💰 Go to the game', urlGame)
+
+
+  return ctx.reply(
+    '🚫 준비중입니다.'
+  )
+
+
 })
 
 
