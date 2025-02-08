@@ -23,6 +23,7 @@ import {
 import {
     safeTransferFrom,
     claimTo,
+    getOwnedNFTs,
 } from "thirdweb/extensions/erc1155";
 
 
@@ -109,10 +110,10 @@ function AgentPage() {
 
 
 
-    const address = account?.address;
+    //const address = account?.address;
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -406,658 +407,7 @@ function AgentPage() {
 
 
 
-    const [loadingDeployErc721Contract, setLoadingDeployErc721Contract] = useState(false);
-    const deployErc721Contract = async () => {
-
-        console.log("deployErc721Contract=====================");
-
-        console.log("address", address);
-        console.log("userCode", userCode);
-        console.log("loadingDeployErc721Contract", loadingDeployErc721Contract);
-        console.log("balance", balance);
-
-  
-        if (!address) {
-            //toast.error('지갑을 먼저 연결해주세요');
-            return;
-        }
-
-        if (!userCode) {
-            //console.log("userCode=====", userCode);
-            //toast.error('닉네임을 먼저 설정해주세요');
-            return;
-        }
-
-        if (loadingDeployErc721Contract) {
-            //toast.error('이미 실행중입니다');
-            return;
-        }
-        
-        //if (confirm("Are you sure you want to deploy ERC721 contract?")) {
-        // chinese confirm
-        if (confirm("AI 에이전트 계약주소를 생성하시겠습니까?")) {
-
-            setLoadingDeployErc721Contract(true);
-
-
-            try {
-
-
-                const erc721ContractAddress = await deployERC721Contract({
-                    chain: polygon,
-                    client: client,
-                    account: account as any,
-            
-                    /*  type ERC721ContractType =
-                    | "DropERC721"
-                    | "TokenERC721"
-                    | "OpenEditionERC721";
-                    */
-            
-                    ///type: "DropERC721",
-            
-                    type: "TokenERC721",
-                    
-                    
-                    params: {
-                        name: "AI Agent",
-                        description: "This is AI Agent",
-                        symbol: "AGENT",
-                    },
-            
-                });
-
-                ///console.log("erc721ContractAddress", erc721ContractAddress);
-
-                // save the contract address to the database
-                // /api/user/updateUser
-                // walletAddress, erc721ContractAddress
-
-                if (!erc721ContractAddress) {
-                    throw new Error('Failed to deploy ERC721 contract');
-                }
-
-
-                ///console.log("erc721ContractAddress", erc721ContractAddress);
-
-
-
-                const response = await fetch('/api/user/updateUserErc721Contract', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        walletAddress: address,
-                        erc721ContractAddress: erc721ContractAddress,
-                        center: center,
-                    }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to save ERC721 contract address');
-                }
-
-                ///const data = await response.json();
-
-                ///console.log("data", data);
-
-
-                //setReferralCode(erc721ContractAddress);
-
-                setErc721ContractAddress(erc721ContractAddress);
-                
-                ///toast.success('AI 에이전트 계약주소 생성 완료');
-
-            } catch (error) {
-                console.error("deployErc721Contract error", error);
-
-                if (error instanceof Error) {
-                    alert('AI 에이전트 계약주소 생성 실패.' + error.message);
-                } else {
-                    alert('AI 에이전트 계약주소 생성 실패: 알 수 없는 오류');
-                }
-
-
-            }
-
-            setLoadingDeployErc721Contract(false);
-
-        }
-  
-    };
-
-
-
-   /* my NFTs */
-   const [myNfts, setMyNfts] = useState([] as any[]);
-
-   const [loadingMyNfts, setLoadingMyNfts] = useState(false);
-
-   
-   useEffect(() => {
-
-
-       const getMyNFTs = async () => {
-
-              if (!address) {
-                return;
-              }
-
-              setLoadingMyNfts(true);
-
-            
-           try {
-
-                /*
-                const contract = getContract({
-                     client,
-                     chain: polygon,
-                     address: erc721ContractAddress,
-                });
-
-
-                
-                const nfts = await getOwnedNFTs({
-                    contract: contract,
-                    owner: address as string,
-                });
-
-                console.log("nfts=======", nfts);
-
-                setMyNfts( nfts );
-                */
-                
-
-                /*
-                setMyNfts([
-                    {
-                         name: "AI Agent",
-                         description: "This is AI Agent",
-                         image: "https://owinwallet.com/logo-aiagent.png",
-                    },
-                ]);
-                */
-
-
-                // api /api/agent/getAgentNFTByWalletAddress
-                
-                const response = await fetch("/api/nftNoah/getNFTByWalletAddress", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        tokenId: tokenId,
-                        walletAddress: address,
-                    }),
-                });
-
-                if (!response.ok) {
-
-                    setLoadingMyNfts(false);
-                    throw new Error('Failed to get NFTs');
-
-                }
-
-                const data = await response.json();
-
-                //console.log("myOwnedNfts====", data.result);
-
-
-
-
-                if (data.result) {
-                    // exclude name is "MasgerBot"
-                    const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
-
-                        if (nft.name === "MasterBot") {
-                            return false;
-                        }
-
-                        return true;
-                    });
-
-                    //console.log("filteredNfts", filteredNfts);
-
-                    setMyNfts(filteredNfts);
-
-
-
-                    //setMyNfts(data.result.ownedNfts);
-                } else {
-                    setMyNfts([]);
-                }
-
-                
-                setLoadingMyNfts(false);
-   
-
-
-           } catch (error) {
-               console.error("Error getting NFTs", error);
-           }
-           
-
-           setLoadingMyNfts(false);
-
-       };
-
-       if (address ) {
-           getMyNFTs();
-       }
-
-   }
-   , [ address, tokenId ]);
-
-
-
-   
-    const [agentName, setAgentName] = useState("");
-    const [agentDescription, setAgentDescription] = useState("");
-
-
-    const [agentImage, setAgentImage] = useState("");
-    const [ganeratingAgentImage, setGeneratingAgentImage] = useState(false);
-
-   /*
-    const [mintingAgentNft, setMintingAgentNft] = useState(false);
-    const [messageMintingAgentNft, setMessageMintingAgentNft] = useState("");
-    const mintAgentNft = async () => {
-
-        if (mintingAgentNft) {
-            //toast.error('이미 실행중입니다');
-            setMessageMintingAgentNft('이미 실행중입니다');
-            return;
-        }
-
-        if (!address) {
-            //toast.error('지갑을 먼저 연결해주세요');
-            setMessageMintingAgentNft('지갑을 먼저 연결해주세요');
-            return;
-        }
-
-        if (!erc721ContractAddress) {
-            //toast.error('AI 에이전트 계약주소를 먼저 생성해주세요');
-            setMessageMintingAgentNft('AI 에이전트 계약주소를 먼저 생성해주세요');
-            return;
-        }
-
-        if (agentName.length < 5 || agentName.length > 15) {
-            //toast.error('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
-            setMessageMintingAgentNft('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
-            return;
-        }
-
-        if (agentDescription.length < 5 || agentDescription.length > 100) {
-            //toast.error('에이전트 설명은 5자 이상 100자 이하로 입력해주세요');
-            setMessageMintingAgentNft('에이전트 설명은 5자 이상 100자 이하로 입력해주세요');
-            return;
-        }
-
-
-
-
-        setMessageMintingAgentNft('AI 에이전트 NFT 발행중입니다');
-
-
-        setMintingAgentNft(true);
-
-        try {
-
-
-            setGeneratingAgentImage(true);
-
-
-            setMessageMintingAgentNft('AI 에이전트 이미지 생성중입니다');
-
-            // genrate image from api
-            // /api/ai/generateImage
-
-            const responseGenerateImage = await fetch("/api/ai/generateImageAgent", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    englishPrompt: "",
-                }),
-            });
-
-            const dataGenerateImage = await responseGenerateImage.json();
-
-            const imageUrl = dataGenerateImage?.result?.imageUrl;
-        
-            if (!imageUrl) {
-
-                setGeneratingAgentImage(false);
-
-                throw new Error('Failed to generate image');
-            }
-
-
-            setGeneratingAgentImage(false);
-            setAgentImage(imageUrl);
-
-
-            setMessageMintingAgentNft('AI 에이전트 NFT 발행중입니다');
-
-            const contract = getContract({
-                client,
-                chain: polygon,
-                address: erc721ContractAddress,
-
-              });
-
-
-            const transaction = mintTo({
-                contract: contract,
-                to: address as string,
-                nft: {
-                    name: agentName,
-                    description: agentDescription,
-
-                    ////image: agentImage,
-                    image: imageUrl,
-
-                },
-            });
-
-            //await sendTransaction({ transaction, account: activeAccount as any });
-
-
-
-            //setActiveAccount(smartConnectWallet);
-
-            const transactionResult = await sendAndConfirmTransaction({
-                account: account as any,
-                transaction: transaction,
-
-                ///////account: smartConnectWallet as any,
-            });
-
-            //console.log("transactionResult", transactionResult);
-
-
-            if (!transactionResult) {
-                throw new Error('AI 에이전트 NFT 발행 실패. 관리자에게 문의해주세요');
-            }
-
-            setMessageMintingAgentNft('AI 에이전트 NFT 발행 완료');
-
-
-            // fetch the NFTs again
-            const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    walletAddress: address,
-                    //erc721ContractAddress: erc721ContractAddress,
-                }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.result) {
-                    // exclude name is "MasgerBot"
-                    const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
-
-                        if (nft.name === "MasterBot") {
-                            return false;
-                        }
-
-                        return true;
-                    });
-
-                    setMyNfts(filteredNfts);
-
-
-
-                } else {
-                    setMyNfts([]);
-                }
-            }
-
-            setAgentName("");
-            setAgentDescription("");
-
-            ///toast.success('AI 에이전트 NFT 발행 완료');
-
-
-
-
-        } catch (error) {
-            //console.error("mintAgentNft error", error);
-
-            ///toast.error('AI 에이전트 NFT 발행 실패');
-
-            if (error instanceof Error) {
-                setMessageMintingAgentNft('AI 에이전트 NFT 발행 실패:' + error.message);
-            } else {
-                setMessageMintingAgentNft('AI 에이전트 NFT 발행 실패: 알 수 없는 오류');
-            }
-        }
-
-        setMintingAgentNft(false);
-
-        setAgentImage("");
-
-    }
-        */
-
-
-
-
-    // transfer NFT
-    const [transferingNftList, setTransferingNftList] = useState([] as any[]);
-
-    // initailize transferingNftList for myNfts
-    useEffect(() => {
-        if (myNfts) {
-            setTransferingNftList(myNfts.map((nft) => {
-                return {
-                    contractAddress: nft.contract.address,
-                    tokenId: nft.tokenId,
-                    transferring: false,
-                };
-            }));
-        }
-    }, [myNfts]);
-
-
-    ///console.log("transferingNftList", transferingNftList);
-
-
-    const [sendAmountList, setSendAmountList] = useState([] as any[]);
-    useEffect(() => {
-        if (myNfts) {
-            setSendAmountList(myNfts.map((nft) => {
-                return {
-                    contractAddress: nft.contract.address,
-                    tokenId: nft.tokenId,
-                    amount: 0,
-                };
-            }));
-        }
-    }, [myNfts]);
-
-
-
-    // toAddress array
-    const [toAddressList, setToAddressList] = useState([] as any[]);
-    useEffect(() => {
-        if (myNfts) {
-            setToAddressList(myNfts.map((nft) => {
-                return {
-                    contractAddress: nft.contract.address,
-                    tokenId: nft.tokenId,
-                    to: "",
-                };
-            }));
-        }
-    } , [myNfts]);
-
-
-
-    const transferNft = async (contractAddress: string, tokenId: string) => {
-
-        if (transferingNftList.find((item) =>
-            item.contractAddress === contractAddress && item.tokenId === tokenId
-        ).transferring) {
-            return;
-        }
-
-        
-
-
-        if (confirm(
-            "NFT를 다른 사용자에게 전송하시겠습니까?"
-        ) === false) {
-            return;
-        }
-
-
-
-        setTransferingNftList(transferingNftList.map((item) => {
-            if (item.contractAddress === contractAddress && item.tokenId === tokenId) {
-                return {
-                    ...item,
-                    transferring: true,
-                };
-            }
-        }));
-
-        const to = toAddressList.find((item) => 
-            item.contractAddress === contractAddress && item.tokenId === tokenId
-        ).to;
-
-        try {
-
-            const contract = getContract({
-                client,
-                chain: polygon,
-                address: contractAddress,
-            });
-
-            /*
-            const transaction = transferFrom({
-                contract: contract,
-                from: address as string,
-                to: to,
-                tokenId: BigInt(tokenId),
-            });
-            */
-            /*
-            const transaction = safeTransferFrom({
-                contract, // the erc1155 contract
-                from: "0x...", // owner's wallet address
-                to: "0x...", // recipient address
-                tokenId: 0n,
-                value: quantity,
-                data: optionalData,
-              });
-            */
-
-            const value = sendAmountList.find((item) =>
-                item.contractAddress === contractAddress && item.tokenId === tokenId
-            ).amount;
-
-            const optionalData = "0x";
-
-            const transaction = safeTransferFrom({
-                contract: contract,
-                from: address as string,
-                to: to,
-                tokenId: BigInt(tokenId),
-                
-                //value: 1n,
-
-                value: BigInt(value),
-
-
-                data: optionalData,
-            });
-
-
-
-
-
-            const transactionResult = await sendAndConfirmTransaction({
-                account: account as any,
-                transaction: transaction,
-
-            });
-
-            if (!transactionResult) {
-                throw new Error('Failed to transfer NFT');
-            }
-
-            setTransferingNftList(transferingNftList.map((item) => {
-                if (item.contractAddress === contractAddress && item.tokenId === tokenId) {
-                    return {
-                        ...item,
-                        transferring: false,
-                    };
-                }
-            }));
-
-            alert('NFT 전송 완료');
-
-
-
-
-            // fetch the NFTs again
-            const response = await fetch("/api/nftNoah/getNFTByWalletAddress", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    tokenId: tokenId,
-                    walletAddress: address,
-                }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.result) {
-                    
-                    setMyNfts(data.result.ownedNfts);
-
-
-
-                } else {
-                    setMyNfts([]);
-                }
-            }
-
-        } catch (error) {
-            console.error("transferNft error", error);
-
-            setTransferingNftList(transferingNftList.map((item) => {
-                if (item.contractAddress === contractAddress && item.tokenId === tokenId) {
-                    return {
-                        ...item,
-                        transferring: false,
-                    };
-                }
-            }));
-
-            if (error instanceof Error) {
-                alert('Failed to transfer NFT:' + error.message);
-            } else {
-                alert('Failed to transfer NFT: unknown error');
-            }
-        }
-
-    }
-
-
     const erc1155ContractAddress = "0xE6BeA856Cd054945cE7A9252B2dc360703841028";
-
-
 
 
 
@@ -1204,6 +554,49 @@ function AgentPage() {
 
 
     }
+
+
+
+
+    // getOwnedNFTs
+    //const [ownedNfts, setOwnedNfts] = useState([] as any[]);
+
+
+
+
+
+
+    const [ownedNfts, setOwnedNfts] = useState([] as any[]);
+    const [loadingOwnedNfts, setLoadingOwnedNfts] = useState(false);
+
+    useEffect(() => {
+        const fetchOwnedNFTs = async () => {
+            setLoadingOwnedNfts(true);
+
+
+            const contractErc1155 = getContract({
+                client,
+                chain: polygon,
+                address: erc1155ContractAddress,
+            });
+
+            const nfts = await getOwnedNFTs({
+                contract: contractErc1155,
+                start: 0,
+                count: 10,
+                address: address as string,
+            });
+            setOwnedNfts(nfts);
+            setLoadingOwnedNfts(false);
+        };
+
+        if (address) {
+            fetchOwnedNFTs();
+        }
+    }, [address, erc1155ContractAddress]);
+
+
+    //console.log("ownedNfts", ownedNfts);
 
 
 
@@ -1606,318 +999,50 @@ function AgentPage() {
                     )}
       
 
-                    {address && myNfts && myNfts.length > 0 && (
-
-                        <div className='w-full flex flex-col gap-2 items-start justify-between'>
-
-                                {/* my NFTs */}
-                                <div className='mt-10 flex flex-row gap-2 items-start justify-between'>
-                         
-
-                                    <div className='flex flex-row items-center justify-start gap-2'>
-                                        <button
-                                            onClick={() => {
-                                                // fetch the NFTs again
-                                                const getMyNFTs = async () => {
-
-                                                    setLoadingMyNfts(true);
-                                                    try {
-                                                        const response = await fetch("/api/nftNoah/getNFTByWalletAddress", {
-                                                            method: "POST",
-                                                            headers: {
-                                                                "Content-Type": "application/json",
-                                                            },
-                                                            body: JSON.stringify({
-                                                                tokenId: tokenId,
-                                                                walletAddress: address,
-                                                            }),
-                                                        });
-
-                                                        if (response.ok) {
-                                                            const data = await response.json();
-                                                            if (data.result) {
-                                                                ///setMyNfts(data.result.ownedNfts);
-
-                                                                // exclude name is "MasgerBot"
-                                                                const filteredNfts = data.result.ownedNfts.filter((nft : any) => {
-                                                                    
-
-                                                                    if (nft.name === "MasterBot") {
-                                                                        return false;
-                                                                    }
-
-                                                                    return true;
-                                                                });
-
-                                                                setMyNfts(filteredNfts);
-
-                                                            } else {
-                                                                setMyNfts([]);
-                                                            }
-                                                        }
-
-
-
-                                                    } catch (error) {
-                                                        console.error("Error getting NFTs", error);
-                                                    }
-
-                                                    setLoadingMyNfts(false);
-                                                };
-
-                                                getMyNFTs();
-                                            }}
-                                            className="p-2 bg-blue-500 text-sm text-zinc-100 rounded"
-                                        >
-                                            새로 읽어오기
-                                        </button>
-                                    </div>
-                                
-                                </div>
-
-                                {loadingMyNfts && (
-                                    <div className='w-full flex flex-col gap-2 items-start justify-between'>
-                                        <span className='text-lg font-semibold text-green-500'>
-                                            NOAH-K 교환권 NFT를 불러오는 중입니다.
-                                        </span>
-                                    </div>
-                                )}
-
-
-
-                                {address && myNfts.length === 0 && (
-                                    <div className='w-full flex flex-col gap-2 items-start justify-between'>
-                                        <span className='text-lg font-semibold text-red-500'>
-                                            NOAH-K 교환권 NFT를 보유하고 있지 않습니다.
-                                        </span>
-                                    </div>
-                                )}
-
-
-                                <div className='w-full grid grid-cols-1 xl:grid-cols-3 gap-2'>
-
-
-                                    {address && myNfts?.map((nft, index) => (
-                                        <div
-                                            key={index}
-                                            className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
-                                            bg-zinc-100'
-                                        >
-
-                                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
-                                                {/* goto button for detail page */}
-                                                
-
-
-                                                <button
-                                                    onClick={() => {
-                                                        router.push('/my-nft-erc1155/' + nft.contract.address + '/' + nft.tokenId);
-                                                    }}
-                                                    className="flex flex-row gap-2 items-center justify-center p-2 bg-green-500 text-zinc-100 rounded
-                                                    hover:bg-green-700 text-sm font-semibold"
-                                                >
-                                                        상세보기
-                                                </button>
-
-
-
-  
-                                                <button
-                                                    onClick={() => {
-                                                        window.open('https://opensea.io/assets/matic/' + nft.contract.address + '/' + nft.tokenId);
-                                                    }}
-                                                    className="flex flex-row gap-2 items-center justify-center p-2 bg-zinc-800 text-zinc-100 rounded
-                                                    hover:bg-zinc-700 text-sm font-semibold"
-                                                >
-                                                    <Image
-                                                        src="/logo-opensea.png"
-                                                        alt="OpenSea"
-                                                        width={30}
-                                                        height={30}
-                                                        className="rounded-lg"
-                                                    />
-                                                    <span className='text-sm font-semibold'>
-                                                        OpenSea에서 보기
-                                                    </span>
-                                                </button>
-
-                                                    
-              
-
-
-                                            </div>
-
-
-                                            <div className='w-full flex flex-col gap-2 items-center justify-between'>
-
-
-
-                                                <div className='w-full flex flex-col gap-2 items-start justify-between'>
-                                                    {/* contract address */}
-                                                    <div className='text-sm font-semibold'>
-                                                        계약주소: {nft?.contract?.address && nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
-                                                    </div>
-                                                    <div className='text-2xl font-semibold text-blue-500'>
-                                                        계약번호: #{nft?.tokenId?.length > 10 ? nft.tokenId.slice(0, 10) + '...' : nft.tokenId}
-                                                    </div>
-                                                    <div className='text-2xl font-semibold text-green-500'>
-                                                        {nft?.name}
-                                                    </div>
-                                                    {nft?.description && (
-                                                        <div className='text-sm font-semibold'>
-                                                            설명: {nft?.description}
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                            </div>
-
-                                            
-                                            <Image
-                                                src={nft?.image?.pngUrl}
-                                                alt="NFT"
-                                                width={500}
-                                                height={500}
-                                                className="w-full rounded-lg border border-gray-300"
-                                            />
-
-
-                                            {/* balance */}
-                                            {/* 수량 */}
-                                            <div className='mt-5 w-full flex flex-col gap-2 items-end justify-between'>
-                                                <span className='text-4xl font-semibold text-green-500'>
-                                                    수량: {
-                                                        Number(nft?.balance).toLocaleString()
-                                                    }
-                                                </span>
-                                            </div>
-
-                                            {/* transfer NFT */}
-                                            
-                                            
-                                            <div className='w-full flex flex-col gap-2 items-end justify-between'>
-                                                
-                                                <div className='w-full flex flex-col gap-2 items-start justify-between'>
-                                                    <span className='text-sm text-red-500 font-semibold'>
-                                                        소유권 이전하기
-                                                    </span>
-                                                    <div className='flex flex-row items-center justify-start gap-2'>
-                                                        <div className='w-3 h-3 bg-red-500 rounded-full'></div>
-                                                        <span className='text-xs text-gray-800'>
-                                                            소유권을 이전하면 소유자 권리를 모두 이전하는 것에 동의하는 것입니다.
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                        
-                                                
-                                                <input
-                                                    className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                                    placeholder="받는 사람 지갑주소"
-                                                    type='text'
-
-                                                    value={toAddressList.find((item) =>
-                                                        item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                    )?.to}
-
-                                                    onChange={(e) => {
-                                                        setToAddressList(toAddressList.map((item) => {
-
-                                                            if (item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId) {
-                                                                return {
-                                                                    ...item,
-                                                                    to: e.target.value,
-                                                                };
-                                                            } else {
-                                                                return item;
-                                                            }
-                                                        }));
-                                                    }}
-                                                />
-                                                {/* 수량 */}
-
-                                                <div className="flex flex-row gap-2 items-center justify-between">
-                                                    
-                                                    <input
-                                                        className=" w-48 flex p-2 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold text-center"
-                                                        placeholder="수량"
-                                                        type='number'
-
-                                                        value={sendAmountList.find((item) =>
-                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.amount}
-
-                                                        onChange={(e) => {
-
-                                                            setSendAmountList(sendAmountList.map((item) => {
-
-                                                                if (item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId) {
-                                                                    return {
-                                                                        ...item,
-                                                                        amount: e.target.value,
-                                                                    };
-                                                                } else {
-                                                                    return item;
-                                                                }
-                                                            }));
-                                                        }}
-                                                    />
-
-
-                                                    <button
-                                                        
-                                                        disabled={transferingNftList.find((item) => 
-                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.transferring}
-
-                                                        onClick={() => {
-                                                            transferNft(nft.contract.address, nft.tokenId);
-                                                        }}
-                                                        className={`
-                                                            
-                                                            flex p-2 bg-blue-500 text-zinc-100 rounded
-                                                        ${transferingNftList.find((item) => 
-                                                            item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                        )?.transferring ? 'opacity-50' : ''}
-                                                        `}
-                                                    >
-                                                        <div className='flex flex-row gap-2 items-center justify-between'>
-                                                            {transferingNftList.find((item) =>
-                                                                item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                            )?.transferring && (
-
-                                                                <Image
-                                                                    src="/loading.png"
-                                                                    alt="Send"
-                                                                    width={25}
-                                                                    height={25}
-                                                                    className="animate-spin"
-                                                                />
-                                                            )}
-                                                            <span className='text-lg font-semibold'>
-                                                                {transferingNftList.find((item) =>
-                                                                    item?.contractAddress === nft.contract.address && item.tokenId === nft.tokenId
-                                                                )?.transferring ? '전송중...' : '전송하기'}
-                                                            </span>
-                                                        </div>
-
-                                                    </button>
-
-                                                </div>
-
-                                    
-                                            </div>
-
-                                        </div>
-
-
-                                    ))}
-                                </div>
-
-
+                    {/* owned NFTs */}
+                    <div className="w-full flex flex-col gap-2 items-center justify-between
+                        border border-gray-800
+                        p-4 rounded-lg">
+                        <div className="w-full flex flex-row gap-2 items-center justify-start">
+                            {/* dot */}
+                            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <div className="text-sm text-zinc-100 font-semibold">
+                                교환권 NFT 소유
+                            </div>
                         </div>
+                        <div className="w-full flex flex-col gap-2 items-center justify-between">
+                            {ownedNfts.map((nft, index) => (
+                                <div key={index} className="w-full flex flex-col gap-2 items-center justify-between
+                                    border border-gray-800
+                                    p-4 rounded-lg">
+                                    
+                                    {/* metadata?.animation_url */}
+                                    {/* ipfs://QmZzvZ to https://ipfs.io/ipfs/QmZzvZ */}
+                                    {/* video */}
+                                    <div className="w-full flex flex-col gap-2 items-center justify-between">
+                                        <video
+                                            src={nft.metadata?.animation_url.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+                                            //controls
+                                            autoPlay
+                                            loop
+                                            className="rounded-lg"
+                                        />
+                                    </div>
 
-
-                    )}
+                                    <div className="text-xl text-zinc-100 font-semibold">
+                                        {nft.metadata?.name}
+                                    </div>
+                                    
+                                    <div className="text-4xl text-green-500 font-semibold">
+                                        {
+                                            // nft.quantityOwned is bigint
+                                            nft.quantityOwned.toString()
+                                        }개
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
 
 
