@@ -1276,7 +1276,7 @@ function AgentPage() {
                                     USDT 잔액
                                 </div>
                             </div>
-                            <span className="text-4xl text-zinc-400 font-semibold">
+                            <span className="text-4xl text-green-500 font-semibold">
                                 {
                                     balance.toLocaleString(undefined, {
                                         maximumFractionDigits: 6,
