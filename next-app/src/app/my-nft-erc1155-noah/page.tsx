@@ -57,7 +57,11 @@ import Image from 'next/image';
 
 //import Uploader from '@/components/uploader';
 
-import { balanceOf } from "thirdweb/extensions/erc20";
+import {
+    allowance,
+    approve,
+    balanceOf
+} from "thirdweb/extensions/erc20";
 
 
 import {
@@ -1090,6 +1094,43 @@ function AgentPage() {
                 address: contractAddress,
             });
 
+
+            // // ERC20: transfer amount exceeds allowance
+
+            const result =
+            await allowance({
+                contract: contract,
+                owner: address as string,
+                spender: erc1155ContractAddress,
+            });
+
+            console.log("result", result);
+
+            if (result < 1) {
+                
+                //throw new Error('USDT 토큰을 먼저 교환권 NFT 발행 계약에 승인해주세요');
+
+                // approve
+
+                const transactionApprove = approve({
+                    contract: contract,
+                    spender: erc1155ContractAddress,
+                    amount: 1,
+                });
+
+                const transactionResultApprove = await sendAndConfirmTransaction({
+                    account: account as any,
+                    transaction: transactionApprove,
+                });
+
+                if (!transactionResultApprove) {
+                    throw new Error('USDT 토큰을 먼저 교환권 NFT 발행 계약에 승인해주세요');
+                }
+
+            }
+
+
+
             const transaction = claimTo({
                 contract: erc1155Contract,
 
@@ -1098,7 +1139,7 @@ function AgentPage() {
 
                 tokenId: 0n,
 
-                
+
                 to: address as string,
                 ///amount: 1n,
 
@@ -1149,6 +1190,8 @@ function AgentPage() {
                 setMessageClaimingNft('NFT 발행 실패:' + error.message);
 
                 alert('NFT 발행 실패:' + error.message);
+
+                // ERC20: transfer amount exceeds allowance
 
             } else {
                 setMessageClaimingNft('NFT 발행 실패: 알 수 없는 오류');
