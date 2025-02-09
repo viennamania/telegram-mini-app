@@ -279,6 +279,28 @@ export async function getOrderById(orderId: string): Promise<UserProps | null> {
 
 }
 
+// getOrderbyEscrowWalletAddress
+export async function getOrderbyEscrowWalletAddress(escrowWalletAddress: string): Promise<UserProps | null> {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('ordersNoahk');
+
+  const result = await collection.findOne<UserProps>(
+    {
+      'escrow.walletAddress': escrowWalletAddress,
+    }
+  );
+
+  if (result) {
+    return result;
+  } else {
+    return null;
+  }
+
+}
+
+
+
 
 
 // get count of open orders not expired 24 hours after created

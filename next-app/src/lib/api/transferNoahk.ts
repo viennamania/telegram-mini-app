@@ -123,11 +123,24 @@ export async function insertOne(data: any) {
 
     if (userToAddress && userToAddress.walletAddress) {
 
+
+        // if data.fromAddress is escrow.walletAddress of ordersNoahk collection
+
+        const collectionOrders = client.db('shinemywinter').collection('ordersNoahk');
+
+        const sellOrder = await collectionOrders.findOne(
+            { "escrow.walletAddress": data.fromAddress },
+            { projection: { walletAddress: 1 } }
+        );
+
+
+
         const response = await collectionUserTransfers.insertOne(
         {
             user: userToAddress,
             sendOrReceive: "receive",
             transferData: transferData,
+            sellOrder: sellOrder,
         } );
 
 

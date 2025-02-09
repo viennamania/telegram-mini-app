@@ -865,6 +865,66 @@ export default function Index({ params }: any) {
 
 
 
+    // /api/wallet/getTransfersNoahkByWalletAddress
+    const [transfers, setTransfers] = useState<any[]>([]);
+    const [loadingTransfers, setLoadingTransfers] = useState(false);
+    useEffect(() => {
+      
+      if (!address) {
+        return;
+      }
+
+      setLoadingTransfers(true);
+
+      fetch('/api/wallet/getTransfersNoahkByWalletAddress', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          walletAddress: address,
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+          setTransfers(data.result.transfers);
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+      })
+      .finally(() => {
+          setLoadingTransfers(false);
+      });
+
+    } , [address]);
+
+    //console.log('transfers', transfers);
+    /*
+    {
+      "_id": "67a8108d3570161531bd05a8",
+      "user": {
+          "_id": "67a7fe589785b6b27cad008e",
+          "nickname": "noahk",
+          "mobile": "",
+          "telegramId": "",
+          "center": "noah_wallet_bot",
+          "walletAddress": "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C"
+      },
+      "sendOrReceive": "receive",
+      "transferData": {
+          "transactionHash": "0x4313c895111b1389b401c6c23e119e5bdba2abbda26484c06cac3b1f661e79ad",
+          "transactionIndex": 24,
+          "fromAddress": "0x8c0Fe9Cc307e758B825e10319B92FC96fE13Dd87",
+          "toAddress": "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C",
+          "value": "1000000000000000000",
+          "timestamp": 1739067529000,
+          "_id": "67a8108d3570161531bd05a7"
+      }
+  }
+    */
+
+
+
 
 
     return (
@@ -973,6 +1033,49 @@ export default function Index({ params }: any) {
                           <span className="p-2 text-gray-500 text-lg font-semibold">NOAH-K</span>
 
                       </div>
+                  </div>
+
+                  {/* transfer history */}
+                  <div className="w-full flex flex-col items-center justify-between gap-2">
+                    <div className="text-lg font-semibold text-gray-400">
+                      {My_Balance}
+                    </div>
+
+                    <div className="w-full overflow-x-auto">
+                      <table className="w-full table-auto border-collapse border border-zinc-800 rounded-md">
+                        <thead className="bg-zinc-800 text-white">
+                          <tr>
+                            <th className="p-2">From</th>
+                            <th className="p-2">To</th>
+                            <th className="p-2">Amount</th>
+                            <th className="p-2">Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {transfers.map((item, index) => (
+                            <tr key={index} className={`
+                              ${index % 2 === 0 ? 'bg-zinc-700' : 'bg-zinc-800'}
+                            `}>
+                              <td className="p-2 text-sm text-gray-400 text-left pl-5">
+                                {item.transferData.fromAddress.substring(0, 6) + '...' + item.transferData.fromAddress.substring(item.transferData.fromAddress.length - 4, item.transferData.fromAddress.length)}
+                              </td>
+                              <td className="p-2 text-sm text-gray-400 text-left pl-5">
+                                {item.transferData.toAddress.substring(0, 6) + '...' + item.transferData.toAddress.substring(item.transferData.toAddress.length - 4, item.transferData.toAddress.length)}
+                              </td>
+                              <td className="p-2 text-xl font-semibold text-green-500 text-right pr-5">
+
+                                {
+                                Number(item.transferData.value) / 10 ** 18
+                                }
+                              </td>
+                              <td className="p-2 text-sm text-gray-400 text-center">
+                                {new Date(item.transferData.timestamp).toLocaleString()}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
 
                 </div>
