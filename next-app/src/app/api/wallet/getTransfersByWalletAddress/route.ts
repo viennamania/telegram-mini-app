@@ -16,9 +16,9 @@ export async function POST(request: NextRequest) {
 
 
   const result = await getTransferByWalletAddress({
-    limit,
-    page,
-    walletAddress,
+    limit : limit ? limit : 10,
+    page  : page ? page : 0,
+    walletAddress : walletAddress
   });
 
  

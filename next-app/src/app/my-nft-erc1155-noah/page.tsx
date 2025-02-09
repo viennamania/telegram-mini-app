@@ -524,6 +524,25 @@ function AgentPage() {
             });
             setOwnedNfts(nfts);
             setLoadingOwnedNfts(false);
+
+
+            // fetch transfers again
+            setLoadingTransfers(true);
+            const response = await fetch("/api/wallet/getTransfersByWalletAddress", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    limit: 2,
+                    page: 0,
+                    walletAddress: address,
+                }),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setTransfers(data.result?.transfers);
+            }
             
 
 
@@ -595,7 +614,70 @@ function AgentPage() {
 
 
 
-    // background image
+    // /api/wallet/getTransfersByWalletAddress
+    const [transfers, setTransfers] = useState([] as any[]);
+    const [loadingTransfers, setLoadingTransfers] = useState(false);
+    useEffect(() => {
+        const fetchTransfers = async () => {
+            setLoadingTransfers(true);
+
+            const response = await fetch("/api/wallet/getTransfersByWalletAddress", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    limit: 2,
+                    page: 0,
+                    walletAddress: address,
+                }),
+            });
+
+            if (!response.ok) {
+                setLoadingTransfers(false);
+                return;
+            }
+
+            const data = await response.json();
+
+            //console.log("data", data);
+
+            if (data.result) {
+                setTransfers(data.result?.transfers);
+            } else {
+                setTransfers([]);
+            }
+
+            setLoadingTransfers(false);
+        };
+
+        if (address) {
+            fetchTransfers();
+        }
+    } , [address]);
+
+    /*
+    {
+        "_id": "67a85ce3537afb93e116d201",
+        "user": {
+            "_id": "67860b48c7ec01ab07b82a95",
+            "telegramId": "441516803",
+            "walletAddress": "0x542197103Ca1398db86026Be0a85bc8DcE83e440"
+        },
+        "sendOrReceive": "send",
+        "transferData": {
+            "transactionHash": "0x58348ae8a94819d950b41a89b1f8b3fc7cfce424f377b1a1ca7c5a85f4123d2c",
+            "transactionIndex": 19,
+            "fromAddress": "0x542197103Ca1398db86026Be0a85bc8DcE83e440",
+            "toAddress": "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C",
+            "value": "1000000",
+            "timestamp": 1739087064000,
+            "_id": "67a85ce3537afb93e116d200"
+        }
+    }   
+    */
+
+
 
     return (
 
@@ -704,31 +786,120 @@ function AgentPage() {
 
                     {/* usdt balance */}
                     {address && (
-                        <div className='w-full flex flex-row gap-2 items-center justify-between
+
+                        <div className="w-full flex flex-col gap-2 items-center justify-between
                             border border-gray-200
-                            p-4 rounded-lg'>
+                            p-4 rounded-lg">
 
-                            <Image
-                                src="/logo-tether.png"
-                                alt="USDT"
-                                width={30}
-                                height={30}
-                                className="rounded"
-                            />                                
+                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
+
+                                <Image
+                                    src="/logo-tether.png"
+                                    alt="USDT"
+                                    width={30}
+                                    height={30}
+                                    className="rounded"
+                                />                                
 
 
-                            <div className="flex flex-row gap-2 items-center justify-between">
+                                <div className="flex flex-row gap-2 items-center justify-between">
 
-                                <span className="p-2 text-green-500 text-4xl font-semibold"> 
-                                    {
-                                        Number(balance).toFixed(6)
-                                    }
-                                </span>
-                                <span className="p-2 text-green-500 text-xl font-semibold">
-                                    USDT
-                                </span>
+                                    <span className="p-2 text-green-500 text-4xl font-semibold"> 
+                                        {
+                                            Number(balance).toFixed(6)
+                                        }
+                                    </span>
+                                    <span className="p-2 text-green-500 text-xl font-semibold">
+                                        USDT
+                                    </span>
 
+                                </div>
                             </div>
+
+                            {/* 전송내역 (최신 5개) */}
+                            {loadingTransfers && (
+                                <div className="flex flex-row gap-2 items-center justify-center">
+                                    <Image
+                                        src="/loading.png"
+                                        alt="loading"
+                                        width={30}
+                                        height={30}
+                                        className="animate-spin"
+                                    />
+                                    <span className="text-lg text-zinc-400 font-semibold">
+                                        전송내역을 불러오는 중입니다...
+                                    </span>
+                                </div>
+                            )}
+
+                            {!loadingTransfers && transfers.length === 0 && (
+                                <div className="w-full flex flex-col gap-2 items-start justify-between
+                                    border border-gray-200
+                                    p-4 rounded-lg">
+
+                                    {transfers.length === 0 && (
+                                        <span className="text-lg text-zinc-400 font-semibold">
+                                            전송내역이 없습니다.
+                                        </span>
+                                    )}
+
+                                </div>
+                            )}
+
+                            {!loadingTransfers && transfers.length > 0 && (
+                                <div className="w-full flex flex-col gap-2 items-start justify-between">
+
+                                    <div className="w-full flex flex-row gap-2 items-center justify-between">
+                                        <div className="text-sm text-zinc-100
+                                        border-b border-gray-200
+                                        p-2 rounded-lg">
+                                            전송내역 (최신 2개)
+                                        </div>
+                                    </div>
+
+                                    {transfers.map((transfer, index) => (
+                                        <div key={index} className="w-full flex flex-row gap-2 items-center justify-between">
+
+                                            <div className="flex flex-row gap-2 items-center justify-between">
+                                                {transfer.sendOrReceive === 'send' && (
+                                                    <div className="flex flex-row gap-2 items-center justify-between">
+                                                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                                                        <span className="text-sm text-red-500">
+                                                            보내기
+                                                        </span>
+                                                    </div>
+                                                )}
+                                                {transfer.sendOrReceive === 'receive' && (
+                                                    <div className="flex flex-row gap-2 items-center justify-between">
+                                                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                                        <span className="text-sm text-green-500">
+                                                            받기
+                                                        </span>
+                                                    </div>
+                                                )}
+                                                <span className="text-sm text-zinc-100">
+                                                    {
+                                                        transfer.transferData.value / 10 ** 6
+                                                    } USDT
+                                                </span>
+                                            </div>
+
+                                            <div className="flex flex-row gap-2 items-center justify-between">
+                                                <span className="text-sm text-zinc-100">
+                                                    {
+                                                        //transfer.transferData.timestamp
+                                                        new Date(transfer.transferData.timestamp).toLocaleString()
+                                                    }
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    ))}
+
+                                </div>
+                            )}
+
+
                         </div>
                     )}
 
@@ -1021,7 +1192,7 @@ function AgentPage() {
                                     height={30}
                                     className="animate-spin"
                                 />
-                                <span className="text-lg font-semibold">
+                                <span className="text-lg font-semibold text-zinc-400">
                                     교환권 NFT 불러오는 중...
                                 </span>
                             </div>

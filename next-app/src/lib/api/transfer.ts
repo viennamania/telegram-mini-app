@@ -161,6 +161,14 @@ export async function getTransferByWalletAddress(data: any) {
         return null;
     }
 
+    if (!data.limit) {
+        data.limit = 10;
+    }
+
+    if (!data.page) {
+        data.page = 0;
+    }
+
 
     const client = await clientPromise;
 
@@ -185,6 +193,10 @@ export async function getTransferByWalletAddress(data: any) {
 
     const userTransfers = await collectionUserTransfers
     .find({ "user.walletAddress": data.walletAddress })
+
+    .limit(data.limit)
+    .skip(data.page * data.limit)
+
     .sort({ "transferData.timestamp": -1 })
     .toArray();
 
