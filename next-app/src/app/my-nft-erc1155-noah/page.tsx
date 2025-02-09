@@ -456,7 +456,7 @@ function AgentPage() {
 
             console.log("result", result);
 
-            if (result < 1) {
+            if (result < 100) {
                 
                 //throw new Error('USDT 토큰을 먼저 교환권 NFT 발행 계약에 승인해주세요');
 
@@ -465,7 +465,7 @@ function AgentPage() {
                 const transactionApprove = approve({
                     contract: contract,
                     spender: erc1155ContractAddress,
-                    amount: 1,
+                    amount: 100,
                 });
 
                 const transactionResultApprove = await sendAndConfirmTransaction({
@@ -777,7 +777,7 @@ function AgentPage() {
                                 </div>
                             </button>
                             <span className="text-lg text-zinc-400 font-semibold">
-                                교환권 NFT 발행은 1 USDT 당 1개씩 발행 가능합니다.
+                                교환권 NFT 발행은 100 USDT 당 1개씩 발행 가능합니다.
                             </span>
                         </div>
                     )}
