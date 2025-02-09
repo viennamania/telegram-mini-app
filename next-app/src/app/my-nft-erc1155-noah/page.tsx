@@ -419,24 +419,24 @@ function AgentPage() {
 
         if (claimingNft) {
             //toast.error('이미 실행중입니다');
-            setMessageClaimingNft('이미 실행중입니다');
+            setMessageClaimingNft('이미 실행중입니다.');
             return;
         }
 
         if (!address) {
             //toast.error('지갑을 먼저 연결해주세요');
-            setMessageClaimingNft('지갑을 먼저 연결해주세요');
+            setMessageClaimingNft('지갑을 먼저 연결해주세요.');
             return;
         }
 
         if (balance < 100) {
             //toast.error('USDT 잔액이 부족합니다');
-            setMessageClaimingNft('USDT 잔액이 부족합니다');
+            setMessageClaimingNft('USDT 잔액이 부족합니다.');
             return;
         }
 
 
-        setMessageClaimingNft('NFT 발행중입니다');
+        setMessageClaimingNft('NFT 발행중입니다.');
 
         setClaimingNft(true);
 
@@ -478,7 +478,7 @@ function AgentPage() {
                 });
 
                 if (!transactionResultApprove) {
-                    throw new Error('USDT 토큰을 먼저 교환권 NFT 발행 계약에 승인해주세요');
+                    throw new Error('USDT 토큰을 먼저 교환권 NFT 발행 계약에 승인해주세요.');
                 }
 
             }
@@ -507,10 +507,10 @@ function AgentPage() {
             });
 
             if (!transactionResult) {
-                throw new Error('NFT 발행 실패. 관리자에게 문의해주세요');
+                throw new Error('NFT 발행 실패. 관리자에게 문의해주세요.');
             }
 
-            setMessageClaimingNft('NFT 발행 완료');
+            setMessageClaimingNft('NFT 발행을 완료했습니다.');
 
             //alert('NFT 발행 완료');
 
@@ -630,17 +630,17 @@ function AgentPage() {
         
         if (transferringNft) {
             //toast.error('이미 실행중입니다');
-            setMessageTransferringNft('이미 실행중입니다');
+            setMessageTransferringNft('이미 실행중입니다.');
             return;
         }
 
         if (!address) {
             //toast.error('지갑을 먼저 연결해주세요');
-            setMessageTransferringNft('지갑을 먼저 연결해주세요');
+            setMessageTransferringNft('지갑을 먼저 연결해주세요.');
             return;
         }
 
-        setMessageTransferringNft('NFT 전송중입니다');
+        setMessageTransferringNft('NFT 전송중입니다.');
 
         setTransferringNft(true);
 
@@ -672,7 +672,7 @@ function AgentPage() {
             });
 
             if (!transactionResult) {
-                throw new Error('NFT 전송 실패. 관리자에게 문의해주세요');
+                throw new Error('NFT 전송 실패. 관리자에게 문의해주세요.');
             }
 
             setMessageTransferringNft('NFT 전송 완료');
