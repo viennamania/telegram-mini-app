@@ -677,7 +677,7 @@ function AgentPage() {
 
             setMessageTransferringNft('NFT 전송 완료');
 
-            alert('NFT 전송 완료');
+            //alert('NFT 전송 완료');
 
             // fetch the NFTs again
             setLoadingOwnedNfts(true);
@@ -713,12 +713,12 @@ function AgentPage() {
             if (error instanceof Error) {
                 setMessageTransferringNft('NFT 전송 실패:' + error.message);
 
-                alert('NFT 전송 실패:' + error.message);
+                //alert('NFT 전송 실패:' + error.message);
 
             } else {
                 setMessageTransferringNft('NFT 전송 실패: 알 수 없는 오류');
 
-                alert('NFT 전송 실패: 알 수 없는 오류');
+                //alert('NFT 전송 실패: 알 수 없는 오류');
             }
 
         }
@@ -1477,6 +1477,12 @@ function AgentPage() {
                                                     {!transferringNft && '교환권 NFT 전송'}
                                                 </div>
                                             </button>
+
+                                            {messageTransferringNft && (
+                                                <span className="text-lg text-green-500 font-semibold">
+                                                    {messageTransferringNft}
+                                                </span>
+                                            )}
 
                                         </div>
 
