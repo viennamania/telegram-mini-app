@@ -75,9 +75,7 @@ function ProfilePage() {
     const center = searchParams.get("center");
     //const telegramId = searchParams.get("telegramId");
 
-
     const account = useActiveAccount();
-
 
     const contract = getContract({
         client,

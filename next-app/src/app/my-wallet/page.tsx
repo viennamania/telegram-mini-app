@@ -998,12 +998,6 @@ function ProfilePage() {
                                     </div>
                                 </div>
 
-
-
-
-
-
-
                                 {/*
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
@@ -1207,8 +1201,8 @@ function ProfilePage() {
                                                                 <Image
                                                                     src={transfer?.otherUser?.avatar || '/profile-default.png'}
                                                                     alt="Avatar"
-                                                                    width={18}
-                                                                    height={18}
+                                                                    width={30}
+                                                                    height={30}
                                                                     className="rounded-full"
 
                                                                     style={{
