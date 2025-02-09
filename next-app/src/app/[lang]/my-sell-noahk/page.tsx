@@ -466,7 +466,18 @@ export default function Index({ params }: any) {
   
         fetchSellOrders();
 
-        // fetch sell orders every 10 seconds
+        // fetch sell orders every 1 seconds
+        // when status is "ordered"
+
+        const interval = setInterval(() => {
+
+          if (sellOrders.some((item) => item.status === 'ordered')) {
+            fetchSellOrders();
+          }
+
+        }, 1000);
+
+        return () => clearInterval(interval);
 
         /*
         const interval = setInterval(() => {
