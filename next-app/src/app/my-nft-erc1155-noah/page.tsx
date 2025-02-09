@@ -90,7 +90,7 @@ function AgentPage() {
     const center = searchParams.get('center');
 
 
-    const tokenId = searchParams.get('tokenId');
+    const tokenId = searchParams.get('tokenId') || "0";
  
 
     const account = useActiveAccount();
@@ -428,9 +428,12 @@ function AgentPage() {
             return;
         }
 
-        if (confirm("NFT를 발행하시겠습니까?") === false) {
+        if (balance < 100) {
+            //toast.error('USDT 잔액이 부족합니다');
+            setMessageClaimingNft('USDT 잔액이 부족합니다');
             return;
         }
+
 
         setMessageClaimingNft('NFT 발행중입니다');
 
@@ -701,26 +704,31 @@ function AgentPage() {
 
                     {/* usdt balance */}
                     {address && (
-                        <div className="w-full flex flex-col gap-2 items-center justify-between
-                            border border-gray-800
-                            p-4 rounded-lg"
-                        >
+                        <div className='w-full flex flex-row gap-2 items-center justify-between
+                            border border-gray-200
+                            p-4 rounded-lg'>
 
-                            <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                {/* dot */}
-                                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                <div className="text-sm text-zinc-100 font-semibold">
-                                    USDT 잔액
-                                </div>
+                            <Image
+                                src="/logo-tether.png"
+                                alt="USDT"
+                                width={30}
+                                height={30}
+                                className="rounded"
+                            />                                
+
+
+                            <div className="flex flex-row gap-2 items-center justify-between">
+
+                                <span className="p-2 text-green-500 text-4xl font-semibold"> 
+                                    {
+                                        Number(balance).toFixed(6)
+                                    }
+                                </span>
+                                <span className="p-2 text-green-500 text-xl font-semibold">
+                                    USDT
+                                </span>
+
                             </div>
-                            <span className="text-4xl text-green-500 font-semibold">
-                                {
-                                    balance.toLocaleString(undefined, {
-                                        maximumFractionDigits: 6,
-                                    })
-                                }
-                            </span>
-
                         </div>
                     )}
 
