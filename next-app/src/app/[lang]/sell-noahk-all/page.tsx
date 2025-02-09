@@ -464,6 +464,10 @@ export default function Index({ params }: any) {
   
         fetchSellOrders();
 
+
+
+        
+
         // fetch sell orders every 10 seconds
 
         /*

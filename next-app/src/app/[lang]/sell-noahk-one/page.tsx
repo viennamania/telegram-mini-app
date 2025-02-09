@@ -467,6 +467,18 @@ export default function Index({ params }: any) {
   
         fetchSellOrders();
 
+        const interval = setInterval(() => {
+          if (
+            sellOrders.filter((item) => item.status === 'ordered').length > 0
+          ) {
+          
+            fetchSellOrders();
+          }
+        }, 1000);
+
+        return () => clearInterval(interval);
+
+
         // fetch sell orders every 10 seconds
 
         /*
@@ -2262,8 +2274,6 @@ export default function Index({ params }: any) {
                                         item.buyer.nickname ? item.buyer.nickname : item.buyer.walletAddress.slice(0, 6) + '...' + item.buyer.walletAddress.slice(-4)
                                       }
                                     </p>
-
-
 
                                   </div>
                               )}
