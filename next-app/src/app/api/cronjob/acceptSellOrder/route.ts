@@ -231,7 +231,7 @@ export async function GET(request: NextRequest) {
       if (sellerWalletAddress) {
 
         const messagetext = '구매자가 구매를 신청하였습니다.'
-        + '\n\n겨래번호: ' + '#' + sellOrder.tradeId
+        + '\n\n겨래번호: ' + '#' + acceptedSellOrder.tradeId
         + '\n\n구매자 입금자명: ' + depositName
 
         const result = await insertOtcMessageByWalletAddress({
