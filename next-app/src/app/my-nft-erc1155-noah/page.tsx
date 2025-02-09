@@ -676,6 +676,11 @@ function AgentPage() {
 
             //alert('NFT 전송 완료');
 
+            setSendAmount('');
+            setToAddress('');
+            
+
+
             // fetch the NFTs again
             setLoadingOwnedNfts(true);
             const nfts = await getOwnedNFTs({
@@ -688,6 +693,7 @@ function AgentPage() {
             setLoadingOwnedNfts(false);
 
             // fetch transfers again
+            /*
             setLoadingTransfers(true);
             const response = await fetch("/api/wallet/getTransfersByWalletAddress", {
                 method: "POST",
@@ -704,6 +710,9 @@ function AgentPage() {
                 const data = await response.json();
                 setTransfers(data.result?.transfers);
             }
+            setLoadingTransfers(false);
+            */
+
 
         } catch (error) {
 
