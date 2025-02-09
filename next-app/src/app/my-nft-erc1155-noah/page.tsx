@@ -1008,76 +1008,105 @@ function AgentPage() {
                             {/* dot */}
                             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                             <div className="text-sm text-zinc-100 font-semibold">
-                                교환권 NFT 소유
+                                소유한 교환권 NFT
                             </div>
                         </div>
-                        <div className="w-full flex flex-col gap-2 items-center justify-between">
-                            {ownedNfts.map((nft, index) => (
-                                <div key={index} className="w-full flex flex-col gap-2 items-center justify-between
-                                    border border-gray-800
-                                    p-4 rounded-lg">
+
+                        {loadingOwnedNfts && (
+                            <div className="w-full flex flex-row gap-2 items-center justify-center">
+                                <Image
+                                    src="/loading.png"
+                                    alt="loding"
+                                    width={30}
+                                    height={30}
+                                    className="animate-spin"
+                                />
+                                <span className="text-lg font-semibold">
+                                    교환권 NFT 불러오는 중...
+                                </span>
+                            </div>
+                        )}
+
+ 
+                        {ownedNfts.length === 0 && !loadingOwnedNfts && (
+                            <div className="w-full flex flex-row gap-2 items-center justify-center">
+                                <span className="text-lg font-semibold text-zinc-400">
+                                    소유한 교환권 NFT가 없습니다.
+                                </span>
+                            </div>
+                        )}
 
 
-                                    <div className="text-xl text-zinc-100 font-semibold">
-                                        {nft.metadata?.name}
-                                    </div>
-                                    
-                                    <div className="text-4xl text-green-500 font-semibold">
-                                        {
-                                            // nft.quantityOwned is bigint
-                                            nft.quantityOwned.toString()
-                                        }개
-                                    </div>
-
-                                    
-                                    {/* metadata?.animation_url */}
-                                    {/* ipfs://QmZzvZ to https://ipfs.io/ipfs/QmZzvZ */}
-                                    {/* video */}
-                                    {/*
-                                    <div className="w-full flex flex-col gap-2 items-center justify-between">
-                                        <video
-                                            src={nft.metadata?.animation_url.replace('ipfs://', 'https://ipfs.io/ipfs/')}
-                                            //controls
-                                            autoPlay
-                                            loop
-                                            className="rounded-lg"
-                                        />
-                                    </div>
-                                    */}
-
-                                    <div className="w-full flex flex-col gap-2 items-center justify-between
+                        {!loadingOwnedNfts && ownedNfts.length > 0 && (
+                            <div className="w-full flex flex-col gap-2 items-center justify-between">
+                                {ownedNfts.map((nft, index) => (
+                                    <div key={index} className="w-full flex flex-col gap-2 items-center justify-between
                                         border border-gray-800
                                         p-4 rounded-lg">
-                                        {/* opensea */}
-                                        <button
-                                            onClick={() => {
-                                                window.open('https://opensea.io/assets/matic/' + erc1155ContractAddress + '/0');
-                                            }}
-                                            className="p-2 rounded hover:bg-gray-300"
-                                        >
-                                            <Image
-                                                src="/logo-opensea.png"
-                                                alt="OpenSea"
-                                                width={30}
-                                                height={30}
-                                                className="rounded-lg"
-                                            />
-                                        </button>
+
+
+                                        <div className="text-xl text-zinc-100 font-semibold">
+                                            {nft.metadata?.name}
+                                        </div>
+                                        
+                                        <div className="text-4xl text-green-500 font-semibold">
+                                            {
+                                                // nft.quantityOwned is bigint
+                                                nft.quantityOwned.toString()
+                                            }개
+                                        </div>
+
+                                        
+                                        {/* metadata?.animation_url */}
+                                        {/* ipfs://QmZzvZ to https://ipfs.io/ipfs/QmZzvZ */}
+                                        {/* video */}
+                                        {/*
                                         <div className="w-full flex flex-col gap-2 items-center justify-between">
-                                            <Image
-                                                src={nft.metadata?.image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
-                                                alt="NFT"
-                                                width={500}
-                                                height={500}
+                                            <video
+                                                src={nft.metadata?.animation_url.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+                                                //controls
+                                                autoPlay
+                                                loop
                                                 className="rounded-lg"
                                             />
                                         </div>
+                                        */}
+
+                                        <div className="w-full flex flex-col gap-2 items-center justify-between
+                                            border border-gray-800
+                                            p-4 rounded-lg">
+                                            {/* opensea */}
+                                            <button
+                                                onClick={() => {
+                                                    window.open('https://opensea.io/assets/matic/' + erc1155ContractAddress + '/0');
+                                                }}
+                                                className="p-2 rounded hover:bg-gray-300"
+                                            >
+                                                <Image
+                                                    src="/logo-opensea.png"
+                                                    alt="OpenSea"
+                                                    width={30}
+                                                    height={30}
+                                                    className="rounded-lg"
+                                                />
+                                            </button>
+                                            <div className="w-full flex flex-col gap-2 items-center justify-between">
+                                                <Image
+                                                    src={nft.metadata?.image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+                                                    alt="NFT"
+                                                    width={500}
+                                                    height={500}
+                                                    className="rounded-lg"
+                                                />
+                                            </div>
+                                        </div>
+
+
                                     </div>
+                                ))}
+                            </div>
+                        )}
 
-
-                                </div>
-                            ))}
-                        </div>
                     </div>
 
 
