@@ -109,7 +109,7 @@ export async function GET(request: NextRequest) {
     buyerAvatar = user.avatar;
     buyerMobile = user.mobile;
     buyerMemo = "";
-    depositName = "";
+    depositName = depositName;
     depositBankName = "";
   }
 
