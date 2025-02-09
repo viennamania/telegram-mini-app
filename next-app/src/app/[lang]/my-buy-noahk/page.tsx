@@ -1933,7 +1933,7 @@ export default function Index({ params }: any) {
                                   <div className="mt-2 flex flex-row items-center gap-2">
                                     <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
                                     <p className="text-sm text-zinc-400">
-                                      은행:{' '}
+                                      걸제은행:{' '}
                                       
                                       {
                                       item.seller?.bankInfo.bankName === "090" ? "카카오뱅크" :
