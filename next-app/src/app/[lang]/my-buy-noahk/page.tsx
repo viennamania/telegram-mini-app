@@ -1084,8 +1084,15 @@ export default function Index({ params }: any) {
                              
                               
                               <td className="p-2 text-sm text-gray-400 text-left pl-5">
-                                {item?.sellOrder ?
-                                  item.sellOrder?.nickName + ' (거래번호#' + item.sellOrder?.tradeId + ' 에스크로지갑)'
+                                {item?.sellOrder ? (
+                                  <span className="text-sm text-green-500">
+                                    {
+                                  '판매자: '
+                                  + item.sellOrder?.nickname
+                                  + '(' + item.sellOrder?.seller?.bankInfo.accountHolder + ')' + ' (거래번호#' + item.sellOrder?.tradeId + ' 에스크로지갑)'
+                                    }
+                                  </span>
+                                )
                                   :
                                   item.transferData.fromAddress.substring(0, 6) + '...' + item.transferData.fromAddress.substring(item.transferData.fromAddress.length - 4, item.transferData.fromAddress.length)}
                               </td>
