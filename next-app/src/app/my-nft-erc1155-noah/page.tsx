@@ -1391,6 +1391,7 @@ function AgentPage() {
                                                 />
                                             </button>
                                             <div className="w-full flex flex-col gap-2 items-center justify-between">
+                                                {/*
                                                 <Image
                                                     src={nft.metadata?.image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
                                                     alt="NFT"
@@ -1398,6 +1399,21 @@ function AgentPage() {
                                                     height={500}
                                                     className="rounded-lg"
                                                 />
+                                                */}
+                                                <video
+                                                    src={
+                                                        nft.metadata?.animation_url.startsWith('ipfs://') ?
+                                                        'https://ipfs.io/ipfs/' + nft?.raw?.metadata?.animation_url.slice(7) :
+                                                        nft?.raw?.metadata?.animation_url
+                                                    }
+                                                    autoPlay
+                                                    loop
+                                                    muted
+                                                    controls
+                                                    className="w-full rounded-lg border border-gray-300"
+                                                />
+
+
                                             </div>
                                         </div>
 
