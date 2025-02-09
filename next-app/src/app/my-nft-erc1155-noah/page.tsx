@@ -756,7 +756,10 @@ function AgentPage() {
                             </span>
                             <button
                                 disabled={claimingNft}
-                                onClick={() => claimNft(erc1155ContractAddress, "0")}
+                                onClick={() =>
+                                    confirm("교환권 NFT를 발행하시겠습니까?") &&
+                                    claimNft(erc1155ContractAddress, "0"
+                                )}
                                 className={`
                                     ${claimingNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
                                     p-2 rounded-lg text-sm font-semibold
@@ -1015,19 +1018,7 @@ function AgentPage() {
                                 <div key={index} className="w-full flex flex-col gap-2 items-center justify-between
                                     border border-gray-800
                                     p-4 rounded-lg">
-                                    
-                                    {/* metadata?.animation_url */}
-                                    {/* ipfs://QmZzvZ to https://ipfs.io/ipfs/QmZzvZ */}
-                                    {/* video */}
-                                    <div className="w-full flex flex-col gap-2 items-center justify-between">
-                                        <video
-                                            src={nft.metadata?.animation_url.replace('ipfs://', 'https://ipfs.io/ipfs/')}
-                                            //controls
-                                            autoPlay
-                                            loop
-                                            className="rounded-lg"
-                                        />
-                                    </div>
+
 
                                     <div className="text-xl text-zinc-100 font-semibold">
                                         {nft.metadata?.name}
@@ -1039,6 +1030,53 @@ function AgentPage() {
                                             nft.quantityOwned.toString()
                                         }개
                                     </div>
+
+                                    
+                                    {/* metadata?.animation_url */}
+                                    {/* ipfs://QmZzvZ to https://ipfs.io/ipfs/QmZzvZ */}
+                                    {/* video */}
+                                    {/*
+                                    <div className="w-full flex flex-col gap-2 items-center justify-between">
+                                        <video
+                                            src={nft.metadata?.animation_url.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+                                            //controls
+                                            autoPlay
+                                            loop
+                                            className="rounded-lg"
+                                        />
+                                    </div>
+                                    */}
+
+                                    <div className="w-full flex flex-col gap-2 items-center justify-between
+                                        border border-gray-800
+                                        p-4 rounded-lg">
+                                        {/* opensea */}
+                                        <button
+                                            onClick={() => {
+                                                window.open('https://opensea.io/assets/matic/' + erc1155ContractAddress + '/0');
+                                            }}
+                                            className="p-2 rounded hover:bg-gray-300"
+                                        >
+                                            <Image
+                                                src="/logo-opensea.png"
+                                                alt="OpenSea"
+                                                width={30}
+                                                height={30}
+                                                className="rounded-lg"
+                                            />
+                                        </button>
+                                        <div className="w-full flex flex-col gap-2 items-center justify-between">
+                                            <Image
+                                                src={nft.metadata?.image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+                                                alt="NFT"
+                                                width={500}
+                                                height={500}
+                                                className="rounded-lg"
+                                            />
+                                        </div>
+                                    </div>
+
+
                                 </div>
                             ))}
                         </div>
