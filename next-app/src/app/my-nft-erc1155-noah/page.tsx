@@ -78,6 +78,7 @@ import {
     useSearchParams,
 } from "next//navigation";
 import { token } from "thirdweb/extensions/vote";
+import { N } from "ethers";
 
 
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
@@ -611,6 +612,121 @@ function AgentPage() {
     //console.log("ownedNfts", ownedNfts);
 
 
+    // safeTransferFrom
+    // transfer NFT
+    const [transferringNft, setTransferringNft] = useState(false);
+    const [messageTransferringNft, setMessageTransferringNft] = useState("");
+
+    const [toAddress, setToAddress] = useState("");
+    const [sendAmount, setSendAmount] = useState("");
+
+
+    const transferNft = async (
+        contractAddress: string,
+        tokenId: string,
+        //toAddress: string,
+        //amount: string,
+    ) => {
+        
+        if (transferringNft) {
+            //toast.error('이미 실행중입니다');
+            setMessageTransferringNft('이미 실행중입니다');
+            return;
+        }
+
+        if (!address) {
+            //toast.error('지갑을 먼저 연결해주세요');
+            setMessageTransferringNft('지갑을 먼저 연결해주세요');
+            return;
+        }
+
+        setMessageTransferringNft('NFT 전송중입니다');
+
+        setTransferringNft(true);
+
+        try {
+
+            const erc1155Contract = getContract({
+                client,
+                chain: polygon,
+                address: contractAddress,
+            });
+
+            const optionalData = '0x';
+            const transaction = safeTransferFrom({
+                contract: contract,
+                from: address as string,
+                to: toAddress,
+                tokenId: BigInt(tokenId),
+
+                value: BigInt(sendAmount),
+
+
+                data: optionalData,
+            });
+
+
+            const transactionResult = await sendAndConfirmTransaction({
+                account: account as any,
+                transaction: transaction,
+            });
+
+            if (!transactionResult) {
+                throw new Error('NFT 전송 실패. 관리자에게 문의해주세요');
+            }
+
+            setMessageTransferringNft('NFT 전송 완료');
+
+            alert('NFT 전송 완료');
+
+            // fetch the NFTs again
+            setLoadingOwnedNfts(true);
+            const nfts = await getOwnedNFTs({
+                contract: erc1155Contract,
+                start: 0,
+                count: 10,
+                address: address as string,
+            });
+            setOwnedNfts(nfts);
+            setLoadingOwnedNfts(false);
+
+            // fetch transfers again
+            setLoadingTransfers(true);
+            const response = await fetch("/api/wallet/getTransfersByWalletAddress", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    limit: 2,
+                    page: 0,
+                    walletAddress: address,
+                }),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setTransfers(data.result?.transfers);
+            }
+
+        } catch (error) {
+
+            if (error instanceof Error) {
+                setMessageTransferringNft('NFT 전송 실패:' + error.message);
+
+                alert('NFT 전송 실패:' + error.message);
+
+            } else {
+                setMessageTransferringNft('NFT 전송 실패: 알 수 없는 오류');
+
+                alert('NFT 전송 실패: 알 수 없는 오류');
+            }
+
+        }
+
+        setTransferringNft(false);
+
+
+    }
 
 
 
@@ -1213,7 +1329,7 @@ function AgentPage() {
                                 {ownedNfts.map((nft, index) => (
                                     <div key={index} className="w-full flex flex-col gap-2 items-center justify-between
                                         border border-gray-800
-                                        p-4 rounded-lg">
+                                        rounded-lg">
 
 
                                         <div className="text-xl text-zinc-100 font-semibold">
@@ -1245,7 +1361,7 @@ function AgentPage() {
 
                                         <div className="w-full flex flex-col gap-2 items-center justify-between
                                             border border-gray-800
-                                            p-4 rounded-lg">
+                                            rounded-lg">
                                             {/* opensea */}
                                             <button
                                                 onClick={() => {
@@ -1271,6 +1387,93 @@ function AgentPage() {
                                                 />
                                             </div>
                                         </div>
+
+
+                                        {/* transfer NFT */}
+                                        <div className="mt-5 w-full flex flex-col gap-2 items-center justify-between
+                                            border border-gray-800
+                                            rounded-lg">
+                                            
+                                            <div className="w-full flex flex-row gap-2 items-center justify-start
+                                                border-b border-gray-200
+                                                p-2 rounded-lg">
+                                                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                                <span className="text-sm text-zinc-100 font-semibold">
+                                                    교환권 NFT 전송
+                                                </span>
+                                            </div>
+
+                                            <span className="text-lg text-zinc-400 font-semibold">
+                                                교환권 NFT를 전송받을 주소를 입력하세요.
+                                            </span>
+                                            <input
+                                                className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                                placeholder="주소"
+                                                type='text'
+                                                onChange={(e) => {
+                                                    setToAddress(e.target.value);
+                                                }}
+                                                value={toAddress}
+                                            />
+                                            <input
+                                                className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
+                                                placeholder="수량"
+                                                type='number'
+                                                onChange={(e) => {
+
+                                                    // only number
+                                                    if (isNaN(Number(e.target.value))) {
+                                                        return;
+                                                    }
+
+                                                    // less than balance
+                                                    if (Number(e.target.value) > Number(nft.quantityOwned.toString())) {
+                                                        return;
+                                                    }
+
+                                                    setSendAmount(e.target.value);
+                                                    
+                                                }}
+                                                value={sendAmount}
+                                            />
+                                            <button
+                                                disabled={
+                                                    transferringNft
+                                                    || !toAddress
+                                                    || !sendAmount
+                                                    || Number(sendAmount) > Number(nft.quantityOwned.toString())
+                                                }
+                                                
+                                                onClick={() =>
+                                                    confirm("교환권 NFT를 전송하시겠습니까?") &&
+                                                    transferNft(
+                                                        erc1155ContractAddress,
+                                                        "0",
+                                                    )
+                                                }
+                                                className={`
+                                                    ${transferringNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
+                                                    p-2 rounded-lg text-sm font-semibold
+                                                `}
+                                            >
+                                                <div className="flex flex-row gap-2 items-center justify-center">
+                                                    {transferringNft && (
+                                                        <Image
+                                                            src="/loading.png"
+                                                            alt="loding"
+                                                            width={30}
+                                                            height={30}
+                                                            className="animate-spin"
+                                                        />
+                                                    )}
+                                                    {transferringNft && '교환권 NFT 전송중...'}
+                                                    {!transferringNft && '교환권 NFT 전송'}
+                                                </div>
+                                            </button>
+
+                                        </div>
+
+
 
 
                                     </div>
