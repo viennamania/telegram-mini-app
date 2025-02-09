@@ -130,7 +130,6 @@ export async function insertOne(data: any) {
 
         const sellOrder = await collectionOrders.findOne(
             { "escrow.walletAddress": data.fromAddress },
-            { projection: { walletAddress: 1 } }
         );
 
 

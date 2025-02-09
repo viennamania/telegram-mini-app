@@ -870,31 +870,49 @@ export default function Index({ params }: any) {
     const [loadingTransfers, setLoadingTransfers] = useState(false);
     useEffect(() => {
       
-      if (!address) {
-        return;
+
+
+
+
+      const fetchTransfers = async () => {
+
+        if (!address) {
+          return;
+        }
+  
+
+        setLoadingTransfers(true);
+
+        fetch('/api/wallet/getTransfersNoahkByWalletAddress', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            walletAddress: address,
+          }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            setTransfers(data.result.transfers);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            setLoadingTransfers(false);
+        });
+
       }
 
-      setLoadingTransfers(true);
+      fetchTransfers();
 
-      fetch('/api/wallet/getTransfersNoahkByWalletAddress', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          walletAddress: address,
-        }),
-      })
-      .then(response => response.json())
-      .then(data => {
-          setTransfers(data.result.transfers);
-      })
-      .catch((error) => {
-          console.error('Error:', error);
-      })
-      .finally(() => {
-          setLoadingTransfers(false);
-      });
+      const interval = setInterval(() => {
+        fetchTransfers();
+      } , 5000);
+
+      return () => clearInterval(interval);
+
 
     } , [address]);
 
@@ -1038,17 +1056,18 @@ export default function Index({ params }: any) {
                   {/* transfer history */}
                   <div className="w-full flex flex-col items-center justify-between gap-2">
                     <div className="text-lg font-semibold text-gray-400">
-                      {My_Balance}
+                      거래내역 (최근 10개)
                     </div>
 
                     <div className="w-full overflow-x-auto">
                       <table className="w-full table-auto border-collapse border border-zinc-800 rounded-md">
                         <thead className="bg-zinc-800 text-white">
                           <tr>
-                            <th className="p-2">From</th>
-                            <th className="p-2">To</th>
-                            <th className="p-2">Amount</th>
-                            <th className="p-2">Date</th>
+                            <th className="p-2">보내기/받기</th>
+                            <th className="p-2">보낸지갑</th>
+                            <th className="p-2">받은지갑</th>
+                            <th className="p-2">수량</th>
+                            <th className="p-2">날짜</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1056,9 +1075,21 @@ export default function Index({ params }: any) {
                             <tr key={index} className={`
                               ${index % 2 === 0 ? 'bg-zinc-700' : 'bg-zinc-800'}
                             `}>
+                              
+                              {item.sendOrReceive === 'send' ? (
+                                <td className="p-2 text-sm text-red-500 text-left pl-5">보내기</td>
+                              ) : (
+                                <td className="p-2 text-sm text-green-500 text-left pl-5">받기</td>
+                              )}
+                             
+                              
                               <td className="p-2 text-sm text-gray-400 text-left pl-5">
-                                {item.transferData.fromAddress.substring(0, 6) + '...' + item.transferData.fromAddress.substring(item.transferData.fromAddress.length - 4, item.transferData.fromAddress.length)}
+                                {item?.sellOrder ?
+                                  item.sellOrder?.nickName + ' (거래번호#' + item.sellOrder?.tradeId + ' 에스크로지갑)'
+                                  :
+                                  item.transferData.fromAddress.substring(0, 6) + '...' + item.transferData.fromAddress.substring(item.transferData.fromAddress.length - 4, item.transferData.fromAddress.length)}
                               </td>
+
                               <td className="p-2 text-sm text-gray-400 text-left pl-5">
                                 {item.transferData.toAddress.substring(0, 6) + '...' + item.transferData.toAddress.substring(item.transferData.toAddress.length - 4, item.transferData.toAddress.length)}
                               </td>
