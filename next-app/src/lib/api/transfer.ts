@@ -137,6 +137,8 @@ export async function insertOne(data: any) {
                     telegramId: telegramId,
                     message: message,
                     timestamp: data.timestamp,
+
+                    userTransfer: response,
                 }
                 );
 

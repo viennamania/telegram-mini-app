@@ -1159,7 +1159,9 @@ function ProfilePage() {
                                             -
                                             </span>
                                         </th>
-                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">지갑주소</th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
+                                            상대방
+                                        </th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">수량(USDT)</th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">시간</th>
                                     </tr>
@@ -1177,12 +1179,50 @@ function ProfilePage() {
                                                 }
                                             </td>
                                             {transfer.sendOrReceive === "send" ? (
-                                                <td className="p-2 text-xs text-zinc-800">
-                                                    {shortenAddress(transfer.transferData.toAddress)}
+                                                <td className="p-2 text-sm text-zinc-800">
+                                                    {
+                                                        transfer?.otherUser?.nickname
+                                                        ? (
+                                                            <div className="flex flex-row gap-2 items-center justify-start">
+                                                                <Image
+                                                                    src={transfer?.otherUser?.avatar || "/profile-default.png"}
+                                                                    alt="Avatar"
+                                                                    width={30}
+                                                                    height={30}
+                                                                    className="rounded-full"
+                                                                />
+                                                                {transfer?.otherUser?.nickname}
+                                                            </div>
+                                                        )
+                                                        :
+                                                        transfer.transferData.toAddress.slice(0, 6) + '...'
+                                                    }
                                                 </td>
                                             ) : (
-                                                <td className="p-2 text-xs text-zinc-800">
-                                                    {shortenAddress(transfer.transferData.fromAddress)}
+                                                <td className="p-2 text-sm text-zinc-800">
+                                                    {
+                                                        transfer?.otherUser?.nickname
+                                                        ? (
+                                                            <div className="flex flex-row gap-2 items-center justify-start">
+                                                                <Image
+                                                                    src={transfer?.otherUser?.avatar || '/profile-default.png'}
+                                                                    alt="Avatar"
+                                                                    width={18}
+                                                                    height={18}
+                                                                    className="rounded-full"
+
+                                                                    style={{
+                                                                        objectFit: 'cover',
+                                                                    }}
+                                                                
+
+                                                                />
+                                                                {transfer?.otherUser?.nickname}
+                                                            </div>
+                                                        )
+                                                        :
+                                                        transfer.transferData.fromAddress.slice(0, 6) + '...'
+                                                    }
                                                 </td>
                                             )}
                                             {/* monospace font */}
