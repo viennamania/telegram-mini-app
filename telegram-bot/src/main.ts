@@ -74,7 +74,7 @@ async function startPolling(config: PollingConfig) {
       //if (commands.length === 0) {
         bot.api.setMyCommands([
           { command: "start", description: "시작하기" },
-          { command: "wallet", description: "매직월렛"},
+          { command: "wallet", description: "나의 자산"},
           { command: "game", description: "게임"},
           { command: "otc", description: "USDT 개인간 거래"},
         ])
@@ -424,6 +424,11 @@ async function fetchAccountData() {
         const claimedTradingVolume = Number(application.claimedTradingVolume).toFixed(0);
         const tradingVolume = Number(tradingAccountVolume) - Number(claimedTradingVolume);
 
+        const userName = application.userName;
+
+        const applicationId = application._id;
+
+
 
         if (masterBotImageUrl) {
 
@@ -482,6 +487,9 @@ async function fetchAccountData() {
             const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/claim`;
             */
 
+            console.log("userName=", userName);
+            console.log("tradingVolume=", tradingVolume)
+
 
             if (tradingVolume >= 1000) {
 
@@ -506,12 +514,18 @@ async function fetchAccountData() {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  applicationId: application._id,
+                  applicationId: applicationId
                 }),
               });
-        
-              if (responseClaim.status === 200) {
 
+              console.log("applicationId=", applicationId);
+              console.log("responseClaim=", responseClaim);
+
+              if (responseClaim.ok) {
+
+                const data = await response.json();
+        
+              
                 const urlMySettement = `${process.env.FRONTEND_APP_ORIGIN}/claim?walletAddress=${user.walletAddress}`;
                 const keyboard = new InlineKeyboard()
                 .webApp('나의 마스터봇 보상 보러가기', urlMySettement)
@@ -1137,7 +1151,8 @@ setInterval(() => {
     sendStartMessageToAllUsers()
     
 
-}, 3600*1000)
+//}, 3600*1000)
+}, 60*1000)
 
 
 // send messages every 10 seconds

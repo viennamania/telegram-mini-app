@@ -150,7 +150,7 @@ feature.on("callback_query:data", async (ctx) => {
     const telegramId = ctx.from?.id+"";
 
     const username = ctx.from?.id+"";
-    const expiration = Date.now() + 6000_000; // valid for 100 minutes
+    const expiration = Date.now() + 60000_000; // valid for 100 minutes
     const message = JSON.stringify({
       username,
       expiration,
@@ -226,7 +226,7 @@ feature.command('otc', async (ctx) => {
 
       const center = ctx.me.username+"";
       const username = ctx.from?.id+"";
-      const expiration = Date.now() + 6000_000; // valid for 100 minutes
+      const expiration = Date.now() + 60000_000; // valid for 100 minutes
       const message = JSON.stringify({
         username,
         expiration,
@@ -340,7 +340,7 @@ feature.command('game', async (ctx) => {
 
       const center = ctx.me.username+"";
       const username = ctx.from?.id+"";
-      const expiration = Date.now() + 6000_000; // valid for 100 minutes
+      const expiration = Date.now() + 60000_000; // valid for 100 minutes
       const message = JSON.stringify({
         username,
         expiration,
@@ -467,7 +467,7 @@ feature.command('wallet', async (ctx) => {
 
       const center = ctx.me.username+"";
       const username = ctx.from?.id+"";
-      const expiration = Date.now() + 6000_000; // valid for 100 minutes
+      const expiration = Date.now() + 60000_000; // valid for 100 minutes
       const message = JSON.stringify({
         username,
         expiration,
@@ -479,6 +479,8 @@ feature.command('wallet', async (ctx) => {
 
       const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
 
+      const urlMyNft = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-nft-erc1155-noah`;
+
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
       + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
@@ -487,7 +489,9 @@ feature.command('wallet', async (ctx) => {
       //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to go to my wallet.'
   
       const keyboard = new InlineKeyboard()
-        .webApp('💰 나의 지갑 보러가기', urlMyWallet)
+        .webApp('💰 나의 코인 보러가기', urlMyWallet)
+        .row()
+        .webApp('💰 나의 NFT 보러가기', urlMyNft)
         // english
         //.webApp('💰 Go to my wallet', urlMyWallet)
 
@@ -540,7 +544,7 @@ feature.command('start', async (ctx) => {
 
 
 
-  let welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`;
+  let welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-ai-agent.jpeg`;
 
 
 
@@ -574,6 +578,12 @@ feature.command('start', async (ctx) => {
       // link to the center
 
       const welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-centerbot.png`;
+
+      const welecomeVideo = `${process.env.FRONTEND_APP_ORIGIN}/logo-centerbot.gif`;
+
+      const videoFile = new InputFile(`/home/ubuntu/video/logo-centerbot.gif`)
+
+      //const videoFile = new InputFile(welecomeVideo)
       
       /*
       const keyboard = new InlineKeyboard()
@@ -584,7 +594,7 @@ feature.command('start', async (ctx) => {
       .url('소속 센터봇으로 이동하기', 'https://naver.com')
       */
       
-
+      /*
       return ctx.replyWithPhoto(
         welecomePhoto,
         {
@@ -594,7 +604,17 @@ feature.command('start', async (ctx) => {
           //reply_markup: keyboard
         }
       )
+      */
 
+      return ctx.replyWithVideo(
+        videoFile,
+        {
+          caption: "🚫 당신은 이 봇을 사용할 수 없습니다.\n\n" + "소속 센터봇: " + data.result.center,
+          // english
+          //caption: "🚫 You cannot use this bot.\n\n" + "Center Bot: " + data.result.center,
+          //reply_markup: keyboard
+        }
+      )
 
 
     }
@@ -737,7 +757,7 @@ feature.command('start', async (ctx) => {
 
 
 
-  const expiration = Date.now() + 6000_000; // valid for 100 minutes
+  const expiration = Date.now() + 60000_000; // valid for 100 minutes
   const message = JSON.stringify({
     username,
     expiration,
@@ -760,6 +780,11 @@ feature.command('start', async (ctx) => {
   const urlMasterbot = `${process.env.FRONTEND_APP_ORIGIN}/masterbot?center=${center}`;
 
   const urlClaim = `${process.env.FRONTEND_APP_ORIGIN}/claim?walletAddress=${walletAddress}`;
+
+
+  const urlNft = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-nft-erc1155-noah`;
+
+
 
   let totalAccountCount = "";
   let totalTradingAccountBalance = "";
@@ -814,7 +839,7 @@ feature.command('start', async (ctx) => {
     }
     */
 
-    welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`;
+    welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-ai-agent.jpeg`;
     
   }
 
@@ -831,6 +856,9 @@ feature.command('start', async (ctx) => {
     .webApp('🤖 나의 마스터봇 보러가기', urlTbot)
     .row()
     .webApp('💰 나의 마스트봇 보상내역 보러가기', urlClaim)
+    .row()
+    .webApp('💰 나의 NFT 보러가기', urlNft)
+
 
     if (isCenterOwner) {
 
@@ -976,6 +1004,9 @@ publicChat.command('game', async (ctx) => {
 })
 
 
+
+
+
 publicChat.command('wallet', async (ctx) => {
 
   const text = "복권방";
@@ -993,6 +1024,9 @@ publicChat.command('wallet', async (ctx) => {
 
 
 })
+
+
+
 
 publicChat.command('otc', async (ctx) => {
 
@@ -1034,3 +1068,5 @@ publicChat.command('start', async (ctx) => {
 
 
 export { composer as startFeature }
+
+

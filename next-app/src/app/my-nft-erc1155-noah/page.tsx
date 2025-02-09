@@ -654,14 +654,11 @@ function AgentPage() {
 
             const optionalData = '0x';
             const transaction = safeTransferFrom({
-                contract: contract,
+                contract: erc1155Contract,
                 from: address as string,
                 to: toAddress,
                 tokenId: BigInt(tokenId),
-
                 value: BigInt(sendAmount),
-
-
                 data: optionalData,
             });
 
