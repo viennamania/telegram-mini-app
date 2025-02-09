@@ -458,7 +458,7 @@ function AgentPage() {
                 spender: erc1155ContractAddress,
             });
 
-            console.log("result", result);
+            //console.log("result", result);
 
             if (result < 100) {
                 
@@ -512,7 +512,7 @@ function AgentPage() {
 
             setMessageClaimingNft('NFT 발행 완료');
 
-            alert('NFT 발행 완료');
+            //alert('NFT 발행 완료');
 
             
             // fetch the NFTs again
@@ -552,14 +552,14 @@ function AgentPage() {
             if (error instanceof Error) {
                 setMessageClaimingNft('NFT 발행 실패:' + error.message);
 
-                alert('NFT 발행 실패:' + error.message);
+                //alert('NFT 발행 실패:' + error.message);
 
                 // ERC20: transfer amount exceeds allowance
 
             } else {
                 setMessageClaimingNft('NFT 발행 실패: 알 수 없는 오류');
 
-                alert('NFT 발행 실패: 알 수 없는 오류');
+                //alert('NFT 발행 실패: 알 수 없는 오류');
             }
         }
 
@@ -1064,6 +1064,13 @@ function AgentPage() {
                                     {!claimingNft && '교환권 NFT 발행'}
                                 </div>
                             </button>
+                            
+                            {messageClaimingNft && (
+                                <span className="text-lg text-green-500 font-semibold">
+                                    {messageClaimingNft}
+                                </span>
+                            )}
+
                             <span className="text-lg text-zinc-400 font-semibold">
                                 교환권 NFT 발행은 100 USDT 당 1개씩 발행 가능합니다.
                             </span>
