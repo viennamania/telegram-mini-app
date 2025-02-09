@@ -869,7 +869,7 @@ export default function Index({ params }: any) {
 
     return (
 
-      <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto">
+      <main className="p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-2xl mx-auto">
 
         {/*
         <AutoConnect
@@ -1391,8 +1391,8 @@ export default function Index({ params }: any) {
 
                 ) : (
 
-                  <div className="w-full grid gap-4 lg:grid-cols-2 xl:grid-cols-3 justify-center
-                    mt-4 p-4
+                  <div className="w-full grid gap-4 lg:grid-cols-2 xl:grid-cols-4 justify-center
+                    mt-4 p-0
                   ">
 
                       {sellOrders.map((item, index) => (
