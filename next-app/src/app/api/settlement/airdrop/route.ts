@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
   const members = await getAllMembersByCenter({
     center: center,
     limit: 500,
-    page: 1,
+    page: 0,
   });
 
   if (!members) {

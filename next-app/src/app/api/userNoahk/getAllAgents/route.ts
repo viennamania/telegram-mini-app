@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
 
   const result = await getAllAgents({
     limit: 500,
-    page: 1,
+    page: 0,
   });
 
  

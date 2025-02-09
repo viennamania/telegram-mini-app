@@ -728,7 +728,7 @@ async function sendMessages() {
     body: JSON.stringify({
       center: center,
       limit: 10,
-      page: 1,
+      page: 0,
     }),
   });
 

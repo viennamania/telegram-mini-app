@@ -606,7 +606,7 @@ function ProfilePage() {
                 },
                 body: JSON.stringify({
                     limit: 10,
-                    page: 1,
+                    page: 0,
                     walletAddress: address,
                 }),
             });
@@ -618,7 +618,7 @@ function ProfilePage() {
 
             const data = await response.json();
 
-            console.log("getTransfers data", data);
+            //console.log("getTransfers data", data);
 
 
             if (data.result) {
@@ -897,9 +897,16 @@ function ProfilePage() {
                                 {/* send USDT */}
 
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        USDT 보내기
+                                    
+                                    <div className="flex flex-row gap-2 items-center justify-between">
+                                        {/* dot */}
+                                        <div className="bg-green-500 w-3 h-3 rounded-full"></div>
+                                        <span className="text-lg font-semibold text-zinc-800">
+                                            USDT 보내기
+                                        </span>
                                     </div>
+
+
                                     <div className='w-full flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                         <input
                                             disabled={sending}
@@ -1097,7 +1104,7 @@ function ProfilePage() {
                                     height={20}
                                     className="rounded"
                                 />
-                                <span className="text-lg font-semibold">
+                                <span className="text-sm font-semibold">
                                     폴리스캔에서 거래내역 보기
                                 </span>
                             </div>
@@ -1112,25 +1119,45 @@ function ProfilePage() {
                     {/* if transfers.sendReceive === send, then display "보내기" */}
                     {/* if transfers.sendReceive === receive, then display "받기" */}
                     
-                    {loadingTransfers && (
-                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                거래내역 로딩중...
-                            </div>
-                        </div>
-                    )}
+                    <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
 
-                    {transfers?.length > 0 && (
-                        <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                거래내역
-                            </div>
+
+                        <div className="w-full flex flex-row gap-2 items-center justify-start">
+                            {/* dot */}
+                            <div className="bg-green-500 w-3 h-3 rounded-full"></div>
+                            <span className="text-lg font-semibold text-zinc-800">
+                                최근 10개 거래내역
+                            </span>
+                        </div>
+
+
+                        {loadingTransfers && (
+                            <span className="text-sm text-zinc-800">
+                                거래내역 로딩중...
+                            </span>
+                        )}
+
+                        {!loadingTransfers && transfers?.length === 0 && (
+                            <span className="text-sm text-zinc-800">
+                                거래내역이 없습니다.
+                            </span>
+                        )}
+
+                        {!loadingTransfers && transfers?.length > 0 && (
 
                             <table className="w-full">
                                 <thead>
                                     <tr>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
-                                            +/-
+                                            <span className="text-green-500 text-sm font-semibold">
+                                            +
+                                            </span>
+                                            <span className="text-zinc-100 text-sm font-semibold">
+                                            /
+                                            </span>
+                                            <span className="text-red-500 text-sm font-semibold">
+                                            -
+                                            </span>
                                         </th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">지갑주소</th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">수량(USDT)</th>
@@ -1141,7 +1168,13 @@ function ProfilePage() {
                                     {transfers.map((transfer, index) => (
                                         <tr key={index}>
                                             <td className="p-2 text-lg text-zinc-800 font-semibold">
-                                                {transfer.sendOrReceive === "send" ? "-" : "+"}
+                                                {
+                                                    transfer.sendOrReceive === "send" ? (
+                                                        <span className="text-red-500">-</span>
+                                                    ) : (
+                                                        <span className="text-green-500">+</span>
+                                                    )
+                                                }
                                             </td>
                                             {transfer.sendOrReceive === "send" ? (
                                                 <td className="p-2 text-xs text-zinc-800">
@@ -1161,7 +1194,7 @@ function ProfilePage() {
                                                 {Number(transfer.transferData.value / 10 ** 6).toFixed(6)}
                                             </td>
                                             <td className="p-2 text-xs text-zinc-800 font-semibold text-right">
-                                           
+                                        
 
                                                 {
 
@@ -1218,14 +1251,13 @@ function ProfilePage() {
                                 </tbody>
                             </table>
 
-                        </div>
-                    ) }
+                        ) }
 
                     
 
 
 
-
+                    </div>
                     
                    
 

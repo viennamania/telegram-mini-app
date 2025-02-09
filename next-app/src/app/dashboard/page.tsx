@@ -213,7 +213,7 @@ function HomeContent() {
               },
               body: JSON.stringify({
                   limit: 100,
-                  page: 1,
+                  page: 0,
                   marketingCenter: marketingCenter,
               }),
           });
@@ -676,7 +676,7 @@ function HomeContent() {
                         },
                         body: JSON.stringify({
                             limit: 100,
-                            page: 1,
+                            page: 0,
                             marketingCenter: marketingCenter,
                         }),
                     });

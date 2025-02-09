@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   const result = await getSellTradesByWalletAddress({
     walletAddress: walletAddress,
     limit: 100,
-    page: 1,
+    page: 0,
   });
 
  

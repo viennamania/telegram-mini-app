@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   const result = await getMessagesByTelegramId({
     telemgramId,
     limit: 500,
-    page: 1,
+    page: 0,
   });
 
  

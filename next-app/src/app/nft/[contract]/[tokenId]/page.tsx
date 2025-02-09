@@ -368,7 +368,7 @@ export default function AgentPage({ params }: any) {
                   "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                  page: 1,
+                  page: 0,
                   limit: 10,
                   agentBot: agentContractAddress,
                   agentBotNumber: agentTokenId,
@@ -939,7 +939,7 @@ export default function AgentPage({ params }: any) {
             },
             body: JSON.stringify({
                 limit: 10,
-                page: 1,
+                page: 0,
                 walletAddress: holderWalletAddress,
             }),
         });

@@ -610,7 +610,7 @@ function ProfilePage() {
                 },
                 body: JSON.stringify({
                     limit: 10,
-                    page: 1,
+                    page: 0,
                     walletAddress: address,
                 }),
             });
@@ -782,7 +782,7 @@ function ProfilePage() {
                     },
                     body: JSON.stringify({
                         limit: 10,
-                        page: 1,
+                        page: 0,
                         walletAddress: address,
                     }),
                 });
@@ -928,7 +928,7 @@ function ProfilePage() {
                                                 },
                                                 body: JSON.stringify({
                                                     limit: 10,
-                                                    page: 1,
+                                                    page: 0,
                                                     walletAddress: address,
                                                 }),
                                             });

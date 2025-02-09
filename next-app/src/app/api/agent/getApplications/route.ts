@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       
       const result = await getAllAgentsForAILabs({
         limit: 1000,
-        page: 1,
+        page: 0,
       });
       
 

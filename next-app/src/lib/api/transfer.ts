@@ -76,14 +76,21 @@ export async function insertOne(data: any) {
     */
     const userFromAddress = await collectionUsers.findOne(
         { walletAddress: data.fromAddress },
-        { projection: { telegramId: 1, walletAddress: 1 } }
+        //{ projection: { telegramId: 1, walletAddress: 1 } }
     )
+
+    const userToAddress = await collectionUsers.findOne(
+        { walletAddress: data.toAddress },
+        //{ projection: { telegramId: 1, walletAddress: 1, center: 1 } }
+    )
+
 
     if (userFromAddress && userFromAddress.walletAddress) {
         
         await collectionUserTransfers.insertOne(
         {
             user: userFromAddress,
+            otherUser: userToAddress,
             sendOrReceive: "send",
             transferData: transferData,
         }
@@ -94,16 +101,14 @@ export async function insertOne(data: any) {
 
 
 
-    const userToAddress = await collectionUsers.findOne(
-        { walletAddress: data.toAddress },
-        { projection: { telegramId: 1, walletAddress: 1, center: 1 } }
-    )
+
 
     if (userToAddress && userToAddress.walletAddress) {
 
         const response = await collectionUserTransfers.insertOne(
         {
             user: userToAddress,
+            otherUser: userFromAddress,
             sendOrReceive: "receive",
             transferData: transferData,
         }

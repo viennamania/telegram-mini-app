@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
   const members = await getAllMembersByMarketingCenter({
     marketingCenter: marketingCenter,
     limit: 500,
-    page: 1,
+    page: 0,
   });
 
   if (!members) {

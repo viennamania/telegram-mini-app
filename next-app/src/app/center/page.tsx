@@ -331,7 +331,7 @@ function AgentPage() {
             },
             body: JSON.stringify({
                 limit: 100,
-                page: 1,
+                page: 0,
                 walletAddress: address,
             }),
         });

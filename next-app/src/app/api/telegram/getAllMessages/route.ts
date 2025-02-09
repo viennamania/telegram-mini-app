@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
   const result = await getAllMessages({
     center,
     limit: 500,
-    page: 1,
+    page: 0,
   });
 
  

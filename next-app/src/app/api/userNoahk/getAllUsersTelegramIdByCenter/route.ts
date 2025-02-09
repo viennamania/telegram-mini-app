@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
 
   const result = await getAllUsersTelegramIdByCenter({
     limit: 100,
-    page: 1,
+    page: 0,
     center,
     searchNickname,
   });

@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
     {
       walletAddress: walletAddress,
       limit: 300,
-      page: 1,
+      page: 0,
     }
   );
 
