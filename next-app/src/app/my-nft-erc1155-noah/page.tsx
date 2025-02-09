@@ -510,28 +510,18 @@ function AgentPage() {
 
             alert('NFT 발행 완료');
 
-            /*
+            
             // fetch the NFTs again
-            const response = await fetch("/api/nftNoah/getNFTByWalletAddress", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    tokenId: tokenId,
-                    walletAddress: address,
-                }),
+            setLoadingOwnedNfts(true);
+            const nfts = await getOwnedNFTs({
+                contract: erc1155Contract,
+                start: 0,
+                count: 10,
+                address: address as string,
             });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.result) {
-                    setMyNfts(data.result.ownedNfts);
-                } else {
-                    setMyNfts([]);
-                }
-            }
-            */
+            setOwnedNfts(nfts);
+            setLoadingOwnedNfts(false);
+            
 
 
         } catch (error) {
@@ -571,9 +561,8 @@ function AgentPage() {
 
     useEffect(() => {
         const fetchOwnedNFTs = async () => {
+
             setLoadingOwnedNfts(true);
-
-
             const contractErc1155 = getContract({
                 client,
                 chain: polygon,
@@ -588,6 +577,7 @@ function AgentPage() {
             });
             setOwnedNfts(nfts);
             setLoadingOwnedNfts(false);
+
         };
 
         if (address) {
