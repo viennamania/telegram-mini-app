@@ -1085,7 +1085,7 @@ export default function Index({ params }: any) {
                               
                               <td className="p-2 text-sm text-gray-400 text-left pl-5">
                                 {item?.sellOrder ? (
-                                  <span className="text-sm text-green-500">
+                                  <span className="text-sm text-yellow-500">
                                     {
                                   '판매자: '
                                   + item.sellOrder?.nickname
