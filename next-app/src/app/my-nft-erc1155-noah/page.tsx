@@ -1176,15 +1176,20 @@ function AgentPage() {
                                     onClick={() => {
                                         window.open('https://opensea.io/assets/matic/' + erc721ContractAddress);
                                     }}
-                                    className="p-2 rounded hover:bg-gray-300"
+                                    className="bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold"
                                 >
-                                    <Image
-                                        src="/logo-opensea.png"
-                                        alt="OpenSea"
-                                        width={30}
-                                        height={30}
-                                        className="rounded-lg"
-                                    />
+                                    <div className="flex flex-row gap-2 items-center justify-center">
+                                        <Image
+                                            src="/logo-opensea.png"
+                                            alt="OpenSea"
+                                            width={30}
+                                            height={30}
+                                            className="rounded-lg"
+                                        />
+                                        <span className="text-sm font-semibold">
+                                            오픈씨에서 보기
+                                        </span>
+                                    </div>
                                 </button>
                                 
 
