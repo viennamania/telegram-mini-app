@@ -1432,9 +1432,25 @@ function AgentPage() {
                                                 </span>
                                             </div>
 
+                                            {/*
+                                            교환권 NFT를 전송하면 소유자의 모든 권리를 이전하는 것에 동의하는 것입니다.
+                                            */}
+                                            <div className="w-full flex flex-col gap-2 items-start justify-between">
+                                                {/* dot */}
+                                                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                                                <span className="text-sm text-red-500 font-semibold">
+                                                    교환권 NFT를 전송하면 소유자의 모든 권리를 이전하는 것에 동의하는 것입니다.
+                                                </span>
+                                            </div>
+
+
                                             <span className="text-lg text-zinc-400 font-semibold">
-                                                교환권 NFT를 전송받을 주소를 입력하세요.
+                                                교환권 NFT를 전송받을 주소와 수량을 입력하세요.
                                             </span>
+
+
+
+
                                             <input
                                                 className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
                                                 placeholder="주소"
@@ -1496,7 +1512,7 @@ function AgentPage() {
                                                         />
                                                     )}
                                                     {transferringNft && '교환권 NFT 전송중...'}
-                                                    {!transferringNft && '교환권 NFT 전송'}
+                                                    {!transferringNft && '교환권 NFT 전송하기'}
                                                 </div>
                                             </button>
 
