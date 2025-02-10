@@ -1403,8 +1403,8 @@ function AgentPage() {
                                                 <video
                                                     src={
                                                         nft.metadata?.animation_url.startsWith('ipfs://') ?
-                                                        'https://ipfs.io/ipfs/' + nft?.raw?.metadata?.animation_url.slice(7) :
-                                                        nft?.raw?.metadata?.animation_url
+                                                        'https://ipfs.io/ipfs/' + nft.metadata?.animation_url.slice(7) :
+                                                        nft.metadata?.animation_url
                                                     }
                                                     autoPlay
                                                     loop
