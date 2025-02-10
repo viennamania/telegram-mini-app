@@ -1095,7 +1095,7 @@ function AgentPage() {
 
                     {/* title */}
                     <div className="text-2xl font-semibold text-zinc-100">
-                        나의 NOAH-K 교환권 NFT
+                        나의 NOAH 채굴 NFT
                     </div>
                 </div>
         
@@ -1444,7 +1444,7 @@ function AgentPage() {
                                 {loadingMyNfts && (
                                     <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                         <span className='text-lg font-semibold text-green-500'>
-                                            NOAH-K 교환권 NFT를 불러오는 중입니다.
+                                            NOAH 채굴 NFT를 불러오는 중입니다.
                                         </span>
                                     </div>
                                 )}
@@ -1454,7 +1454,7 @@ function AgentPage() {
                                 {address && myNfts.length === 0 && (
                                     <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                         <span className='text-lg font-semibold text-red-500'>
-                                            NOAH-K 교환권 NFT를 보유하고 있지 않습니다.
+                                            NOAH 채굴 NFT를 보유하고 있지 않습니다.
                                         </span>
                                     </div>
                                 )}
