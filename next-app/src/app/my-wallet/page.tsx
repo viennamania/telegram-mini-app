@@ -1220,7 +1220,7 @@ function ProfilePage() {
                                                 </td>
                                             )}
                                             {/* monospace font */}
-                                            <td className="p-2 text-xl text-blue-500 text-right"
+                                            <td className="p-2 text-xl text-green-500 text-right"
                                                 style={{
                                                     fontFamily: 'monospace',
                                                 }}
