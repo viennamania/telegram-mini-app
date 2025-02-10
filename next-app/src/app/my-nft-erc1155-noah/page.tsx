@@ -908,6 +908,9 @@ function AgentPage() {
                             border border-gray-200
                             p-4 rounded-lg">
 
+                            
+                            
+                            
                             <div className='w-full flex flex-row gap-2 items-center justify-between'>
 
                                 <Image
@@ -939,6 +942,8 @@ function AgentPage() {
 
                                 </div>
                             </div>
+
+
 
                             {/* 전송내역 (최신 5개) */}
                             {loadingTransfers && (

@@ -780,11 +780,11 @@ function ProfilePage() {
         
  
 
-                <div className="flex flex-col items-start justify-center space-y-4">
+                <div className="w-full flex flex-col items-start justify-center space-y-4">
 
-                    <div className="flex justify-center mt-5">
+                    <div className="w-full flex justify-center mt-5">
                         {address ? (
-                            <div className="flex flex-row gap-2 items-center justify-between">
+                            <div className="w-full flex flex-row gap-2 items-center justify-between">
 
                                 <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
                                     <Image
@@ -811,20 +811,6 @@ function ProfilePage() {
                                     className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                                 >
                                     복사
-                                </Button>
-
-                                {/* polygon scan */}
-                                <Button
-                                    onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
-                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                                >
-                                    <Image
-                                        src="/logo-polygon.png"
-                                        alt="Polygon"
-                                        width={20}
-                                        height={20}
-                                        className="rounded"
-                                    />
                                 </Button>
                                 
                             </div>
@@ -869,9 +855,9 @@ function ProfilePage() {
 
                             <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
-                                <div className='w-full flex flex-row gap-2 items-center justify-between
-                                    border border-gray-800
-                                    p-4 rounded-lg'>
+                                
+                                
+                                <div className='w-full flex flex-row gap-2 items-center justify-between'>
 
                                     <Image
                                         src="/logo-tether.png"
@@ -882,17 +868,30 @@ function ProfilePage() {
                                     />                                
 
 
-                                    <div className="flex flex-row gap-2 items-center justify-between">
+                                    <div className="flex flex-row gap-2 items-end justify-between">
 
-                                        <span className="p-2 text-green-500 text-4xl font-semibold"> 
-                                            {
-                                                Number(balance).toFixed(6)
-                                            }
+                                        <div className="flex flex-row items-end justify-start">
+                                            <span className="text-4xl text-green-500 font-semibold">
+                                                {
+                                                    Number(balance).toFixed(6).split('.')[0]
+                                                }.
+                                            </span>
+                                            <span className="text-2xl text-green-500 font-semibold">
+                                                {
+                                                    Number(balance).toFixed(6).split('.')[1]
+                                                }
+                                            </span>
+                                        </div>
+                                        <span className="text-green-500 text-2xl font-semibold">
+                                            USDT
                                         </span>
-                                        <span className="p-2 text-gray-500 text-lg font-semibold">USDT</span>
 
                                     </div>
                                 </div>
+
+
+
+
 
                                 {/* send USDT */}
 
