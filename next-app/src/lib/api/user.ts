@@ -522,7 +522,7 @@ export async function getAllUsers(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       },
       
     )
@@ -641,7 +641,7 @@ export async function getAllUsersTelegramIdByCenter(
       $limit: limit,
     },
     {
-      $skip: (page - 1) * limit,
+      $skip: page * limit,
     },
     // order by createdAt desc
     {
@@ -661,7 +661,7 @@ export async function getAllUsersTelegramIdByCenter(
 export async function getAllMembersByCenter(
   {
     limit = 100,
-    page = 1,
+    page = 0,
     center,
   }: {
     limit: number;
@@ -705,7 +705,7 @@ export async function getAllMembersByCenter(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       }, 
     ).toArray();
 
@@ -724,7 +724,7 @@ export async function getAllMembersByCenter(
 export async function getAllMembersByMarketingCenter(
   {
     limit = 100,
-    page = 1,
+    page = 0,
     marketingCenter,
   }: {
     limit: number;
@@ -753,7 +753,7 @@ export async function getAllMembersByMarketingCenter(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       }, 
     ).toArray();
 
@@ -801,7 +801,7 @@ export async function getBestSellers(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       },
       
     )
@@ -1131,7 +1131,7 @@ export async function getAllUsersForSettlement(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       },
       
     )
@@ -1189,7 +1189,7 @@ export async function getAllUsersForSettlementOfStore(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       },
       
     )
@@ -1271,7 +1271,7 @@ export async function getAllUsersForSettlementOfFee(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       },
       
     )
@@ -1400,7 +1400,7 @@ export async function setMasterBotContractAddressByWalletAddress(
 export async function getAllAgents(
   {
     limit = 100,
-    page = 1,
+    page = 0,
   }: {
     limit: number;
     page: number;
@@ -1442,7 +1442,7 @@ export async function getAllAgents(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       },
       
     )
@@ -1502,7 +1502,7 @@ export async function getAllErc721ContractAddresses(): Promise<string[]> {
 export async function getAllCenters(
   {
     limit = 100,
-    page = 1,
+    page = 0,
     marketingCenter = null,
   }: {
     limit: number;
@@ -1545,7 +1545,7 @@ export async function getAllCenters(
         $limit: limit,
       },
       {
-        $skip: (page - 1) * limit,
+        $skip: page * limit,
       }
     ])
     .toArray();

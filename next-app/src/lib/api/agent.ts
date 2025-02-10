@@ -134,7 +134,7 @@ export async function insertOne(data: any) {
 
 // getAllAgents
 // sort by createdAt desc
-export async function getAllAgents({ page = 1, limit = 100 }) {
+export async function getAllAgents({ page = 0, limit = 100 }) {
 
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('agents');
@@ -158,7 +158,7 @@ export async function getAllAgents({ page = 1, limit = 100 }) {
 
     {
       sort: { createdAt: -1 },
-      skip: (page - 1) * limit,
+      skip: page * limit,
       limit: limit,
     }
   ).toArray();
@@ -182,7 +182,7 @@ export async function getAllAgents({ page = 1, limit = 100 }) {
 
 // getAllAgents
 // sort by createdAt desc
-export async function getAllAgentsForAILabs({ page = 1, limit = 100 }) {
+export async function getAllAgentsForAILabs({ page = 0, limit = 100 }) {
 
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('agents');
@@ -195,7 +195,7 @@ export async function getAllAgentsForAILabs({ page = 1, limit = 100 }) {
         }
       },
       {
-        $skip: (page - 1) * limit,
+        $skip: page * limit,
       },
       {
         $limit: limit,
@@ -273,7 +273,7 @@ export async function getMyReferAgents(
       }
     },
     {
-      $skip: (page - 1) * limit,
+      $skip: page * limit,
     },
     {
       $limit: limit,

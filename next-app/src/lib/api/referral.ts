@@ -491,7 +491,7 @@ export async function getAllUsers(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       },
       
     )
@@ -562,7 +562,7 @@ export async function getAllUsersTelegramIdByCenter(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       }, 
     ).toArray();
 
@@ -614,7 +614,7 @@ export async function getBestSellers(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       },
       
     )
@@ -928,7 +928,7 @@ export async function getAllUsersForSettlement(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       },
       
     )
@@ -986,7 +986,7 @@ export async function getAllUsersForSettlementOfStore(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       },
       
     )
@@ -1068,7 +1068,7 @@ export async function getAllUsersForSettlementOfFee(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       },
       
     )
@@ -1197,7 +1197,7 @@ export async function setMasterBotContractAddressByWalletAddress(
 export async function getAllAgents(
   {
     limit = 100,
-    page = 1,
+    page = 0,
   }: {
     limit: number;
     page: number;
@@ -1239,7 +1239,7 @@ export async function getAllAgents(
       },
       {
         limit: limit,
-        skip: (page - 1) * limit,
+        skip: page * limit,
       },
       
     )

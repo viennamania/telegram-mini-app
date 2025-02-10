@@ -461,13 +461,14 @@ function HomeContent() {
 
       if (!response.ok) {
           console.error("Error sending");
+          alert("전송에 실패했습니다.");
           setLoadingSend(false);
           return;
       }
 
       const data = await response.json();
 
-      console.log("send data", data);
+      //console.log("send data", data);
 
       if (data?.result) {
           alert("전송이 완료되었습니다.");
