@@ -467,7 +467,7 @@ function AgentPage() {
 
             if (allowanceAmount < price * 10 ** 6) {
                 
-                //throw new Error('USDT 토큰을 먼저 채굴 NFT 발행 계약에 승인해주세요');
+                //throw new Error('USDT 토큰을 먼저 채굴 NFT 구매신청 계약에 승인해주세요');
 
                 // approve
 
@@ -483,7 +483,7 @@ function AgentPage() {
                 });
 
                 if (!transactionResultApprove) {
-                    throw new Error('USDT 토큰을 먼저 채굴 NFT 발행 계약에 승인해주세요.');
+                    throw new Error('USDT 토큰을 먼저 채굴 NFT 구매신청 계약에 승인해주세요.');
                 }
 
             }
@@ -902,7 +902,7 @@ function AgentPage() {
 
 
                     {/* usdt balance */}
-                    {address && (
+                    {/*address && (
 
                         <div className="w-full flex flex-col gap-2 items-center justify-between
                             border border-gray-200
@@ -943,9 +943,6 @@ function AgentPage() {
                                 </div>
                             </div>
 
-
-
-                            {/* 전송내역 (최신 5개) */}
                             {loadingTransfers && (
                                 <div className="flex flex-row gap-2 items-center justify-center">
                                     <Image
@@ -993,7 +990,7 @@ function AgentPage() {
                                                 {transfer.sendOrReceive === 'send' && (
                                                     <div className="w-20 flex flex-row gap-2 items-center justify-between">
                                                         <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                                                        {/* otherUser?.avatar */}
+
                                                         {transfer?.otherUser?.avatar && (
                                                             <Image
                                                                 src={transfer.otherUser.avatar}
@@ -1011,7 +1008,7 @@ function AgentPage() {
                                                 {transfer.sendOrReceive === 'receive' && (
                                                     <div className=" w-20 flex flex-row gap-2 items-center justify-between">
                                                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                                        {/* otherUser?.avatar */}
+ 
                                                         {transfer?.otherUser?.avatar && (
                                                             <Image
                                                                 src={transfer.otherUser.avatar}
@@ -1061,7 +1058,7 @@ function AgentPage() {
 
 
                         </div>
-                    )}
+                    )/*}
 
                 
 
@@ -1077,11 +1074,11 @@ function AgentPage() {
                                 {/* dot */}
                                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                 <div className="text-sm text-zinc-100 font-semibold">
-                                    채굴 NFT 발행
+                                    채굴 NFT 구매신청
                                 </div>
                             </div>
                             <span className="text-lg text-zinc-400 font-semibold">
-                                채굴 NFT를 발행받을려면 아래 버튼을 클릭하세요.
+                                채굴 NFT를 구매하려면 아래 버튼을 클릭하세요.
                             </span>
                             <button
                                 disabled={claimingNft}
@@ -1104,8 +1101,8 @@ function AgentPage() {
                                             className="animate-spin"
                                         />
                                     )}
-                                    {claimingNft && '채굴 NFT 발행중...'}
-                                    {!claimingNft && '채굴 NFT 발행하기'}
+                                    {claimingNft && '채굴 NFT 구매신청중...'}
+                                    {!claimingNft && '채굴 NFT 구매신청하기'}
                                 </div>
                             </button>
                             
@@ -1116,7 +1113,7 @@ function AgentPage() {
                             )}
 
                             <span className="text-lg text-zinc-400 font-semibold">
-                                채굴 NFT 발행은 100 USDT 당 1개씩 발행 가능합니다.
+                                채굴 NFT 구매신청은 100 USDT 당 1개씩 발행 가능합니다.
                             </span>
                         </div>
                     )}

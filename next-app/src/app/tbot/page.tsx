@@ -2996,16 +2996,16 @@ function HomeContent() {
                         '>
 
                             <div
-                            className={`flex flex-col gap-2
-                                p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
-                                ${selectedMasterBot === 0 ? 'border-blue-500' : 'border-gray-300'}
-                            `}
-                            onClick={() => {
-                                setSelectedMasterBot(0);
-                                setMasterBotPrice(
-                                    363 * usdKrwExchangeRate
-                                );
-                            } }
+                                className={`flex flex-col gap-2
+                                    p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
+                                    ${selectedMasterBot === 0 ? 'border-blue-500' : 'border-gray-300'}
+                                `}
+                                onClick={() => {
+                                    setSelectedMasterBot(0);
+                                    setMasterBotPrice(
+                                        363 * usdKrwExchangeRate
+                                    );
+                                } }
                             >
                                 <Image
                                     src="/logo-mbot-upgrade.png"
@@ -3032,16 +3032,17 @@ function HomeContent() {
                                     }(vat 포함)
                                 </span>
                             </div> 
+                            
                             <div className={`flex flex-col gap-2
                                 p-4 rounded-lg border-2 hover:shadow-lg hover:bg-gray-100
                                 ${selectedMasterBot === 1 ? 'border-blue-500' : 'border-gray-300'}
-                            `}
-                            onClick={() => {
-                                setSelectedMasterBot(1);
-                                setMasterBotPrice(
-                                    605 * usdKrwExchangeRate
-                                );
-                            } }
+                                `}
+                                onClick={() => {
+                                    setSelectedMasterBot(1);
+                                    setMasterBotPrice(
+                                        605 * usdKrwExchangeRate
+                                    );
+                                } }
                             >
                                 <Image
                                     src="/logo-mbot-upgrade.png"
