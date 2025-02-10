@@ -119,7 +119,7 @@ function AgentPage() {
 
 
 
-
+    const buyPrice = 179025;
 
 
 
@@ -429,6 +429,11 @@ function AgentPage() {
             return;
         }
 
+        alert(
+            "NFT 구매신청을 완료했습니다."
+        )
+
+        /*
         if (balance < 100) {
             //toast.error('USDT 잔액이 부족합니다');
             setMessageClaimingNft('USDT 잔액이 부족합니다.');
@@ -571,6 +576,8 @@ function AgentPage() {
         }
 
         setClaimingNft(false);
+        
+        */
 
 
     }
@@ -1083,7 +1090,7 @@ function AgentPage() {
                             <button
                                 disabled={claimingNft}
                                 onClick={() =>
-                                    confirm("채굴 NFT를 발행하시겠습니까?") &&
+                                    confirm("채굴 NFT를 구매신청하시겠습니까?") &&
                                     claimNft(erc1155ContractAddress, "0"
                                 )}
                                 className={`
@@ -1112,8 +1119,21 @@ function AgentPage() {
                                 </span>
                             )}
 
-                            <span className="text-lg text-zinc-400 font-semibold">
-                                채굴 NFT 구매신청은 100 USDT 당 1개씩 발행 가능합니다.
+                            <span className="text-xl text-yellow-500 font-semibold">
+                                
+                                {/*채굴 NFT 구매신청은 100 USDT 당 1개씩 발행 가능합니다.*/}
+
+                                {/* KRW */}
+                                100 NOAH 채굴 NFT 판매금액은 ₩{
+                                Number(buyPrice).toLocaleString(
+
+                                    //navigator.language
+                                    'ko-KR'
+                                )
+
+
+                                } 입니다.
+
                             </span>
                         </div>
                     )}
