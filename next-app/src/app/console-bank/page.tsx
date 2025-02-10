@@ -918,9 +918,9 @@ function HomeContent() {
                                               스타이움엑스 (가상)
                                             </>
                                           ) : (
-                                            <>
+                                            <span className="text-red-500">
                                             가상계좌 없음
-                                            </>
+                                            </span>
                                           )
                                         }
                                       </span>
