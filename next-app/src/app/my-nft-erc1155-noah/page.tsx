@@ -994,14 +994,14 @@ function AgentPage() {
                                                     </div>
                                                 )}
                                                 {transfer.sendOrReceive === 'receive' && (
-                                                    <div className="w-20 flex flex-row gap-2 items-center justify-between">
+                                                    <div className=" w-20 flex flex-row gap-2 items-center justify-between">
                                                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                                         <span className="text-sm text-green-500">
                                                             받기
                                                         </span>
                                                     </div>
                                                 )}
-                                                <span className="w-20 text-sm text-zinc-100 text-right">
+                                                <span className="w-28 text-sm text-zinc-100 text-right">
                                                     {
                                                         transfer.transferData.value / 10 ** 6
                                                     } USDT
