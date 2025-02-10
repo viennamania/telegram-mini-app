@@ -463,7 +463,9 @@ function AgentPage() {
             //console.log("result", result);
             allowanceAmount = Number(result);
 
-            if (allowanceAmount < 100) {
+            const price = 100;
+
+            if (allowanceAmount < price * 10 ** 6) {
                 
                 //throw new Error('USDT 토큰을 먼저 채굴 NFT 발행 계약에 승인해주세요');
 
@@ -472,7 +474,7 @@ function AgentPage() {
                 const transactionApprove = approve({
                     contract: contract,
                     spender: erc1155ContractAddress,
-                    amount: 100,
+                    amount: price * 10 ** 6,
                 });
 
                 const transactionResultApprove = await sendAndConfirmTransaction({
@@ -555,7 +557,7 @@ function AgentPage() {
 
             if (error instanceof Error) {
                 setMessageClaimingNft('NFT 발행 실패:' + error.message
-                    + "allowanceAmount: " + allowanceAmount);
+                    + " allowanceAmount: " + allowanceAmount);
 
                 //alert('NFT 발행 실패:' + error.message);
 
