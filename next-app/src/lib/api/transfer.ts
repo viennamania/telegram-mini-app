@@ -116,7 +116,16 @@ export async function insertOne(data: any) {
 
 
 
+
+
         if (response) {
+
+            // get one userTransfer by response.insertedId
+            const userTransfer = await collectionUserTransfers.findOne(
+                { _id: response.insertedId }
+            );
+
+
 
             const telegramId = userToAddress.telegramId;
             const center = userToAddress.center;
@@ -138,7 +147,7 @@ export async function insertOne(data: any) {
                     message: message,
                     timestamp: data.timestamp,
 
-                    userTransfer: response,
+                    ///userTransfer: response, => error
                 }
                 );
 
