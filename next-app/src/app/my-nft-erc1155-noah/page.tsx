@@ -544,6 +544,7 @@ function AgentPage() {
                 const data = await response.json();
                 setTransfers(data.result?.transfers);
             }
+            setLoadingTransfers(false);
             
 
 
