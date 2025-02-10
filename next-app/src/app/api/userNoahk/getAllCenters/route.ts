@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
   const result = await getAllCenters({
     limit: limit || 100,
-    page: page || 1,
+    page: page || 0,
     marketingCenter: marketingCenter || null
   });
 

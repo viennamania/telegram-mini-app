@@ -676,6 +676,10 @@ export async function getAllMembersByCenter(
     return null;
   }
 
+  //console.log('getAllMembersByCenter limit: ' + limit);
+  //console.log('getAllMembersByCenter page: ' + page);
+
+
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('users');
 
