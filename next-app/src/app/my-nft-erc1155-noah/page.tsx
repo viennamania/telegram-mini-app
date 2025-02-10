@@ -1435,7 +1435,7 @@ function AgentPage() {
                                             {/*
                                             교환권 NFT를 전송하면 소유자의 모든 권리를 이전하는 것에 동의하는 것입니다.
                                             */}
-                                            <div className="w-full flex flex-col gap-2 items-start justify-between">
+                                            <div className="w-full flex flex-row gap-2 items-center justify-start">
                                                 {/* dot */}
                                                 <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                                                 <span className="text-sm text-red-500 font-semibold">
