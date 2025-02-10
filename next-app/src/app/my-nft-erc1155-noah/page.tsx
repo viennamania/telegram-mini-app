@@ -114,7 +114,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -769,7 +769,7 @@ function AgentPage() {
 
             const data = await response.json();
 
-            //console.log("data", data);
+            console.log("data", data);
 
             if (data.result) {
                 setTransfers(data.result?.transfers);
@@ -988,6 +988,16 @@ function AgentPage() {
                                                 {transfer.sendOrReceive === 'send' && (
                                                     <div className="w-20 flex flex-row gap-2 items-center justify-between">
                                                         <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                                                        {/* otherUser?.avatar */}
+                                                        {transfer?.otherUser?.avatar && (
+                                                            <Image
+                                                                src={transfer.otherUser.avatar}
+                                                                alt="Avatar"
+                                                                width={20}
+                                                                height={20}
+                                                                className="rounded"
+                                                            />
+                                                        )}
                                                         <span className="text-sm text-red-500">
                                                             보내기
                                                         </span>
@@ -996,6 +1006,16 @@ function AgentPage() {
                                                 {transfer.sendOrReceive === 'receive' && (
                                                     <div className=" w-20 flex flex-row gap-2 items-center justify-between">
                                                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                                        {/* otherUser?.avatar */}
+                                                        {transfer?.otherUser?.avatar && (
+                                                            <Image
+                                                                src={transfer.otherUser.avatar}
+                                                                alt="Avatar"
+                                                                width={20}
+                                                                height={20}
+                                                                className="rounded"
+                                                            />
+                                                        )}
                                                         <span className="text-sm text-green-500">
                                                             받기
                                                         </span>
