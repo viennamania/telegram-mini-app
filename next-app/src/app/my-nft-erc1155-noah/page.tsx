@@ -517,7 +517,7 @@ function AgentPage() {
 
             setMessageClaimingNft('NFT 발행을 완료했습니다.');
 
-            //alert('NFT 발행 완료');
+            alert('NFT 발행을 완료했습니다.');
 
             
             // fetch the NFTs again
@@ -679,9 +679,9 @@ function AgentPage() {
                 throw new Error('NFT 전송 실패. 관리자에게 문의해주세요.');
             }
 
-            setMessageTransferringNft('NFT 전송 완료');
+            setMessageTransferringNft('NFT 전송을 완ㄹ했습니다.');
 
-            //alert('NFT 전송 완료');
+            alert('NFT 전송을 완료했습니다.');
 
             setSendAmount('');
             setToAddress('');
