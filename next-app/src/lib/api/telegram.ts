@@ -97,7 +97,7 @@ export async function getAllMessages(data: any) {
     })
     .sort({ _id: -1 })
     .limit(limit)
-    .skip(limit * (page - 1))
+    .skip(limit * page)
     .toArray();
 
     // totalTelegramMessages

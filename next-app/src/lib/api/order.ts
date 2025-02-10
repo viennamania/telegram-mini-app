@@ -335,7 +335,7 @@ export async function getSellOrders(
     )
 
     .sort({ createdAt: -1 })
-    .limit(limit).skip((page - 1) * limit).toArray();
+    .limit(limit).skip(page * limit).toArray();
 
     return {
       totalCount: results.length,
@@ -356,7 +356,7 @@ export async function getSellOrders(
       
       //{ projection: { _id: 0, emailVerified: 0 } }
   
-    ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+    ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
   
     return {
       totalCount: results.length,
@@ -421,7 +421,7 @@ export async function getAllSellOrders(
 
     )
     .sort({ createdAt: -1 })
-    .limit(limit).skip((page - 1) * limit).toArray();
+    .limit(limit).skip(page * limit).toArray();
 
     // get total count of orders
     const totalCount = await collection.countDocuments(
@@ -445,7 +445,7 @@ export async function getAllSellOrders(
         status: status === 'all' ? { $ne: 'nothing' } : status,
       },
 
-    ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+    ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
 
     // get total count of orders
     const totalCount = await collection.countDocuments(
@@ -697,7 +697,7 @@ export async function getSellOrdersForBuyer(
       
       //{ projection: { _id: 0, emailVerified: 0 } }
 
-    ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+    ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
 
     return {
       totalCount: results.length,
@@ -718,7 +718,7 @@ export async function getSellOrdersForBuyer(
       
       //{ projection: { _id: 0, emailVerified: 0 } }
   
-    ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+    ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
   
     return {
       totalCount: results.length,
@@ -756,7 +756,7 @@ export async function getSellOrdersByWalletAddress(
 
   const results = await collection.find<UserProps>(
     { walletAddress: walletAddress },
-  ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+  ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
 
   return {
     totalCount: results.length,
@@ -1024,7 +1024,7 @@ export async function getTradesByWalletAddress(
 
     { 'buyer.walletAddress': walletAddress, tradeId: { $ne: null } },
 
-  ).sort({ acceptedAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+  ).sort({ acceptedAt: -1 }).limit(limit).skip(page * limit).toArray();
 
 
 
@@ -1076,7 +1076,7 @@ export async function getTradesByWalletAddressProcessing(
       status: { $ne: 'paymentConfirmed' },
     },
 
-  ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+  ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
 
 
   return {
@@ -1120,7 +1120,7 @@ export async function getSellTradesByWalletAddress(
 
     { 'walletAddress': walletAddress, tradeId: { $ne: null } },
 
-  ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+  ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
 
 
   return {
@@ -1167,7 +1167,7 @@ export async function getSellTradesByWalletAddressProcessing(
       status: { $ne: 'paymentConfirmed' },
     },
 
-  ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+  ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
 
 
   return {
@@ -1491,7 +1491,7 @@ export async function getBuyOrders(
     )
 
     .sort({ createdAt: -1 })
-    .limit(limit).skip((page - 1) * limit).toArray();
+    .limit(limit).skip(page * limit).toArray();
 
     return {
       totalCount: results.length,
@@ -1514,7 +1514,7 @@ export async function getBuyOrders(
       
       //{ projection: { _id: 0, emailVerified: 0 } }
   
-    ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+    ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
   
     return {
       totalCount: results.length,
@@ -1623,7 +1623,7 @@ export async function getBuyOrdersForSeller(
       
       //{ projection: { _id: 0, emailVerified: 0 } }
 
-    ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+    ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
 
     return {
       totalCount: results.length,
@@ -1644,7 +1644,7 @@ export async function getBuyOrdersForSeller(
       
       //{ projection: { _id: 0, emailVerified: 0 } }
   
-    ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+    ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
   
     return {
       totalCount: results.length,
@@ -2064,7 +2064,7 @@ export async function getOneBuyOrder(
     
     //{ projection: { _id: 0, emailVerified: 0 } }
 
-  ).sort({ createdAt: -1 }).limit(limit).skip((page - 1) * limit).toArray();
+  ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
 
 
 
