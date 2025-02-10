@@ -114,7 +114,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -853,15 +853,17 @@ function AgentPage() {
                     </div>
                 </div>
         
-                <div className="mt-5 flex flex-col items-start justify-center space-y-4">
+                <div className="w-full mt-5 flex flex-col items-start justify-center space-y-4">
 
                     
                     
-                    <div className="flex justify-center mt-5">
+                    <div className="w-full flex justify-center mt-5">
                         {address ? (
-                            <div className="flex flex-row gap-2 items-center justify-between">
+                            <div className="w-full flex flex-row gap-2 items-center justify-between">
 
-                                <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
+                                <div className="flex flex-col xl:flex-row items-center justify-start gap-5
+                                bg-white bg-opacity-90
+                                rounded-lg">
                                     <Image
                                     src="/icon-wallet-live.gif"
                                     alt="Wallet"
@@ -886,20 +888,6 @@ function AgentPage() {
                                     className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
                                 >
                                     복사
-                                </Button>
-
-                                {/* polygon scan */}
-                                <Button
-                                    onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
-                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                                >
-                                    <Image
-                                        src="/logo-polygon.png"
-                                        alt="Polygon"
-                                        width={20}
-                                        height={20}
-                                        className="rounded"
-                                    />
                                 </Button>
                                 
                             </div>
@@ -929,14 +917,21 @@ function AgentPage() {
                                 />                                
 
 
-                                <div className="flex flex-row gap-2 items-center justify-between">
+                                <div className="flex flex-row gap-2 items-end justify-between">
 
-                                    <span className="p-2 text-green-500 text-4xl font-semibold"> 
-                                        {
-                                            Number(balance).toFixed(6)
-                                        }
-                                    </span>
-                                    <span className="p-2 text-green-500 text-xl font-semibold">
+                                    <div className="flex flex-row items-end justify-start">
+                                        <span className="text-4xl text-green-500 font-semibold">
+                                            {
+                                                Number(balance).toFixed(6).split('.')[0]
+                                            }.
+                                        </span>
+                                        <span className="text-2xl text-green-500 font-semibold">
+                                            {
+                                                Number(balance).toFixed(6).split('.')[1]
+                                            }
+                                        </span>
+                                    </div>
+                                    <span className="text-green-500 text-2xl font-semibold">
                                         USDT
                                     </span>
 
@@ -989,7 +984,7 @@ function AgentPage() {
 
                                             <div className="flex flex-row gap-2 items-center justify-between">
                                                 {transfer.sendOrReceive === 'send' && (
-                                                    <div className="flex flex-row gap-2 items-center justify-between">
+                                                    <div className="w-20 flex flex-row gap-2 items-center justify-between">
                                                         <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                                                         <span className="text-sm text-red-500">
                                                             보내기
@@ -997,14 +992,14 @@ function AgentPage() {
                                                     </div>
                                                 )}
                                                 {transfer.sendOrReceive === 'receive' && (
-                                                    <div className="flex flex-row gap-2 items-center justify-between">
+                                                    <div className="w-20 flex flex-row gap-2 items-center justify-between">
                                                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                                         <span className="text-sm text-green-500">
                                                             받기
                                                         </span>
                                                     </div>
                                                 )}
-                                                <span className="text-sm text-zinc-100">
+                                                <span className="w-20 text-sm text-zinc-100 text-right">
                                                     {
                                                         transfer.transferData.value / 10 ** 6
                                                     } USDT
@@ -1015,7 +1010,18 @@ function AgentPage() {
                                                 <span className="text-sm text-zinc-100">
                                                     {
                                                         //transfer.transferData.timestamp
-                                                        new Date(transfer.transferData.timestamp).toLocaleString()
+                                                        //new Date(transfer.transferData.timestamp).toLocaleString()
+                                                        // time ago, just now, 1 minute ago, 1 hour ago, 1 day ago
+
+
+
+                                                        (new Date().getTime() - transfer.transferData.timestamp) / 1000 < 60 && ('방금')
+                                                        || (new Date().getTime() - transfer.transferData.timestamp) / 1000 / 60 < 60 && (Math.floor((new Date().getTime() - transfer.transferData.timestamp) / 1000 / 60) + '분 전')
+                                                        || (new Date().getTime() - transfer.transferData.timestamp) / 1000 / 60 / 60 < 24 && (Math.floor((new Date().getTime() - transfer.transferData.timestamp) / 1000 / 60 / 60) + '시간 전')
+                                                        || (new Date().getTime() - transfer.transferData.timestamp) / 1000 / 60 / 60 / 24 < 1 && (Math.floor((new Date().getTime() - transfer.transferData.timestamp) / 1000 / 60 / 60 / 24) + '일 전')
+                                                        || new Date(transfer.transferData.timestamp).toLocaleString()
+
+
                                                     }
                                                 </span>
                                             </div>
