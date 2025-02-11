@@ -590,10 +590,11 @@ function AgentPage() {
         )
         */
     {/* 결제계좌 */}
+    {/* NH 농협은행 301-0357-6583-41 온리윈 주식회사 */}
     const paymentInfo = {
-        bankName: "국민은행",
-        accountHolder: "김철수",
-        accountNumber: "123-456-7890",
+        bankName: "NH 농협은행",
+        accountHolder: "온리윈 주식회사",
+        accountNumber: "301-0357-6583-41",
     };
 
 
@@ -1512,6 +1513,10 @@ function AgentPage() {
                                                 }
                                             </span>
                                         </div>
+
+                                        
+
+
                                         {/* 구매신청한 NOAH 채굴 NFT */}
                                         {/* tokenId */}
                                         {/* 0 => noah-100-blue-mining.mp4 */}

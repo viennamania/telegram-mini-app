@@ -1433,20 +1433,13 @@ export async function getBuyOrdersByWalletAddress(
 
 // get buy orders order by createdAt desc
 export async function getBuyOrders(
-
   {
-
     limit,
     page,
-    walletAddress,
-    searchMyOrders,
   }: {
 
     limit: number;
     page: number;
-    walletAddress: string;
-    searchMyOrders: boolean;
-  
   }
 
 ): Promise<ResultProps> {
@@ -1455,39 +1448,13 @@ export async function getBuyOrders(
   const collection = client.db('shinemywinter').collection('buyordersNft');
 
 
-  // status is not 'paymentConfirmed'
-
-  // if searchMyOrders is true, get orders by wallet address is walletAddress
-  // else get all orders except paymentConfirmed
-  // sort status is accepted first, then createdAt desc
-
-  if (searchMyOrders) {
-
-    const results = await collection.find<BuyOrderProps>(
-
-      //{ walletAddress: walletAddress, status: { $ne: 'paymentConfirmed' } },
-      { walletAddress: walletAddress },
-      
-      //{ projection: { _id: 0, emailVerified: 0 } }
-
-    )
-
-    .sort({ createdAt: -1 })
-    .limit(limit).skip(page * limit).toArray();
-
-    return {
-      totalCount: results.length,
-      orders: results,
-    };
-
-  } else {
 
     const results = await collection.find<BuyOrderProps>(
       {
         //status: 'ordered',
   
         
-        status: { $ne: 'paymentConfirmed' },
+        //status: { $ne: 'paymentConfirmed' },
 
   
         // exclude private sale
@@ -1502,8 +1469,6 @@ export async function getBuyOrders(
       totalCount: results.length,
       orders: results,
     };
-
-  }
 
 
 }
@@ -1648,101 +1613,56 @@ export async function getBuyOrdersForSeller(
 // update order status to accepted
 
 export async function acceptBuyOrder(data: any) {
-  
-  ///console.log('acceptBuyOrder data: ' + JSON.stringify(data));
-
-  /*
-  acceptBuyOrder data: {"lang":"kr","chain":"polygon",
-  "orderId":"66cbe428254954dcc8929528",
-  "sellerWalletAddress":"0x919eB871C4F99b860Da992f51260790BF6dc25a7",
-  "sellerNickname":"",
-  "sellerAvatar":""}
-  */
 
 
+  //console.log('acceptBuyOrder data: ' + JSON.stringify(data));
 
 
-  if (!data.orderId || !data.sellerWalletAddress || !data.sellerMobile) {
+  if (!data.tradeId || !data.seler) {
     return null;
   }
 
-  const sellerMemo = data.sellerMemo || '';
-
-
-  const bankInfo = data?.seller?.bankInfo || {};
-
-
-  ///console.log('acceptBuyOrder bankInfo: ' + JSON.stringify(bankInfo));
-
-
-
-  /*
-    if (!data.walletAddress || !data.sellerStatus || !data.bankName || !data.accountNumber || !data.accountHolder) {
-    return null;
-  }
-
-  const seller = {
-    status: data.sellerStatus,
-    bankInfo: {
-      bankName: data.bankName,
-      accountNumber: data.accountNumber,
-      accountHolder: data.accountHolder,
-    }
-  };
-  */
-
-
-
+ 
 
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('buyordersNft');
 
-  // random number for tradeId
-  // 100000 ~ 999999 string
 
-  const tradeId = Math.floor(Math.random() * 900000) + 100000 + '';
+  const result = await collection.updateOne(
+    
+    { tradeId: data.tradeId, status: 'ordered' },
 
-
-
-  /*
-    const result = await collection.findOne<BuyOrderProps>(
-    { _id: new ObjectId(orderId) }
+    { $set: {
+      status: 'accepted',
+      acceptedAt: new Date().toISOString(),
+      seller: data.seller,
+    } }
   );
-  */
 
 
-  ///console.log('acceptSellOrder data.orderId: ' + data.orderId);
 
- 
+
   // *********************************************
   // update status to accepted if status is ordered
 
   // if status is not ordered, return null
   // check condition and update status to accepted
   // *********************************************
-
+  /*
   const result = await collection.findOneAndUpdate(
-    { _id: new ObjectId(data.orderId + ''), status: 'ordered' },
+    {
+      tradeId: tradeId,
+      status: 'ordered'
+    },
     { $set: {
       status: 'accepted',
       acceptedAt: new Date().toISOString(),
-      tradeId: tradeId,
       
-      seller: {
-        walletAddress: data.sellerWalletAddress,
-        nickname: data.sellerNickname,
-        avatar: data.sellerAvatar,
-        mobile: data.sellerMobile,
-        memo: sellerMemo,
-        bankInfo: bankInfo,
-
-      },
+      seller: data.seller,
 
     } }
   );
-
-
-
+  */
 
 
 
@@ -1751,11 +1671,10 @@ export async function acceptBuyOrder(data: any) {
   if (result) {
 
     const updated = await collection.findOne<BuyOrderProps>(
-      { _id: new ObjectId(data.orderId + '') }
+      { tradeId: data.tradeId }
     );
 
     ///console.log('acceptSellOrder updated: ' + JSON.stringify(updated));
-
 
 
     return updated;
