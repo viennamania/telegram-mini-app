@@ -20,6 +20,35 @@ export async function insertOne(data: any) {
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('games');
 
+
+  // check if latest data is within 30 seconds
+  // then return waiting message
+
+  // // within 30 seconds
+
+  const latestData = await collection.findOne({ walletAddress: data.walletAddress }, { sort: { createdAt: -1 } });
+
+
+  if (latestData) {
+    // within 30 seconds
+    if (
+      //isWithinOneMinute(latestData.createdAt)
+      new Date().getTime() - new Date(latestData.createdAt).getTime() < 30000
+    ) {
+  
+      return {
+        status: "waiting",
+        waitingTime: 30 - Math.floor((new Date().getTime() - new Date(latestData.createdAt).getTime()) / 1000),
+        data: {
+          message: "Please wait for 30 seconds before creating a new game"
+        }
+
+      };
+    }
+  }
+
+
+
   // insert sequence number for order by wallet address
 
   const sequence = await collection.countDocuments({ walletAddress: data.walletAddress });
@@ -40,7 +69,10 @@ export async function insertOne(data: any) {
   const insertedData = await collection.findOne({ _id: insertedId });
 
   if (insertedData) {
-    return insertedData;
+    return {
+      status: "success",
+      data: insertedData
+    };
   } else {
     return null;
   }
