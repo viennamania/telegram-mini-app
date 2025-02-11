@@ -429,7 +429,7 @@ function AgentPage() {
             return;
         }
 
-        if (balance < 115.5) {
+        if (balance < price) {
             //toast.error('USDT 잔액이 부족합니다');
             setMessageClaimingNft('USDT 잔액이 부족합니다.');
             return;
