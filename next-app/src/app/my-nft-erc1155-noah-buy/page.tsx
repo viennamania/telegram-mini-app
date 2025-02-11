@@ -1316,11 +1316,11 @@ function AgentPage() {
                             </div>
 
 
-                            <div className="w-full flex flex-row gap-2 items-center justify-between">
+                            <div className="w-full flex flex-row gap-2 items-center justify-start">
                                 {/* dot */}
                                 <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
 
-                                <span className="text-xl text-yellow-500 font-semibold">
+                                <span className="text-lg text-yellow-500 font-semibold">
                                     
                                     {/*채굴 NFT 구매신청은 100 USDT 당 1개씩 발행 가능합니다.*/}
 
@@ -1330,17 +1330,21 @@ function AgentPage() {
                                     || seletedTokenId === "3" && '1000 NOAH 채굴 NFT'
                                     || seletedTokenId === "4" && '5000 NOAH 채굴 NFT'
                                     || seletedTokenId === "5" && '10000 NOAH 채굴 NFT'
-                                    }{' '} 1개 판매금액은 ₩{
+                                    }{' '} 1개 판매금액
+                                </span>
+                            </div>
+
+                            <div className="w-full flex flex-row gap-2 items-center justify-between
+                                border border-zinc-400 text-yellow-500
+                                p-4 rounded-lg">
+                                {usdtPrice * (1 + fee)} USDT<br />
+                                ₩{
                                     Number(krwPrice).toLocaleString(
 
                                         //navigator.language
                                         'ko-KR'
                                     )
-
-
-                                    } 입니다.
-
-                                </span>
+                                }(VAT포함)
                             </div>
 
 
