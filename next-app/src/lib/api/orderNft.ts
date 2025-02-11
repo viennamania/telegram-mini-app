@@ -145,7 +145,7 @@ export async function insertSellOrder(data: any) {
   const userCollection = client.db('shinemywinter').collection('users');
 
 
-  const user = await userCollection.findOne<BuyOrderProps>(
+  const user = await userCollection.findOne<any>(
     { walletAddress: data.walletAddress },
     { projection: { _id: 0, emailVerified: 0 } }
   );
