@@ -30,17 +30,17 @@ export async function insertOne(data: any) {
 
 
   if (latestData) {
-    // within 30 seconds
+    // within 60 seconds
     if (
       //isWithinOneMinute(latestData.createdAt)
-      new Date().getTime() - new Date(latestData.createdAt).getTime() < 30000
+      new Date().getTime() - new Date(latestData.createdAt).getTime() < 60000
     ) {
   
       return {
         status: "waiting",
-        waitingTime: 30 - Math.floor((new Date().getTime() - new Date(latestData.createdAt).getTime()) / 1000),
+        waitingTime: 60 - Math.floor((new Date().getTime() - new Date(latestData.createdAt).getTime()) / 1000),
         data: {
-          message: "Please wait for 30 seconds before creating a new game"
+          message: "Please wait for 60 seconds before creating a new game"
         }
 
       };
