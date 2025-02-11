@@ -73,8 +73,11 @@ function ProfilePage() {
 
     const center = searchParams.get("center");
     
-    const telegramId = searchParams.get("telegramId");
+    //const telegramId = searchParams.get("telegramId");
 
+    const [telegramId, setTelegramId] = useState(
+        searchParams.get("telegramId") || ""
+    );
 
 
     const account = useActiveAccount();
@@ -95,7 +98,8 @@ function ProfilePage() {
   
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    
     ///const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
   
 
@@ -222,6 +226,7 @@ function ProfilePage() {
                 ///setTelegramId(data.result.telegramId);
 
                 if (data.result.telegramId) {
+                    setTelegramId(data.result.telegramId);
                     setIsValideTelegramId(true);
                 }
 
@@ -303,13 +308,13 @@ function ProfilePage() {
 
         if (editedNickname.length < 5 || editedNickname.length > 10) {
 
-            //toast.error("회원아이디은 5자 이상 10자 이하로 입력해주세요");
+            //toast.error("회원아이디는 5자 이상 10자 이하로 입력해주세요");
             return;
         }
         
         ///if (!/^[a-z0-9]*$/.test(nickname)) {
         if (!/^[a-z0-9]*$/.test(editedNickname)) {
-            //toast.error("회원아이디은 영문 소문자와 숫자만 입력해주세요");
+            //toast.error("회원아이디는 영문 소문자와 숫자만 입력해주세요");
             return;
         }
 
@@ -544,98 +549,6 @@ function ProfilePage() {
 
 
 
-   /* my NFTs */
-   const [myNfts, setMyNfts] = useState([] as any[]);
-
-
-   
-   useEffect(() => {
-
-
-       const getMyNFTs = async () => {
-
-            
-           try {
-
-                /*
-                const contract = getContract({
-                     client,
-                     chain: polygon,
-                     address: erc721ContractAddress,
-                });
-
-
-                
-                const nfts = await getOwnedNFTs({
-                    contract: contract,
-                    owner: address as string,
-                });
-
-                console.log("nfts=======", nfts);
-
-                setMyNfts( nfts );
-                */
-
-                /*
-                setMyNfts([
-                    {
-                         name: "AI Agent",
-                         description: "This is AI Agent",
-                         image: "https://owinwallet.com/logo-aiagent.png",
-                    },
-                ]);
-                */
-
-
-                // api /api/agent/getAgentNFTByWalletAddress
-
-                const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        walletAddress: address,
-                    }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to get NFTs');
-                }
-
-                const data = await response.json();
-
-                ///console.log("myOwnedNfts====", data.result);
-
-                if (data.result) {
-                    setMyNfts(data.result.ownedNfts);
-                } else {
-                    setMyNfts([]);
-                }
-                
-                   
-   
-
-
-           } catch (error) {
-               console.error("Error getting NFTs", error);
-           }
-           
-
-       };
-
-       if (address ) {
-           getMyNFTs();
-       }
-
-   }
-   , [ address ]);
-   
-
-
-   console.log("myNfts", myNfts);
-
-
 
 
     const [agentName, setAgentName] = useState("");
@@ -860,9 +773,22 @@ function ProfilePage() {
 
                 <div className="flex flex-col items-start justify-center space-y-4">
 
-                    <div className="flex justify-center mt-5">
+                    <div className="w-full flex justify-center mt-5">
                         {address ? (
-                            <div className="flex flex-row gap-2 items-center justify-between">
+                            <div className="w-full flex flex-row gap-2 items-center justify-between">
+
+                                <div className="flex flex-col xl:flex-row items-center justify-start gap-5
+                                bg-white bg-opacity-90
+                                rounded-lg">
+                                    <Image
+                                    src="/icon-wallet-live.gif"
+                                    alt="Wallet"
+                                    width={50}
+                                    height={25}
+                                    className="rounded"
+                                    />
+                                </div>
+
                                 
                                 <Button
                                     onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
@@ -891,15 +817,20 @@ function ProfilePage() {
 
 
                     {userCode && isValideTelegramId && (
-                        <div className='w-full flex flex-row gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                매직아이디(MID)
+                        <div className='w-full flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
+                            {/* dot */}
+                            <div className="flex flex-row gap-2 items-center justify-between">
+                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    텔레그램ID
+                                </span>
                             </div>
                             <div className='flex flex-row gap-2 items-center justify-between'>
                                 <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
                                     {telegramId}
                                 </div>
                             </div>
+
                             {/* 복사 버튼 */}
                             <button
                                 onClick={() => {
@@ -955,7 +886,7 @@ function ProfilePage() {
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                                 회원아이디을 저장하면 나의 소속 센터 봇이 설정됩니다
                             </div>
-                            <span className='text-xs font-semibold text-gray-500'>
+                            <span className='text-sm font-semibold text-gray-500'>
                                 회원아이디는 영문 소문자와 숫자로 5자 이상 10자 이하로 입력해주세요.
                             </span>
 
@@ -978,63 +909,86 @@ function ProfilePage() {
 
 
                         {address && userCode && (
-                            <div className='flex flex-row gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg'>
 
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    회원아이디
+                            <div className="w-full flex flex-col gap-5 items-start justify-between border border-gray-300 p-4 rounded-lg">
+
+                                <div className='w-full flex flex-row gap-2 items-center justify-between'>
+
+                                    <div className="flex flex-row gap-2 items-center justify-between">
+                                        {/* dot */}
+                                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <span className='text-sm font-semibold text-gray-500'>
+                                            회원아이디
+                                        </span>
+                                    </div>
+
+                                    <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
+                                        {nickname}
+                                    </div>
+                                
+
+                                    {/* 복사 버튼 */}
+                                    <button
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(nickname);
+                                            alert('회원아이디가 복사되었습니다.');
+                                        }}
+                                        className="p-2 bg-blue-500 text-zinc-100 rounded"
+                                    >
+                                        복사
+                                    </button>
+
+                                    
+
+
+                                    <Image
+                                        src="/verified.png"
+                                        alt="Verified"
+                                        width={20}
+                                        height={20}
+                                        className="rounded-lg"
+                                    />
+
                                 </div>
 
-                                <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                    {nickname}
+                                <div className='w-full flex flex-row gap-2 items-center justify-end'>
+                                    <button
+                                        onClick={() => {
+
+                                            nicknameEdit ? setNicknameEdit(false) : setNicknameEdit(true);
+
+                                        } }
+                                        className="p-2 bg-blue-500 text-zinc-100 rounded"
+                                    >
+                                        {nicknameEdit ? "취소" : "수정"}
+                                    </button>
                                 </div>
 
-                                {/* 복사 버튼 */}
-                                <button
-                                    onClick={() => {
-                                        navigator.clipboard.writeText(nickname);
-                                        alert('회원아이디가 복사되었습니다.');
-                                    }}
-                                    className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                >
-                                    복사
-                                </button>
 
-                                
-                                <button
-                                    onClick={() => {
-
-                                        nicknameEdit ? setNicknameEdit(false) : setNicknameEdit(true);
-
-                                    } }
-                                    className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                >
-                                    {nicknameEdit ? "취소" : "수정"}
-                                </button>
-
-                                <Image
-                                    src="/verified.png"
-                                    alt="Verified"
-                                    width={20}
-                                    height={20}
-                                    className="rounded-lg"
-                                />
 
 
                                 
+
                             </div>
+
                         )}
 
 
                         { (address && (nicknameEdit || !userCode)) && (
                             <div className=' flex flex-col xl:flex-row gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
 
-                                <div
-                                    className="bg-green-500 text-sm text-zinc-100 p-2 rounded"
-                                >
-                                    {!userCode ? "회원아이디 설정" :
-                                        nicknameEdit ? "수정할 내 회원아이디" : "새로운 회원아이디"
-                                    }
+                                <div className="flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                    
+                                        {!userCode ? "회원아이디 설정" :
+                                            nicknameEdit ? "수정할 내 회원아이디" : "새로운 회원아이디"
+                                        }
+                                    </span>
                                 </div>
+
+
 
                                 <div className='flex flex-col gap-2 items-start justify-between'>
                                     <input
@@ -1051,11 +1005,11 @@ function ProfilePage() {
                                             // check if the value is alphanumeric and lowercase
 
                                             if (!/^[a-z0-9]*$/.test(e.target.value)) {
-                                                //toast.error('회원아이디은 영문 소문자와 숫자만 입력해주세요');
+                                                //toast.error('회원아이디는 영문 소문자와 숫자만 입력해주세요');
                                                 return;
                                             }
                                             if ( e.target.value.length > 10) {
-                                                //toast.error('회원아이디은 10자 이하로 입력해주세요');
+                                                //toast.error('회원아이디는 10자 이하로 입력해주세요');
                                                 return;
                                             }
 
@@ -1068,9 +1022,26 @@ function ProfilePage() {
                                         } }
                                     />
 
+                                    {/* 3 / 10 */}
+                                    <div className='flex flex-row gap-2 items-center justify-start'>
+                                        
+                                        {editedNickname.length < 5 ? (
+                                            <span className='text-sm font-semibold text-red-500'>
+                                                {editedNickname.length} / 10
+                                            </span>
+                                        ) : (
+                                            <span className='text-sm font-semibold text-green-500'>
+                                                {editedNickname.length} / 10
+                                            </span>
+                                        )}
+                                        
+                                    </div>
+
                                     {editedNickname && isNicknameDuplicate && (
-                                        <div className='flex flex-row gap-2 items-center justify-between'>
-                                            <span className='text-xs font-semibold text-red-500'>
+                                        <div className='flex flex-row gap-2 items-center justify-start'>
+                                            {/* dot */}
+                                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                                            <span className='text-sm font-semibold text-red-500'>
                                                 이미 사용중인 회원아이디입니다.
                                             </span>
                                         </div>
@@ -1080,8 +1051,10 @@ function ProfilePage() {
                                     && !isNicknameDuplicate
                                     && editedNickname.length >= 5
                                     && (
-                                        <div className='flex flex-row gap-2 items-center justify-between'>
-                                            <span className='text-xs font-semibold text-green-500'>
+                                        <div className='flex flex-row gap-2 items-center justify-start'>
+                                            {/* dot */}
+                                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                            <span className='text-sm font-semibold text-green-500'>
                                                 사용가능한 회원아이디입니다.
                                             </span>
                                         </div>
@@ -1089,9 +1062,11 @@ function ProfilePage() {
                                 </div>
 
 
-                                <div className='flex flex-row gap-2 items-center justify-between'>
-                                    <span className='text-xs font-semibold'>
-                                        회원아이디은 5자 이상 10자 이하로 입력해주세요
+                                <div className='flex flex-row gap-2 items-center justify-start'>
+                                    {/* dot */}
+                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <span className='text-sm font-semibold text-gray-500'>
+                                        회원아이디는 5자 이상 10자 이하로 입력해주세요
                                     </span>
                                 </div>
                                 <button
@@ -1103,6 +1078,7 @@ function ProfilePage() {
                                         || loadingSetUserData
                                     }
                                     className={`
+                                        w-full
                                         ${!address
                                         || !editedNickname
                                         || editedNickname.length < 5
