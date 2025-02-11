@@ -114,11 +114,28 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
+    const [nftName, setNftName] = useState(
+        [
+            "100 NOAH 채굴 NFT",
+            "300 NOAH 채굴 NFT",
+            "500 NOAH 채굴 NFT",
+            "1000 NOAH 채굴 NFT",
+            "5000 NOAH 채굴 NFT",
+            "10000 NOAH 채굴 NFT",
 
-    const usdtPrice = 100;
+        ]
+    );
+
+
+    {/* token id */}
+    const [seletedTokenId, setSeletedTokenId] = useState("0");
+
+
+    //const usdtPrice = 100;
+    const [usdtPrice, setUsdtPrice] = useState(100);
     // fee 5%
     const fee = 0.05;
 
@@ -127,12 +144,51 @@ function AgentPage() {
     const tax = 0.1;
 
     // 소수점 버림
+    /*
     const krwPrice = Math.floor(
         (usdtPrice + usdtPrice * fee) * (1 + tax) * rate
     );
+    */
 
     //const buyPrice = 179025;
 
+    const [krwPrice, setKrwPrice] = useState(0);
+    useEffect(() => {
+
+        if (seletedTokenId === "0") {
+            setUsdtPrice(100);
+            setKrwPrice(Math.floor(
+                (100 + 100 * fee) * (1 + tax) * rate
+            ));
+        } else if (seletedTokenId === "1") {
+            setUsdtPrice(300);
+            setKrwPrice(Math.floor(
+                (300 + 300 * fee) * (1 + tax) * rate
+            ));
+        } else if (seletedTokenId === "2") {
+            setUsdtPrice(500);
+            setKrwPrice(Math.floor(
+                (500 + 500 * fee) * (1 + tax) * rate
+            ));
+        } else if (seletedTokenId === "3") {
+            setUsdtPrice(1000);
+            setKrwPrice(Math.floor(
+                (1000 + 1000 * fee) * (1 + tax) * rate
+            ));
+        } else if (seletedTokenId === "4") {
+            setUsdtPrice(5000);
+            setKrwPrice(Math.floor(
+                (5000 + 5000 * fee) * (1 + tax) * rate
+            ));
+        } else if (seletedTokenId === "5") {
+            setUsdtPrice(10000);
+            setKrwPrice(Math.floor(
+                (10000 + 10000 * fee) * (1 + tax) * rate
+            ));
+        }
+
+
+    }, [seletedTokenId]);
 
 
 
@@ -544,6 +600,7 @@ function AgentPage() {
     {/* 입금자명 */}
     const [depositName, setDepositName] = useState("");
 
+
     const [buyOrdering, setBuyOrdering] = useState(false);
     const [messageBuyOrdering, setMessageBuyOrdering] = useState("");
 
@@ -577,7 +634,7 @@ function AgentPage() {
                 body: JSON.stringify({
                     walletAddress: address,
                     contractAddress: erc1155ContractAddress,
-                    tokenId: tokenId,
+                    tokenId: seletedTokenId,
                     usdtPrice: usdtPrice,
                     fee: fee,
                     tax: tax,
@@ -1148,6 +1205,146 @@ function AgentPage() {
                                     채굴 NFT 구매신청
                                 </div>
                             </div>
+
+                            {/* 구매할 NOAH 채굴 NFT를 선택해주세요. */}
+                            <span className="text-lg text-green-500 font-semibold">
+                                구매할 NOAH 채굴 NFT를 선택해주세요.
+                            </span>
+
+                            {/* selected token id */}
+                            {/* noah-100-blue.jpeg => setUsdtPrice(100) */}
+                            {/* noah-300-green.jpeg => setUsdtPrice(300) */}
+                            {/* noah-500-red.jpeg => setUsdtPrice(500) */}
+                            {/* noah-1000-purple.jpeg => setUsdtPrice(1000) */}
+                            {/* noah-5000-orange.jpeg => setUsdtPrice(5000) */}
+                            {/* noah-10000-gold.jpeg => setUsdtPrice(10000) */}
+                            <div className="w-full grid grid-cols-3 gap-2 items-center justify-between">
+                                <div
+                                    onClick={() => setSeletedTokenId("0")}
+                                    className={`
+                                        ${seletedTokenId === "0" ? 'border border-green-500' : 'border border-gray-800'}
+                                        p-2 rounded-lg cursor-pointer
+                                    `}
+                                >
+                                    <video
+                                        src="/noah-100-blue-mining.mp4"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        className="rounded-lg"
+                                    />
+
+                                </div>
+                                <div
+                                    onClick={() => setSeletedTokenId("1")}
+                                    className={`
+                                        ${seletedTokenId === "1" ? 'border border-green-500' : 'border border-gray-800'}
+                                        p-2 rounded-lg cursor-pointer
+                                    `}
+                                >
+                                    <video
+                                        src="/noah-300-green-mining.mp4"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        className="rounded-lg"
+                                    />
+                                </div>
+                                <div
+                                    onClick={() => setSeletedTokenId("2")}
+                                    className={`
+                                        ${seletedTokenId === "2" ? 'border border-green-500' : 'border border-gray-800'}
+                                        p-2 rounded-lg cursor-pointer
+                                    `}
+                                >
+                                    <video
+                                        src="/noah-500-red-mining.mp4"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        className="rounded-lg"
+                                    />
+                                </div>
+                                <div
+                                    onClick={() => setSeletedTokenId("3")}
+                                    className={`
+                                        ${seletedTokenId === "3" ? 'border border-green-500' : 'border border-gray-800'}
+                                        p-2 rounded-lg cursor-pointer
+                                    `}
+                                >
+                                    <video
+                                        src="/noah-1000-purple-minig.mp4"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        className="rounded-lg"
+                                    />
+                                </div>
+                                <div
+                                    onClick={() => setSeletedTokenId("4")}
+                                    className={`
+                                        ${seletedTokenId === "4" ? 'border border-green-500' : 'border border-gray-800'}
+                                        p-2 rounded-lg cursor-pointer
+                                    `}
+                                >
+                                    <video
+                                        src="/noah-5000-orange-mining.mp4"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        className="rounded-lg"
+                                    />
+                                </div>
+
+                                <div
+                                    onClick={() => setSeletedTokenId("5")}
+                                    className={`
+                                        ${seletedTokenId === "5" ? 'border border-green-500' : 'border border-gray-800'}
+                                        p-2 rounded-lg cursor-pointer
+                                    `}
+                                >
+                                    <video
+                                        src="/noah-10000-gold-mining.mp4"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        className="rounded-lg"
+                                    />
+                                </div>
+
+                            </div>
+
+
+                            <div className="w-full flex flex-row gap-2 items-center justify-between">
+                                {/* dot */}
+                                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+
+                                <span className="text-xl text-yellow-500 font-semibold">
+                                    
+                                    {/*채굴 NFT 구매신청은 100 USDT 당 1개씩 발행 가능합니다.*/}
+
+                                    {seletedTokenId === "0" && '100 NOAH 채굴 NFT'
+                                    || seletedTokenId === "1" && '300 NOAH 채굴 NFT'
+                                    || seletedTokenId === "2" && '500 NOAH 채굴 NFT'
+                                    || seletedTokenId === "3" && '1000 NOAH 채굴 NFT'
+                                    || seletedTokenId === "4" && '5000 NOAH 채굴 NFT'
+                                    || seletedTokenId === "5" && '10000 NOAH 채굴 NFT'
+                                    }{' '} 1개 판매금액은 ₩{
+                                    Number(krwPrice).toLocaleString(
+
+                                        //navigator.language
+                                        'ko-KR'
+                                    )
+
+
+                                    } 입니다.
+
+                                </span>
+                            </div>
+
+
+
+
                             <span className="text-lg text-zinc-400 font-semibold">
                                 채굴 NFT를 구매신청하려면 아래 계좌번호로 입금할 입금자명을 입력해주세요.
                             </span>
@@ -1240,27 +1437,7 @@ function AgentPage() {
                                 */}
                         
 
-                            <div className="w-full flex flex-row gap-2 items-center justify-between">
-                                {/* dot */}
-                                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
 
-                                <span className="text-xl text-yellow-500 font-semibold">
-                                    
-                                    {/*채굴 NFT 구매신청은 100 USDT 당 1개씩 발행 가능합니다.*/}
-
-                                    {/* KRW */}
-                                    100 NOAH 채굴 NFT 1개 판매금액은 ₩{
-                                    Number(krwPrice).toLocaleString(
-
-                                        //navigator.language
-                                        'ko-KR'
-                                    )
-
-
-                                    } 입니다.
-
-                                </span>
-                            </div>
                         </div>
                     )}
 
@@ -1331,6 +1508,78 @@ function AgentPage() {
                                                     new Date(order.createdAt).toLocaleString()
                                                 }
                                             </span>
+                                        </div>
+                                        {/* 구매신청한 NOAH 채굴 NFT */}
+                                        {/* tokenId */}
+                                        {/* 0 => noah-100-blue-mining.mp4 */}
+                                        {/* 1 => noah-300-green-mining.mp4 */}
+                                        <div className="w-full flex flex-row gap-2 items-center justify-between p-2">
+                                            {order.orderInfo.tokenId === "0" && (
+                                                <video
+                                                    autoPlay
+                                                    loop
+                                                    muted
+                                                    playsInline
+                                                    className="w-full h-full rounded-lg"
+                                                >
+                                                    <source src="/noah-100-blue-mining.mp4" type="video/mp4" />
+                                                </video>
+                                            )}
+                                            {order.orderInfo.tokenId === "1" && (
+                                                <video
+                                                    autoPlay
+                                                    loop
+                                                    muted
+                                                    playsInline
+                                                    className="w-full h-full rounded-lg"
+                                                >
+                                                    <source src="/noah-300-green-mining.mp4" type="video/mp4" />
+                                                </video>
+                                            )}
+                                            {order.orderInfo.tokenId === "2" && (
+                                                <video
+                                                    autoPlay
+                                                    loop
+                                                    muted
+                                                    playsInline
+                                                    className="w-full h-full rounded-lg"
+                                                >
+                                                    <source src="/noah-500-red-mining.mp4" type="video/mp4" />
+                                                </video>
+                                            )}
+                                            {order.orderInfo.tokenId === "3" && (
+                                                <video
+                                                    autoPlay
+                                                    loop
+                                                    muted
+                                                    playsInline
+                                                    className="w-full h-full rounded-lg"
+                                                >
+                                                    <source src="/noah-1000-purple-mining.mp4" type="video/mp4" />
+                                                </video>
+                                            )}
+                                            {order.orderInfo.tokenId === "4" && (
+                                                <video
+                                                    autoPlay
+                                                    loop
+                                                    muted
+                                                    playsInline
+                                                    className="w-full h-full rounded-lg"
+                                                >
+                                                    <source src="/noah-5000-orange-mining.mp4" type="video/mp4" />
+                                                </video>
+                                            )}
+                                            {order.orderInfo.tokenId === "5" && (
+                                                <video
+                                                    autoPlay
+                                                    loop
+                                                    muted
+                                                    playsInline
+                                                    className="w-full h-full rounded-lg"
+                                                >
+                                                    <source src="/noah-10000-gold-mining.mp4" type="video/mp4" />
+                                                </video>
+                                            )}
                                         </div>
 
                                         {/* 구매수량 */}
