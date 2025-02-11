@@ -1026,9 +1026,15 @@ function AgentPage() {
                                                         </span>
                                                     </div>
                                                 )}
-                                                <span className="w-28 text-sm text-zinc-100 text-right">
+                                                {/* monospace font style */}
+                                                <span
+                                                    className="w-28 text-sm text-zinc-100 text-right"
+                                                    style={{
+                                                        fontFamily: 'monospace',
+                                                    }}
+                                                >
                                                     {
-                                                        transfer.transferData.value / 10 ** 6
+                                                        Number(transfer.transferData.value / 10 ** 6).toFixed(6)
                                                     } USDT
                                                 </span>
                                             </div>
