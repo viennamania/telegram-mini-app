@@ -1336,7 +1336,16 @@ export async function sellOrderRollbackPayment(data: any) {
 
 
 
-
+/*
+    walletAddress,
+    contractAddress,
+    tokenId,
+    usdtPrice,
+    fee,
+    tax,
+    rate,
+    krwPrice,
+*/
 
 
 
@@ -1345,27 +1354,22 @@ export async function sellOrderRollbackPayment(data: any) {
 export async function insertBuyOrder(data: any) {
 
   console.log('insertBuyOrder data: ' + JSON.stringify(data));
-  /*
-  insertBuyOrder data:
-  {
-    "walletAddress":"0xC426C1a1b7bEC05CD5CCFc2c85Ae7A2245BE2263",
-    "usdtAmount":0.71,
-    "krwAmount":1000,
-    "rate":1400,
-    "privateSale":false,
-    "buyer":{"depositBankName":"국민은행","depositName":"송수영"}
-  }
-  */
+ 
 
-  if (!data.walletAddress || !data.usdtAmount || !data.krwAmount || !data.rate) {
+  if (!data.walletAddress
+    || !data.contractAddress
+    || !data.tokenId
+    || !data.usdtPrice
+    || !data.fee
+    || !data.tax
+    || !data.rate
+    || !data.krwPrice
+  ) {
     return null;
   }
 
-  let nickname = data.nickname || '';
-
 
   const client = await clientPromise;
-
 
 
   // get user mobile number by wallet address
@@ -1378,19 +1382,6 @@ export async function insertBuyOrder(data: any) {
     { projection: { _id: 0, emailVerified: 0 } }
   );
 
-
-
-
-  ////console.log('user: ' + user);
-
-  if (user?.nickname) {
-    nickname = user?.nickname;
-  }
-
-
-  const mobile = user?.mobile;
-
-  const avatar = user?.avatar;
 
   
   //const seller = user.seller;
@@ -1407,35 +1398,27 @@ export async function insertBuyOrder(data: any) {
   const result = await collection.insertOne(
 
     {
-      lang: data.lang,
-      chain: data.chain,
       walletAddress: data.walletAddress,
-      nickname: nickname,
-      mobile: mobile,
-      avatar: avatar,
-      
-      //seller: seller,
-
-      usdtAmount: data.usdtAmount,
-      krwAmount: data.krwAmount,
-      rate: data.rate,
+      buyer: user,
+      orderInfo: data,
       createdAt: new Date().toISOString(),
       status: 'ordered',
-      privateSale: data.privateSale,
-      
-      buyer: data.buyer,
-
-      tradeId: tradeId,
     }
   );
 
 
   if (result) {
+
+
+    const updated = await collection.findOne<UserProps>(
+      { _id: result.insertedId }
+    );
+
+
     return {
 
-      _id: result.insertedId,
-
-      walletAddress: data.walletAddress,
+      orderId: result.insertedId,
+      order: updated,
       
     };
   } else {

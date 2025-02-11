@@ -126,7 +126,10 @@ function AgentPage() {
     // tax 10%
     const tax = 0.1;
 
-    const krwPrice = (usdtPrice + usdtPrice * fee) * (1 + tax) * rate;
+    // 소수점 버림
+    const krwPrice = Math.floor(
+        (usdtPrice + usdtPrice * fee) * (1 + tax) * rate
+    );
 
     //const buyPrice = 179025;
 
@@ -422,6 +425,7 @@ function AgentPage() {
 
 
     // claim NFT
+    /*
     const [claimingNft, setClaimingNft] = useState(false);
     const [messageClaimingNft, setMessageClaimingNft] = useState("");
     const claimNft = async (contractAddress: string, tokenId: string) => {
@@ -438,33 +442,9 @@ function AgentPage() {
             return;
         }
 
-        // /api/orderNft/setBuyOrder
-        /*
-        const response = await fetch("/api/orderNft/setBuyOrder", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                walletAddress: address,
-                contractAddress: contractAddress,
-                tokenId: tokenId,
-                usdtPrice: usdtPrice,
-                fee: fee,
-                tax: tax,
-                rate: rate,
-                krwPrice: krwPrice,
-            }),
-        });
-        */
 
 
-
-        alert(
-            "NFT 구매신청을 완료했습니다."
-        )
-
-        /*
+        
         if (balance < 100) {
             //toast.error('USDT 잔액이 부족합니다');
             setMessageClaimingNft('USDT 잔액이 부족합니다.');
@@ -608,10 +588,119 @@ function AgentPage() {
 
         setClaimingNft(false);
         
-        */
+        
 
 
     }
+    */
+
+
+    // 구매신청
+    /*
+            // /api/orderNft/setBuyOrder
+        
+        const response = await fetch("/api/orderNft/setBuyOrder", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                walletAddress: address,
+                contractAddress: contractAddress,
+                tokenId: tokenId,
+                usdtPrice: usdtPrice,
+                fee: fee,
+                tax: tax,
+                rate: rate,
+                krwPrice: krwPrice,
+            }),
+        });
+        
+
+
+
+        alert(
+            "NFT 구매신청을 완료했습니다."
+        )
+        */
+
+
+    const [buyOrdering, setBuyOrdering] = useState(false);
+    const [messageBuyOrdering, setMessageBuyOrdering] = useState("");
+
+    const buyOrder = async () => {
+        
+        if (buyOrdering) {
+            //toast.error('이미 실행중입니다');
+            setMessageBuyOrdering('이미 실행중입니다.');
+            return;
+        }
+
+        if (!address) {
+            //toast.error('지갑을 먼저 연결해주세요');
+            setMessageBuyOrdering('지갑을 먼저 연결해주세요.');
+            return;
+        }
+
+
+
+        setMessageBuyOrdering('NFT 구매신청중입니다.');
+
+        setBuyOrdering(true);
+
+        try {
+
+            const response = await fetch("/api/orderNft/setBuyOrder", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    walletAddress: address,
+                    contractAddress: erc1155ContractAddress,
+                    tokenId: tokenId,
+                    usdtPrice: usdtPrice,
+                    fee: fee,
+                    tax: tax,
+                    rate: rate,
+                    krwPrice: krwPrice,
+                }),
+            });
+
+            const data = await response.json();
+
+            console.log("data", data);
+
+            if (data.result) {
+
+                setMessageBuyOrdering('NFT 구매신청을 완료했습니다.');
+
+                alert('NFT 구매신청을 완료했습니다.');
+            } else {
+                setMessageBuyOrdering('NFT 구매신청 실패: 알 수 없는 오류');
+
+                //alert('NFT 구매신청 실패: 알 수 없는 오류');
+            }
+
+        } catch (error) {
+
+            if (error instanceof Error) {
+                setMessageBuyOrdering('NFT 구매신청 실패:' + error.message);
+
+                //alert('NFT 구매신청 실패:' + error.message);
+
+            } else {
+                setMessageBuyOrdering('NFT 구매신청 실패: 알 수 없는 오류');
+
+                //alert('NFT 구매신청 실패: 알 수 없는 오류');
+            }
+
+        }
+
+        setBuyOrdering(false);
+
+    }
+
 
 
 
@@ -1116,8 +1205,43 @@ function AgentPage() {
                                 </div>
                             </div>
                             <span className="text-lg text-zinc-400 font-semibold">
-                                채굴 NFT를 구매하려면 아래 버튼을 클릭하세요.
+                                채굴 NFT를 구매신청하려면 아래 버튼을 클릭하세요.
                             </span>
+
+                            <button
+                                disabled={buyOrdering}
+                                onClick={() =>
+                                    confirm("채굴 NFT를 구매신청하시겠습니까?") &&
+                                    buyOrder()
+                                }
+                                className={`
+                                    ${buyOrdering ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
+                                    p-2 rounded-lg text-sm font-semibold
+                                `}
+                            >
+                                <div className="flex flex-row gap-2 items-center justify-center">
+                                    {buyOrdering && (
+                                        <Image
+                                            src="/loading.png"
+                                            alt="loding"
+                                            width={30}
+                                            height={30}
+                                            className="animate-spin"
+                                        />
+                                    )}
+                                    {buyOrdering && '채굴 NFT 구매신청중...'}
+                                    {!buyOrdering && '채굴 NFT 구매신청하기'}
+                                </div>
+                            </button>
+
+                            {messageBuyOrdering && (
+                                <span className="text-lg text-green-500 font-semibold">
+                                    {messageBuyOrdering}
+                                </span>
+                            )}
+
+
+                            {/*
                             <button
                                 disabled={claimingNft}
                                 onClick={() =>
@@ -1149,23 +1273,30 @@ function AgentPage() {
                                     {messageClaimingNft}
                                 </span>
                             )}
+                                */}
+                        
 
-                            <span className="text-xl text-yellow-500 font-semibold">
-                                
-                                {/*채굴 NFT 구매신청은 100 USDT 당 1개씩 발행 가능합니다.*/}
+                            <div className="w-full flex flex-row gap-2 items-center justify-between">
+                                {/* dot */}
+                                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
 
-                                {/* KRW */}
-                                100 NOAH 채굴 NFT 판매금액은 ₩{
-                                Number(krwPrice).toLocaleString(
+                                <span className="text-xl text-yellow-500 font-semibold">
+                                    
+                                    {/*채굴 NFT 구매신청은 100 USDT 당 1개씩 발행 가능합니다.*/}
 
-                                    //navigator.language
-                                    'ko-KR'
-                                )
+                                    {/* KRW */}
+                                    100 NOAH 채굴 NFT 1개 판매금액은 ₩{
+                                    Number(krwPrice).toLocaleString(
+
+                                        //navigator.language
+                                        'ko-KR'
+                                    )
 
 
-                                } 입니다.
+                                    } 입니다.
 
-                            </span>
+                                </span>
+                            </div>
                         </div>
                     )}
 

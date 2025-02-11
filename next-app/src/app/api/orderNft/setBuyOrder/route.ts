@@ -10,19 +10,43 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
-  const { walletAddress, nickname, usdtAmount, krwAmount, rate, privateSale, buyer } = body;
+  //const { walletAddress, nickname, usdtAmount, krwAmount, rate, privateSale, buyer } = body;
 
   ///console.log("setBuyOrder =====  walletAddress", walletAddress);
   
+  /*
+                      walletAddress: address,
+                    contractAddress: erc1155ContractAddress,
+                    tokenId: tokenId,
+                    usdtPrice: usdtPrice,
+                    fee: fee,
+                    tax: tax,
+                    rate: rate,
+                    krwPrice: krwPrice,
+  */
+
+  const {
+    walletAddress,
+    contractAddress,
+    tokenId,
+    usdtPrice,
+    fee,
+    tax,
+    rate,
+    krwPrice,
+  } = body;
+
+
 
   const result = await insertBuyOrder({
     walletAddress: walletAddress,
-    nickname: nickname,
-    usdtAmount: usdtAmount,
-    krwAmount: krwAmount,
+    contractAddress: contractAddress,
+    tokenId: tokenId,
+    usdtPrice: usdtPrice,
+    fee: fee,
+    tax: tax,
     rate: rate,
-    privateSale: privateSale,
-    buyer: buyer
+    krwPrice: krwPrice,
   });
 
 
