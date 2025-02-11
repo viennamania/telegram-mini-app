@@ -1030,7 +1030,7 @@ export default function Index({ params }: any) {
                     </button>
                   </div>
 
-                  <div className='flex flex-row items-center justify-between gap-2'>
+                  <div className='flex flex-row items-center justify-center gap-2'>
 
                       <Image
                           src="/logo-noahk-erc20.png"
@@ -1041,29 +1041,48 @@ export default function Index({ params }: any) {
                       />                                
 
 
-                      <div className="flex flex-row gap-2 items-center justify-between">
+                      <div className="flex flex-col xl:flex-row gap-2 items-center justify-between">
 
-                          <span className="p-2 text-green-500 text-4xl font-semibold"> 
-                              {
-                                  Number(balance).toFixed(0)
-                              }
-                          </span>
-                          <span className="p-2 text-gray-500 text-lg font-semibold">NOAH-K</span>
+                          <div className="flex flex-row items-center gap-2">
+                            <span className="text-green-500 text-4xl font-semibold"> 
+                                {
+                                    Number(balance).toFixed(0)
+                                }
+                            </span>
+                            <span className="text-gray-500 text-lg font-semibold">NOAH-K</span>
+                          </div>
 
+                          {/* polygon scan */}
+                          {/* https://polygonscan.com/token/0x9948328fa1813037a37f3d35c0b1e009d6d9a563 */}
+                          <a
+                              href={`https://polygonscan.com/token/${contractAddress}?a=${address}`}
+                              target="_blank"
+                              className="text-sm text-gray-400
+                              border border-gray-800 rounded-md p-2"
+                          >
+                              Polygon Scan
+                          </a>
                       </div>
                   </div>
 
                   {/* transfer history */}
-                  <div className="w-full flex flex-col items-center justify-between gap-2">
-                    <div className="text-lg font-semibold text-gray-400">
+                  <div className=" flex-col items-center justify-between gap-2
+                    hidden xl:flex">
+
+                    <div className="w-full text-lg font-semibold text-gray-400 text-left">
                       거래내역 (최근 10개)
                     </div>
 
                     <div className="w-full overflow-x-auto">
-                      <table className="w-full table-auto border-collapse border border-zinc-800 rounded-md">
+                    
+                      <table className="w-full table-auto
+                        border-collapse border border-gray-800 rounded-md">
+                      
+
                         <thead className="bg-zinc-800 text-white">
                           <tr>
                             <th className="p-2">보내기/받기</th>
+                            <th className="p-2">OTC 거래번호</th>
                             <th className="p-2">보낸지갑</th>
                             <th className="p-2">받은지갑</th>
                             <th className="p-2">수량</th>
@@ -1082,6 +1101,13 @@ export default function Index({ params }: any) {
                                 <td className="p-2 text-sm text-green-500 text-left pl-5">받기</td>
                               )}
                              
+                              <td className="p-2 text-xl font-semibold text-green-500 text-left">
+                                {
+                                  item.sellOrder?.tradeId
+                                  && '#' + item.sellOrder?.tradeId
+                                }
+                              </td>
+
                               
                               <td className="p-2 text-sm text-gray-400 text-left pl-5">
                                 {item?.sellOrder ? (
@@ -1097,6 +1123,7 @@ export default function Index({ params }: any) {
                                   item.transferData.fromAddress.substring(0, 6) + '...' + item.transferData.fromAddress.substring(item.transferData.fromAddress.length - 4, item.transferData.fromAddress.length)}
                               </td>
 
+
                               <td className="p-2 text-sm text-gray-400 text-left pl-5">
                                 {item.transferData.toAddress.substring(0, 6) + '...' + item.transferData.toAddress.substring(item.transferData.toAddress.length - 4, item.transferData.toAddress.length)}
                               </td>
@@ -1107,7 +1134,19 @@ export default function Index({ params }: any) {
                                 }
                               </td>
                               <td className="p-2 text-sm text-gray-400 text-center">
-                                {new Date(item.transferData.timestamp).toLocaleString()}
+                                {
+                                //new Date(item.transferData.timestamp).toLocaleString()
+                                // ago
+                                new Date().getTime() - item.transferData.timestamp < 1000 * 60 ? (
+                                  ' ' + Math.floor((new Date().getTime() - item.transferData.timestamp) / 1000) + ' ' + seconds_ago
+                                ) :
+                                new Date().getTime() - item.transferData.timestamp < 1000 * 60 * 60 ? (
+                                  ' ' + Math.floor((new Date().getTime() - item.transferData.timestamp) / 1000 / 60) + ' ' + minutes_ago
+                                ) : (
+                                  ' ' + Math.floor((new Date().getTime() - item.transferData.timestamp) / 1000 / 60 / 60) + ' ' + hours_ago
+                                ) 
+                                }
+
                               </td>
                             </tr>
                           ))}
@@ -1931,16 +1970,11 @@ export default function Index({ params }: any) {
                               {address && item.buyer && item.buyer.walletAddress === address ? (
 
                                 <div className="mt-4 flex flex-col items-start justify-start gap-2">
-                                
-                                  <span className="text-sm font-semibold text-white">
-                                    {Payment}:
-                                  </span>
-
 
                                   <div className="mt-2 flex flex-row items-center gap-2">
                                     <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
                                     <p className="text-sm text-zinc-400">
-                                      걸제은행:{' '}
+                                      결제은행:{' '}
                                       
                                       {
                                       item.seller?.bankInfo.bankName === "090" ? "카카오뱅크" :
