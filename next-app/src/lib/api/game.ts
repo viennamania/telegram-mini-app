@@ -43,6 +43,8 @@ export async function insertOne(data: any) {
 
 }
 
+
+
 // getOneByWalletAddressAndSequence
 export async function getOneByWalletAddressAndSequence(walletAddress: string, sequence: number) {
   const client = await clientPromise;

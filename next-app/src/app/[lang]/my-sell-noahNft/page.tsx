@@ -430,7 +430,7 @@ export default function Index({ params }: any) {
         return;
     }
 
-    fetch('/api/userNoahk/getUser', {
+    fetch('/api/user/getUser', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
