@@ -35,8 +35,12 @@ export async function insertOne(data: any) {
     }
   );
 
-  if (result) {
-    return result;
+  const insertedId = result.insertedId;
+
+  const insertedData = await collection.findOne({ _id: insertedId });
+
+  if (insertedData) {
+    return insertedData;
   } else {
     return null;
   }

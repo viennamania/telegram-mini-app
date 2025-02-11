@@ -1234,7 +1234,6 @@ function AgentPage() {
                                         muted
                                         className="rounded-lg"
                                     />
-
                                 </div>
                                 <div
                                     onClick={() => setSeletedTokenId("1")}
