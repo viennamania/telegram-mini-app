@@ -114,7 +114,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
     const [nftName, setNftName] = useState(
@@ -1197,7 +1197,7 @@ function AgentPage() {
                     && buyOrders.filter((order) => order.status === "ordered").length === 0 && (
 
                         <div className="w-full flex flex-col gap-2 items-center justify-between
-                            border border-gray-800
+                            border border-gray-200
                             p-4 rounded-lg">
                             <div className="w-full flex flex-row gap-2 items-center justify-start">
                                 {/* dot */}
@@ -1274,7 +1274,7 @@ function AgentPage() {
                                     `}
                                 >
                                     <video
-                                        src="/noah-1000-purple-minig.mp4"
+                                        src="/noah-1000-purple-mining.mp4"
                                         autoPlay
                                         loop
                                         muted
@@ -1453,14 +1453,50 @@ function AgentPage() {
                     {/* buyOders status is "ordered" count check > 0 */}
                     {/* buyOrders list */}
                     {/* 구매신청내역 */}
-                    <div className="mt-10 w-full flex flex-col gap-2 items-center justify-between">
+                    <div className="mt-10 w-full flex flex-col gap-2 items-center justify-between
+                        border-t border-zinc-400 p-4 rounded-lg">
 
-                        <span className="text-lg text-zinc-100 font-semibold">
-                            NOAH 채굴 NFT 구매신청내역
-                        </span>
+                        <div className="flex flex-col gap-2 items-center justify-between">
+                            <span className="text-lg text-zinc-100 font-semibold">
+                                NOAH 채굴 NFT 구매신청내역
+                            </span>
+                            {/* 새로고침 */}
+                            <button
+                                onClick={() => {
+                                    
+                                    
+                                    const fetchBuyOrders = async () => {
+
+                                        setLoadingBuyOrders(true);
+                                        const response = await fetch("/api/orderNft/getBuyOrdersByWalletAddress", {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json",
+                                            },
+                                            body: JSON.stringify({
+                                                walletAddress: address,
+                                            }),
+                                        });
+                                        if (response.ok) {
+                                            const data = await response.json();
+                                            setBuyOrders(data.result?.orders);
+                                        }
+                                        setLoadingBuyOrders(false);
+                                    };
+
+                                    fetchBuyOrders();
+
+                                }}
+
+                                className="bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold"
+                            >
+                                새로고침
+                            </button>
+
+                        </div>
 
                         {/* 구매신청내역이 없습니다. */}
-                        {address && !loadingBuyOrders && buyOrders.filter((order) => order.status === "ordered").length === 0 && (
+                        {address && !loadingBuyOrders && buyOrders.length === 0 && (
                             <div className="w-full flex flex-col gap-2 items-start justify-between
                                 border border-gray-800
                                 p-4 rounded-lg">
@@ -1492,11 +1528,207 @@ function AgentPage() {
 }
                         */}
  
-                        {address && !loadingBuyOrders && buyOrders.filter((order) => order.status === "ordered").length > 0 && (
+                        {address && !loadingBuyOrders && (
 
                             <div className="w-full flex flex-col gap-2 items-center justify-between">
 
                                 {buyOrders.map((order, index) => (
+
+                                    <>
+                                        {order.status === 'paymentConfirmed' && (
+
+                                       
+                                            <div
+                                                key={index}
+                                                className="w-full flex flex-col gap-2 items-start justify-between
+                                                border border-green-500
+                                                p-4 rounded-lg"
+                                            >
+                                                {/* 거래번호 */}
+                                                <div className="w-full flex flex-row gap-2 items-center justify-between">
+                                                    <span className="text-lg text-green-500 font-semibold">
+                                                        거래번호: #{order.tradeId}
+                                                    </span>
+                                                    {/* time ago */}
+                                                    <span className="text-sm text-zinc-400 font-semibold">
+                                                        {
+                                                            (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 < 60 && ('방금')
+                                                            || (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 < 60 && (Math.floor((new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60) + '분 전')
+                                                            || (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 / 60 < 24 && (Math.floor((new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 / 60) + '시간 전')
+                                                            || (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 / 60 / 24 < 1 && (Math.floor((new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 / 60 / 24) + '일 전')
+                                                            || new Date(order.createdAt).toLocaleString()
+                                                        }
+                                                    </span>
+                                                </div>
+                                                {/* toeknId is 0 => noah-100-blue-mining.mp4 */}
+                                                {order.orderInfo.tokenId === "0" && (
+                                                    <video
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        playsInline
+                                                        className="w-full h-full rounded-lg"
+                                                    >
+                                                        <source src="/noah-100-blue-mining.mp4" type="video/mp4" />
+                                                    </video>
+                                                )}
+                                                {order.orderInfo.tokenId === "1" && (
+                                                    <video
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        playsInline
+                                                        className="w-full h-full rounded-lg"
+                                                    >
+                                                        <source src="/noah-300-green-mining.mp4" type="video/mp4" />
+                                                    </video>
+                                                )}
+                                                {order.orderInfo.tokenId === "2" && (
+                                                    <video
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        playsInline
+                                                        className="w-full h-full rounded-lg"
+                                                    >
+                                                        <source src="/noah-500-red-mining.mp4" type="video/mp4" />
+                                                    </video>
+                                                )}
+                                                {order.orderInfo.tokenId === "3" && (
+                                                    <video
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        playsInline
+                                                        className="w-full h-full rounded-lg"
+                                                    >
+                                                       
+                                                        <source src="/noah-1000-purple-mining.mp4" type="video/mp4" />
+                                                    </video>
+                                                )}
+                                                {order.orderInfo.tokenId === "4" && (
+                                                    <video
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        playsInline
+                                                        className="w-full h-full rounded-lg"
+                                                    >
+                                                        <source src="/noah-5000-orange-mining.mp4" type="video/mp4" />
+                                                    </video>
+                                                )}
+                                                {order.orderInfo.tokenId === "5" && (
+                                                    <video
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        playsInline
+                                                        className="w-full h-full rounded-lg"
+                                                    >
+                                                        <source src="/noah-10000-gold-mining.mp4" type="video/mp4" />
+                                                    </video>
+                                                )}
+                                                {/* 거래완료 */}
+                                                <div className="w-full flex flex-row gap-2 items-center justify-between">
+                                                    <span className="text-lg text-green-500 font-semibold">
+                                                        구매완료
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        )}
+
+                                        {order.status === 'cancelled' && (
+                                            <div
+                                                key={index}
+                                                className="w-full flex flex-col gap-2 items-start justify-between
+                                                border border-red-500
+                                                p-4 rounded-lg"
+                                            >
+                                                {/* 거래번호 */}
+                                                <div className="w-full flex flex-row gap-2 items-center justify-between">
+                                                    <span className="text-lg text-red-500 font-semibold">
+                                                        거래번호: #{order.tradeId}
+                                                    </span>
+                                                    {/* time ago */}
+                                                    <span className="text-sm text-zinc-400 font-semibold">
+                                                        {
+                                                            (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 < 60 && ('방금')
+                                                            || (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 < 60 && (Math.floor((new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60) + '분 전')
+                                                            || (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 / 60 < 24 && (Math.floor((new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 / 60) + '시간 전')
+                                                            || (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 / 60 / 24 < 1 && (Math.floor((new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 / 60 / 24) + '일 전')
+                                                            || new Date(order.createdAt).toLocaleString()
+                                                        }
+                                                    </span>
+                                                </div>
+
+                                                {/* toeknId is 0 => noah-100-blue.jpeg */}
+                                                {order.orderInfo.tokenId === "0" && (
+                                                    <Image
+                                                        src="/noah-100-blue.jpeg"
+                                                        alt="NOAH-100"
+                                                        width={100}
+                                                        height={100}
+                                                        className="rounded-lg"
+                                                    />
+                                                )}
+                                                {order.orderInfo.tokenId === "1" && (
+                                                    <Image
+                                                        src="/noah-300-green.jpeg"
+                                                        alt="NOAH-300"
+                                                        width={100}
+                                                        height={100}
+                                                        className="rounded-lg"
+                                                    />
+                                                )}
+                                                {order.orderInfo.tokenId === "2" && (
+                                                    <Image
+                                                        src="/noah-500-red.jpeg"
+                                                        alt="NOAH-500"
+                                                        width={100}
+                                                        height={100}
+                                                        className="rounded-lg"
+                                                    />
+                                                )}
+                                                {order.orderInfo.tokenId === "3" && (
+                                                    <Image
+                                                        src="/noah-1000-purple.jpeg"
+                                                        alt="NOAH-1000"
+                                                        width={100}
+                                                        height={100}
+                                                        className="rounded-lg"
+                                                    />
+                                                )}
+                                                {order.orderInfo.tokenId === "4" && (
+                                                    <Image
+                                                        src="/noah-5000-orange.jpeg"
+                                                        alt="NOAH-5000"
+                                                        width={100}
+                                                        height={100}
+                                                        className="rounded-lg"
+                                                    />
+                                                )}
+                                                {order.orderInfo.tokenId === "5" && (
+                                                    <Image
+                                                        src="/noah-10000-gold.jpeg"
+                                                        alt="NOAH-10000"
+                                                        width={100}
+                                                        height={100}
+                                                        className="rounded-lg"
+                                                    />
+                                                )}
+
+                                                {/* 거래취소 */}
+                                                <div className="w-full flex flex-row gap-2 items-center justify-between">
+                                                    <span className="text-lg text-red-500 font-semibold">
+                                                        거래취소
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        )}
+
+
+                                    {order.status === 'ordered' && (
                                     <div
                                         key={index}
                                         className="w-full flex flex-col gap-2 items-start justify-between
@@ -1659,6 +1891,12 @@ function AgentPage() {
 
 
                                     </div>
+
+                                    )}
+                                    </>
+
+
+
                                 ))}
 
 

@@ -1618,7 +1618,7 @@ export async function acceptBuyOrder(data: any) {
   //console.log('acceptBuyOrder data: ' + JSON.stringify(data));
 
 
-  if (!data.tradeId || !data.seler) {
+  if (!data.tradeId || !data.seller) {
     return null;
   }
 
@@ -1627,7 +1627,7 @@ export async function acceptBuyOrder(data: any) {
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('buyordersNft');
 
-
+  /*
   const result = await collection.updateOne(
     
     { tradeId: data.tradeId, status: 'ordered' },
@@ -1638,6 +1638,39 @@ export async function acceptBuyOrder(data: any) {
       seller: data.seller,
     } }
   );
+  */
+  try {
+    const result = await collection.findOneAndUpdate(
+      {tradeId: data.tradeId, status: 'ordered'},
+      { $set: {
+        status: 'paymentConfirmed',
+        acceptedAt: new Date().toISOString(),
+        seller: data.seller,
+      } }
+    );
+
+    //console.log('acceptBuyOrder result: ' + result);
+
+    if (result) {
+      const updated = await collection.findOne<BuyOrderProps>(
+        { tradeId: data.tradeId }
+      );
+
+      //console.log('acceptBuyOrder updated: ' + JSON.stringify(updated));
+
+      return updated;
+
+    } else {
+      return null;
+    }
+
+  } catch (error) {
+
+    console.log('acceptBuyOrder error: ' + error+'');
+    return null;
+  }
+
+
 
 
 
@@ -1666,23 +1699,6 @@ export async function acceptBuyOrder(data: any) {
 
 
 
-
-
-  if (result) {
-
-    const updated = await collection.findOne<BuyOrderProps>(
-      { tradeId: data.tradeId }
-    );
-
-    ///console.log('acceptSellOrder updated: ' + JSON.stringify(updated));
-
-
-    return updated;
-
-  } else {
-    return null;
-  }
-  
 }
 
 
@@ -1859,12 +1875,9 @@ export async function buyOrderGetOrderById(orderId: string): Promise<BuyOrderPro
 export async function cancelTradeBySeller(
 
   {
-    orderId,
-    walletAddress,
+    tradeId,
   }: {
-    orderId: string;
-    walletAddress: string;
-  
+    tradeId: string;
   }
 
 ) {
@@ -1872,23 +1885,9 @@ export async function cancelTradeBySeller(
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('buyordersNft');
 
-  // check orderId is valid ObjectId
-  if (!ObjectId.isValid(orderId)) {
-    return false;
-  }
 
-  // check walletAddress is valid
-
-  if (!walletAddress) {
-    return false;
-  }
-
-  // check status is 'accepted'
-
-  // update status to 'cancelled'
-
-  const result = await collection.updateOne(
-    { _id: new ObjectId(orderId), 'seller.walletAddress': walletAddress, status: 'accepted' },
+  const result = await collection.findOneAndUpdate(
+    { tradeId: tradeId, status: 'ordered' },
     { $set: {
       status: 'cancelled',
       cancelledAt: new Date().toISOString(),
@@ -1896,7 +1895,7 @@ export async function cancelTradeBySeller(
   );
 
   const updated = await collection.findOne<BuyOrderProps>(
-    { _id: new ObjectId(orderId) }
+    { tradeId: tradeId }
   );
 
   if (result) {

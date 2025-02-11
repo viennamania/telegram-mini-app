@@ -419,110 +419,6 @@ export default function Index({ params }: any) {
 
 
 
-  const [escrowWalletAddress, setEscrowWalletAddress] = useState('');
-  const [makeingEscrowWallet, setMakeingEscrowWallet] = useState(false);
-
-  const makeEscrowWallet = async () => {
-      
-    if (!address) {
-      
-      //toast.error('Please connect your wallet');
-      alert('Please connect your wallet');
-
-      return;
-    }
-
-
-    setMakeingEscrowWallet(true);
-
-    fetch('/api/orderNoahk/getEscrowWalletAddress', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        lang: params.lang,
-        chain: params.chain,
-        walletAddress: address,
-        isSmartAccount: false
-      }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        
-        //console.log('getEscrowWalletAddress data.result', data.result);
-
-
-        if (data.result) {
-          setEscrowWalletAddress(data.result.escrowWalletAddress);
-        } else {
-          
-          //toast.error('Escrow wallet address has been failed');
-          alert('Escrow wallet address has been failed');
-
-        }
-    })
-    .finally(() => {
-      setMakeingEscrowWallet(false);
-    });
-
-  }
-
- 
-  /*
-  const [escrowBalance, setEscrowBalance] = useState(0);
-  const [escrowNativeBalance, setEscrowNativeBalance] = useState(0);
-  useEffect(() => {
-
-    const getEscrowBalance = async () => {
-
-      if (!address) {
-        setEscrowBalance(0);
-        return;
-      }
-
-      if (!escrowWalletAddress || escrowWalletAddress === '') return;
-
-
-      const result = await balanceOf({
-        contract,
-        address: escrowWalletAddress,
-      });
-
-  
-      setEscrowBalance( Number(result) / 10 ** 18 );
-
-
-
-
-      await fetch('/api/userNoahK/getBalanceByWalletAddress', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chain: params.chain,
-          walletAddress: escrowWalletAddress,
-        }),
-      })
-      .then(response => response.json())
-      .then(data => {
-          setEscrowNativeBalance(data.result?.displayValue);
-      });
-
-    };
-
-    getEscrowBalance();
-
-    const interval = setInterval(() => {
-      getEscrowBalance();
-    } , 1000);
-
-    return () => clearInterval(interval);
-
-  } , [address, escrowWalletAddress, contract, params.chain]);
-  */
-
 
 
   // get User by wallet address
@@ -674,75 +570,6 @@ export default function Index({ params }: any) {
 
 
 
-
-
-    // cancel sell order state
-    const [cancellings, setCancellings] = useState([] as boolean[]);
-    useEffect(() => {
-      setCancellings(sellOrders.map(() => false));
-    }, [sellOrders]);
-
-
-
-    const cancelTrade = async (orderId: string, index: number) => {
-
-
-
-      if (cancellings[index]) {
-        return;
-      }
-
-
-
-      setCancellings(cancellings.map((item, i) => i === index ? true : item));
-
-      const response = await fetch('/api/orderNoahk/cancelTradeByBuyer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          orderId: orderId,
-          walletAddress: address
-        })
-      });
-
-      const data = await response.json();
-
-      ///console.log('data', data);
-
-      if (data.result) {
-
-        //toast.success(Order_has_been_cancelled);
-        alert(Order_has_been_cancelled);
-
-        await fetch('/api/orderNoahk/getAllSellOrdersForBuyer', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(
-            {
-              walletAddress: address,
-              searchMyTrades: true,
-            }
-          )
-        }).then(async (response) => {
-          const data = await response.json();
-          //console.log('data', data);
-          if (data.result) {
-            setSellOrders(data.result.orders);
-          }
-        });
-
-      } else {
-        //toast.error('Order has been failed');
-        alert('Order has been failed');
-      }
-
-      setCancellings(cancellings.map((item, i) => i === index ? false : item));
-
-    }
 
 
   
@@ -992,6 +819,7 @@ export default function Index({ params }: any) {
       })
       .catch((error) => {
           console.error('Error:', error);
+          alert('주문을 수락하는데 실패했습니다');
       })
       .finally(() => {
           setAcceptingBuyOrder (
@@ -1000,6 +828,76 @@ export default function Index({ params }: any) {
               })
           );
       });
+
+    }
+
+
+
+
+    // cancel sell order state
+    const [cancellings, setCancellings] = useState([] as boolean[]);
+    useEffect(() => {
+      setCancellings(buyOrders.map(() => false));
+    } , [buyOrders]);
+
+
+    const cancelTrade = async (tradeId: string, index: number) => {
+
+      if (cancellings[index]) {
+        return;
+      }
+
+
+
+      setCancellings(cancellings.map((item, i) => i === index ? true : item));
+
+      const response = await fetch('/api/orderNft/cancelTradeBySeller', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          tradeId: tradeId,
+        })
+      });
+
+      if (!response.ok) {
+        //toast.error('Failed to cancel trade');
+        alert('거래취소에 실패했습니다');
+        setCancellings(cancellings.map((item, i) => i === index ? false : item));
+        return;
+      }
+
+      const data = await response.json();
+
+      ///console.log('data', data);
+
+      if (data.result) {
+
+        //toast.success(Order_has_been_cancelled);
+        alert(Order_has_been_cancelled);
+
+        await fetch('/api/orderNft/getAllBuyOrders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+          }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            setBuyOrders(data.result.orders);
+        })
+
+
+
+      } else {
+        //toast.error('Order has been failed');
+        alert('거래취소에 실패했습니다');
+      }
+
+      setCancellings(cancellings.map((item, i) => i === index ? false : item));
 
     }
 
@@ -1098,7 +996,7 @@ export default function Index({ params }: any) {
                   width={100}
                   height={100}
                 >
-                  <source src="/noah-1000-purple-minig.mp4" type="video/mp4" />
+                  <source src="/noah-1000-purple-mining.mp4" type="video/mp4" />
                 </video>
 
                 <video
@@ -1575,7 +1473,8 @@ export default function Index({ params }: any) {
 
                             <td className="p-2">
                               <div className="text-sm font-semibold text-white">
-                                {item?.orderInfo?.paymentInfo?.bankName} {item?.orderInfo?.paymentInfo?.accountHolder} {item?.orderInfo?.paymentInfo?.accountNumber}
+                                {item?.orderInfo?.paymentInfo?.bankName}{' '}{item?.orderInfo?.paymentInfo?.accountNumber}<br />
+                                {item?.orderInfo?.paymentInfo?.accountHolder}
                               </div>
                             </td>
 
@@ -1639,7 +1538,7 @@ export default function Index({ params }: any) {
                                   </div>
                                 )}
 
-                                {item.status === 'completed' && (
+                                {item.status === 'paymentConfirmed' && (
                                   <div className="text-sm text-green-500">
                                     {Completed_at}
                                   </div>
@@ -1648,9 +1547,10 @@ export default function Index({ params }: any) {
                               </div>
                             </td>
 
-                            <td className="p-2">
+                            <td className="p-2 flex flex-col items-center justify-center gap-2">
 
-                              {item.status === 'accepted' && item.buyer && item.buyer.walletAddress === address && (
+                              {/*item.status === 'accepted' && item.buyer && item.buyer.walletAddress === address && (*/}
+                              {item.status === 'ordered' && (
                                 <div className="flex flex-row items-center gap-2">
                                   <input
                                     type="checkbox"
@@ -1660,7 +1560,7 @@ export default function Index({ params }: any) {
                                         agreementForCancelTrade.map((item, idx) => idx === index ? e.target.checked : item)
                                       );
                                     }}
-                                    className="w-10 h-10
+                                    className="w-5 h-5
                                       border border-gray-800 rounded-md
                                     "
                                   />
@@ -1674,7 +1574,7 @@ export default function Index({ params }: any) {
                                     `}
                                       
                                     onClick={() => {
-                                      cancelTrade(item._id, index);
+                                      cancelTrade(item.tradeId, index);
                                     }}
                                   >
                                     {cancellings[index] && (
@@ -1687,7 +1587,7 @@ export default function Index({ params }: any) {
                                       />
                                     )}
                                     {!cancellings[index] && 
-                                      Cancel_My_Trade
+                                      "거래취소"
                                     }
                                   </button>
                                 </div>
