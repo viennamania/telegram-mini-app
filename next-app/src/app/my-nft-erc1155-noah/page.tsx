@@ -410,7 +410,7 @@ function AgentPage() {
 
     const erc1155ContractAddress = "0xE6BeA856Cd054945cE7A9252B2dc360703841028";
 
-    const price = 115.5;
+    const price = 105;
 
     // claim NFT
     const [claimingNft, setClaimingNft] = useState(false);
