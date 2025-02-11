@@ -1351,7 +1351,7 @@ function AgentPage() {
 
 
                             <span className="text-lg text-zinc-400 font-semibold">
-                                NOAH 채굴 NFT를 구매신청하려면 아래 계좌번호로 입금할 입금자명을 입력해주세요.
+                                NOAH 채굴 NFT를 구매신청하려면 아래 계좌번호로 입금할 입금자명을 정확하게 입력해주세요.
                             </span>
                             
                             {/* 계좌번호 */}
@@ -1382,7 +1382,8 @@ function AgentPage() {
                                         buyOrder()
                                     }
                                     className={`
-                                        ${buyOrdering ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
+                                        ${buyOrdering || !depositName
+                                         ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
                                         p-2 rounded-lg text-lg font-semibold
                                     `}
                                 >
