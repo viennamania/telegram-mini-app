@@ -410,7 +410,7 @@ function AgentPage() {
 
     const erc1155ContractAddress = "0xE6BeA856Cd054945cE7A9252B2dc360703841028";
 
-
+    const price = 115.5;
 
     // claim NFT
     const [claimingNft, setClaimingNft] = useState(false);
@@ -429,7 +429,7 @@ function AgentPage() {
             return;
         }
 
-        if (balance < 100) {
+        if (balance < 115.5) {
             //toast.error('USDT 잔액이 부족합니다');
             setMessageClaimingNft('USDT 잔액이 부족합니다.');
             return;
@@ -462,8 +462,6 @@ function AgentPage() {
 
             //console.log("result", result);
             allowanceAmount = Number(result);
-
-            const price = 100;
 
             if (allowanceAmount < price * 10 ** 6) {
                 
@@ -1121,9 +1119,22 @@ function AgentPage() {
                                 </span>
                             )}
 
-                            <span className="text-lg text-zinc-400 font-semibold">
-                                채굴 NFT 발행은 100 USDT 당 1개씩 발행 가능합니다.
-                            </span>
+                            <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                {/* dot */}
+                                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <span className="text-sm text-yellow-500 font-semibold">
+                                    채굴 NFT 발행 금액은 {price} USDT 입니다.
+                                </span>
+                            </div>
+                            {/* 지갑에 USDT가 있어야 발행 가능합니다. */}
+                            <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                {/* dot */}
+                                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <span className="text-sm text-yellow-500 font-semibold">
+                                    지갑에 USDT가 있어야 발행 가능합니다.
+                                </span>
+                            </div>
+
                         </div>
                     )}
 
@@ -1493,7 +1504,7 @@ function AgentPage() {
                                             </div>
 
 
-                                            <span className="text-lg text-zinc-400 font-semibold">
+                                            <span className="text-sm text-zinc-400 font-semibold">
                                                 채굴 NFT를 전송받을 주소와 수량을 입력하세요.
                                             </span>
 

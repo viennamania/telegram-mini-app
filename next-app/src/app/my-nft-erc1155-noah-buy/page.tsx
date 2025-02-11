@@ -118,8 +118,17 @@ function AgentPage() {
   
 
 
+    const usdtPrice = 100;
+    // fee 5%
+    const fee = 0.05;
 
-    const buyPrice = 179025;
+    const rate = 1550;
+    // tax 10%
+    const tax = 0.1;
+
+    const krwPrice = (usdtPrice + usdtPrice * fee) * (1 + tax) * rate;
+
+    //const buyPrice = 179025;
 
 
 
@@ -428,6 +437,28 @@ function AgentPage() {
             setMessageClaimingNft('지갑을 먼저 연결해주세요.');
             return;
         }
+
+        // /api/orderNft/setBuyOrder
+        /*
+        const response = await fetch("/api/orderNft/setBuyOrder", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                walletAddress: address,
+                contractAddress: contractAddress,
+                tokenId: tokenId,
+                usdtPrice: usdtPrice,
+                fee: fee,
+                tax: tax,
+                rate: rate,
+                krwPrice: krwPrice,
+            }),
+        });
+        */
+
+
 
         alert(
             "NFT 구매신청을 완료했습니다."
@@ -1125,7 +1156,7 @@ function AgentPage() {
 
                                 {/* KRW */}
                                 100 NOAH 채굴 NFT 판매금액은 ₩{
-                                Number(buyPrice).toLocaleString(
+                                Number(krwPrice).toLocaleString(
 
                                     //navigator.language
                                     'ko-KR'
