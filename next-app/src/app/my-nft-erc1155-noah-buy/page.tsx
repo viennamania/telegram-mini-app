@@ -114,7 +114,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
     const [nftName, setNftName] = useState(
@@ -1744,11 +1744,24 @@ function AgentPage() {
 
                                         <div className="w-full flex flex-row gap-2 items-center justify-between
                                             border-t border-green-500 p-2">
-                                            <span className="text-lg text-zinc-400 font-semibold">
-                                                구매신청일: {
-                                                    new Date(order.createdAt).toLocaleString()
-                                                }
-                                            </span>
+                                            <div className="flex flex-row gap-2 items-center justify-start">
+                                                <span className="text-lg text-yellow-500 font-semibold">
+                                                    구매신청
+                                                </span>
+                                                <span className="text-sm text-zinc-400 font-semibold">
+                                                    {
+                                                        //new Date(order.createdAt).toLocaleString()
+                                                        // time age, just now, 1 minute ago, 1 hour ago, 1 day ago
+                                                        (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 < 60 && ('방금')
+                                                        || (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 < 60 && (Math.floor((new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60) + '분 전')
+                                                        || (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 / 60 < 24 && (Math.floor((new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 / 60) + '시간 전')
+                                                        || (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 / 60 / 24 < 1 && (Math.floor((new Date().getTime() - new Date(order.createdAt).getTime()) / 1000 / 60 / 60 / 24) + '일 전')
+                                                        || new Date(order.createdAt).toLocaleString()
+
+                                                    }
+
+                                                </span>
+                                            </div>
                                         </div>
 
                                         
