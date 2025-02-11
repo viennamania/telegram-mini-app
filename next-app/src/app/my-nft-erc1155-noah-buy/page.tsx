@@ -1369,37 +1369,40 @@ function AgentPage() {
                                 className="w-full p-2 rounded-lg"
                             />
 
-                            <button
-                                disabled={buyOrdering || !depositName}
-                                onClick={() =>
-                                    confirm("채굴 NFT를 구매신청하시겠습니까?") &&
-                                    buyOrder()
-                                }
-                                className={`
-                                    ${buyOrdering ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
-                                    p-2 rounded-lg text-sm font-semibold
-                                `}
-                            >
-                                <div className="flex flex-row gap-2 items-center justify-center">
-                                    {buyOrdering && (
-                                        <Image
-                                            src="/loading.png"
-                                            alt="loding"
-                                            width={30}
-                                            height={30}
-                                            className="animate-spin"
-                                        />
-                                    )}
-                                    {buyOrdering && '채굴 NFT 구매신청중...'}
-                                    {!buyOrdering && '채굴 NFT 구매신청하기'}
-                                </div>
-                            </button>
+                            <div className="mt-5 flex flex-col gap-2 items-center justify-between">
+                                <button
+                                    disabled={buyOrdering || !depositName}
+                                    onClick={() =>
+                                        confirm("채굴 NFT를 구매신청하시겠습니까?") &&
+                                        buyOrder()
+                                    }
+                                    className={`
+                                        ${buyOrdering ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
+                                        p-2 rounded-lg text-lg font-semibold
+                                    `}
+                                >
+                                    <div className="flex flex-row gap-2 items-center justify-center">
+                                        {buyOrdering && (
+                                            <Image
+                                                src="/loading.png"
+                                                alt="loding"
+                                                width={30}
+                                                height={30}
+                                                className="animate-spin"
+                                            />
+                                        )}
+                                        {buyOrdering && '채굴 NFT 구매신청중...'}
+                                        {!buyOrdering && '채굴 NFT 구매신청하기'}
+                                    </div>
+                                </button>
 
-                            {messageBuyOrdering && (
-                                <span className="text-lg text-green-500 font-semibold">
-                                    {messageBuyOrdering}
-                                </span>
-                            )}
+                                {messageBuyOrdering && (
+                                    <span className="text-lg text-green-500 font-semibold">
+                                        {messageBuyOrdering}
+                                    </span>
+                                )}
+
+                            </div>
 
 
                             {/*
