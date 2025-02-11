@@ -1081,16 +1081,25 @@ function AgentPage() {
                                 {/* dot */}
                                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                 <div className="text-sm text-zinc-100 font-semibold">
-                                    채굴 NFT 발행
+                                    NOAH 채굴 NFT 발행
                                 </div>
                             </div>
+
+                            {/* 보유하고 있는 USDT로 NOAH 채굴 NFT를 직접 발행받을 수 있습니다. */}
+                            <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                {/* dot */}
+                                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <span className="text-sm text-yellow-500 font-semibold">
+                                    보유하고 있는 USDT로 NOAH 채굴 NFT를 직접 발행받을 수 있습니다.
+                                </span>
+                            </div>
                             <span className="text-lg text-zinc-400 font-semibold">
-                                채굴 NFT를 발행받을려면 아래 버튼을 클릭하세요.
+                                NOAH 채굴 NFT를 발행받을려면 아래 버튼을 클릭하세요.
                             </span>
                             <button
                                 disabled={claimingNft}
                                 onClick={() =>
-                                    confirm("채굴 NFT를 발행하시겠습니까?") &&
+                                    confirm("NOAH 채굴 NFT를 발행하시겠습니까?") &&
                                     claimNft(erc1155ContractAddress, "0"
                                 )}
                                 className={`
@@ -1108,8 +1117,8 @@ function AgentPage() {
                                             className="animate-spin"
                                         />
                                     )}
-                                    {claimingNft && '채굴 NFT 발행중...'}
-                                    {!claimingNft && '채굴 NFT 발행하기'}
+                                    {claimingNft && 'NOAH 채굴 NFT 발행중...'}
+                                    {!claimingNft && 'NOAH 채굴 NFT 발행하기'}
                                 </div>
                             </button>
                             
@@ -1123,7 +1132,7 @@ function AgentPage() {
                                 {/* dot */}
                                 <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                                 <span className="text-sm text-yellow-500 font-semibold">
-                                    채굴 NFT 발행 금액은 {price} USDT 입니다.
+                                    NOAH 채굴 NFT 발행 금액은 {price} USDT 입니다.
                                 </span>
                             </div>
                             {/* 지갑에 USDT가 있어야 발행 가능합니다. */}
@@ -1368,7 +1377,7 @@ function AgentPage() {
                             {/* dot */}
                             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                             <div className="text-sm text-zinc-100 font-semibold">
-                                소유한 채굴 NFT
+                                소유한 NOAH 채굴 NFT
                             </div>
                         </div>
 
@@ -1382,7 +1391,7 @@ function AgentPage() {
                                     className="animate-spin"
                                 />
                                 <span className="text-lg font-semibold text-zinc-400">
-                                    채굴 NFT 불러오는 중...
+                                    NOAH 채굴 NFT 불러오는 중...
                                 </span>
                             </div>
                         )}
@@ -1391,7 +1400,7 @@ function AgentPage() {
                         {ownedNfts.length === 0 && !loadingOwnedNfts && (
                             <div className="w-full flex flex-row gap-2 items-center justify-center">
                                 <span className="text-lg font-semibold text-zinc-400">
-                                    소유한 채굴 NFT가 없습니다.
+                                    소유한 NOAH 채굴 NFT가 없습니다.
                                 </span>
                             </div>
                         )}
@@ -1488,7 +1497,7 @@ function AgentPage() {
                                                 p-2 rounded-lg">
                                                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                                 <span className="text-sm text-zinc-100 font-semibold">
-                                                    채굴 NFT 전송
+                                                    NOAH 채굴 NFT 전송
                                                 </span>
                                             </div>
 
@@ -1499,13 +1508,13 @@ function AgentPage() {
                                                 {/* dot */}
                                                 <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                                                 <span className="text-sm text-red-500 font-semibold">
-                                                    채굴 NFT를 전송하면 소유자의 모든 권리를 이전하는 것에 동의하는 것입니다.
+                                                    NOAH 채굴 NFT를 전송하면 소유자의 모든 권리를 이전하는 것에 동의하는 것입니다.
                                                 </span>
                                             </div>
 
 
                                             <span className="text-sm text-zinc-400 font-semibold">
-                                                채굴 NFT를 전송받을 주소와 수량을 입력하세요.
+                                               NOAH 채굴 NFT를 전송받을 주소와 수량을 입력하세요.
                                             </span>
 
 
@@ -1550,7 +1559,7 @@ function AgentPage() {
                                                 }
                                                 
                                                 onClick={() =>
-                                                    confirm("채굴 NFT를 전송하시겠습니까?") &&
+                                                    confirm("NOAH 채굴 NFT를 전송하시겠습니까?") &&
                                                     transferNft(
                                                         erc1155ContractAddress,
                                                         "0",
@@ -1571,8 +1580,8 @@ function AgentPage() {
                                                             className="animate-spin"
                                                         />
                                                     )}
-                                                    {transferringNft && '채굴 NFT 전송중...'}
-                                                    {!transferringNft && '채굴 NFT 전송하기'}
+                                                    {transferringNft && 'NOAH 채굴 NFT 전송중...'}
+                                                    {!transferringNft && 'NOAH 채굴 NFT 전송하기'}
                                                 </div>
                                             </button>
 
