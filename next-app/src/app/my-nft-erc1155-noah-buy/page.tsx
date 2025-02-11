@@ -1207,7 +1207,7 @@ function AgentPage() {
                             </div>
 
                             {/* 구매할 NOAH 채굴 NFT를 선택해주세요. */}
-                            <span className="text-lg text-green-500 font-semibold">
+                            <span className="text-lg text-yellow-500 font-semibold">
                                 구매할 NOAH 채굴 NFT를 선택해주세요.
                             </span>
 
