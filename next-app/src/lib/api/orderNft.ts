@@ -4,65 +4,32 @@ import clientPromise from '../mongodb';
 import { ObjectId } from 'mongodb';
 
 
-export interface UserProps {
-  /*
-  name: string;
-  username: string;
-  email: string;
-  image: string;
-  bio: string;
-  bioMdx: MDXRemoteSerializeResult<Record<string, unknown>>;
-  followers: number;
-  verified: boolean;
-  */
+/*
+      tradeId: data.tradeId,
+      walletAddress: data.walletAddress,
+      buyer: user,
+      orderInfo: data,
+      createdAt: new Date().toISOString(),
+      status: 'ordered',
+*/
 
-  id: string,
-  name: string,
-  nickname: string,
-  email: string,
-  avatar: string,
-  regType: string,
-  mobile: string,
-  gender: string,
-  weight: number,
-  height: number,
-  birthDate: string,
-  purpose: string,
-  marketingAgree: string,
-  createdAt: string,
-  updatedAt: string,
-  deletedAt: string,
-  loginedAt: string,
-  followers : number,
-  emailVerified: boolean,
-  bio: string,
+export interface BuyOrderProps {
+ 
+  _id: ObjectId;
+  tradeId: string;
+  walletAddress: string;
+  buyer: any;
+  orderInfo: any;
+  paymentInfo: any;
+  depositName: string;
+  createdAt: Date;
+  status: string;
 
-  password: string,
-
-  seller: any,
-
-  status: string,
-
-  walletAddress: string,
-
-  tradeId: string,
-
-  usdtAmount: number,
-  krwAmount: number,
-  
-  acceptedAt: string,
-  paymentRequestedAt: string,
-  paymentConfirmedAt: string,
-  cancelledAt: string,
-
-  buyer: any,
-
-  transactionHash: string,
 }
 
 export interface ResultProps {
   totalCount: number;
-  orders: UserProps[];
+  orders: BuyOrderProps[];
 }
 
 
@@ -78,7 +45,7 @@ export async function getUsdtPrice(data: any) {
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('setup');
 
-  const result = await collection.findOne<UserProps>(
+  const result = await collection.findOne<BuyOrderProps>(
     { $and: [ { walletAddress: data.walletAddress }, { usdtPrice: { $exists: true } } ] }
   );
 
@@ -178,7 +145,7 @@ export async function insertSellOrder(data: any) {
   const userCollection = client.db('shinemywinter').collection('users');
 
 
-  const user = await userCollection.findOne<UserProps>(
+  const user = await userCollection.findOne<BuyOrderProps>(
     { walletAddress: data.walletAddress },
     { projection: { _id: 0, emailVerified: 0 } }
   );
@@ -240,7 +207,7 @@ export async function insertSellOrder(data: any) {
 /*
 error=====>BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
 */
-export async function getOrderById(orderId: string): Promise<UserProps | null> {
+export async function getOrderById(orderId: string): Promise<BuyOrderProps | null> {
 
   //console.log('getOrderById orderId: ' + orderId);
   ///  orderId 67470264536de8c4c57ab7488
@@ -257,7 +224,7 @@ export async function getOrderById(orderId: string): Promise<UserProps | null> {
   }
 
 
-  const result = await collection.findOne<UserProps>(
+  const result = await collection.findOne<BuyOrderProps>(
     {
       _id: new ObjectId(orderId),
     }
@@ -325,7 +292,7 @@ export async function getSellOrders(
 
   if (searchMyOrders) {
 
-    const results = await collection.find<UserProps>(
+    const results = await collection.find<BuyOrderProps>(
 
       //{ walletAddress: walletAddress, status: { $ne: 'paymentConfirmed' } },
       { walletAddress: walletAddress },
@@ -344,7 +311,7 @@ export async function getSellOrders(
 
   } else {
 
-    const results = await collection.find<UserProps>(
+    const results = await collection.find<BuyOrderProps>(
       {
         //status: 'ordered',
   
@@ -407,7 +374,7 @@ export async function getAllSellOrders(
     // if status is 'all', get all orders by wallet address
     // if status is not 'all', get orders by wallet address and status
 
-    const results = await collection.find<UserProps>(
+    const results = await collection.find<BuyOrderProps>(
 
       //{ walletAddress: walletAddress, status: status },
 
@@ -437,7 +404,7 @@ export async function getAllSellOrders(
 
   } else {
 
-    const results = await collection.find<UserProps>(
+    const results = await collection.find<BuyOrderProps>(
       
       //{ status: status, },
 
@@ -494,7 +461,7 @@ export async function getOneSellOrder(
 
 
 
-  const results = await collection.find<UserProps>(
+  const results = await collection.find<BuyOrderProps>(
     {
 
       _id: new ObjectId(orderId),
@@ -608,7 +575,7 @@ export async function cancelTradeByBuyer(
     } }
   );
 
-  const updated = await collection.findOne<UserProps>(
+  const updated = await collection.findOne<BuyOrderProps>(
     { _id: new ObjectId(orderId) }
   );
 
@@ -689,7 +656,7 @@ export async function getSellOrdersForBuyer(
 
   if (searchMyTrades) {
 
-    const results = await collection.find<UserProps>(
+    const results = await collection.find<BuyOrderProps>(
       {
         'buyer.walletAddress': walletAddress,
         status: { $ne: 'paymentConfirmed' },
@@ -706,7 +673,7 @@ export async function getSellOrdersForBuyer(
 
   } else {
 
-    const results = await collection.find<UserProps>(
+    const results = await collection.find<BuyOrderProps>(
       {
         //status: 'ordered',
   
@@ -754,7 +721,7 @@ export async function getSellOrdersByWalletAddress(
   const collection = client.db('shinemywinter').collection('orders');
 
 
-  const results = await collection.find<UserProps>(
+  const results = await collection.find<BuyOrderProps>(
     { walletAddress: walletAddress },
   ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
 
@@ -802,7 +769,7 @@ export async function acceptSellOrder(data: any) {
 
 
   /*
-    const result = await collection.findOne<UserProps>(
+    const result = await collection.findOne<BuyOrderProps>(
     { _id: new ObjectId(orderId) }
   );
   */
@@ -882,7 +849,7 @@ export async function acceptSellOrder(data: any) {
 
   if (result) {
 
-    const updated = await collection.findOne<UserProps>(
+    const updated = await collection.findOne<BuyOrderProps>(
       { _id: new ObjectId(data.orderId + '') }
     );
 
@@ -933,7 +900,7 @@ export async function requestPayment(data: any) {
   );
 
   if (result) {
-    const updated = await collection.findOne<UserProps>(
+    const updated = await collection.findOne<BuyOrderProps>(
       { _id: new ObjectId(data.orderId + '') }
     );
 
@@ -980,7 +947,7 @@ export async function confirmPayment(data: any) {
   );
 
   if (result) {
-    const updated = await collection.findOne<UserProps>(
+    const updated = await collection.findOne<BuyOrderProps>(
       { _id: new ObjectId(data.orderId+'') }
     );
 
@@ -1020,7 +987,7 @@ export async function getTradesByWalletAddress(
   // get orders by buyer.walletAddress = walletAddress 
   // tradeId is not null
 
-  const results = await collection.find<UserProps>(
+  const results = await collection.find<BuyOrderProps>(
 
     { 'buyer.walletAddress': walletAddress, tradeId: { $ne: null } },
 
@@ -1068,7 +1035,7 @@ export async function getTradesByWalletAddressProcessing(
   // tradeId is not null
   // status is not 'paymentConfirmed'
 
-  const results = await collection.find<UserProps>(
+  const results = await collection.find<BuyOrderProps>(
 
     {
       'buyer.walletAddress': walletAddress,
@@ -1116,7 +1083,7 @@ export async function getSellTradesByWalletAddress(
   // get orders by buyer.walletAddress = walletAddress 
   // tradeId is not null
 
-  const results = await collection.find<UserProps>(
+  const results = await collection.find<BuyOrderProps>(
 
     { 'walletAddress': walletAddress, tradeId: { $ne: null } },
 
@@ -1159,7 +1126,7 @@ export async function getSellTradesByWalletAddressProcessing(
   // get orders by buyer.walletAddress = walletAddress 
   // tradeId is not null
 
-  const results = await collection.find<UserProps>(
+  const results = await collection.find<BuyOrderProps>(
 
     {
       'walletAddress': walletAddress,
@@ -1244,7 +1211,7 @@ export async function updateOne(data: any) {
   );
 
   if (result) {
-    const updated = await collection.findOne<UserProps>(
+    const updated = await collection.findOne<BuyOrderProps>(
       { walletAddress: data.walletAddress },
       { projection: { _id: 0, emailVerified: 0 } }
     );
@@ -1260,7 +1227,7 @@ export async function updateOne(data: any) {
 
 export async function getOneByWalletAddress(
   walletAddress: string,
-): Promise<UserProps | null> {
+): Promise<BuyOrderProps | null> {
 
   console.log('getOneByWalletAddress walletAddress: ' + walletAddress);
 
@@ -1270,7 +1237,7 @@ export async function getOneByWalletAddress(
 
   // id is number
 
-  const results = await collection.findOne<UserProps>(
+  const results = await collection.findOne<BuyOrderProps>(
     { walletAddress: walletAddress },
     { projection: { _id: 0, emailVerified: 0 } }
   );
@@ -1320,7 +1287,7 @@ export async function sellOrderRollbackPayment(data: any) {
   );
 
   if (result) {
-    const updated = await collection.findOne<UserProps>(
+    const updated = await collection.findOne<BuyOrderProps>(
       { _id: new ObjectId(data.orderId+'') }
     );
 
@@ -1335,17 +1302,6 @@ export async function sellOrderRollbackPayment(data: any) {
 
 
 
-
-/*
-    walletAddress,
-    contractAddress,
-    tokenId,
-    usdtPrice,
-    fee,
-    tax,
-    rate,
-    krwPrice,
-*/
 
 
 
@@ -1364,6 +1320,8 @@ export async function insertBuyOrder(data: any) {
     || !data.tax
     || !data.rate
     || !data.krwPrice
+    || !data.paymentInfo
+    || !data.depositName
   ) {
     return null;
   }
@@ -1377,7 +1335,7 @@ export async function insertBuyOrder(data: any) {
   const userCollection = client.db('shinemywinter').collection('users');
 
 
-  const user = await userCollection.findOne<UserProps>(
+  const user = await userCollection.findOne<BuyOrderProps>(
     { walletAddress: data.walletAddress },
     { projection: { _id: 0, emailVerified: 0 } }
   );
@@ -1398,11 +1356,15 @@ export async function insertBuyOrder(data: any) {
   const result = await collection.insertOne(
 
     {
+      tradeId: tradeId,
       walletAddress: data.walletAddress,
       buyer: user,
       orderInfo: data,
+      paymentInfo: data.paymentInfo,
+      depositName: data.depositName,
       createdAt: new Date().toISOString(),
       status: 'ordered',
+
     }
   );
 
@@ -1410,7 +1372,7 @@ export async function insertBuyOrder(data: any) {
   if (result) {
 
 
-    const updated = await collection.findOne<UserProps>(
+    const updated = await collection.findOne<BuyOrderProps>(
       { _id: result.insertedId }
     );
 
@@ -1427,6 +1389,43 @@ export async function insertBuyOrder(data: any) {
   
 
 }
+
+
+
+// getBuyOrdersByWalletAddress
+export async function getBuyOrdersByWalletAddress(
+
+  {
+    limit,
+    page,
+    walletAddress,
+  }: {
+    limit: number;
+    page: number;
+    walletAddress: string;
+  
+  }
+
+): Promise<ResultProps> {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('buyordersNft');
+
+  
+  const results = await collection.find<BuyOrderProps>(
+    { walletAddress: walletAddress },
+  ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
+
+  return {
+    totalCount: results.length,
+    orders: results,
+  };
+
+}
+
+
+
+
 
 
 
@@ -1464,7 +1463,7 @@ export async function getBuyOrders(
 
   if (searchMyOrders) {
 
-    const results = await collection.find<UserProps>(
+    const results = await collection.find<BuyOrderProps>(
 
       //{ walletAddress: walletAddress, status: { $ne: 'paymentConfirmed' } },
       { walletAddress: walletAddress },
@@ -1483,7 +1482,7 @@ export async function getBuyOrders(
 
   } else {
 
-    const results = await collection.find<UserProps>(
+    const results = await collection.find<BuyOrderProps>(
       {
         //status: 'ordered',
   
@@ -1596,7 +1595,7 @@ export async function getBuyOrdersForSeller(
 
   if (searchMyTrades) {
 
-    const results = await collection.find<UserProps>(
+    const results = await collection.find<BuyOrderProps>(
       {
         'walletAddress': walletAddress,
         
@@ -1615,7 +1614,7 @@ export async function getBuyOrdersForSeller(
 
   } else {
 
-    const results = await collection.find<UserProps>(
+    const results = await collection.find<BuyOrderProps>(
       {
         //status: 'ordered',
   
@@ -1706,7 +1705,7 @@ export async function acceptBuyOrder(data: any) {
 
 
   /*
-    const result = await collection.findOne<UserProps>(
+    const result = await collection.findOne<BuyOrderProps>(
     { _id: new ObjectId(orderId) }
   );
   */
@@ -1751,7 +1750,7 @@ export async function acceptBuyOrder(data: any) {
 
   if (result) {
 
-    const updated = await collection.findOne<UserProps>(
+    const updated = await collection.findOne<BuyOrderProps>(
       { _id: new ObjectId(data.orderId + '') }
     );
 
@@ -1803,7 +1802,7 @@ export async function buyOrderRequestPayment(data: any) {
   );
 
   if (result) {
-    const updated = await collection.findOne<UserProps>(
+    const updated = await collection.findOne<BuyOrderProps>(
       { _id: new ObjectId(data.orderId + '') }
     );
 
@@ -1851,7 +1850,7 @@ export async function buyOrderConfirmPayment(data: any) {
   );
 
   if (result) {
-    const updated = await collection.findOne<UserProps>(
+    const updated = await collection.findOne<BuyOrderProps>(
       { _id: new ObjectId(data.orderId+'') }
     );
 
@@ -1899,7 +1898,7 @@ export async function buyOrderRollbackPayment(data: any) {
   );
 
   if (result) {
-    const updated = await collection.findOne<UserProps>(
+    const updated = await collection.findOne<BuyOrderProps>(
       { _id: new ObjectId(data.orderId+'') }
     );
 
@@ -1915,12 +1914,12 @@ export async function buyOrderRollbackPayment(data: any) {
 
 
 // getOrderById
-export async function buyOrderGetOrderById(orderId: string): Promise<UserProps | null> {
+export async function buyOrderGetOrderById(orderId: string): Promise<BuyOrderProps | null> {
 
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('buyordersNft');
 
-  const result = await collection.findOne<UserProps>(
+  const result = await collection.findOne<BuyOrderProps>(
     { _id: new ObjectId(orderId) }
   );
 
@@ -1977,7 +1976,7 @@ export async function cancelTradeBySeller(
     } }
   );
 
-  const updated = await collection.findOne<UserProps>(
+  const updated = await collection.findOne<BuyOrderProps>(
     { _id: new ObjectId(orderId) }
   );
 
@@ -1991,6 +1990,8 @@ export async function cancelTradeBySeller(
 
 
 }
+
+
 
 
 
@@ -2032,7 +2033,7 @@ export async function getOneBuyOrder(
 
 
 
-  const results = await collection.find<UserProps>(
+  const results = await collection.find<BuyOrderProps>(
     {
 
       _id: new ObjectId(orderId),

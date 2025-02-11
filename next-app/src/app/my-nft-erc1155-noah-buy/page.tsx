@@ -114,7 +114,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -285,142 +285,52 @@ function AgentPage() {
     // check user nickname duplicate
 
 
-    const [isNicknameDuplicate, setIsNicknameDuplicate] = useState(false);
-
-    const checkNicknameIsDuplicate = async ( nickname: string ) => {
-
-        const response = await fetch("/api/user/checkUserByNickname", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                nickname: nickname,
-            }),
-        });
 
 
-        const data = await response?.json();
-
-
-        //console.log("checkNicknameIsDuplicate data", data);
-
-        if (data.result) {
-            setIsNicknameDuplicate(true);
-        } else {
-            setIsNicknameDuplicate(false);
-        }
-
-    }
+    const erc1155ContractAddress = "0xE6BeA856Cd054945cE7A9252B2dc360703841028";
 
 
 
+    // api/orderNft/getBuyOrdersByWalletAddress
 
-    const [loadingSetUserData, setLoadingSetUserData] = useState(false);
+    const [loadingBuyOrders, setLoadingBuyOrders] = useState(false);
+    const [buyOrders, setBuyOrders] = useState([] as any[]);
+    useEffect(() => {
+        const fetchBuyOrders = async () => {
+            setLoadingBuyOrders(true);
 
-    const setUserData = async () => {
-
-
-        // check nickname length and alphanumeric
-        //if (nickname.length < 5 || nickname.length > 10) {
-
-        if (editedNickname.length < 5 || editedNickname.length > 10) {
-
-            //toast.error("닉네임은 5자 이상 10자 이하로 입력해주세요");
-            return;
-        }
-        
-        ///if (!/^[a-z0-9]*$/.test(nickname)) {
-        if (!/^[a-z0-9]*$/.test(editedNickname)) {
-            //toast.error("닉네임은 영문 소문자와 숫자만 입력해주세요");
-            return;
-        }
-
-
-        setLoadingSetUserData(true);
-
-        if (nicknameEdit) {
-
-
-            const response = await fetch("/api/user/updateUser", {
+            const response = await fetch("/api/orderNft/getBuyOrdersByWalletAddress", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     walletAddress: address,
-                    
-                    //nickname: nickname,
-                    nickname: editedNickname,
-
                 }),
             });
 
-            const data = await response.json();
-
-            ///console.log("updateUser data", data);
-
-            if (data.result) {
-
-                setUserCode(data.result.id);
-                setNickname(data.result.nickname);
-
-                setNicknameEdit(false);
-                setEditedNickname('');
-
-                //toast.success('Nickname saved');
-
-            } else {
-
-                //toast.error('You must enter different nickname');
+            if (!response.ok) {
+                setLoadingBuyOrders(false);
+                return;
             }
-
-
-        } else {
-
-            const response = await fetch("/api/user/setUserVerified", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    walletAddress: address,                    
-                    //nickname: nickname,
-                    nickname: editedNickname,
-                    userType: "",
-                    mobile: "",
-                    telegramId: "",
-                }),
-            });
 
             const data = await response.json();
 
-            //console.log("data", data);
+            console.log("getBuyOrdersByWalletAddress data", data);
 
             if (data.result) {
-
-                setUserCode(data.result.id);
-                setNickname(data.result.nickname);
-
-                setNicknameEdit(false);
-                setEditedNickname('');
-
-                //toast.success('Nickname saved');
-
+                setBuyOrders(data.result?.orders);
             } else {
-                //toast.error('Error saving nickname');
+                setBuyOrders([]);
             }
+
+            setLoadingBuyOrders(false);
+        };
+
+        if (address) {
+            fetchBuyOrders();
         }
-
-        setLoadingSetUserData(false);
-
-        
-    }
-
-
-
-
-    const erc1155ContractAddress = "0xE6BeA856Cd054945cE7A9252B2dc360703841028";
+    } , [address]);
 
 
 
@@ -623,7 +533,16 @@ function AgentPage() {
             "NFT 구매신청을 완료했습니다."
         )
         */
+    {/* 결제계좌 */}
+    const paymentInfo = {
+        bankName: "국민은행",
+        accountHolder: "김철수",
+        accountNumber: "123-456-7890",
+    };
 
+
+    {/* 입금자명 */}
+    const [depositName, setDepositName] = useState("");
 
     const [buyOrdering, setBuyOrdering] = useState(false);
     const [messageBuyOrdering, setMessageBuyOrdering] = useState("");
@@ -664,6 +583,8 @@ function AgentPage() {
                     tax: tax,
                     rate: rate,
                     krwPrice: krwPrice,
+                    paymentInfo: paymentInfo,
+                    depositName: depositName,
                 }),
             });
 
@@ -676,6 +597,26 @@ function AgentPage() {
                 setMessageBuyOrdering('NFT 구매신청을 완료했습니다.');
 
                 alert('NFT 구매신청을 완료했습니다.');
+
+                // fetch buyOrders again
+                setLoadingBuyOrders(true);
+                const response = await fetch("/api/orderNft/getBuyOrdersByWalletAddress", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        walletAddress: address,
+                    }),
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setBuyOrders(data.result?.orders);
+                }
+                setLoadingBuyOrders(false);
+
+
+
             } else {
                 setMessageBuyOrdering('NFT 구매신청 실패: 알 수 없는 오류');
 
@@ -1185,15 +1126,18 @@ function AgentPage() {
 
 
                         </div>
-                    )/*}
+                        )/*}
 
-                
+                    
+                    */}
+                    
+                    
+                    {/* buyOders status is "ordered" count check 0 */}
 
+                    {address
+                    && !loadingBuyOrders
+                    && buyOrders.filter((order) => order.status === "ordered").length === 0 && (
 
-
-
-                    {/* claim NFT */}
-                    {address && (
                         <div className="w-full flex flex-col gap-2 items-center justify-between
                             border border-gray-800
                             p-4 rounded-lg">
@@ -1205,11 +1149,31 @@ function AgentPage() {
                                 </div>
                             </div>
                             <span className="text-lg text-zinc-400 font-semibold">
-                                채굴 NFT를 구매신청하려면 아래 버튼을 클릭하세요.
+                                채굴 NFT를 구매신청하려면 아래 계좌번호로 입금할 입금자명을 입력해주세요.
                             </span>
+                            
+                            {/* 계좌번호 */}
+                            <div className="w-full flex flex-col gap-2 items-start justify-between">
+                                <span className="text-lg text-zinc-100 font-semibold">
+                                    결제할 계좌번호
+                                </span>
+                                <span className="text-lg text-zinc-400 font-semibold">
+                                    {paymentInfo.bankName} {paymentInfo.accountNumber} {paymentInfo.accountHolder}
+                                </span>
+                            </div>
+
+                            {/* 입금자명 */}
+                            <input
+                                disabled={buyOrdering}
+                                type="text"
+                                value={depositName}
+                                onChange={(e) => setDepositName(e.target.value)}
+                                placeholder="입금자명을 입력해주세요"
+                                className="w-full p-2 rounded-lg"
+                            />
 
                             <button
-                                disabled={buyOrdering}
+                                disabled={buyOrdering || !depositName}
                                 onClick={() =>
                                     confirm("채굴 NFT를 구매신청하시겠습니까?") &&
                                     buyOrder()
@@ -1300,6 +1264,149 @@ function AgentPage() {
                         </div>
                     )}
 
+                    {/* buyOders status is "ordered" count check > 0 */}
+                    {/* buyOrders list */}
+                    {/* 구매신청내역 */}
+                    <div className="mt-10 w-full flex flex-col gap-2 items-center justify-between">
+
+                        <span className="text-lg text-zinc-100 font-semibold">
+                            채굴 NFT 구매신청내역
+                        </span>
+
+                        {/* 구매신청내역이 없습니다. */}
+                        {address && !loadingBuyOrders && buyOrders.filter((order) => order.status === "ordered").length === 0 && (
+                            <div className="w-full flex flex-col gap-2 items-start justify-between
+                                border border-gray-800
+                                p-4 rounded-lg">
+
+                                <span className="text-lg text-zinc-400 font-semibold">
+                                    구매신청내역이 없습니다.
+                                </span>
+
+                            </div>
+                        )}
+
+                        {/* 구매신청내역이 있습니다. */}
+                        {/*{
+
+    "tradeId": "396305",
+=
+    "orderInfo": {
+        "walletAddress": "0x542197103Ca1398db86026Be0a85bc8DcE83e440",
+        "contractAddress": "0xE6BeA856Cd054945cE7A9252B2dc360703841028",
+        "tokenId": "0",
+        "usdtPrice": 100,
+        "fee": 0.05,
+        "tax": 0.1,
+        "rate": 1550,
+        "krwPrice": 179025
+    },
+    "createdAt": "2025-02-11T02:39:52.982Z",
+    "status": "ordered"
+}
+                        */}
+ 
+                        {address && !loadingBuyOrders && buyOrders.filter((order) => order.status === "ordered").length > 0 && (
+
+                            <div className="w-full flex flex-col gap-2 items-center justify-between">
+
+                                {buyOrders.map((order, index) => (
+                                    <div
+                                        key={index}
+                                        className="w-full flex flex-col gap-2 items-start justify-between
+                                        border border-green-500
+                                        p-4 rounded-lg"
+                                    >
+                                        {/* 거래번호 */}
+                                        <div className="w-full flex flex-row gap-2 items-center justify-between">
+                                            <span className="text-lg text-green-500 font-semibold">
+                                                거래번호: #{order.tradeId}
+                                            </span>
+                                        </div>
+
+                                        <div className="w-full flex flex-row gap-2 items-center justify-between
+                                            border-t border-green-500 p-2">
+                                            <span className="text-lg text-zinc-400 font-semibold">
+                                                구매신청일: {
+                                                    new Date(order.createdAt).toLocaleString()
+                                                }
+                                            </span>
+                                        </div>
+
+                                        {/* 구매수량 */}
+                                        <div className="w-full flex flex-row gap-2 items-center justify-between p-2">
+                                            <span className="text-lg text-zinc-400 font-semibold">
+                                                구매수량: 1개
+                                            </span>
+                                        </div>
+
+                                        <div className="w-full flex flex-row gap-2 items-center justify-between p-2">
+                                            <span className="text-lg text-zinc-400 font-semibold">
+                                                구매신청금액: ₩{
+                                                    Number(order.orderInfo.krwPrice).toLocaleString(
+                                                        'ko-KR'
+                                                    )
+                                                }
+                                            </span>
+                                        </div>
+
+                                        <div className="w-full flex flex-row gap-2 items-center justify-between p-2">
+                                            <span className="text-lg text-zinc-400 font-semibold">
+                                                구매신청상태: {
+                                                    order.status === 'ordered' && '구매신청중'
+                                                }
+                                            </span>
+                                        </div>
+
+                                        {/* 결제할 계좌번호 */}
+                                        <div className="w-full flex flex-col gap-2 items-start justify-between
+                                            border-t border-green-500 p-2">
+                                            <span className="text-lg text-zinc-400 font-semibold">
+                                                결제할 계좌번호:
+                                            </span>
+                                            <span className="text-lg text-zinc-400 font-semibold">
+                                                {paymentInfo.bankName} {paymentInfo.accountNumber} {paymentInfo.accountHolder}
+                                            </span>
+                                        </div>
+
+                                        {/* 입금자명 */}
+                                        <div className="w-full flex flex-row gap-2 items-center justify-between p-2">
+                                            <span className="text-lg text-zinc-400 font-semibold">
+                                                입금자명: {order.depositName}
+                                            </span>
+                                        </div>
+                                        
+                                        {/* 결제할 계좌번호로 신청한 입금자명으로 입급을 해주세요. */}
+                                        {/* 입금확인후 NFT가 발행됩니다. */}
+
+                                        <div className="w-full flex flex-col gap-2 items-start justify-between
+                                            border-t border-green-500 p-2">
+                                            <div className="flex flex-row gap-2 items-center justify-start">
+                                                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                                <div className="text-sm text-zinc-100 font-semibold">
+                                                    결제할 계좌번호로 신청한 입금자명으로 입급을 해주세요.
+                                                </div>
+                                            </div>
+                                            <div className="flex flex-row gap-2 items-center justify-start">
+                                                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                                <div className="text-sm text-zinc-100 font-semibold">
+                                                    입금확인후 NFT가 발행됩니다.
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                ))}
+
+
+                            </div>
+
+
+
+                        )}
+
+                    </div>
 
 
 

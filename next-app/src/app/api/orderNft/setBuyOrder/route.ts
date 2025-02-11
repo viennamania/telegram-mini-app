@@ -34,6 +34,8 @@ export async function POST(request: NextRequest) {
     tax,
     rate,
     krwPrice,
+    paymentInfo,
+    depositName,
   } = body;
 
 
@@ -47,6 +49,8 @@ export async function POST(request: NextRequest) {
     tax: tax,
     rate: rate,
     krwPrice: krwPrice,
+    paymentInfo: paymentInfo,
+    depositName: depositName,
   });
 
 
