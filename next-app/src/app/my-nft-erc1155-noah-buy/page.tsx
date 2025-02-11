@@ -1203,7 +1203,7 @@ function AgentPage() {
                                 {/* dot */}
                                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                 <div className="text-sm text-zinc-100 font-semibold">
-                                    채굴 NFT 구매신청
+                                    NOAH 채굴 NFT 구매신청
                                 </div>
                             </div>
 
@@ -1347,7 +1347,7 @@ function AgentPage() {
 
 
                             <span className="text-lg text-zinc-400 font-semibold">
-                                채굴 NFT를 구매신청하려면 아래 계좌번호로 입금할 입금자명을 입력해주세요.
+                                NOAH 채굴 NFT를 구매신청하려면 아래 계좌번호로 입금할 입금자명을 입력해주세요.
                             </span>
                             
                             {/* 계좌번호 */}
@@ -1374,7 +1374,7 @@ function AgentPage() {
                                 <button
                                     disabled={buyOrdering || !depositName}
                                     onClick={() =>
-                                        confirm("채굴 NFT를 구매신청하시겠습니까?") &&
+                                        confirm("NOAH 채굴 NFT를 구매신청하시겠습니까?") &&
                                         buyOrder()
                                     }
                                     className={`
@@ -1392,8 +1392,8 @@ function AgentPage() {
                                                 className="animate-spin"
                                             />
                                         )}
-                                        {buyOrdering && '채굴 NFT 구매신청중...'}
-                                        {!buyOrdering && '채굴 NFT 구매신청하기'}
+                                        {buyOrdering && 'NOAH 채굴 NFT 구매신청중...'}
+                                        {!buyOrdering && 'NOAH 채굴 NFT 구매신청하기'}
                                     </div>
                                 </button>
 
@@ -1451,7 +1451,7 @@ function AgentPage() {
                     <div className="mt-10 w-full flex flex-col gap-2 items-center justify-between">
 
                         <span className="text-lg text-zinc-100 font-semibold">
-                            채굴 NFT 구매신청내역
+                            NOAH 채굴 NFT 구매신청내역
                         </span>
 
                         {/* 구매신청내역이 없습니다. */}
@@ -1894,7 +1894,7 @@ function AgentPage() {
                             {/* dot */}
                             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                             <div className="text-sm text-zinc-100 font-semibold">
-                                소유한 채굴 NFT
+                                소유한 NOAH 채굴 NFT
                             </div>
                         </div>
 
@@ -1908,7 +1908,7 @@ function AgentPage() {
                                     className="animate-spin"
                                 />
                                 <span className="text-lg font-semibold text-zinc-400">
-                                    채굴 NFT 불러오는 중...
+                                    NOAH 채굴 NFT 불러오는 중...
                                 </span>
                             </div>
                         )}
@@ -1917,7 +1917,7 @@ function AgentPage() {
                         {ownedNfts.length === 0 && !loadingOwnedNfts && (
                             <div className="w-full flex flex-row gap-2 items-center justify-center">
                                 <span className="text-lg font-semibold text-zinc-400">
-                                    소유한 채굴 NFT가 없습니다.
+                                    소유한 NOAH 채굴 NFT가 없습니다.
                                 </span>
                             </div>
                         )}
@@ -2014,7 +2014,7 @@ function AgentPage() {
                                                 p-2 rounded-lg">
                                                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                                 <span className="text-sm text-zinc-100 font-semibold">
-                                                    채굴 NFT 전송
+                                                    NOAH 채굴 NFT 전송
                                                 </span>
                                             </div>
 
@@ -2025,13 +2025,13 @@ function AgentPage() {
                                                 {/* dot */}
                                                 <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                                                 <span className="text-sm text-red-500 font-semibold">
-                                                    채굴 NFT를 전송하면 소유자의 모든 권리를 이전하는 것에 동의하는 것입니다.
+                                                    NOAH 채굴 NFT를 전송하면 소유자의 모든 권리를 이전하는 것에 동의하는 것입니다.
                                                 </span>
                                             </div>
 
 
                                             <span className="text-lg text-zinc-400 font-semibold">
-                                                채굴 NFT를 전송받을 주소와 수량을 입력하세요.
+                                                NOAH 채굴 NFT를 전송받을 주소와 수량을 입력하세요.
                                             </span>
 
 
@@ -2076,7 +2076,7 @@ function AgentPage() {
                                                 }
                                                 
                                                 onClick={() =>
-                                                    confirm("채굴 NFT를 전송하시겠습니까?") &&
+                                                    confirm("NOAH 채굴 NFT를 전송하시겠습니까?") &&
                                                     transferNft(
                                                         erc1155ContractAddress,
                                                         "0",
@@ -2097,8 +2097,8 @@ function AgentPage() {
                                                             className="animate-spin"
                                                         />
                                                     )}
-                                                    {transferringNft && '채굴 NFT 전송중...'}
-                                                    {!transferringNft && '채굴 NFT 전송하기'}
+                                                    {transferringNft && 'NOAH 채굴 NFT 전송중...'}
+                                                    {!transferringNft && 'NOAH 채굴 NFT 전송하기'}
                                                 </div>
                                             </button>
 
