@@ -989,7 +989,7 @@ function AgentPage() {
 
                                             <div className="flex flex-row gap-2 items-center justify-between">
                                                 {transfer.sendOrReceive === 'send' && (
-                                                    <div className="w-20 flex flex-row gap-2 items-center justify-between">
+                                                    <div className="w-24   flex flex-row gap-2 items-center justify-between">
                                                         <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                                                         {/* otherUser?.avatar */}
                                                         {transfer?.otherUser?.avatar && (
