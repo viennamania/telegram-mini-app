@@ -128,7 +128,7 @@ export async function updateResultByWalletAddressAndSequence(
     win
   } : {
     walletAddress: string,
-    sequence: number,
+    sequence: string,
     selectedOddOrEven: string,
     resultOddOrEven: string,
     win: boolean
@@ -140,8 +140,13 @@ export async function updateResultByWalletAddressAndSequence(
   const collection = client.db('shinemywinter').collection('games');
 
   // finde one
+  // sequence is integer
+
   const findResult = await collection.findOne(
-    { walletAddress: walletAddress, sequence: sequence }
+    {
+      walletAddress: walletAddress,
+      sequence: parseInt(sequence)
+    }
   );
 
   if (!findResult) {
