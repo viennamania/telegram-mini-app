@@ -39,9 +39,7 @@ export async function insertOne(data: any) {
       return {
         status: "waiting",
         waitingTime: 60 - Math.floor((new Date().getTime() - new Date(latestData.createdAt).getTime()) / 1000),
-        data: {
-          message: "Please wait for 60 seconds before creating a new game"
-        }
+        data: latestData
 
       };
     }
