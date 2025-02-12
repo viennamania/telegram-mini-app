@@ -90,8 +90,6 @@ function AgentPage() {
 
     const center = searchParams.get('center');
 
-
-    ///////////const tokenId = searchParams.get('tokenId') || "0";
  
 
     const account = useActiveAccount();
@@ -114,7 +112,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -614,7 +612,7 @@ function AgentPage() {
     }, [address, erc1155ContractAddress]);
 
 
-    //console.log("ownedNfts", ownedNfts);
+    ///console.log("ownedNfts", ownedNfts);
 
 
     // safeTransferFrom
@@ -653,11 +651,14 @@ function AgentPage() {
         setSendAmount(ownedNfts.map(() => ""));
     } , [ownedNfts]);
 
+
+    /*
     const [tokenId, setTokenId] = useState([] as string[]);
     useEffect(() => {
         setTokenId(ownedNfts.map(() => ""));
     } , [ownedNfts]);
-
+    */
+    //const [tokenId, setTokenId] = useState("");
 
         
 
@@ -670,6 +671,7 @@ function AgentPage() {
 
     const transferNft = async (
         index: number,
+        tokenId: string,
     ) => {
 
     
@@ -733,7 +735,7 @@ function AgentPage() {
                 contract: erc1155Contract,
                 from: address as string,
                 to: toAddress[index],
-                tokenId: BigInt(tokenId[index]),
+                tokenId: BigInt(tokenId),
                 value: BigInt(sendAmount[index]),
                 data: optionalData,
             });
@@ -760,7 +762,7 @@ function AgentPage() {
 
             setSendAmount(sendAmount.map(() => ""));
             setToAddress(toAddress.map(() => ""));
-            setTokenId(tokenId.map(() => ""));
+
             
 
 
@@ -1670,8 +1672,10 @@ function AgentPage() {
                                                 
                                                 onClick={() =>
                                                     confirm("NOAH 채굴 NFT를 전송하시겠습니까?") &&
+                                                    
                                                     transferNft(
                                                         index,
+                                                        nft.id.toString(),
                                                     )
                                                 }
                                                 /*
@@ -1781,12 +1785,7 @@ function Header(
         <div className="w-full flex flex-row justify-between items-center gap-2
           bg-green-500 p-4 rounded-lg mb-5
         ">
-            {/* logo */}
-            <button
-                onClick={() => {
-                    router.push('/?center=' + center + '&agent=' + agent + '&tokenId=' + tokenId);
-                }}
-            >            
+      
                 <div className="flex flex-row gap-2 items-center">
                     <Image
                     src="/logo-aiagent.png"
@@ -1799,7 +1798,7 @@ function Header(
                     AI Agent
                     </span>
                 </div>
-            </button>
+
 
             {/*}
             <div className="flex flex-row gap-2 items-center">
