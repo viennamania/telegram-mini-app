@@ -91,7 +91,7 @@ function AgentPage() {
     const center = searchParams.get('center');
 
 
-    const tokenId = searchParams.get('tokenId') || "0";
+    ///////////const tokenId = searchParams.get('tokenId') || "0";
  
 
     const account = useActiveAccount();
@@ -619,51 +619,122 @@ function AgentPage() {
 
     // safeTransferFrom
     // transfer NFT
+    /*
     const [transferringNft, setTransferringNft] = useState(false);
     const [messageTransferringNft, setMessageTransferringNft] = useState("");
 
     const [toAddress, setToAddress] = useState("");
     const [sendAmount, setSendAmount] = useState("");
+    */
+
+    // array of transferingNft
+    // array of messageTransferringNft
+    // array of toAddress
+    // array of sendAmount
+    // array of tokenId
+
+    const [transferringNft, setTransferringNft] = useState([] as boolean[]);
+    useEffect(() => {
+        setTransferringNft(ownedNfts.map(() => false));
+    } , [ownedNfts]);
+
+    const [messageTransferringNft, setMessageTransferringNft] = useState([] as string[]);
+    useEffect(() => {
+        setMessageTransferringNft(ownedNfts.map(() => ""));
+    } , [ownedNfts]);
+
+    const [toAddress, setToAddress] = useState([] as string[]);
+    useEffect(() => {
+        setToAddress(ownedNfts.map(() => ""));
+    } , [ownedNfts]);
+
+    const [sendAmount, setSendAmount] = useState([] as string[]);
+    useEffect(() => {
+        setSendAmount(ownedNfts.map(() => ""));
+    } , [ownedNfts]);
+
+    const [tokenId, setTokenId] = useState([] as string[]);
+    useEffect(() => {
+        setTokenId(ownedNfts.map(() => ""));
+    } , [ownedNfts]);
+
+
+        
+
+
+
+
+    
+
 
 
     const transferNft = async (
-        contractAddress: string,
-        tokenId: string,
-        //toAddress: string,
-        //amount: string,
+        index: number,
     ) => {
-        
-        if (transferringNft) {
+
+    
+        if (transferringNft[index]) {
             //toast.error('이미 실행중입니다');
-            setMessageTransferringNft('이미 실행중입니다.');
+            messageTransferringNft[index] = '이미 실행중입니다.';
+            setMessageTransferringNft([...messageTransferringNft]);
             return;
         }
 
         if (!address) {
             //toast.error('지갑을 먼저 연결해주세요');
-            setMessageTransferringNft('지갑을 먼저 연결해주세요.');
+            messageTransferringNft[index] = '지갑을 먼저 연결해주세요.';
+            setMessageTransferringNft([...messageTransferringNft]);
             return;
         }
 
-        setMessageTransferringNft('NFT 전송중입니다.');
+        if (!toAddress[index]) {
+            //toast.error('수신자 주소를 입력해주세요');
+            messageTransferringNft[index] = '수신자 주소를 입력해주세요.';
+            setMessageTransferringNft([...messageTransferringNft]);
+            return;
+        }
 
-        setTransferringNft(true);
+        if (!sendAmount[index]) {
+            //toast.error('전송할 양을 입력해주세요');
+            messageTransferringNft[index] = '전송할 양을 입력해주세요.';
+            setMessageTransferringNft([...messageTransferringNft]);
+            return;
+        }
+
+        if (Number(sendAmount[index]) <= 0) {
+            //toast.error('전송할 양을 입력해주세요');
+            messageTransferringNft[index] = '전송할 양을 입력해주세요.';
+            setMessageTransferringNft([...messageTransferringNft]);
+            return;
+        }
+
+        if (Number(sendAmount[index]) > Number(ownedNfts[index].balance)) {
+            //toast.error('보유한 양보다 많이 전송할 수 없습니다');
+            messageTransferringNft[index] = '보유한 양보다 많이 전송할 수 없습니다.';
+            setMessageTransferringNft([...messageTransferringNft]);
+            return;
+        }
+
+
+
+    
+        
 
         try {
 
             const erc1155Contract = getContract({
                 client,
                 chain: polygon,
-                address: contractAddress,
+                address: erc1155ContractAddress,
             });
 
             const optionalData = '0x';
             const transaction = safeTransferFrom({
                 contract: erc1155Contract,
                 from: address as string,
-                to: toAddress,
-                tokenId: BigInt(tokenId),
-                value: BigInt(sendAmount),
+                to: toAddress[index],
+                tokenId: BigInt(tokenId[index]),
+                value: BigInt(sendAmount[index]),
                 data: optionalData,
             });
 
@@ -677,12 +748,19 @@ function AgentPage() {
                 throw new Error('NFT 전송 실패. 관리자에게 문의해주세요.');
             }
 
-            setMessageTransferringNft('NFT 전송을 완ㄹ했습니다.');
+            //setMessageTransferringNft('NFT 전송을 완ㄹ했습니다.');
+
+            messageTransferringNft[index] = 'NFT 전송을 완료했습니다.';
+            setMessageTransferringNft([...messageTransferringNft]);
 
             alert('NFT 전송을 완료했습니다.');
 
-            setSendAmount('');
-            setToAddress('');
+            //setSendAmount('');
+            //setToAddress('');
+
+            setSendAmount(sendAmount.map(() => ""));
+            setToAddress(toAddress.map(() => ""));
+            setTokenId(tokenId.map(() => ""));
             
 
 
@@ -722,19 +800,27 @@ function AgentPage() {
         } catch (error) {
 
             if (error instanceof Error) {
-                setMessageTransferringNft('NFT 전송 실패:' + error.message);
+                messageTransferringNft[index] = 'NFT 전송 실패:' + error.message;
+                setMessageTransferringNft([...messageTransferringNft]);
+
+                //setMessageTransferringNft('NFT 전송 실패:' + error.message);
 
                 //alert('NFT 전송 실패:' + error.message);
 
             } else {
-                setMessageTransferringNft('NFT 전송 실패: 알 수 없는 오류');
+                messageTransferringNft[index] = 'NFT 전송 실패: 알 수 없는 오류';
+                setMessageTransferringNft([...messageTransferringNft]);
+
+                //setMessageTransferringNft('NFT 전송 실패: 알 수 없는 오류');
 
                 //alert('NFT 전송 실패: 알 수 없는 오류');
             }
 
         }
 
-        setTransferringNft(false);
+        ///setTransferringNft(false);
+        transferringNft[index] = false;
+
 
 
     }
@@ -1525,7 +1611,8 @@ function AgentPage() {
                                                 placeholder="주소"
                                                 type='text'
                                                 onChange={(e) => {
-                                                    setToAddress(e.target.value);
+                                                    //setToAddress(e.target.value);
+                                                    toAddress[index] = e.target.value;
                                                 }}
                                                 value={toAddress}
                                             />
@@ -1545,31 +1632,48 @@ function AgentPage() {
                                                         return;
                                                     }
 
-                                                    setSendAmount(e.target.value);
+                                                    ///setSendAmount(e.target.value);
+                                                    sendAmount[index] = e.target.value;
                                                     
                                                 }}
                                                 value={sendAmount}
                                             />
                                             <button
+                                                /*
                                                 disabled={
                                                     transferringNft
                                                     || !toAddress
                                                     || !sendAmount
                                                     || Number(sendAmount) > Number(nft.quantityOwned.toString())
                                                 }
+                                                */
+                                                disabled={transferringNft[index]
+                                                    || !toAddress[index]
+                                                    || !sendAmount[index]
+                                                    || Number(sendAmount[index]) > Number(nft.quantityOwned.toString())
+                                                }
+
+
                                                 
                                                 onClick={() =>
                                                     confirm("NOAH 채굴 NFT를 전송하시겠습니까?") &&
                                                     transferNft(
-                                                        erc1155ContractAddress,
-                                                        nft.tokenId.toString(),
+                                                        index,
                                                     )
                                                 }
+                                                /*
                                                 className={`
                                                     ${transferringNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
                                                     p-2 rounded-lg text-sm font-semibold
                                                 `}
+                                                */
+                                                className={`
+                                                    ${transferringNft[index] ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
+                                                    p-2 rounded-lg text-sm font-semibold
+                                                `}
+
                                             >
+                                                {/*
                                                 <div className="flex flex-row gap-2 items-center justify-center">
                                                     {transferringNft && (
                                                         <Image
@@ -1583,11 +1687,34 @@ function AgentPage() {
                                                     {transferringNft && 'NOAH 채굴 NFT 전송중...'}
                                                     {!transferringNft && 'NOAH 채굴 NFT 전송하기'}
                                                 </div>
+                                                */}
+                                                <div className="flex flex-row gap-2 items-center justify-center">
+                                                    {transferringNft[index] && (
+                                                        <Image
+                                                            src="/loading.png"
+                                                            alt="loding"
+                                                            width={30}
+                                                            height={30}
+                                                            className="animate-spin"
+                                                        />
+                                                    )}
+                                                    {transferringNft[index] && 'NOAH 채굴 NFT 전송중...'}
+                                                    {!transferringNft[index] && 'NOAH 채굴 NFT 전송하기'}
+                                                </div>
+
+
                                             </button>
 
+                                            {/*
                                             {messageTransferringNft && (
                                                 <span className="text-lg text-green-500 font-semibold">
                                                     {messageTransferringNft}
+                                                </span>
+                                            )}
+                                            */}
+                                            {messageTransferringNft[index] && (
+                                                <span className="text-lg text-green-500 font-semibold">
+                                                    {messageTransferringNft[index]}
                                                 </span>
                                             )}
 
