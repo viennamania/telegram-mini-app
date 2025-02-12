@@ -30,6 +30,8 @@ export async function insertOne(data: any) {
 
 
   if (latestData) {
+
+
     // within 60 seconds
     if (
       //isWithinOneMinute(latestData.createdAt)
@@ -55,6 +57,7 @@ export async function insertOne(data: any) {
     {
       walletAddress: data.walletAddress,
       sequence: sequence,
+      status: "opened",
       usdtAmount: data.usdtAmount,
       krwAmount: data.krwAmount,
       rate: data.rate,
@@ -164,6 +167,15 @@ export async function updateResultByWalletAddressAndSequence(
     }
   }
 
+
+  if (findResult.status === "closed") {
+    return {
+      status: "fail",
+      data: findResult,
+    }
+  }
+
+
   const result = await collection.updateOne(
     {
       walletAddress: walletAddress,
@@ -171,6 +183,7 @@ export async function updateResultByWalletAddressAndSequence(
     },
     {
       $set: {
+        status: "closed",
         selectedOddOrEven: selectedOddOrEven,
         resultOddOrEven: resultOddOrEven,
         win: win,
