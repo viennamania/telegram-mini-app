@@ -161,7 +161,7 @@ export async function updateResultByWalletAddressAndSequence(
   );
 
   if (result) {
-    return result;
+    return findResult;
   } else {
     return null;
   }
