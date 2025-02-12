@@ -11,11 +11,11 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
 
   /*
-          walletAddress: walletAddress,
-        sequence: selectedSequence,
-        seletedOddOrEven: oddOrEven,
-        resultOddOrEven: resultOddOrEven, 
-        win: win,
+          walletAddress,
+        sequence,
+        seletedOddOrEven,
+        resultOddOrEven, 
+        win
         */
 
   const {
