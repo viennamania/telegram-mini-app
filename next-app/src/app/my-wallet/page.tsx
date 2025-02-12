@@ -1145,7 +1145,9 @@ function ProfilePage() {
                             </span>
                         )}
 
-                        {!loadingTransfers && transfers?.length > 0 && (
+                        {/*!loadingTransfers && transfers?.length > 0 && (*/}
+
+
 
                             <table className="w-full">
                                 <thead>
@@ -1320,7 +1322,7 @@ function ProfilePage() {
                                 </tbody>
                             </table>
 
-                        ) }
+                        {/*}) */}
 
                     
 
