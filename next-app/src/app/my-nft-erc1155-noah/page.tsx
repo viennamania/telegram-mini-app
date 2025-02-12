@@ -1614,7 +1614,9 @@ function AgentPage() {
                                                     //setToAddress(e.target.value);
                                                     toAddress[index] = e.target.value;
                                                 }}
-                                                value={toAddress}
+                                                value={
+                                                    toAddress[index]
+                                                }
                                             />
                                             <input
                                                 className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
