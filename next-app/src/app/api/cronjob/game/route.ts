@@ -206,8 +206,9 @@ export async function GET(request: NextRequest) {
         ///const amount = game.krwAmount;
 
               // send amount is 0.00001 to 0.001
-        const sendAmount = Number(Math.random() * (0.001 - 0.00001) + 0.00001).toFixed(6);
+        //const sendAmount = Number(Math.random() * (0.001 - 0.00001) + 0.00001).toFixed(6);
 
+        const sendAmount = game.settlement;
 
         const transaction = transfer({
           contract: contractUSDT,
@@ -226,7 +227,6 @@ export async function GET(request: NextRequest) {
         const result = await setGamesSettlementByWalletAddressAndSequence({
           walletAddress: toWalletAddress,
           sequence: sequence,
-          settlement: settlement,
         });
 
     

@@ -176,21 +176,51 @@ export async function updateResultByWalletAddressAndSequence(
   }
 
 
-  const result = await collection.updateOne(
-    {
-      walletAddress: walletAddress,
-      sequence: parseInt(sequence),
-    },
-    {
-      $set: {
-        status: "closed",
-        selectedOddOrEven: selectedOddOrEven,
-        resultOddOrEven: resultOddOrEven,
-        win: win,
-        updatedAt: new Date().toISOString(),
+  const settlement = Number(Math.random() * (0.001 - 0.00001) + 0.00001).toFixed(6);
+
+  let result = null;
+  
+  
+  if (win) {
+    result = await collection.updateOne(
+      {
+        walletAddress: walletAddress,
+        sequence: parseInt(sequence),
+      },
+      {
+        $set: {
+          status: "closed",
+          selectedOddOrEven: selectedOddOrEven,
+          resultOddOrEven: resultOddOrEven,
+          win: win,
+          settlementStatus: false,
+          settlement: settlement,
+          settlementAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        }
       }
-    }
-  );
+    );
+  } else {
+    result = await collection.updateOne(
+      {
+        walletAddress: walletAddress,
+        sequence: parseInt(sequence),
+      },
+      {
+        $set: {
+          status: "closed",
+          selectedOddOrEven: selectedOddOrEven,
+          resultOddOrEven: resultOddOrEven,
+          win: win,
+          updatedAt: new Date().toISOString(),
+        }
+      }
+    );
+  }
+
+
+
+
 
   if (result) {
     return {
@@ -231,9 +261,7 @@ export async function getAllGamesSettlement() {
 
   const result = await collection.find(
     {
-      win: { $exists: true },
-      status: "closed",
-      settlement: { $exists: false }
+      settlementStatus: false,
     }
   ).toArray();
 
@@ -246,11 +274,9 @@ export async function setGamesSettlementByWalletAddressAndSequence(
   {
     walletAddress,
     sequence,
-    settlement,
   } : {
     walletAddress: string,
     sequence: string,
-    settlement: string
   }
 ) {
 
@@ -267,7 +293,7 @@ export async function setGamesSettlementByWalletAddressAndSequence(
     },
     {
       $set: {
-        settlement: settlement,
+        settlementStatus: true,
         settlementAt: new Date().toISOString(),
       }
     }
