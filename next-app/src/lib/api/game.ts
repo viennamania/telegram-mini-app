@@ -145,7 +145,7 @@ export async function updateResultByWalletAddressAndSequence(
   const findResult = await collection.findOne(
     {
       walletAddress: walletAddress,
-      sequence: parseInt(sequence)
+      sequence: parseInt(sequence),
     }
   );
 
@@ -165,7 +165,10 @@ export async function updateResultByWalletAddressAndSequence(
   }
 
   const result = await collection.updateOne(
-    { walletAddress: walletAddress, sequence: sequence },
+    {
+      walletAddress: walletAddress,
+      sequence: parseInt(sequence),
+    },
     {
       $set: {
         selectedOddOrEven: selectedOddOrEven,
