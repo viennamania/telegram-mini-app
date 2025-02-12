@@ -223,9 +223,19 @@ export async function updateResultByWalletAddressAndSequence(
 
 
   if (result) {
+
+
+    // find updated data
+    const updatedData = await collection.findOne(
+      {
+        walletAddress: walletAddress,
+        sequence: parseInt(sequence),
+      }
+    );
+
     return {
       status: "success",
-      data: findResult
+      data: updatedData
     };
     ;
   } else {
