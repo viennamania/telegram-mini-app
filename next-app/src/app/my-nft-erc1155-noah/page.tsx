@@ -1612,7 +1612,16 @@ function AgentPage() {
                                                 type='text'
                                                 onChange={(e) => {
                                                     //setToAddress(e.target.value);
-                                                    toAddress[index] = e.target.value;
+                                                    //toAddress[index] = e.target.value;
+
+                                                    setToAddress(toAddress.map((value, idx) => {
+                                                        if (idx === index) {
+                                                            return e.target.value;
+                                                        } else {
+                                                            return value;
+                                                        }
+                                                    }));
+
                                                 }}
                                                 value={
                                                     toAddress[index]
@@ -1624,21 +1633,23 @@ function AgentPage() {
                                                 type='number'
                                                 onChange={(e) => {
 
-                                                    // only number
-                                                    if (isNaN(Number(e.target.value))) {
-                                                        return;
-                                                    }
+                                                    //setSendAmount(e.target.value);
+                                                    //sendAmount[index] = e.target.value;
 
-                                                    // less than balance
-                                                    if (Number(e.target.value) > Number(nft.quantityOwned.toString())) {
-                                                        return;
-                                                    }
+                                                    setSendAmount(sendAmount.map((value, idx) => {
+                                                        if (idx === index) {
+                                                            return e.target.value;
+                                                        } else {
+                                                            return value;
+                                                        }
+                                                    }));
 
-                                                    ///setSendAmount(e.target.value);
-                                                    sendAmount[index] = e.target.value;
                                                     
                                                 }}
-                                                value={sendAmount}
+                                                value={
+                                                    sendAmount[index]
+                                                }
+
                                             />
                                             <button
                                                 /*
