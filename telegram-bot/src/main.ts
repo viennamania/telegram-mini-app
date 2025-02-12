@@ -844,7 +844,16 @@ async function sendMessages() {
         */
 
 
-        const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
+        //const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
+
+        // get video from url
+        // URL of a video file
+        const videoUrl = 'https://shinemywinter.vercel.app/noah-10000-gold-mining.mp4';
+        // Create an InputFile object from the URL
+        const videoFile = new InputFile(videoUrl);
+
+
+
         await botInstance.api.sendVideo(
           telegramId,
           videoFile,

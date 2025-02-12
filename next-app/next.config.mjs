@@ -23,6 +23,8 @@ const nextConfig = {
 
       "ipfs.io",
 
+      "shinemywinter.vercel.app",
+
     ],
   },
 

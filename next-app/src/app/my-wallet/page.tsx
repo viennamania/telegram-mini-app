@@ -93,7 +93,7 @@ function ProfilePage() {
     const address = account?.address;
 
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -1176,14 +1176,18 @@ function ProfilePage() {
                                                     {
                                                         transfer?.otherUser?.nickname
                                                         ? (
-                                                            <div className="flex flex-row gap-2 items-center justify-start">
+                                                            <div className="flex flex-col gap-1 items-center justify-center">
+                                                           
+
                                                                 <Image
                                                                     src={transfer?.otherUser?.avatar || "/profile-default.png"}
                                                                     alt="Avatar"
-                                                                    width={30}
-                                                                    height={30}
+                                                                    width={50}
+                                                                    height={50}
                                                                     className="rounded-full"
                                                                 />
+                                                            
+
                                                                 {transfer?.otherUser?.nickname}
                                                             </div>
                                                         )
@@ -1196,12 +1200,12 @@ function ProfilePage() {
                                                     {
                                                         transfer?.otherUser?.nickname
                                                         ? (
-                                                            <div className="flex flex-row gap-2 items-center justify-start">
+                                                            <div className="flex flex-col gap-1 items-center justify-center">
                                                                 <Image
                                                                     src={transfer?.otherUser?.avatar || '/profile-default.png'}
                                                                     alt="Avatar"
-                                                                    width={30}
-                                                                    height={30}
+                                                                    width={50}
+                                                                    height={50}
                                                                     className="rounded-full"
 
                                                                     style={{
@@ -1219,12 +1223,35 @@ function ProfilePage() {
                                                 </td>
                                             )}
                                             {/* monospace font */}
-                                            <td className="p-2 text-xl text-green-500 text-right"
-                                                style={{
-                                                    fontFamily: 'monospace',
-                                                }}
-                                            >
-                                                {Number(transfer.transferData.value / 10 ** 6).toFixed(6)}
+                                            <td className="p-2">
+
+                                                <div className="flex flex-row items-end justify-end">
+                                                    <span className="text-2xl text-green-500 font-semibold text-right"
+                                                        style={{
+                                                            fontFamily: 'monospace',
+                                                        }}
+                                                    >
+                                                        {
+                                                            Number(transfer.transferData.value / 10 ** 6).toFixed(6).split('.')[0]
+                                                        }
+                                                    </span>
+                                                    <span className="text-sm text-black text-right"
+                                                    >
+                                                        .
+                                                    </span>
+                                                    <span className="text-sm text-green-500 text-right"
+
+                                                        style={{
+                                                            fontFamily: 'monospace',
+                                                        }}
+                                                    >
+                                                        {
+                                                            Number(transfer.transferData.value / 10 ** 6).toFixed(6).split('.')[1]
+                                                        }
+                                                    </span>
+                                                </div>
+
+
                                             </td>
                                             <td className="p-2 text-xs text-zinc-800 font-semibold text-right">
                                         
