@@ -111,16 +111,33 @@ export function isWithinOneMinute(createdAt: string) {
 }
 
 // update result
-export async function updateResultByWalletAddressAndSequence(walletAddress: string, sequence: number, data: any) {
+/*
+    walletAddress,
+    sequence,
+    selectedOddOrEven,
+    resultOddOrEven,
+    win. true, false
+    */
+export async function updateResultByWalletAddressAndSequence(
+  data: {
+    walletAddress: string,
+    sequence: number,
+    selectedOddOrEven: string,
+    resultOddOrEven: string,
+    win: boolean,
+  } 
+) {
+
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('games');
 
   const result = await collection.updateOne(
-    { walletAddress: walletAddress, sequence: sequence },
+    { walletAddress: data.walletAddress, sequence: data.sequence },
     {
       $set: {
-        result: data.result,
-        updatedAt: new Date().toISOString(),
+        selectedOddOrEven: data.selectedOddOrEven,
+        resultOddOrEven: data.resultOddOrEven,
+        win: data.win,
       }
     }
   );
