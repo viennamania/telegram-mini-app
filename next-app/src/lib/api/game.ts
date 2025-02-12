@@ -29,7 +29,9 @@ export async function insertOne(data: any) {
   const latestData = await collection.findOne({ walletAddress: data.walletAddress }, { sort: { createdAt: -1 } });
 
 
-  if (latestData) {
+  if (latestData
+    && latestData.status === "opened"
+  ) {
 
 
     // within 60 seconds
@@ -44,7 +46,16 @@ export async function insertOne(data: any) {
         data: latestData
 
       };
+      
+    } else {
+
+      return {
+        status: "success",
+        data: latestData
+      };
+
     }
+
   }
 
 
