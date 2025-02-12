@@ -145,7 +145,18 @@ export async function updateResultByWalletAddressAndSequence(
   );
 
   if (!findResult) {
-    return null;
+
+    return {
+      params : {
+        walletAddress: walletAddress,
+        sequence: sequence,
+        selectedOddOrEven: selectedOddOrEven,
+        resultOddOrEven: resultOddOrEven,
+        win: win,
+      },
+      status: "fail",
+      message: "no data found"
+    }
   }
 
   const result = await collection.updateOne(
@@ -161,9 +172,16 @@ export async function updateResultByWalletAddressAndSequence(
   );
 
   if (result) {
-    return findResult;
+    return {
+      status: "success",
+      data: findResult
+    };
+    ;
   } else {
-    return null;
+    return {
+      status: "fail",
+      message: "fail to update"
+    };
   }
 
 }
