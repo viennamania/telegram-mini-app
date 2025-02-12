@@ -635,6 +635,15 @@ function ProfilePage() {
             getTransfers();
         }
 
+        // interval
+        const interval = setInterval(() => {
+            if (address) {
+                getTransfers();
+            }
+        } , 5000);
+
+        return () => clearInterval(interval);
+
     } , [address]);
 
 
