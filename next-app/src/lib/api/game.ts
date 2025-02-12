@@ -206,3 +206,72 @@ export async function updateResultByWalletAddressAndSequence(
   }
 
 }
+
+
+
+// getAllWinGames
+export async function getAllWinGames() {
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('games');
+
+  const result = await collection.find(
+    {
+      win: true
+    }
+  ).toArray();
+
+  return result;
+}
+
+
+// getAllGamesSettlement
+export async function getAllGamesSettlement() {
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('games');
+
+  const result = await collection.find(
+    {
+      win: { $exists: true },
+      status: "closed",
+      settlement: { $exists: false }
+    }
+  ).toArray();
+
+  return result;
+}
+
+
+// setGaemsSettlementByWalletAddressAndSequence
+export async function setGamesSettlementByWalletAddressAndSequence(
+  {
+    walletAddress,
+    sequence,
+    settlement,
+  } : {
+    walletAddress: string,
+    sequence: string,
+    settlement: string
+  }
+) {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('games');
+
+  // finde one and updaate
+  // sequence is integer
+
+  const findResult = await collection.findOneAndUpdate(
+    {
+      walletAddress: walletAddress,
+      sequence: parseInt(sequence),
+    },
+    {
+      $set: {
+        settlement: settlement,
+        settlementAt: new Date().toISOString(),
+      }
+    }
+  );
+
+  return findResult;
+}

@@ -43,6 +43,13 @@ import {
   
 } from "thirdweb/extensions/erc20";
 
+import {
+  getAllGamesSettlement,
+  setGamesSettlementByWalletAddressAndSequence,
+} from '@lib/api/game';
+
+
+
 
 ///import { Network, Alchemy } from 'alchemy-sdk';
 
@@ -76,16 +83,16 @@ export async function GET(request: NextRequest) {
     //const center = searchParams.get('center');
 
     //console.log("center: ", center);
-    const center = request.nextUrl.searchParams.get('center');
+    //const center = request.nextUrl.searchParams.get('center');
 
     //console.log("center: ", center);
 
   
 
 
-    if (!center) {
-        return NextResponse.error();
-    }
+    //if (!center) {
+    //    return NextResponse.error();
+    //}
 
 
     // check time 
@@ -102,7 +109,7 @@ export async function GET(request: NextRequest) {
 
 
 
-
+      /*
       const members = await getAllMembersByCenter({
         center: center,
         limit: 500,
@@ -114,16 +121,21 @@ export async function GET(request: NextRequest) {
       if (!members) {
         return NextResponse.error();
       }
+      */
 
 
-      //return NextResponse.error();
+
+      const games = await getAllGamesSettlement();
+
+      console.log("games: ", games);
 
 
-    
-      //console.log("members: ", members);
-    
-        // amount is random from 0.00001 to 0.1
-        const amount = Math.random() * (1 - 0.00001) + 0.00001;
+      if (!games) {
+        return NextResponse.json({
+          result: "no data found",
+        });
+      }
+
 
     
       const client = createThirdwebClient({
@@ -166,7 +178,7 @@ export async function GET(request: NextRequest) {
     
       const gameWalletAddress = account.address;
     
-      //console.log("gameWalletAddress: ", gameWalletAddress);
+      console.log("gameWalletAddress: ", gameWalletAddress);
       // 0x298288C587dbBc7a7064Aa252ea0848a4F519A5a
       
     
@@ -174,15 +186,28 @@ export async function GET(request: NextRequest) {
 
       //console.log("members: ", members);
 
+
     
       let transactions = [] as any;
-    
+
+
       /*
-      const sendAmount = amount / members.length;
-    
-      members.forEach(async (member : any) => {
-    
-        const toWalletAddress = member.walletAddress;
+            // send amount is 0.00001 to 0.001
+      const sendAmount = 
+        Math.random() * (0.001 - 0.00001) + 0.00001;
+
+        */
+
+
+      games.forEach(async (game : any) => {
+
+        const toWalletAddress = game.walletAddress;
+
+        ///const amount = game.krwAmount;
+
+              // send amount is 0.00001 to 0.001
+        const sendAmount = Number(Math.random() * (0.001 - 0.00001) + 0.00001).toFixed(6);
+
 
         const transaction = transfer({
           contract: contractUSDT,
@@ -191,25 +216,22 @@ export async function GET(request: NextRequest) {
         });
     
         transactions.push(transaction);
+
+
+        // update game settlement
+        const sequence = game.sequence;
+
+        const settlement = sendAmount.toString();
+
+        const result = await setGamesSettlementByWalletAddressAndSequence({
+          walletAddress: toWalletAddress,
+          sequence: sequence,
+          settlement: settlement,
+        });
+
     
       } );
-      */
-
-      //const myWalletAddress = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
-
-      const myWalletAddress = "0x4EF39b249A165cdA40b9c7b5F64e79bAb78Ff0C2";
-
-
-      const sendAmount = "45";
-      const transaction = transfer({
-        contract: contractUSDT,
-        to: myWalletAddress,
-        amount: sendAmount,
-      });
-
-      transactions.push(transaction);
     
-
     
 
     
@@ -226,13 +248,12 @@ export async function GET(request: NextRequest) {
       
       console.log("batchResponse: ", batchResponse);
 
-
+    
 
     return NextResponse.json({
         
         result: {
-            members,
-            amount,
+            //amount,
             gameWalletAddress,
         },
     });

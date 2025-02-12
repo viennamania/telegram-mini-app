@@ -16,6 +16,10 @@
         {
             "path": "/api/cronjob/airdrop?center=ppump_reco_bot",
             "schedule": "*/40 * * * *"
+        },
+        {
+            "path": "/api/cronjob/game",
+            "schedule": "* * * * *"
         }
 
     ]
