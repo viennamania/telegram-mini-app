@@ -30,8 +30,16 @@ export async function insertOne(data: any) {
 
 
   if (latestData
-    && latestData.status === "opened"
+    //&& latestData.status === "opened"
   ) {
+
+
+    if (latestData.status === "opened") {
+      return {
+        status: "success",
+        data: latestData
+      };
+    }
 
 
     // within 60 seconds
@@ -45,13 +53,6 @@ export async function insertOne(data: any) {
         waitingTime: 60 - Math.floor((new Date().getTime() - new Date(latestData.createdAt).getTime()) / 1000),
         data: latestData
 
-      };
-      
-    } else {
-
-      return {
-        status: "success",
-        data: latestData
       };
 
     }
