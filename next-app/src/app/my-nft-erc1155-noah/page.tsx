@@ -1562,7 +1562,7 @@ function AgentPage() {
                                                     confirm("NOAH 채굴 NFT를 전송하시겠습니까?") &&
                                                     transferNft(
                                                         erc1155ContractAddress,
-                                                        "0",
+                                                        nft.tokenId.toString(),
                                                     )
                                                 }
                                                 className={`
