@@ -139,6 +139,15 @@ export async function updateResultByWalletAddressAndSequence(
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('games');
 
+  // finde one
+  const findResult = await collection.findOne(
+    { walletAddress: walletAddress, sequence: sequence }
+  );
+
+  if (!findResult) {
+    return null;
+  }
+
   const result = await collection.updateOne(
     { walletAddress: walletAddress, sequence: sequence },
     {
