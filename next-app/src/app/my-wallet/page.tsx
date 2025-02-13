@@ -885,7 +885,7 @@ function ProfilePage() {
                                                     Number(balance).toFixed(6).split('.')[0]
                                                 }.
                                             </span>
-                                            <span className="text-2xl text-green-500 font-semibold">
+                                            <span className="text-4xl text-green-500">
                                                 {
                                                     Number(balance).toFixed(6).split('.')[1]
                                                 }

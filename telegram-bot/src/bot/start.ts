@@ -141,29 +141,72 @@ feature.on("callback_query:data", async (ctx) => {
 
     //console.log("dataSetGame=", dataSetGame);
 
-    const sequence = dataSetGame?.result?.sequence;
+    const status = dataSetGame?.result?.status;
+
+    if (status === 'waiting') {
+
+      const sequence = parseInt(dataSetGame?.result?.data?.sequence) + 1;
+
+      const waitingTime = dataSetGame?.result?.waitingTime;
+
+      const text = '✅ ' + sequence + '회차 홀짝게임을 시작합니다.'
+      + '\n\n⏱️ ' + waitingTime + '초 후에 시작가능합니다.'
+      + '\n\n🙏 잠시만 기다려 주세요.'
+      + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
+
+      //return ctx.reply(text);
+
+      const keyboard = new InlineKeyboard()
+      .text('🎲 ' + sequence + '회차 홀짝게임 시작하기', 'roulette')
+    
+      //const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-waiting.jpg`;
+      const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-waiting.webp`;
+
+      return ctx.replyWithPhoto(
+        photoUrl,
+        {
+          caption: text,
+          reply_markup: keyboard
+        }
+      )
+    
+    }
+
+    let sequence;
+
+    if (status === "success") {
+
+      sequence = dataSetGame?.result?.data?.sequence;
 
     //console.log("sequence=", sequence);
 
-    if (!sequence) {
-      return ctx.reply("Failed to set game");
+      if (!sequence) {
+        return ctx.reply("🚫 Failed to set game");
+      }
+
     }
 
 
 
-    const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-wins.jpg`;
+
+
+    const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-banner.jpg`;
     
+    //const videoFile = new InputFile(`/home/ubuntu/video/welcome-casino.gif`)
+    //const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
+
+
     const text = '✅ ' + sequence + '회차 홀짝게임을 시작합니다.'
-      + '\n\n👇 아래 버튼에서 홀 또는 짝을 선택하세요.';
+      + '\n\n👇 아래 버튼에서 🚹 홀 또는 🚺 짝을 선택하세요.';
 
     const queryDataOdd = 'roulette-odd' + '-' + sequence;
     const queryDataEvent = 'roulette-even' + '-' + sequence;
 
     const keyboard = new InlineKeyboard()
       //.text('🎲 홀', 'roulette-odd').text('🎲 짝', 'roulette-even')
-      .text('🎲 홀', queryDataOdd).text('🎲 짝', queryDataEvent)
+      .text('🚹 홀', queryDataOdd).text('🚺 짝', queryDataEvent)
 
-
+    
     return ctx.replyWithPhoto(
       photoUrl,
       {
@@ -171,10 +214,20 @@ feature.on("callback_query:data", async (ctx) => {
         reply_markup: keyboard
       }
     )
+      
+    /*
+    return ctx.replyWithVideo(
+      videoFile,
+      {
+        caption: text,
+        reply_markup: keyboard
+      }
+    )
+      */
 
 
 
-  //} else if (data === "roulette-odd" || data === "roulette-even") {
+  ///} else if (data === "roulette-odd" || data === "roulette-even") {
 
   } else if (data.startsWith("roulette-")) {
 
@@ -186,18 +239,38 @@ feature.on("callback_query:data", async (ctx) => {
 
     const dataSplit = data.split('-');
 
-    const oddOrEven = dataSplit[1];
+    const selectedOddOrEven = dataSplit[1];
     const selectedSequence = dataSplit[2];
 
-    console.log('oddOrEven', oddOrEven);
+
+
+
+
+    //const randomNumber = Math.floor(Math.random() * 2);
+
+    const randomNumber = Math.floor(Math.random() * 20);
+
+
+    //const result = randomNumber === 0 ? "🚺 짝" : "🚹 홀";
+
+    // random number divided by 2 is 0 or 1
+    // odd is 1, even is 0
+
+    const resultOddOrEven = randomNumber / 2 === 0 ? "even" : "odd";
+
+
+
     console.log('selectedSequence', selectedSequence);
+    console.log('selectedOddOrEven', selectedOddOrEven);
+    console.log('resultOddOrEven', resultOddOrEven);
 
 
 
 
-    const randomNumber = Math.floor(Math.random() * 2);
-    const result = randomNumber === 0 ? "짝" : "홀";
-    const win = (data === "roulette-odd" && randomNumber === 1) || (data === "roulette-even" && randomNumber === 0);
+
+    const win = (selectedOddOrEven === "odd" && resultOddOrEven === "odd")
+      || (selectedOddOrEven === "even" && resultOddOrEven === "even");
+
 
     //return ctx.answerCallbackQuery(`랜덤 숫자: ${randomNumber}\n결과: ${result}\n${win ? "당첨" : "꽝"}`);
 
@@ -209,7 +282,7 @@ feature.on("callback_query:data", async (ctx) => {
 
 
 
-
+    
     const telegramId = ctx.from?.id+"";
 
     const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
@@ -225,86 +298,150 @@ feature.on("callback_query:data", async (ctx) => {
     });
   
     if (responseGetUser.status !== 200) {
-      return ctx.reply("Failed to get user");
+      return ctx.reply("🚫 Failed to get user");
     }
 
     const dataUser = await responseGetUser.json();
     //console.log("dataUser", dataUser);
 
     if (!dataUser?.result?.walletAddress) {
-      return ctx.reply("Failed to get wallet address");
+      return ctx.reply("🚫 Failed to get wallet address");
     }
     
     const walletAddress = dataUser.result.walletAddress;
+    
 
+    /*
+    let resultOddOrEven;
 
+    if (randomNumber === 1) resultOddOrEven = "odd"
+    else if (randomNumber === 0) resultOddOrEven = "even";
+    */
 
-    const urlSetGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/setGame`;
+    const urlSetGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/updateGame`;
   
-    const responseSetGame = await fetch(urlSetGame, {
+    const responseUpdateGame = await fetch(urlSetGame, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         walletAddress: walletAddress,
+        sequence: selectedSequence,
+        selectedOddOrEven: selectedOddOrEven,
+        resultOddOrEven: resultOddOrEven, 
+        win: win,
       }),
     });
 
-    if (responseSetGame.status !== 200) {
-      return ctx.reply("Failed to set game 1");
+    if (responseUpdateGame.status !== 200) {
+      return ctx.reply("🚫 Failed to update game 1");
     }
 
-    const dataSetGame = await responseSetGame.json();
+    const dataUpdateGame = await responseUpdateGame.json();
 
-    console.log("dataSetGame=", dataSetGame);
+    if (dataUpdateGame.result.status === 'fail') {
 
-    const sequence = dataSetGame?.result?.sequence;
+      if (dataUpdateGame.result?.data.status === 'closed') {
+
+        const sequence = dataUpdateGame.result?.data.sequence;
+
+        return ctx.reply("🚫 " + sequence + '회차 게임은 이미 종료되었습니다.');
+
+      } else {
+
+        return ctx.reply("🚫 Failed to run game");
+
+      }
+
+    }
+
+    //console.log("walletAddress=", walletAddress);
+    //console.log("selectedSequence=", selectedSequence);
+    //console.log("oddOrEven=", oddOrEven);
+    //console.log("resultOddOrEven=", resultOddOrEven);
+    //console.log("win=", win);
+
+    console.log("dataUpdateGame=", dataUpdateGame);
+
+  
+
+    /*
+    const sequence = dataUpdateGame?.result?.sequence;
 
     //console.log("sequence=", sequence);
 
     if (!sequence) {
       return ctx.reply("Failed to set game 2");
     }
+      */
+
+    
+    if (selectedOddOrEven === "odd") {
+      await ctx.reply("🚹 홀을 선택하셨습니다.");
+    } else if (selectedOddOrEven === "even") {
+      await ctx.reply("🚺 짝을 선택하셨습니다.");
+    }
+
+    // loop random number and reply count '홀', '짝'
+    for (let i = 0; i < randomNumber; i++) {
+
+      await ctx.reply("⏳ 결과를 확인중입니다..." + (i % 2 === 0 ? "🚹 홀" : "🚺 짝")); 
+      
+    }
+
+    if (resultOddOrEven === "odd") {
+      await ctx.reply("💥 결과: 🚹 홀");
+    } else {
+      await ctx.reply("💥 결과: 🚺 짝");
+    }
 
 
 
+    ///await ctx.reply("⏳ " + selectedSequence + "회차 홀짝게임 결과를 확인중입니다...");
+
+
+
+    const resultOddOrEvenText = resultOddOrEven === "odd" ? "🚹 홀" : "🚺 짝";
+    
+
+    const winningPrice = dataUpdateGame.result?.data.settlement;
 
 
     if (win) {
-
+ 
       photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-wins.jpg`;
 
 
-      if (data === "roulette-odd") {
-        text = '✅ 홀을 선택하셨습니다.'
-          + '\n\n결과: ' + randomNumber + ', ' + result + '\n\n✅ 당첨!!!'
-          //+ '\n\n✅ ' + sequence + '회차 홀짝게임을 시작합니다.'
-          //+ '\n\n👇 아래 버튼에서 홀 또는 짝을 선택하세요.';
+      if (selectedOddOrEven === "odd") {
+        text = '✅ ' + selectedSequence + '회차 🚹 홀을 선택하셨습니다.'
+          + '\n\n💥 결과: ' + resultOddOrEvenText + '\n\n😊 당첨!!!'
+          + '\n\n💲 ' + '당첨금: ' + winningPrice + ' USDT'
+          + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
       }
-      if (data === "roulette-even") {
-        text = '✅ 짝을 선택하셨습니다.'
-          + '\n\n결과: ' + randomNumber + ', ' + result + '\n\n✅ 당첨!!!'
-          //+ '\n\n✅ ' + sequence + '회차 홀짝게임을 시작합니다.'
-          //+ '\n\n👇 아래 버튼에서 홀 또는 짝을 선택하세요.';
+      if (selectedOddOrEven === "even") {
+        text = '✅ ' + selectedSequence + '회차 🚺 짝을 선택하셨습니다.'
+          + '\n\n💥 결과: ' + resultOddOrEvenText + '\n\n😊 당첨!!!'
+          + '\n\n💲 ' + '당첨금: ' + winningPrice + ' USDT'
+          + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
       }
 
     } else {
 
       photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-lose.jpg`;
 
-      if (data === "roulette-odd") {
-        text = '✅ 홀을 선택하셨습니다.'
-        + '\n\n결과: ' + randomNumber + ', ' + result + '\n\n✅ 꽝!!!'
+      if (selectedOddOrEven === "odd") {
+        text = '✅ ' + selectedSequence + '회차 🚹 홀을 선택하셨습니다.'
+        + '\n\n💥 결과: ' + resultOddOrEvenText + '\n\n😭 꽝!!!'
         //+ '\n\n✅ ' + sequence + '회차 홀짝게임을 시작합니다.'
-        //+ '\n\n👇 아래 버튼에서 홀 또는 짝을 선택하세요.';
+        + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
       }
 
-      if (data === "roulette-even") {
-        text = '✅ 짝을 선택하셨습니다.'
-        + '\n\n결과: ' + randomNumber + ', ' + result + '\n\n✅ 꽝!!!'
+      if (selectedOddOrEven === "even") {
+        text = '✅ ' + selectedSequence + '회차 🚺 짝을 선택하셨습니다.'
+        + '\n\n💥 결과: ' + resultOddOrEvenText + '\n\n😭 꽝!!!'
         //+ '\n\n✅ ' + sequence + '회차 홀짝게임을 시작합니다.'
-        //+ '\n\n👇 아래 버튼에서 홀 또는 짝을 선택하세요.';
+        + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
       }
 
     }
@@ -312,11 +449,12 @@ feature.on("callback_query:data", async (ctx) => {
     //const keyboard = new InlineKeyboard()
     //  .text('🎲 홀', 'roulette-odd').text('🎲 짝', 'roulette-even')
 
+    const nextSequnce = parseInt(selectedSequence) + 1;
     const keyboard = new InlineKeyboard()
-      .text('🎲 홀짝게임 시작하기', 'roulette')
+      .text('🎲 ' + nextSequnce + '회차 홀짝게임 시작하기', 'roulette')
 
 
-
+    
     return ctx.replyWithPhoto(
       photoUrl,
       {
@@ -324,6 +462,12 @@ feature.on("callback_query:data", async (ctx) => {
         reply_markup: keyboard
       }
     )
+    
+
+    //const url = 'https://naver.com';
+
+    //return ctx.answerCallbackQuery({ url });
+
 
     
   } else if (data === "my-profile") {
@@ -346,6 +490,8 @@ feature.on("callback_query:data", async (ctx) => {
 
     return ctx.answerCallbackQuery({ url });
   }
+
+
 
   return ctx.answerCallbackQuery("Not implemented");
 
@@ -437,9 +583,8 @@ feature.command('otc', async (ctx) => {
 
 
       const keyboard = new InlineKeyboard()
-        .webApp('💰 USDT 판매하기', urlSellUsdt)
-        .row()
-        .webApp('💰 USDT 구매하기', urlBuyUsdt)
+        .webApp('💰 USDT 판매', urlSellUsdt)
+        .webApp('💰 USDT 구매', urlBuyUsdt)
 
 
 
@@ -553,9 +698,8 @@ feature.command('game', async (ctx) => {
         // english
         //.webApp('💰 Go to the game', urlGame)
 
-        .webApp('🎮 Go to Tap to Earn Game', urlGame)
-        .row()
-        .webApp('🎮 Go to Granderby Game', urlGameGranderby)
+        .webApp('🎮 탭투언 게임', urlGame)
+        .webApp('🐎 그랑더비 게임', urlGameGranderby)
         .row()
         .text('🎲 홀짝게임 시작하기', 'roulette')
 
@@ -671,9 +815,8 @@ feature.command('wallet', async (ctx) => {
       //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to go to my wallet.'
   
       const keyboard = new InlineKeyboard()
-        .webApp('💰 나의 코인 보러가기', urlMyWallet)
-        .row()
-        .webApp('💰 나의 NOAH 채굴 NFT 보러가기', urlMyNft)
+        .webApp('💰 나의 코인 자산', urlMyWallet)
+        .webApp('💰 나의 NFT 자산', urlMyNft)
         // english
         //.webApp('💰 Go to my wallet', urlMyWallet)
 
@@ -1032,12 +1175,11 @@ feature.command('start', async (ctx) => {
   if (referralCode || isCenterOwner) {
     keyboard = new InlineKeyboard()
     //.text(referralCodeText)
-    .row()
+    //.row()
     .webApp('🚻 나의 프로필 보러가기', urlMyProfile)
     .row()
-    .webApp('🤖 나의 에이전트봇 보러가기', urlReferral)
-    .row()
-    .webApp('🤖 나의 마스터봇 보러가기', urlTbot)
+    .webApp('🤖 나의 에이전트봇', urlReferral)
+    .webApp('🤖 나의 마스터봇', urlTbot)
     .row()
     .webApp('💰 나의 마스트봇 보상내역 보러가기', urlClaim)
 
