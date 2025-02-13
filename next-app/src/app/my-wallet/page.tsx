@@ -93,7 +93,7 @@ function ProfilePage() {
     const address = account?.address;
 
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -880,12 +880,12 @@ function ProfilePage() {
                                     <div className="flex flex-row gap-2 items-end justify-between">
 
                                         <div className="flex flex-row items-end justify-start">
-                                            <span className="text-4xl text-green-500 font-semibold">
+                                            <span className="text-6xl text-green-500 font-semibold">
                                                 {
                                                     Number(balance).toFixed(6).split('.')[0]
                                                 }.
                                             </span>
-                                            <span className="text-4xl text-green-500">
+                                            <span className="text-2xl text-green-500">
                                                 {
                                                     Number(balance).toFixed(6).split('.')[1]
                                                 }
