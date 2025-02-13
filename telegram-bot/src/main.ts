@@ -74,9 +74,11 @@ async function startPolling(config: PollingConfig) {
       //if (commands.length === 0) {
         bot.api.setMyCommands([
           { command: "start", description: "시작하기" },
-          { command: "wallet", description: "나의 자산"},
+          { command: "noah", description: "NOAH SKY 시작하기"},
+          { command: "wallet", description: "매직월렛"},
           { command: "game", description: "게임"},
           { command: "otc", description: "USDT 개인간 거래"},
+
         ])
       //}
     } )
@@ -519,7 +521,7 @@ async function fetchAccountData() {
               });
 
               console.log("applicationId=", applicationId);
-              console.log("responseClaim=", responseClaim);
+              //console.log("responseClaim=", responseClaim);
 
               if (responseClaim.ok) {
 
@@ -608,6 +610,210 @@ const adminAccount = privateKeyToAccount({
   privateKey: process.env.ADMIN_SECRET_KEY as string,
   client: createThirdwebClient({ clientId: process.env.THIRDWEB_CLIENT_ID as string }),
 })
+
+
+
+async function pushGame() {
+
+  /*
+  const date = new Date();
+
+  const hours = date.getHours() + 9;
+  if (hours >= 23 || hours < 9) {
+    return;
+  }
+  */
+
+
+  if (!botInstance) return;
+
+
+  const telegramId = "441516803";
+
+  const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
+
+  const responseGetUser = await fetch(urlGetUser, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      telegramId,
+    }),
+  });
+
+  if (responseGetUser.status !== 200) {
+
+    //return ctx.reply("Failed to get user");
+    
+    await botInstance.api.sendMessage(
+      telegramId,
+      'Failed to get user',
+    )
+
+    return;
+
+
+  }
+
+  const dataGetUser = await responseGetUser.json();
+  //console.log("data", data);
+
+  if (!dataGetUser?.result?.walletAddress) {
+    //return ctx.reply("Failed to get wallet address");
+    await botInstance.api.sendMessage(
+      telegramId,
+      'Failed to get wallet address',
+    )
+    return;
+  }
+  
+  const walletAddress = dataGetUser.result.walletAddress;
+
+
+
+  const urlSetGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/setGame`;
+
+  const responseSetGame = await fetch(urlSetGame, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      walletAddress,
+    }),
+  });
+
+  if (responseSetGame.status !== 200) {
+    ///return ctx.reply("Failed to set game");
+
+    await botInstance.api.sendMessage(
+      telegramId,
+      'Failed to set game',
+    )
+
+    return;
+  }
+
+  const dataSetGame = await responseSetGame.json();
+
+  //console.log("dataSetGame=", dataSetGame);
+
+  const status = dataSetGame?.result?.status;
+
+  if (status === 'waiting') {
+
+    const sequence = parseInt(dataSetGame?.result?.data?.sequence) + 1;
+
+    const waitingTime = dataSetGame?.result?.waitingTime;
+
+    const text = '✅ ' + sequence + '회차 홀짝게임을 시작합니다.'
+    + '\n\n🚫 ' + waitingTime + '초 후에 시작가능합니다.'
+    + '\n\n🙏 잠시만 기다려 주세요.'
+    + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
+
+    //return ctx.reply(text);
+
+    const keyboard = new InlineKeyboard()
+    .text('🎲 ' + sequence + '회차 홀짝게임 시작하기', 'roulette')
+  
+    const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-banner.jpg`;
+
+    /*
+    return ctx.replyWithPhoto(
+      photoUrl,
+      {
+        caption: text,
+        reply_markup: keyboard
+      }
+    )
+    */
+
+    await botInstance.api.sendPhoto(
+      telegramId,
+      photoUrl,
+      {
+        caption: text,
+        reply_markup: keyboard
+      }
+    )
+
+    return;
+
+
+  
+  }
+
+  let sequence;
+
+  if (status === "success") {
+
+    sequence = dataSetGame?.result?.data?.sequence;
+
+  //console.log("sequence=", sequence);
+
+    if (!sequence) {
+      //return ctx.reply("🚫 Failed to set game");
+
+      await botInstance.api.sendMessage(
+        telegramId,
+        '🚫 Failed to set game',
+      )
+
+      return;
+    }
+
+  }
+
+
+
+
+
+  const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-banner.jpg`;
+  
+  //const videoFile = new InputFile(`/home/ubuntu/video/welcome-casino.gif`)
+  //const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
+
+
+  const text = '✅ ' + sequence + '회차 홀짝게임을 시작합니다.'
+    + '\n\n👇 아래 버튼에서 🚹 홀 또는 🚺 짝을 선택하세요.';
+
+  const queryDataOdd = 'roulette-odd' + '-' + sequence;
+  const queryDataEvent = 'roulette-even' + '-' + sequence;
+
+  const keyboard = new InlineKeyboard()
+    //.text('🎲 홀', 'roulette-odd').text('🎲 짝', 'roulette-even')
+    .text('🚹 홀', queryDataOdd).text('🚺 짝', queryDataEvent)
+
+  /*
+  return ctx.replyWithPhoto(
+    photoUrl,
+    {
+      caption: text,
+      reply_markup: keyboard
+    }
+  )
+    */
+
+  await botInstance.api.sendPhoto(
+    telegramId,
+    photoUrl,
+    {
+      caption: text,
+      reply_markup: keyboard
+    }
+  )
+  return;
+    
+
+
+}
+
+
+
+
+
+
 
 
 
@@ -732,6 +938,9 @@ async function sendMessages() {
     }),
   });
 
+  //console.log("getAllMessages response=", response);
+
+
   if (response.status !== 200) {
     ///return ctx.reply("Failed to get leaderboard");
     return;
@@ -740,6 +949,9 @@ async function sendMessages() {
   const data = await response.json();
 
   const messages = data.result.messages;
+
+
+  //console.log("messages=", messages);
 
 
   for (const message of messages) {
@@ -752,7 +964,10 @@ async function sendMessages() {
 
     const nftInfo = message?.nftInfo;
 
-    const category = message.category; // "wallet", "settlement", "agent", "center"
+    const category = message.category; // "wallet", "settlement", "agent", "center", "nft", "roulette"
+
+    const otherUserNickname = message?.userTransfer?.otherUser?.nickname;
+    const otherUserAvatar = message?.userTransfer?.otherUser?.avatar;
 
     try {
 
@@ -790,14 +1005,11 @@ async function sendMessages() {
         
         //.webApp('🎮 게임 하러가기', urlGame)
 
-        .webApp('🎮 Go to Tap to Earn Game', urlGame)
+        .webApp('🎮 탭투언 게임', urlGame)
+        .webApp('🐎 그랑더비 게임', urlGameGranderby)
         .row()
-        .webApp('🎮 Go to Granderby Game', urlGameGranderby)
-
-        // english
-        //.webApp('🎮 Go to Game', urlGame);
-        .row()
-        .webApp('💱 USDT 판매 하러가기', urlSellUsdt)
+        .text('🎲 홀짝 게임', 'roulette')
+        .webApp('💱 USDT 판매', urlSellUsdt)
         // english
         //.webApp('💱 Go to USDT OTC', urlOtc);
 
@@ -809,7 +1021,6 @@ async function sendMessages() {
 
 
         
-
 
         const photo = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
         
@@ -843,31 +1054,107 @@ async function sendMessages() {
         );
         */
 
-
-        //const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
-
-        // get video from url
-        // URL of a video file
-        const videoUrl = 'https://shinemywinter.vercel.app/noah-10000-gold-mining.mp4';
-        // Create an InputFile object from the URL
-        const videoFile = new InputFile(videoUrl);
+        console.log("otherUserAvatar=", otherUserAvatar);
 
 
+        if (otherUserAvatar) {
 
-        await botInstance.api.sendVideo(
-          telegramId,
-          videoFile,
-          {
-            caption: caption,
-            reply_markup: keyboard,
+          if (otherUserNickname === 'tbot') {
+
+       
+          
+            const videoUrl = '/home/ubuntu/video/gatsby.gif';
+            // Create an InputFile object from the URL
+            const videoFile = new InputFile(videoUrl);
+            
+            await botInstance.api.sendVideo(
+              telegramId,
+              videoFile,
+              {
+                caption: caption,
+                reply_markup: keyboard,
+              }
+            ).then(() => {
+            //console.log('Message sent');
+            }).catch((error) => {
+              console.error('Error sending video:', error+'');
+            })
+          
+
+          } else if (otherUserNickname === 'roulette') {
+
+       
+          
+            const videoUrl = '/home/ubuntu/video/gatsby.gif';
+            // Create an InputFile object from the URL
+            const videoFile = new InputFile(videoUrl);
+            
+            await botInstance.api.sendVideo(
+              telegramId,
+              videoFile,
+              {
+                caption: caption,
+                reply_markup: keyboard,
+              }
+            ).then(() => {
+            //console.log('Message sent');
+            }).catch((error) => {
+              console.error('Error sending video:', error+'');
+            })
+
+
+          } else {
+
+
+
+
+
+            const photo = otherUserAvatar;
+
+            
+            await botInstance.api.sendPhoto(
+              telegramId,
+              photo,
+              {
+                caption: caption,
+                reply_markup: keyboard,
+              }
+            ).then(() => {
+            //console.log('Message sent');
+            }).catch((error) => {
+              console.error('Error sending photo:', error+'');
+            })
+              
           }
-        ).then(() => {
-        //console.log('Message sent');
-        }).catch((error) => {
-          console.error('Error sending video:', error+'');
-        })
 
 
+
+
+
+        } else {
+
+
+          //const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
+
+          const videoFile = new InputFile(`/home/ubuntu/video/welcome-casino.gif`)
+
+          await botInstance.api.sendVideo(
+            telegramId,
+            videoFile,
+            {
+              caption: caption,
+              reply_markup: keyboard,
+            }
+          ).then(() => {
+          //console.log('Message sent');
+          }).catch((error) => {
+            console.error('Error sending video:', error+'');
+          })
+
+        }
+
+
+        
      
 
 
@@ -1085,6 +1372,13 @@ async function sendMessages() {
         })
 
 
+
+
+      } else if (category === 'roulette') {
+
+
+
+
       }
 
 
@@ -1157,7 +1451,7 @@ setInterval(() => {
 
     fetchAccountData()
 
-    sendStartMessageToAllUsers()
+    //sendStartMessageToAllUsers()
     
 
 //}, 3600*1000)
@@ -1171,6 +1465,22 @@ setInterval(() => {
 
 }, 10*1000)
 
+
+
+
+
+
+/*
+sleep(5000).then(() => {
+  pushGame();
+})
+
+setInterval(() => {
+
+  pushGame();
+
+}, 600*1000)
+*/
 
 
 
