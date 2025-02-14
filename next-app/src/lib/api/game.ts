@@ -63,7 +63,30 @@ export async function insertOne(data: any) {
 
   // insert sequence number for order by wallet address
 
-  const sequence = await collection.countDocuments({ walletAddress: data.walletAddress });
+  /*
+  const sequence = await collection.countDocuments(
+    {
+      walletAddress: data.walletAddress
+    }
+  );
+  */
+
+  // if no data, then sequence is 1
+  // if data exists, then sequence is sequence + 1
+
+  let sequence = 1;
+
+  const findSequence = await collection.find(
+    {
+      walletAddress: data.walletAddress
+    }
+  ).sort({ sequence: -1 }).limit(1).toArray();
+
+  if (findSequence.length > 0) {
+    sequence = findSequence[0].sequence + 1;
+  }
+
+
 
   const result = await collection.insertOne(
     {

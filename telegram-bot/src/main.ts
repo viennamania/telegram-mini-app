@@ -707,7 +707,17 @@ async function pushGame() {
 
     const waitingTime = dataSetGame?.result?.waitingTime;
 
-    const text = '✅ ' + sequence + '회차 홀짝게임을 시작합니다.'
+
+    // 1️⃣ 회차
+    // 2️⃣ 회차
+    // 123 회차 => 1️⃣2️⃣3️⃣ 회차
+    // convert number to emoji
+    // Argument of type '(d: any) => string' is not assignable to parameter of type '(match: string, p1: string, offset: number, string: string) => string'.
+
+    // Parameter 'd' implicitly has an 'any' type.
+    const sequenceEmoji = sequence.toString().replace(/\d/g, (d: any) => String.fromCharCode(0x30 + (+d)));
+
+    const text = '✅ ' + sequenceEmoji + '회차 홀짝게임을 시작합니다.'
     + '\n\n🚫 ' + waitingTime + '초 후에 시작가능합니다.'
     + '\n\n🙏 잠시만 기다려 주세요.'
     + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
@@ -774,8 +784,13 @@ async function pushGame() {
   //const videoFile = new InputFile(`/home/ubuntu/video/welcome-casino.gif`)
   //const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
 
+   // 1️⃣ 회차
+    // 2️⃣ 회차
+    // 12 회차 => 1️⃣2️⃣ 회차
+    // convert number to emoji
+    const sequenceEmoji = sequence.toString().replace(/\d/g, d => String.fromCharCode(0x30 + (+d)));
 
-  const text = '✅ ' + sequence + '회차 홀짝게임을 시작합니다.'
+  const text = '✅ ' + sequenceEmoji + '회차 홀짝게임을 시작합니다.'
     + '\n\n👇 아래 버튼에서 🚹 홀 또는 🚺 짝을 선택하세요.';
 
   const queryDataOdd = 'roulette-odd' + '-' + sequence;
