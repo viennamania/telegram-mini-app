@@ -9,12 +9,12 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
-  const { center } = body;
+  const { center, limit, page } = body;
 
   const result = await getAllMessages({
-    center,
-    limit: 500,
-    page: 0,
+    center: center,
+    limit: limit || 500,
+    page: page || 0,
   });
 
  
