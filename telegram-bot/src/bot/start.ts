@@ -79,7 +79,7 @@ feature.on("callback_query:data", async (ctx) => {
 
 
 
-    const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-banner.jpg`;
+    const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/horse-racing-banner.jpg`;
     
     //const videoFile = new InputFile(`/home/ubuntu/video/welcome-casino.gif`)
     //const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
@@ -293,14 +293,14 @@ feature.on("callback_query:data", async (ctx) => {
       }
 
 
-      const text = '✅ ' + sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
+      const text = sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
       + '\n\n⏱️ ' + waitingTime + '초 후에 게임을 시작할수 있습니다. 🙏 잠시만 기다려주세요.'
       + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
 
       //return ctx.reply(text);
 
       const keyboard = new InlineKeyboard()
-      .text('🎲 ' + sequenceEmoji + '회차 홀짝 게임 시작하기', 'roulette')
+      .text(sequenceEmoji + '회차 홀짝 게임 시작하기', 'roulette')
     
       //const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-waiting.jpg`;
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-waiting.webp`;
@@ -330,6 +330,7 @@ feature.on("callback_query:data", async (ctx) => {
     }
 
 
+    const winPrize = dataSetGame?.result?.data?.winPrize;
 
 
 
@@ -350,7 +351,8 @@ feature.on("callback_query:data", async (ctx) => {
       sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
     }
 
-    const text = '✅ ' + sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
+    const text = sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
+      + '\n\n💲 당첨금: ' + winPrize + ' USDT'
       + '\n\n👇 아래 버튼에서 🚹 홀 또는 🚺 짝을 선택하세요.';
 
     const queryDataOdd = 'roulette-odd' + '-' + sequence;
@@ -573,7 +575,8 @@ feature.on("callback_query:data", async (ctx) => {
     const resultOddOrEvenText = resultOddOrEven === "odd" ? "🚹 홀" : "🚺 짝";
     
 
-    const winningPrice = dataUpdateGame.result?.data.settlement;
+    //const winningPrice = dataUpdateGame.result?.data.settlement;
+    const winPrize = dataUpdateGame.result?.data.winPrize;
 
 
     // 1️⃣ 회차
@@ -595,15 +598,15 @@ feature.on("callback_query:data", async (ctx) => {
 
 
       if (selectedOddOrEven === "odd") {
-        text = '✅ ' + sequenceEmoji + '회차 🚹 홀을 선택하셨습니다.'
+        text = sequenceEmoji + '회차 🚹 홀을 선택하셨습니다.'
           + '\n\n💥 결과: ' + resultOddOrEvenText + ' 😊 당첨!!!'
-          + '\n\n💲 ' + '당첨금: ' + winningPrice + ' USDT가 1분내로 회원님 지갑으로 입금됩니다.'
+          + '\n\n💲 ' + '당첨금: ' + winPrize + ' USDT가 1분내로 회원님 지갑으로 입금됩니다.'
           + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
       }
       if (selectedOddOrEven === "even") {
-        text = '✅ ' + sequenceEmoji + '회차 🚺 짝을 선택하셨습니다.'
+        text = sequenceEmoji + '회차 🚺 짝을 선택하셨습니다.'
           + '\n\n💥 결과: ' + resultOddOrEvenText + ' 😊 당첨!!!'
-          + '\n\n💲 ' + '당첨금: ' + winningPrice + ' USDT'
+          + '\n\n💲 ' + '당첨금: ' + winPrize + ' USDT'
           + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
       }
 
@@ -612,16 +615,14 @@ feature.on("callback_query:data", async (ctx) => {
       photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-lose.jpg`;
 
       if (selectedOddOrEven === "odd") {
-        text = '✅ ' + sequenceEmoji + '회차 🚹 홀을 선택하셨습니다.'
+        text = sequenceEmoji + '회차 🚹 홀을 선택하셨습니다.'
         + '\n\n💥 결과: ' + resultOddOrEvenText + ' 😭 꽝!!!'
-        //+ '\n\n✅ ' + sequence + '회차 홀짝 게임을 시작합니다.'
         + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
       }
 
       if (selectedOddOrEven === "even") {
-        text = '✅ ' + sequenceEmoji + '회차 🚺 짝을 선택하셨습니다.'
+        text = sequenceEmoji + '회차 🚺 짝을 선택하셨습니다.'
         + '\n\n💥 결과: ' + resultOddOrEvenText + ' 😭 꽝!!!'
-        //+ '\n\n✅ ' + sequence + '회차 홀짝 게임을 시작합니다.'
         + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
       }
 
@@ -645,7 +646,8 @@ feature.on("callback_query:data", async (ctx) => {
     }
 
     const keyboard = new InlineKeyboard()
-      .text('🎲 ' + nextSequenceEmoji + '회차 홀짝 게임 시작하기', 'roulette')
+
+      .text(nextSequenceEmoji + '회차 홀짝 게임 시작하기', 'roulette')
 
 
     

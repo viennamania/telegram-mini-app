@@ -127,7 +127,7 @@ export async function GET(request: NextRequest) {
 
       const games = await getAllGamesSettlement();
 
-      console.log("games: ", games);
+      //console.log("games: ", games);
 
 
       if (!games) {
@@ -215,7 +215,7 @@ export async function GET(request: NextRequest) {
         const transaction = transfer({
           contract: contractUSDT,
           to: toWalletAddress,
-          amount: sendAmount,
+          amount: sendAmount.toString(),
         });
     
         transactions.push(transaction);
@@ -224,7 +224,7 @@ export async function GET(request: NextRequest) {
         // update game settlement
         const sequence = game.sequence;
 
-        const settlement = sendAmount.toString();
+        ///const settlement = sendAmount.toString();
 
         const result = await setGamesSettlementByWalletAddressAndSequence({
           walletAddress: toWalletAddress,
