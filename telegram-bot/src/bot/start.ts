@@ -77,6 +77,108 @@ feature.on("callback_query:data", async (ctx) => {
   if (data === "race") {
 
 
+    const telegramId = ctx.from?.id+"";
+
+    const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
+  
+    const responseGetUser = await fetch(urlGetUser, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        telegramId,
+      }),
+    });
+  
+    if (responseGetUser.status !== 200) {
+      return ctx.reply("Failed to get user");
+    }
+
+    const dataGetUser = await responseGetUser.json();
+    //console.log("data", data);
+
+    if (!dataGetUser?.result?.walletAddress) {
+      return ctx.reply("Failed to get wallet address");
+    }
+    
+    const walletAddress = dataGetUser.result.walletAddress;
+
+
+
+    const urlSetGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/setRaceGame`;
+  
+    const responseSetGame = await fetch(urlSetGame, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        walletAddress,
+      }),
+    });
+
+    if (responseSetGame.status !== 200) {
+      return ctx.reply("Failed to set game");
+    }
+
+    const dataSetGame = await responseSetGame.json();
+
+    //console.log("dataSetGame=", dataSetGame);
+
+    const status = dataSetGame?.result?.status;
+
+    if (status === 'waiting') {
+
+      const sequence = parseInt(dataSetGame?.result?.data?.sequence) + 1;
+
+      const waitingTime = dataSetGame?.result?.waitingTime;
+
+      const sequenceString = sequence.toString();
+      let sequenceEmoji = '';
+      for (let i = 0; i < sequenceString.length; i++) {
+        sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
+      }
+
+      const text = sequenceEmoji + '회차 경마 게임을 시작합니다.'
+      + '\n\n⏱️ ' + waitingTime + '초 후에 게임을 시작할수 있습니다. 🙏 잠시만 기다려주세요.'
+      + '\n\n👇 아래 버튼을 눌러 경마 게임을 시작하세요';
+
+      //return ctx.reply(text);
+
+      const keyboard = new InlineKeyboard()
+      .text(sequenceEmoji + '회차 경마 게임 시작하기', 'roulette')
+    
+      //const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-waiting.jpg`;
+      const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-waiting.webp`;
+
+      return ctx.replyWithPhoto(
+        photoUrl,
+        {
+          caption: text,
+          reply_markup: keyboard
+        }
+      )
+    
+    }
+
+    let sequence;
+
+    if (status === "success") {
+
+      sequence = dataSetGame?.result?.data?.sequence;
+
+    //console.log("sequence=", sequence);
+
+      if (!sequence) {
+        return ctx.reply("🚫 Failed to set game");
+      }
+
+    }
+
+
+    const winPrize = dataSetGame?.result?.data?.winPrize;
+
 
 
     const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/horse-racing-banner.jpg`;
@@ -89,12 +191,15 @@ feature.on("callback_query:data", async (ctx) => {
     // 12 회차 => 1️⃣ 2️⃣ 회차
     // convert number to emoji
 
-    const sequence = 23;
-    const sequenceEmoji = sequence.toString().replace(/\d/g, (d: any) => String.fromCharCode(0x30 + (+d)));
+    const sequenceString = sequence.toString();
+    let sequenceEmoji = '';
+    for (let i = 0; i < sequenceString.length; i++) {
+      sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
+    }
 
-
-    const text = '✅ ' + sequenceEmoji + '회차 레이스 게임을 시작합니다.'
-      + '\n\n👇 아래 버튼을 선택하세요'
+    const text = sequenceEmoji + '회차 경마 게임을 시작합니다.'
+      + '\n\n💲 당첨금: ' + winPrize + ' USDT'
+      + '\n\n👇 아래에서 우승을 예상하는 말의 출전번호을 선택하면 경기가 시작됩니다.'
 
     //const queryDataOdd = 'roulette-odd' + '-' + sequence;
     //const queryDataEvent = 'roulette-even' + '-' + sequence;
@@ -127,13 +232,37 @@ feature.on("callback_query:data", async (ctx) => {
 
     // race-1
     // race-2
+    // race-3
+
+
+    /*
+    if (selectedOddOrEven === "odd") {
+      await ctx.reply("🚹 홀을 선택하셨습니다.");
+    } else if (selectedOddOrEven === "even") {
+      await ctx.reply("🚺 짝을 선택하셨습니다.");
+    }
+    */
 
 
     const dataSplit = data.split('-');
 
     const selectedNumber = dataSplit[1];
+
+    const selectedSequence = dataSplit[2];
     
-    ///const selectedSequence = dataSplit[2];
+
+    /*
+    if (selectedOddOrEven === "odd") {
+      await ctx.reply("🚹 홀을 선택하셨습니다.");
+    } else if (selectedOddOrEven === "even") {
+      await ctx.reply("🚺 짝을 선택하셨습니다.");
+    }
+    */
+
+    await ctx.reply("🐎 " + selectedNumber + '️⃣' + '번 말을 선택하셨습니다.');
+
+
+
 
     const timer = 50;
 
@@ -157,6 +286,10 @@ feature.on("callback_query:data", async (ctx) => {
 
     }
 
+
+
+  
+
     for (let i = 0; i < timer; i++) {
 
       //await ctx.reply("1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ 7️⃣ 8️⃣ 8️⃣ 🔟");
@@ -166,6 +299,11 @@ feature.on("callback_query:data", async (ctx) => {
       
       //const text = '🐎 ' + racer.map((r) => r).join(' ');
       // left first change to emoji
+
+
+      
+
+
 
       const first = racer[0] + '️⃣';
 
@@ -183,7 +321,9 @@ feature.on("callback_query:data", async (ctx) => {
       // random exhcnage sequence first and second
       // and third and fourth and fifth and sixth and seventh and eighth and ninth and tenth
 
-      const randomIndex = Math.floor(Math.random() * racerCount)
+      const randomIndex = Math.floor(Math.random() * (racerCount-1))
+
+
 
       const temp = racer[randomIndex];
       racer[randomIndex] = racer[randomIndex + 1];
@@ -197,10 +337,220 @@ feature.on("callback_query:data", async (ctx) => {
     }
 
 
+    let firstHorseNumber = racer[0];
+
+    const win = firstHorseNumber === parseInt(selectedNumber);
 
 
+
+    /*
+    if (resultOddOrEven === "odd") {
+      await ctx.reply("💥 결과: 🚹 홀");
+    } else {
+      await ctx.reply("💥 결과: 🚺 짝");
+    }
+    */
+
+    await ctx.reply("🐎 " + firstHorseNumber + '️⃣' + '번 말이 1등으로 도착하였습니다.');
+
+
+
+
+
+
+
+
+
+
+    let photoUrl = '';
+    let text = '';
+
+
+
+    const telegramId = ctx.from?.id+"";
+
+    const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
+  
+    const responseGetUser = await fetch(urlGetUser, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        telegramId,
+      }),
+    });
+  
+    if (responseGetUser.status !== 200) {
+      return ctx.reply("🚫 Failed to get user");
+    }
+
+    const dataUser = await responseGetUser.json();
+    //console.log("dataUser", dataUser);
+
+    if (!dataUser?.result?.walletAddress) {
+      return ctx.reply("🚫 Failed to get wallet address");
+    }
+    
+    const walletAddress = dataUser.result.walletAddress;
+    
+
+    /*
+    let resultOddOrEven;
+
+    if (randomNumber === 1) resultOddOrEven = "odd"
+    else if (randomNumber === 0) resultOddOrEven = "even";
+    */
+
+    const urlUpdateHorseGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/updateHorseGame`;
+  
+    const responseUpdateHorseGame = await fetch(urlUpdateHorseGame, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        walletAddress: walletAddress,
+        sequence: selectedSequence,
+        selectedNumber: selectedNumber,
+        resultNumber: firstHorseNumber,
+        win: win,
+      }),
+    });
+
+    if (responseUpdateHorseGame.status !== 200) {
+      return ctx.reply("🚫 Failed to update game 1");
+    }
+
+    const dataUpdateGame = await responseUpdateHorseGame.json();
+
+    if (dataUpdateGame.result.status === 'fail') {
+
+      if (dataUpdateGame.result?.data.status === 'closed') {
+
+        const sequence = dataUpdateGame.result?.data.sequence;
+
+        // 1️⃣ 회차
+        // 2️⃣ 회차
+        // 12 회차 => 1️⃣ 2️⃣ 회차
+        // convert number to emoji
+        //const sequenceEmoji = sequence.toString().replace(/\d/g, (d: any) => String.fromCharCode(0x30 + (+d)));
+
+        const sequenceString = sequence.toString();
+        let sequenceEmoji = '';
+        for (let i = 0; i < sequenceString.length; i++) {
+          sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
+        }
+
+        return ctx.reply("🚫 " + sequenceEmoji + '회차 게임은 이미 종료되었습니다.');
+
+        
+
+      } else {
+
+        return ctx.reply("🚫 Failed to run game");
+
+      }
+
+    }
+
+
+    console.log("dataUpdateGame=", dataUpdateGame);
 
   
+
+
+
+    //const winningPrice = dataUpdateGame.result?.data.settlement;
+    const winPrize = dataUpdateGame.result?.data.winPrize;
+
+
+    // 1️⃣ 회차
+    // 2️⃣ 회차
+    // 12 회차 => 1️⃣ 2️⃣ 회차
+    // convert number to emoji
+    //const sequenceEmoji = selectedSequence.toString().replace(/\d/g, d => String.fromCharCode(0x30 + (+d)));
+
+    const sequenceString = selectedSequence.toString();
+    let sequenceEmoji = '';
+    for (let i = 0; i < sequenceString.length; i++) {
+      sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
+    }
+
+    if (win) {
+ 
+      photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/horse-racing-banner.jpg`;
+
+
+      /*
+      if (selectedOddOrEven === "odd") {
+        text = sequenceEmoji + '회차 🚹 홀을 선택하셨습니다.'
+          + '\n\n💥 결과: ' + resultOddOrEvenText + ' 😊 당첨!!!'
+          + '\n\n💲 ' + '당첨금: ' + winPrize + ' USDT가 1분내로 회원님 지갑으로 입금됩니다.'
+          + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
+      }
+      if (selectedOddOrEven === "even") {
+        text = sequenceEmoji + '회차 🚺 짝을 선택하셨습니다.'
+          + '\n\n💥 결과: ' + resultOddOrEvenText + ' 😊 당첨!!!'
+          + '\n\n💲 ' + '당첨금: ' + winPrize + ' USDT'
+          + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
+      }
+      */
+
+      text = sequenceEmoji + '회차 ' + selectedNumber + '️⃣' + '번 말을 선택하셨습니다.'
+      + '\n\n💥 결과: ' + firstHorseNumber + '️⃣' + '번 말이 1등으로 도착하였습니다.'
+      + '\n\n🎉 축하합니다! 당첨되셨습니다.'
+      + '\n\n💲 ' + '당첨금: ' + winPrize + ' USDT가 1분내로 회원님 지갑으로 입금됩니다.'
+      + '\n\n👇 아래 버튼을 눌러 경마 게임을 시작하세요';
+
+    } else {
+
+      photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/horse-racing-banner.jpg`;
+
+      text = sequenceEmoji + '회차 ' + selectedNumber + '️⃣' + '번 말을 선택하셨습니다.'
+      + '\n\n💥 결과: ' + firstHorseNumber + '️⃣' + '번 말이 1등으로 도착하였습니다.'
+      + '\n\n😭 아쉽게도 꽝입니다.'
+      + '\n\n👇 아래 버튼을 눌러 경마 게임을 시작하세요';
+
+    }
+
+    //const keyboard = new InlineKeyboard()
+    //  .text('🎲 홀', 'roulette-odd').text('🎲 짝', 'roulette-even')
+
+    const nextSequnce = parseInt(selectedSequence) + 1;
+
+    // 1️⃣ 회차
+    // 2️⃣ 회차
+    // 12 회차 => 1️⃣ 2️⃣ 회차
+    // convert number to emoji
+    //const nextSequenceEmoji = nextSequnce.toString().replace(/\d/g, d => String.fromCharCode(0x30 + (+d)));
+
+    const nextSequenceString = nextSequnce.toString();
+    let nextSequenceEmoji = '';
+    for (let i = 0; i < nextSequenceString.length; i++) {
+      nextSequenceEmoji += nextSequenceString[i] + '️⃣' + ' ';
+    }
+
+    const keyboard = new InlineKeyboard()
+      .text(nextSequenceEmoji + '회차 경마 게임 시작하기', 'race')
+
+
+    
+    return ctx.replyWithPhoto(
+      photoUrl,
+      {
+        caption: text,
+        reply_markup: keyboard
+      }
+    )
+
+
+
+
+
+
+
+
 
   } else if (data === "roulette") {
 
@@ -435,10 +785,6 @@ feature.on("callback_query:data", async (ctx) => {
 
 
 
-
-
-
-    
     const telegramId = ctx.from?.id+"";
 
     const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
@@ -646,7 +992,6 @@ feature.on("callback_query:data", async (ctx) => {
     }
 
     const keyboard = new InlineKeyboard()
-
       .text(nextSequenceEmoji + '회차 홀짝 게임 시작하기', 'roulette')
 
 

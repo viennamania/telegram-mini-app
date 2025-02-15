@@ -548,3 +548,133 @@ export async function insertOneRaceGame(data: any) {
   }
 
 }
+
+
+
+
+
+export async function updateRaceGameResultByWalletAddressAndSequence(
+
+  {
+    walletAddress,
+    sequence,
+    selectedNumber,
+    resultNumber,
+    win
+  } : {
+    walletAddress: string,
+    sequence: string,
+    selectedNumber: string,
+    resultNumber: string,
+    win: boolean
+  }
+
+) {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('raceGames');
+
+  // finde one
+  // sequence is integer
+
+  const findResult = await collection.findOne(
+    {
+      walletAddress: walletAddress,
+      sequence: parseInt(sequence),
+    }
+  );
+
+  if (!findResult) {
+
+    return {
+      params : {
+        walletAddress: walletAddress,
+        sequence: sequence,
+        selectedNumber: selectedNumber,
+        resultNumber: resultNumber,
+        win: win,
+      },
+      status: "fail",
+      message: "no data found"
+    }
+  }
+
+
+  if (findResult.status === "closed") {
+    return {
+      status: "fail",
+      data: findResult,
+    }
+  }
+
+
+  const settlement = Number(Math.random() * (0.1 - 0.00001) + 0.00001).toFixed(6);
+
+  let result = null;
+  
+  
+  if (win) {
+    result = await collection.updateOne(
+      {
+        walletAddress: walletAddress,
+        sequence: parseInt(sequence),
+      },
+      {
+        $set: {
+          status: "closed",
+          selectedNumber: selectedNumber,
+          resultNumber: resultNumber,
+          win: win,
+          settlementStatus: false,
+          settlement: settlement,
+          settlementAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        }
+      }
+    );
+  } else {
+    result = await collection.updateOne(
+      {
+        walletAddress: walletAddress,
+        sequence: parseInt(sequence),
+      },
+      {
+        $set: {
+          status: "closed",
+          selectedNumber: selectedNumber,
+          resultNumber: resultNumber,
+          win: win,
+          updatedAt: new Date().toISOString(),
+        }
+      }
+    );
+  }
+
+
+
+
+
+  if (result) {
+
+
+    // find updated data
+    const updatedData = await collection.findOne(
+      {
+        walletAddress: walletAddress,
+        sequence: parseInt(sequence),
+      }
+    );
+
+    return {
+      status: "success",
+      data: updatedData
+    };
+    ;
+  } else {
+    return {
+      status: "fail",
+      message: "fail to update"
+    };
+  }
+
+}
