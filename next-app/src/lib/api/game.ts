@@ -55,7 +55,41 @@ export async function insertOne(data: any) {
 
       };
 
+    } else {
+
+      // sequence is last sequence + 1
+
+      const sequence = latestData.sequence + 1;
+
+      const result = await collection.insertOne(
+        {
+          walletAddress: data.walletAddress,
+          sequence: sequence,
+          status: "opened",
+          usdtAmount: data.usdtAmount,
+          krwAmount: data.krwAmount,
+          rate: data.rate,
+          createdAt: new Date().toISOString(),
+        }
+      );
+
+      const insertedId = result.insertedId;
+
+      const insertedData = await collection.findOne({ _id: insertedId });
+
+      if (insertedData) {
+        return {
+          status: "success",
+          data: insertedData
+        };
+      } else {
+        return null;
+      }
+
+
     }
+
+
 
   }
 
