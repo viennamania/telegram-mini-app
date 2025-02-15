@@ -455,7 +455,7 @@ export async function insertOneRaceGame(data: any) {
 
       const sequence = latestData.sequence + 1;
 
-      const winPrize = Number(Math.random() * (2.0 - 0.00001) + 0.00001).toFixed(6);
+      const winPrize = Number(Math.random() * (0.5 - 0.00001) + 0.00001).toFixed(6);
 
 
       const result = await collection.insertOne(
