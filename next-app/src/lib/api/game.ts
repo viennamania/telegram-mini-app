@@ -455,7 +455,7 @@ export async function insertOneRaceGame(data: any) {
 
       const sequence = latestData.sequence + 1;
 
-      const winPrize = Number(Math.random() * (0.1 - 0.00001) + 0.00001).toFixed(6);
+      const winPrize = Number(Math.random() * (2.0 - 0.00001) + 0.00001).toFixed(6);
 
 
       const result = await collection.insertOne(
@@ -677,4 +677,55 @@ export async function updateRaceGameResultByWalletAddressAndSequence(
     };
   }
 
+}
+
+
+
+
+// getAllRaceGamesSettlement
+export async function getAllRaceGamesSettlement() {
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('raceGames');
+
+  const result = await collection.find(
+    {
+      settlementStatus: false,
+    }
+  ).toArray();
+
+  return result;
+}
+
+
+// 
+export async function setRaceGamesSettlementByWalletAddressAndSequence(
+  {
+    walletAddress,
+    sequence,
+  } : {
+    walletAddress: string,
+    sequence: string,
+  }
+) {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('raceGames');
+
+  // finde one and updaate
+  // sequence is integer
+
+  const findResult = await collection.findOneAndUpdate(
+    {
+      walletAddress: walletAddress,
+      sequence: parseInt(sequence),
+    },
+    {
+      $set: {
+        settlementStatus: true,
+        settlementAt: new Date().toISOString(),
+      }
+    }
+  );
+
+  return findResult;
 }

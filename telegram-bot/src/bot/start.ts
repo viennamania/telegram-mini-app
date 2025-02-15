@@ -205,14 +205,14 @@ feature.on("callback_query:data", async (ctx) => {
     //const queryDataEvent = 'roulette-even' + '-' + sequence;
 
     const keyboard = new InlineKeyboard()
-      .text('1️⃣', 'race-1')
-      .text('2️⃣', 'race-2')
-      .text('3️⃣', 'race-3')
-      .text('4️⃣', 'race-4')
-      .text('5️⃣', 'race-5')
-      .text('6️⃣', 'race-6')
-      .text('7️⃣', 'race-7')
-      .text('8️⃣', 'race-8')
+      .text('1️⃣', 'race-1' + '-' + sequence)
+      .text('2️⃣', 'race-2' + '-' + sequence)
+      .text('3️⃣', 'race-3' + '-' + sequence)
+      .text('4️⃣', 'race-4' + '-' + sequence)
+      .text('5️⃣', 'race-5' + '-' + sequence)
+      .text('6️⃣', 'race-6' + '-' + sequence)
+      .text('7️⃣', 'race-7' + '-' + sequence)
+      .text('8️⃣', 'race-8' + '-' + sequence)
       //.text('8️⃣', 'race-9')
       //.text('🔟', 'race-10')
 
@@ -307,7 +307,8 @@ feature.on("callback_query:data", async (ctx) => {
 
       const first = racer[0] + '️⃣';
 
-      const text = '🐎 ' + first
+      const text = timer*10 - i*10 + '미터 남았습니다.'
+        + ' ' + '🐎 ' + first
         + ' ' +  racer[1] + ' ' +  racer[2] + ' ' +  racer[3] + ' ' +  racer[4] + ' ' +  racer[5] + ' ' +  racer[6] + ' ' +  racer[7];
       
       await ctx.reply(text);
@@ -321,14 +322,19 @@ feature.on("callback_query:data", async (ctx) => {
       // random exhcnage sequence first and second
       // and third and fourth and fifth and sixth and seventh and eighth and ninth and tenth
 
-      const randomIndex = Math.floor(Math.random() * (racerCount-1))
+
+      const randomCount = Math.floor(Math.random() * (racerCount-1))
 
 
+      for (let i = 0; i < randomCount; i++) {
 
-      const temp = racer[randomIndex];
-      racer[randomIndex] = racer[randomIndex + 1];
+        const randomIndex = Math.floor(Math.random() * (racerCount-1))
 
-      racer[randomIndex + 1] = temp;
+        const temp = racer[randomIndex];
+        racer[randomIndex] = racer[randomIndex + 1];
+        racer[randomIndex + 1] = temp;
+    
+      }
 
       
 
@@ -402,9 +408,9 @@ feature.on("callback_query:data", async (ctx) => {
     else if (randomNumber === 0) resultOddOrEven = "even";
     */
 
-    const urlUpdateHorseGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/updateHorseGame`;
+    const urlUpdateRaceGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/updateRaceGame`;
   
-    const responseUpdateHorseGame = await fetch(urlUpdateHorseGame, {
+    const responseUpdateRaceGame = await fetch(urlUpdateRaceGame, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -418,11 +424,15 @@ feature.on("callback_query:data", async (ctx) => {
       }),
     });
 
-    if (responseUpdateHorseGame.status !== 200) {
+    if (responseUpdateRaceGame.status !== 200) {
       return ctx.reply("🚫 Failed to update game 1");
     }
 
-    const dataUpdateGame = await responseUpdateHorseGame.json();
+    const dataUpdateGame = await responseUpdateRaceGame.json();
+
+    console.log("dataUpdateGame=", dataUpdateGame);
+
+
 
     if (dataUpdateGame.result.status === 'fail') {
 
@@ -455,14 +465,9 @@ feature.on("callback_query:data", async (ctx) => {
     }
 
 
-    console.log("dataUpdateGame=", dataUpdateGame);
-
-  
-
-
-
-    //const winningPrice = dataUpdateGame.result?.data.settlement;
     const winPrize = dataUpdateGame.result?.data.winPrize;
+
+    console.log("winPrize=", winPrize);
 
 
     // 1️⃣ 회차
@@ -481,21 +486,6 @@ feature.on("callback_query:data", async (ctx) => {
  
       photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/horse-racing-banner.jpg`;
 
-
-      /*
-      if (selectedOddOrEven === "odd") {
-        text = sequenceEmoji + '회차 🚹 홀을 선택하셨습니다.'
-          + '\n\n💥 결과: ' + resultOddOrEvenText + ' 😊 당첨!!!'
-          + '\n\n💲 ' + '당첨금: ' + winPrize + ' USDT가 1분내로 회원님 지갑으로 입금됩니다.'
-          + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
-      }
-      if (selectedOddOrEven === "even") {
-        text = sequenceEmoji + '회차 🚺 짝을 선택하셨습니다.'
-          + '\n\n💥 결과: ' + resultOddOrEvenText + ' 😊 당첨!!!'
-          + '\n\n💲 ' + '당첨금: ' + winPrize + ' USDT'
-          + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
-      }
-      */
 
       text = sequenceEmoji + '회차 ' + selectedNumber + '️⃣' + '번 말을 선택하셨습니다.'
       + '\n\n💥 결과: ' + firstHorseNumber + '️⃣' + '번 말이 1등으로 도착하였습니다.'

@@ -20,6 +20,10 @@
         {
             "path": "/api/cronjob/game",
             "schedule": "* * * * *"
+        },
+        {
+            "path": "/api/cronjob/raceGame",
+            "schedule": "* * * * *"
         }
 
     ]
