@@ -215,7 +215,7 @@ export async function GET(request: NextRequest) {
         const transaction = transfer({
           contract: contractUSDT,
           to: toWalletAddress,
-          amount: sendAmount.toString(),
+          amount: sendAmount,
         });
     
         transactions.push(transaction);
