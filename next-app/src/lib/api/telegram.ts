@@ -115,6 +115,48 @@ export async function getAllMessages(data: any) {
 
 }
 
+
+// getAllMessagesByCenter
+export async function getAllMessagesByCenter(center: string) {
+
+    const client = await clientPromise;
+
+    const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+
+    const messages = await collectionTelegramMessages
+    .find({
+        center,
+    })
+    .sort({ _id: -1 })
+    .toArray();
+
+    return {
+        messages,
+    }
+
+}
+
+
+// deleteAllMessages
+export async function deleteAllMessagesByCenter(center: string) {
+
+    const client = await clientPromise;
+
+    const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+
+    await collectionTelegramMessages.deleteMany(
+        {
+            center,
+        }
+    );
+
+    return {
+        result: "success",
+    };
+
+}
+
+
 // deleteMessage
 export async function deleteMessage(_id: string) {
 
