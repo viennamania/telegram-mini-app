@@ -561,12 +561,14 @@ export async function updateRaceGameResultByWalletAddressAndSequence(
     walletAddress,
     sequence,
     selectedNumber,
+    horseRanking,
     resultNumber,
     win
   } : {
     walletAddress: string,
     sequence: string,
     selectedNumber: string,
+    horseRanking: number[],
     resultNumber: string,
     win: boolean
   }
@@ -625,6 +627,7 @@ export async function updateRaceGameResultByWalletAddressAndSequence(
         $set: {
           status: "closed",
           selectedNumber: selectedNumber,
+          horseRanking: horseRanking,
           resultNumber: resultNumber,
           win: win,
           settlementStatus: false,
@@ -644,6 +647,7 @@ export async function updateRaceGameResultByWalletAddressAndSequence(
         $set: {
           status: "closed",
           selectedNumber: selectedNumber,
+          horseRanking: horseRanking,
           resultNumber: resultNumber,
           win: win,
           updatedAt: new Date().toISOString(),

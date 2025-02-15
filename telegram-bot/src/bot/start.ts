@@ -147,10 +147,10 @@ feature.on("callback_query:data", async (ctx) => {
       //return ctx.reply(text);
 
       const keyboard = new InlineKeyboard()
-      .text(sequenceEmoji + '회차 경마 게임 시작하기', 'roulette')
+      .text(sequenceEmoji + '회차 경마 게임 시작하기', 'race')
     
       //const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-waiting.jpg`;
-      const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-waiting.webp`;
+      const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/horse-racing-waiting-banner.jpg`;
 
       return ctx.replyWithPhoto(
         photoUrl,
@@ -179,6 +179,50 @@ feature.on("callback_query:data", async (ctx) => {
 
     const winPrize = dataSetGame?.result?.data?.winPrize;
 
+    /*
+    {
+  "_id": {
+    "$oid": "67b07fc360627660391dc048"
+  },
+  "walletAddress": "0x542197103Ca1398db86026Be0a85bc8DcE83e440",
+  "sequence": 22,
+  "status": "opened",
+  "winPrize": "1.594177",
+  "horses": [
+    {
+      "tokenId": 116
+    },
+    {
+      "tokenId": 992
+    },
+    {
+      "tokenId": 7276
+    },
+    {
+      "tokenId": 8993
+    },
+    {
+      "tokenId": 869
+    },
+    {
+      "tokenId": 2514
+    },
+    {
+      "tokenId": 7169
+    },
+    {
+      "tokenId": 6024
+    }
+  ],
+  "usdtAmount": 0,
+  "krwAmount": 0,
+  "rate": 0,
+  "createdAt": "2025-02-15T11:51:31.543Z"
+}
+  */
+
+    const horses = dataSetGame?.result?.data?.horses;
+
 
 
     const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/horse-racing-banner.jpg`;
@@ -204,6 +248,43 @@ feature.on("callback_query:data", async (ctx) => {
     //const queryDataOdd = 'roulette-odd' + '-' + sequence;
     //const queryDataEvent = 'roulette-even' + '-' + sequence;
 
+    // 1번말: 116, 2번말: 992, 3번말: 7276, 4번말: 8993, 5번말: 869, 6번말: 2514, 7번말: 7169, 8번말: 6024
+    const keyboard = new InlineKeyboard()
+      .text('1️⃣ 번말: ' + horses[0].tokenId, 'race-1' + '-' + sequence)
+
+      // https://granderby.io/horse-details/4149 보러가기
+      .webApp(horses[0].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[0].tokenId)
+
+      .row()
+      .text('2️⃣ 번말: ' + horses[1].tokenId, 'race-2' + '-' + sequence)
+      .webApp(horses[1].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[1].tokenId)
+
+      .row()
+      .text('3️⃣ 번말: ' + horses[2].tokenId, 'race-3' + '-' + sequence)
+      .webApp(horses[2].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[2].tokenId)
+
+      .row()
+      .text('4️⃣ 번말: ' + horses[3].tokenId, 'race-4' + '-' + sequence)
+      .webApp(horses[3].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[3].tokenId)
+
+      .row()
+      .text('5️⃣ 번말: ' + horses[4].tokenId, 'race-5' + '-' + sequence)
+      .webApp(horses[4].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[4].tokenId)
+
+      .row()
+      .text('6️⃣ 번말: ' + horses[5].tokenId, 'race-6' + '-' + sequence)
+      .webApp(horses[5].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[5].tokenId)
+
+      .row()
+      .text('7️⃣ 번말: ' + horses[6].tokenId, 'race-7' + '-' + sequence)
+      .webApp(horses[6].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[6].tokenId)
+
+      .row()
+      .text('8️⃣ 번말: ' + horses[7].tokenId, 'race-8' + '-' + sequence)
+      .webApp(horses[7].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[7].tokenId)
+      
+
+    /*
     const keyboard = new InlineKeyboard()
       .text('1️⃣', 'race-1' + '-' + sequence)
       .text('2️⃣', 'race-2' + '-' + sequence)
@@ -213,8 +294,7 @@ feature.on("callback_query:data", async (ctx) => {
       .text('6️⃣', 'race-6' + '-' + sequence)
       .text('7️⃣', 'race-7' + '-' + sequence)
       .text('8️⃣', 'race-8' + '-' + sequence)
-      //.text('8️⃣', 'race-9')
-      //.text('🔟', 'race-10')
+    */
 
     
     return ctx.replyWithPhoto(
@@ -259,7 +339,7 @@ feature.on("callback_query:data", async (ctx) => {
     }
     */
 
-    await ctx.reply("🐎 " + selectedNumber + '️⃣' + '번 말을 선택하셨습니다.');
+    await ctx.reply("🐎 " + selectedNumber + '️⃣' + ' 번 말을 우승마로 선택하셨습니다.');
 
 
 
@@ -357,7 +437,7 @@ feature.on("callback_query:data", async (ctx) => {
     }
     */
 
-    await ctx.reply("🐎 " + firstHorseNumber + '️⃣' + '번 말이 1등으로 도착하였습니다.');
+    await ctx.reply("🐎 " + firstHorseNumber + '️⃣' + ' 번 말이 1등으로 도착하였습니다.');
 
 
 
@@ -401,12 +481,17 @@ feature.on("callback_query:data", async (ctx) => {
     const walletAddress = dataUser.result.walletAddress;
     
 
-    /*
-    let resultOddOrEven;
 
-    if (randomNumber === 1) resultOddOrEven = "odd"
-    else if (randomNumber === 0) resultOddOrEven = "even";
-    */
+    // horse ranking array
+    // 0 => 4
+    // 1 => 2
+    // 2 => 7
+
+    const horseRanking = [] as number[];
+
+    for (let i = 0; i < racer.length; i++) {
+      horseRanking.push(racer[i]);
+    }
 
     const urlUpdateRaceGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/updateRaceGame`;
   
@@ -419,6 +504,7 @@ feature.on("callback_query:data", async (ctx) => {
         walletAddress: walletAddress,
         sequence: selectedSequence,
         selectedNumber: selectedNumber,
+        horseRanking: horseRanking,
         resultNumber: firstHorseNumber,
         win: win,
       }),
@@ -484,21 +570,21 @@ feature.on("callback_query:data", async (ctx) => {
 
     if (win) {
  
-      photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/horse-racing-banner.jpg`;
+      photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/horse-racing-winner-banner.jpg`;
 
 
-      text = sequenceEmoji + '회차 ' + selectedNumber + '️⃣' + '번 말을 선택하셨습니다.'
-      + '\n\n💥 결과: ' + firstHorseNumber + '️⃣' + '번 말이 1등으로 도착하였습니다.'
+      text = sequenceEmoji + '회차 ' + selectedNumber + '️⃣' + ' 번 말을 선택하셨습니다.'
+      + '\n\n💥 결과: ' + firstHorseNumber + '️⃣' + ' 번 말이 1등으로 도착하였습니다.'
       + '\n\n🎉 축하합니다! 당첨되셨습니다.'
       + '\n\n💲 ' + '당첨금: ' + winPrize + ' USDT가 1분내로 회원님 지갑으로 입금됩니다.'
       + '\n\n👇 아래 버튼을 눌러 경마 게임을 시작하세요';
 
     } else {
 
-      photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/horse-racing-banner.jpg`;
+      photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/horse-racing-loser-banner.jpg`;
 
-      text = sequenceEmoji + '회차 ' + selectedNumber + '️⃣' + '번 말을 선택하셨습니다.'
-      + '\n\n💥 결과: ' + firstHorseNumber + '️⃣' + '번 말이 1등으로 도착하였습니다.'
+      text = sequenceEmoji + '회차 ' + selectedNumber + '️⃣' + ' 번 말을 선택하셨습니다.'
+      + '\n\n💥 결과: ' + firstHorseNumber + '️⃣' + ' 번 말이 1등으로 도착하였습니다.'
       + '\n\n😭 아쉽게도 꽝입니다.'
       + '\n\n👇 아래 버튼을 눌러 경마 게임을 시작하세요';
 
@@ -1103,7 +1189,7 @@ feature.command('otc', async (ctx) => {
       console.log('urlOtc', urlOtc);
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
-      + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 USDT 판매/구매 하세요.';
+      + '\n\n' + '💲 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 USDT 판매/구매 하세요.';
 
       // english
       //+ '\n\n' + '✅ Wallet Address: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
@@ -1219,7 +1305,7 @@ feature.command('game', async (ctx) => {
 
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
-      + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 게임으로 이동하세요.';
+      + '\n\n' + '💲 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 게임으로 이동하세요.';
       // english
       //+ '\n\n' + '✅ Wallet Address: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
       //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to go to the game.';
@@ -1233,7 +1319,7 @@ feature.command('game', async (ctx) => {
         .webApp('🐎 그랑더비 게임', urlGameGranderby)
         .row()
         .text('🎲 홀짝 게임', 'roulette')
-        .text('🐎 레이스 게임', 'race')
+        .text('🐎 경마 게임', 'race')
 
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-sports-game.jpg`;
 
@@ -1341,7 +1427,7 @@ feature.command('wallet', async (ctx) => {
 
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
-      + '\n\n' + '✅ 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
+      + '\n\n' + '💲 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 나의 지갑으로 이동하세요.';
       // english
       //+ '\n\n' + '✅ Wallet Address: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
       //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to go to my wallet.'

@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
     walletAddress,
     sequence,
     selectedNumber,
+    horseRanking,
     resultNumber,
     win,
   } = body;
@@ -27,6 +28,7 @@ export async function POST(request: NextRequest) {
     walletAddress: walletAddress,
     sequence: sequence,
     selectedNumber: selectedNumber,
+    horseRanking: horseRanking,
     resultNumber: resultNumber,
     win: win,
   });
