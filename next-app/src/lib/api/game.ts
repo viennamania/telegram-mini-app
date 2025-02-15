@@ -126,6 +126,10 @@ export async function getOneByWalletAddressAndSequence(walletAddress: string, se
     { walletAddress: walletAddress, sequence: sequence }
   );
 
+    
+
+
+
   if (result) {
     return result;
   } else {

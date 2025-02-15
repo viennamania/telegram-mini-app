@@ -441,8 +441,9 @@ function HomeContent() {
 
 
   // send erc20 to address
+
+  const [toTelegramId, setToTelegramId] = useState("");
   const [amountSend, setAmountSend] = useState(0);
-  const [toAddress, setToAddress] = useState("");
   const [loadingSend, setLoadingSend] = useState(false);
   const send = async () => {
     
@@ -454,8 +455,8 @@ function HomeContent() {
               "Content-Type": "application/json",
           },
           body: JSON.stringify({
-              amount: amountSend,
-              userTelegramId: toAddress,
+            userTelegramId: toTelegramId,
+            amount: amountSend,
           }),
       });
 
@@ -472,6 +473,7 @@ function HomeContent() {
 
       if (data?.result) {
           alert("전송이 완료되었습니다.");
+          setAmountSend(0);
       } else {
           alert("전송에 실패했습니다.");
       }
@@ -480,6 +482,48 @@ function HomeContent() {
 
   }
 
+
+  // send roulette game
+  const [sendRouletteTelegramId, setSendRouletteTelegramId] = useState("");
+  const [sendRouletteAmount, setSendRouletteAmount] = useState(0);
+
+  const [sendingRoulette, setSendingRoulette] = useState(false);
+  const sendRoulette = async () => {
+    
+      setSendingRoulette(true);
+      // api call sendToUserTelegramId
+      const response = await fetch("/api/game/sendToUserTelegramId", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userTelegramId: sendRouletteTelegramId,
+            amount: sendRouletteAmount,
+          }),
+      });
+
+      if (!response.ok) {
+          console.error("Error sending");
+          alert("전송에 실패했습니다.");
+          setSendingRoulette(false);
+          return;
+      }
+
+      const data = await response.json();
+
+      //console.log("send data", data);
+
+      if (data?.result) {
+          alert("전송이 완료되었습니다.");
+          setSendRouletteAmount(0);
+      } else {
+          alert("전송에 실패했습니다.");
+      }
+
+      setSendingRoulette(false);
+
+  }
 
 
   
@@ -768,40 +812,96 @@ function HomeContent() {
         {/* send to user telegramId */}
         {/* input amountSend */}
         {address && (
-          <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-            <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                텔레그램 사용자에게 USDT 전송
+
+          <div className="flex flex-col xl:flex-row gap-2 items-center justify-between">
+
+            <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+              
+
+              <div className="flex flex-row gap-2 items-center justify-between">
+                {/* dot */}
+                <div className="w-2 h-2 bg-green-500 rounded"></div>
+                <span className="text-sm text-gray-800 font-semibold">
+                    홀짝 게임 전송
+                </span>
+              </div>
+
+              <div className="w-full flex flex-row gap-2 items-start justify-between">
+                  <input
+                    disabled={sendingRoulette}
+                    onChange={(e) => {
+                      setSendRouletteAmount(Number(e.target.value));
+                    }}
+                    type="number"
+                    placeholder="전송 USDT"
+                    className="w-36 p-2 rounded border border-gray-300"
+                  />
+                  <input
+                    disabled={sendingRoulette}
+                    onChange={(e) => {
+                      setSendRouletteTelegramId(e.target.value);
+                    }}
+                    type="text"
+                    placeholder="텔레그램 ID"
+                    className="w-36 p-2 rounded border border-gray-300"
+                  />
+                  <Button
+                    disabled={sendingRoulette}
+                    onClick={() => {
+                      // send
+                      confirm("전송하시겠습니까?") && sendRoulette();
+                    }}
+                    className={`${sendingRoulette ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
+                  >
+                    {sendingRoulette ? "전송중..." : "전송"}
+                  </Button>
+              </div>
             </div>
-            <div className="w-full flex flex-row gap-2 items-start justify-between">
-                <input
-                  disabled={loadingSend}
-                  onChange={(e) => {
-                    setAmountSend(Number(e.target.value));
-                  }}
-                  type="number"
-                  placeholder="전송 USDT"
-                  className="w-36 p-2 rounded border border-gray-300"
-                />
-                <input
-                  disabled={loadingSend}
-                  onChange={(e) => {
-                    setToAddress(e.target.value);
-                  }}
-                  type="text"
-                  placeholder="텔레그램 ID"
-                  className="w-36 p-2 rounded border border-gray-300"
-                />
-                <Button
-                  disabled={loadingSend}
-                  onClick={() => {
-                    // send
-                    confirm("전송하시겠습니까?") && send();
-                  }}
-                  className={`${loadingSend ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
-                >
-                  {loadingSend ? "전송중..." : "전송"}
-                </Button>
+
+
+            <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
+              
+
+              <div className="flex flex-row gap-2 items-center justify-between">
+                {/* dot */}
+                <div className="w-2 h-2 bg-green-500 rounded"></div>
+                <span className="text-sm text-gray-800 font-semibold">
+                    USDT 전송
+                </span>
+              </div>
+
+              <div className="w-full flex flex-row gap-2 items-start justify-between">
+                  <input
+                    disabled={loadingSend}
+                    onChange={(e) => {
+                      setAmountSend(Number(e.target.value));
+                    }}
+                    type="number"
+                    placeholder="전송 USDT"
+                    className="w-36 p-2 rounded border border-gray-300"
+                  />
+                  <input
+                    disabled={loadingSend}
+                    onChange={(e) => {
+                      setToTelegramId(e.target.value);
+                    }}
+                    type="text"
+                    placeholder="텔레그램 ID"
+                    className="w-36 p-2 rounded border border-gray-300"
+                  />
+                  <Button
+                    disabled={loadingSend}
+                    onClick={() => {
+                      // send
+                      confirm("전송하시겠습니까?") && send();
+                    }}
+                    className={`${loadingSend ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
+                  >
+                    {loadingSend ? "전송중..." : "전송"}
+                  </Button>
+              </div>
             </div>
+
           </div>
         )}
 

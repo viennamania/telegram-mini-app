@@ -73,9 +73,136 @@ feature.on("callback_query:data", async (ctx) => {
   const data = ctx.callbackQuery.data;
 
   ////return ctx.reply(data);
+
+  if (data === "race") {
+
+
+
+
+    const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-banner.jpg`;
+    
+    //const videoFile = new InputFile(`/home/ubuntu/video/welcome-casino.gif`)
+    //const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
+
+      // 1️⃣ 회차
+    // 2️⃣ 회차
+    // 12 회차 => 1️⃣ 2️⃣ 회차
+    // convert number to emoji
+
+    const sequence = 23;
+    const sequenceEmoji = sequence.toString().replace(/\d/g, (d: any) => String.fromCharCode(0x30 + (+d)));
+
+
+    const text = '✅ ' + sequenceEmoji + '회차 레이스 게임을 시작합니다.'
+      + '\n\n👇 아래 버튼을 선택하세요'
+
+    //const queryDataOdd = 'roulette-odd' + '-' + sequence;
+    //const queryDataEvent = 'roulette-even' + '-' + sequence;
+
+    const keyboard = new InlineKeyboard()
+      .text('1️⃣', 'race-1')
+      .text('2️⃣', 'race-2')
+      .text('3️⃣', 'race-3')
+      .text('4️⃣', 'race-4')
+      .text('5️⃣', 'race-5')
+      .text('6️⃣', 'race-6')
+      .text('7️⃣', 'race-7')
+      .text('8️⃣', 'race-8')
+      //.text('8️⃣', 'race-9')
+      //.text('🔟', 'race-10')
+
+    
+    return ctx.replyWithPhoto(
+      photoUrl,
+      {
+        caption: text,
+        reply_markup: keyboard
+      }
+    )
+    
+
+
+
+  } else if (data.startsWith("race-")) {
+
+    // race-1
+    // race-2
+
+
+    const dataSplit = data.split('-');
+
+    const selectedNumber = dataSplit[1];
+    
+    ///const selectedSequence = dataSplit[2];
+
+    const timer = 50;
+
+    const racer: number[] = [];
+
+    // set 1 to 10 random sequence
+
+    const racerCount = 8;
+
+    for (let i = 0; i < racerCount; i++) {
+      
+      // random number between 1 and 10 and each number is unique
+
+      let randomNumber = Math.floor(Math.random() * racerCount) + 1;
+
+      while (racer.includes(randomNumber)) {
+        randomNumber = Math.floor(Math.random() * racerCount) + 1;
+      }
+
+      racer.push(randomNumber);
+
+    }
+
+    for (let i = 0; i < timer; i++) {
+
+      //await ctx.reply("1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ 7️⃣ 8️⃣ 8️⃣ 🔟");
+
+      //await ctx.reply("⏳ " + racer.map((r) => r + '️⃣').join(' '));
+
+      
+      //const text = '🐎 ' + racer.map((r) => r).join(' ');
+      // left first change to emoji
+
+      const first = racer[0] + '️⃣';
+
+      const text = '🐎 ' + first
+        + ' ' +  racer[1] + ' ' +  racer[2] + ' ' +  racer[3] + ' ' +  racer[4] + ' ' +  racer[5] + ' ' +  racer[6] + ' ' +  racer[7];
+      
+      await ctx.reply(text);
+
+
+      //await ctx.reply("🐎 " + racer.map((r) => r).join(' '));
+
+
+
+
+      // random exhcnage sequence first and second
+      // and third and fourth and fifth and sixth and seventh and eighth and ninth and tenth
+
+      const randomIndex = Math.floor(Math.random() * racerCount)
+
+      const temp = racer[randomIndex];
+      racer[randomIndex] = racer[randomIndex + 1];
+
+      racer[randomIndex + 1] = temp;
+
+      
+
+
+      
+    }
+
+
+
+
+
   
 
-  if (data === "roulette") {
+  } else if (data === "roulette") {
 
     //const center = ctx.me.username+"";
     //const url = `${process.env.FRONTEND_APP_ORIGIN}/leaderboard?center=${center}`;
@@ -152,18 +279,28 @@ feature.on("callback_query:data", async (ctx) => {
 
       // 1️⃣ 회차
       // 2️⃣ 회차
-      // 12 회차 => 1️⃣2️⃣ 회차
+      // 12 회차 => 1️⃣ 2️⃣ 회차
       // convert number to emoji
-      const sequenceEmoji = sequence.toString().replace(/\d/g, (d: any) => String.fromCharCode(0x30 + (+d)));
 
-      const text = '✅ ' + sequenceEmoji + '회차 홀짝게임을 시작합니다.'
+
+
+      //const sequenceEmoji = sequence.toString().replace(/\d/g, (d: any) => String.fromCharCode(0x30 + (+d)));
+
+      const sequenceString = sequence.toString();
+      let sequenceEmoji = '';
+      for (let i = 0; i < sequenceString.length; i++) {
+        sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
+      }
+
+
+      const text = '✅ ' + sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
       + '\n\n⏱️ ' + waitingTime + '초 후에 게임을 시작할수 있습니다. 🙏 잠시만 기다려주세요.'
-      + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
+      + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
 
       //return ctx.reply(text);
 
       const keyboard = new InlineKeyboard()
-      .text('🎲 ' + sequenceEmoji + '회차 홀짝게임 시작하기', 'roulette')
+      .text('🎲 ' + sequenceEmoji + '회차 홀짝 게임 시작하기', 'roulette')
     
       //const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-waiting.jpg`;
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-waiting.webp`;
@@ -203,12 +340,17 @@ feature.on("callback_query:data", async (ctx) => {
 
       // 1️⃣ 회차
     // 2️⃣ 회차
-    // 12 회차 => 1️⃣2️⃣ 회차
+    // 12 회차 => 1️⃣ 2️⃣ 회차
     // convert number to emoji
-    const sequenceEmoji = sequence.toString().replace(/\d/g, (d: any) => String.fromCharCode(0x30 + (+d)));
+    //const sequenceEmoji = sequence.toString().replace(/\d/g, (d: any) => String.fromCharCode(0x30 + (+d)));
 
+    const sequenceString = sequence.toString();
+    let sequenceEmoji = '';
+    for (let i = 0; i < sequenceString.length; i++) {
+      sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
+    }
 
-    const text = '✅ ' + sequenceEmoji + '회차 홀짝게임을 시작합니다.'
+    const text = '✅ ' + sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
       + '\n\n👇 아래 버튼에서 🚹 홀 또는 🚺 짝을 선택하세요.';
 
     const queryDataOdd = 'roulette-odd' + '-' + sequence;
@@ -360,25 +502,16 @@ feature.on("callback_query:data", async (ctx) => {
 
         // 1️⃣ 회차
         // 2️⃣ 회차
-        // 12 회차 => 1️⃣2️⃣ 회차
+        // 12 회차 => 1️⃣ 2️⃣ 회차
         // convert number to emoji
-        const sequenceEmoji = sequence.toString().replace(/\d/g, (d: any) => String.fromCharCode(0x30 + (+d)));
+        //const sequenceEmoji = sequence.toString().replace(/\d/g, (d: any) => String.fromCharCode(0x30 + (+d)));
 
-        /*
-        const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-closed.jpg`;
+        const sequenceString = sequence.toString();
+        let sequenceEmoji = '';
+        for (let i = 0; i < sequenceString.length; i++) {
+          sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
+        }
 
-        const keyboard = new InlineKeyboard()
-          .text('🎲 ' + sequenceEmoji + '회차 홀짝게임 시작하기', 'roulette')
-
-        //return ctx.reply("🚫 " + sequenceEmoji + '회차 게임은 이미 종료되었습니다.');
-
-        return ctx.replyWithPhoto(
-          `${process.env.FRONTEND_APP_ORIGIN}/roulette-closed.jpg`,
-          {
-            caption: "🚫 " + sequenceEmoji + '회차 게임은 이미 종료되었습니다.'
-          },
-        )
-        */
         return ctx.reply("🚫 " + sequenceEmoji + '회차 게임은 이미 종료되었습니다.');
 
         
@@ -433,7 +566,7 @@ feature.on("callback_query:data", async (ctx) => {
 
 
 
-    ///await ctx.reply("⏳ " + selectedSequence + "회차 홀짝게임 결과를 확인중입니다...");
+    ///await ctx.reply("⏳ " + selectedSequence + "회차 홀짝 게임 결과를 확인중입니다...");
 
 
 
@@ -445,10 +578,15 @@ feature.on("callback_query:data", async (ctx) => {
 
     // 1️⃣ 회차
     // 2️⃣ 회차
-    // 12 회차 => 1️⃣2️⃣ 회차
+    // 12 회차 => 1️⃣ 2️⃣ 회차
     // convert number to emoji
-    const sequenceEmoji = selectedSequence.toString().replace(/\d/g, d => String.fromCharCode(0x30 + (+d)));
+    //const sequenceEmoji = selectedSequence.toString().replace(/\d/g, d => String.fromCharCode(0x30 + (+d)));
 
+    const sequenceString = selectedSequence.toString();
+    let sequenceEmoji = '';
+    for (let i = 0; i < sequenceString.length; i++) {
+      sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
+    }
 
     if (win) {
  
@@ -460,13 +598,13 @@ feature.on("callback_query:data", async (ctx) => {
         text = '✅ ' + sequenceEmoji + '회차 🚹 홀을 선택하셨습니다.'
           + '\n\n💥 결과: ' + resultOddOrEvenText + ' 😊 당첨!!!'
           + '\n\n💲 ' + '당첨금: ' + winningPrice + ' USDT가 1분내로 회원님 지갑으로 입금됩니다.'
-          + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
+          + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
       }
       if (selectedOddOrEven === "even") {
         text = '✅ ' + sequenceEmoji + '회차 🚺 짝을 선택하셨습니다.'
           + '\n\n💥 결과: ' + resultOddOrEvenText + ' 😊 당첨!!!'
           + '\n\n💲 ' + '당첨금: ' + winningPrice + ' USDT'
-          + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
+          + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
       }
 
     } else {
@@ -476,15 +614,15 @@ feature.on("callback_query:data", async (ctx) => {
       if (selectedOddOrEven === "odd") {
         text = '✅ ' + sequenceEmoji + '회차 🚹 홀을 선택하셨습니다.'
         + '\n\n💥 결과: ' + resultOddOrEvenText + ' 😭 꽝!!!'
-        //+ '\n\n✅ ' + sequence + '회차 홀짝게임을 시작합니다.'
-        + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
+        //+ '\n\n✅ ' + sequence + '회차 홀짝 게임을 시작합니다.'
+        + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
       }
 
       if (selectedOddOrEven === "even") {
         text = '✅ ' + sequenceEmoji + '회차 🚺 짝을 선택하셨습니다.'
         + '\n\n💥 결과: ' + resultOddOrEvenText + ' 😭 꽝!!!'
-        //+ '\n\n✅ ' + sequence + '회차 홀짝게임을 시작합니다.'
-        + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
+        //+ '\n\n✅ ' + sequence + '회차 홀짝 게임을 시작합니다.'
+        + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
       }
 
     }
@@ -496,13 +634,18 @@ feature.on("callback_query:data", async (ctx) => {
 
     // 1️⃣ 회차
     // 2️⃣ 회차
-    // 12 회차 => 1️⃣2️⃣ 회차
+    // 12 회차 => 1️⃣ 2️⃣ 회차
     // convert number to emoji
-    const nextSequenceEmoji = nextSequnce.toString().replace(/\d/g, d => String.fromCharCode(0x30 + (+d)));
+    //const nextSequenceEmoji = nextSequnce.toString().replace(/\d/g, d => String.fromCharCode(0x30 + (+d)));
 
+    const nextSequenceString = nextSequnce.toString();
+    let nextSequenceEmoji = '';
+    for (let i = 0; i < nextSequenceString.length; i++) {
+      nextSequenceEmoji += nextSequenceString[i] + '️⃣' + ' ';
+    }
 
     const keyboard = new InlineKeyboard()
-      .text('🎲 ' + nextSequenceEmoji + '회차 홀짝게임 시작하기', 'roulette')
+      .text('🎲 ' + nextSequenceEmoji + '회차 홀짝 게임 시작하기', 'roulette')
 
 
     
@@ -752,7 +895,8 @@ feature.command('game', async (ctx) => {
         .webApp('🎮 탭투언 게임', urlGame)
         .webApp('🐎 그랑더비 게임', urlGameGranderby)
         .row()
-        .text('🎲 홀짝게임 시작하기', 'roulette')
+        .text('🎲 홀짝 게임', 'roulette')
+        .text('🐎 레이스 게임', 'race')
 
       const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-sports-game.jpg`;
 

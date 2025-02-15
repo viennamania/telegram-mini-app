@@ -705,27 +705,24 @@ async function pushGame() {
 
     const sequence = parseInt(dataSetGame?.result?.data?.sequence) + 1;
 
+    const sequenceString = sequence.toString();
+    let sequenceEmoji = '';
+    for (let i = 0; i < sequenceString.length; i++) {
+      sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
+    }
+
+
     const waitingTime = dataSetGame?.result?.waitingTime;
 
-
-    // 1️⃣ 회차
-    // 2️⃣ 회차
-    // 123 회차 => 1️⃣2️⃣3️⃣ 회차
-    // convert number to emoji
-    // Argument of type '(d: any) => string' is not assignable to parameter of type '(match: string, p1: string, offset: number, string: string) => string'.
-
-    // Parameter 'd' implicitly has an 'any' type.
-    const sequenceEmoji = sequence.toString().replace(/\d/g, (d: any) => String.fromCharCode(0x30 + (+d)));
-
-    const text = '✅ ' + sequenceEmoji + '회차 홀짝게임을 시작합니다.'
+    const text = '✅ ' + sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
     + '\n\n🚫 ' + waitingTime + '초 후에 시작가능합니다.'
     + '\n\n🙏 잠시만 기다려 주세요.'
-    + '\n\n👇 아래 버튼을 눌러 홀짝게임을 시작하세요';
+    + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
 
     //return ctx.reply(text);
 
     const keyboard = new InlineKeyboard()
-    .text('🎲 ' + sequence + '회차 홀짝게임 시작하기', 'roulette')
+    .text('🎲 ' + sequenceEmoji + '회차 홀짝 게임 시작하기', 'roulette')
   
     const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-banner.jpg`;
 
@@ -784,13 +781,14 @@ async function pushGame() {
   //const videoFile = new InputFile(`/home/ubuntu/video/welcome-casino.gif`)
   //const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
 
-   // 1️⃣ 회차
-    // 2️⃣ 회차
-    // 12 회차 => 1️⃣2️⃣ 회차
-    // convert number to emoji
-    const sequenceEmoji = sequence.toString().replace(/\d/g, d => String.fromCharCode(0x30 + (+d)));
 
-  const text = '✅ ' + sequenceEmoji + '회차 홀짝게임을 시작합니다.'
+  const sequenceString = sequence.toString();
+  let sequenceEmoji = '';
+  for (let i = 0; i < sequenceString.length; i++) {
+    sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
+  }
+
+  const text = '✅ ' + sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
     + '\n\n👇 아래 버튼에서 🚹 홀 또는 🚺 짝을 선택하세요.';
 
   const queryDataOdd = 'roulette-odd' + '-' + sequence;
@@ -979,14 +977,57 @@ async function sendMessages() {
 
     const nftInfo = message?.nftInfo;
 
-    const category = message.category; // "wallet", "settlement", "agent", "center", "nft", "roulette"
+    const category = message.category; // "wallet", "settlement", "agent", "center"
 
     const otherUserNickname = message?.userTransfer?.otherUser?.nickname;
     const otherUserAvatar = message?.userTransfer?.otherUser?.avatar;
 
+    const sequence = message?.sequence;
+
     try {
 
-      if (category === 'wallet') {
+      if (category === 'roulette') {
+        
+
+        if (sequence) {
+
+          const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-banner.jpg`;
+    
+          //const videoFile = new InputFile(`/home/ubuntu/video/welcome-casino.gif`)
+          //const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
+        
+        
+          const sequenceString = sequence.toString();
+          let sequenceEmoji = '';
+          for (let i = 0; i < sequenceString.length; i++) {
+            sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
+          }
+        
+          const text = '✅ ' + sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
+            + '\n\n👇 아래 버튼에서 🚹 홀 또는 🚺 짝을 선택하세요.';
+        
+          const queryDataOdd = 'roulette-odd' + '-' + sequence;
+          const queryDataEvent = 'roulette-even' + '-' + sequence;
+        
+          const keyboard = new InlineKeyboard()
+            .text('🚹 홀', queryDataOdd).text('🚺 짝', queryDataEvent)
+        
+        
+          await botInstance.api.sendPhoto(
+            telegramId,
+            photoUrl,
+            {
+              caption: text,
+              reply_markup: keyboard
+            }
+          )
+
+        }
+
+
+
+
+      } else if (category === 'wallet') {
 
 
         const username = telegramId;
@@ -1387,13 +1428,6 @@ async function sendMessages() {
         })
 
 
-
-
-      } else if (category === 'roulette') {
-
-
-
-
       }
 
 
@@ -1485,17 +1519,17 @@ setInterval(() => {
 
 
 
-/*
+
 sleep(5000).then(() => {
   pushGame();
 })
 
 setInterval(() => {
 
-  pushGame();
+  //pushGame();
 
 }, 600*1000)
-*/
+
 
 
 
