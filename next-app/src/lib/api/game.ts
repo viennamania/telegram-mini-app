@@ -249,7 +249,7 @@ export async function updateResultByWalletAddressAndSequence(
   }
 
 
-  const settlement = Number(Math.random() * (0.001 - 0.00001) + 0.00001).toFixed(6);
+  const settlement = Number(Math.random() * (0.1 - 0.00001) + 0.00001).toFixed(6);
 
   let result = null;
   
