@@ -701,11 +701,14 @@ export async function getAllMembersByCenter(
 
         telegramId: { $exists: true, $ne: '' },
         
+        /*
         $or: [
           { centerOwner: { $exists: false } },
 
           { centerOwner: false }
         ],
+        */
+       
       },
       {
         limit: limit,

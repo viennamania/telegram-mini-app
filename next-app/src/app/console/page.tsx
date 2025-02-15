@@ -473,7 +473,6 @@ function HomeContent() {
 
       if (data?.result) {
           alert("전송이 완료되었습니다.");
-          setAmountSend(0);
       } else {
           alert("전송에 실패했습니다.");
       }
@@ -516,7 +515,6 @@ function HomeContent() {
 
       if (data?.result) {
           alert("전송이 완료되었습니다.");
-          setSendRouletteAmount(0);
       } else {
           alert("전송에 실패했습니다.");
       }
@@ -841,6 +839,7 @@ function HomeContent() {
                     onChange={(e) => {
                       setSendRouletteTelegramId(e.target.value);
                     }}
+                    value={sendRouletteTelegramId}
                     type="text"
                     placeholder="텔레그램 ID"
                     className="w-36 p-2 rounded border border-gray-300"
@@ -885,6 +884,7 @@ function HomeContent() {
                     onChange={(e) => {
                       setToTelegramId(e.target.value);
                     }}
+                    value={toTelegramId}
                     type="text"
                     placeholder="텔레그램 ID"
                     className="w-36 p-2 rounded border border-gray-300"
