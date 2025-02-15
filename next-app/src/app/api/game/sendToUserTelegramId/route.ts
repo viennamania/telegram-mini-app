@@ -240,8 +240,9 @@ export async function POST(request: NextRequest) {
   }
 
   const sequence = data?.sequence;
+  const winPrize = data?.winPrize;
 
-  if (!sequence) {
+  if (!sequence || !winPrize) {
     return NextResponse.error();
   }
 
@@ -261,6 +262,7 @@ export async function POST(request: NextRequest) {
     telegramId: userTelegramId,
     message,
     sequence: sequence,
+    winPrize: winPrize,
   } );
 
 

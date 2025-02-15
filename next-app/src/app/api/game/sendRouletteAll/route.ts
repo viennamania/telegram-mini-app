@@ -136,8 +136,9 @@ export async function POST(request: NextRequest) {
       if (result?.status === "success") {
         const insertedData = result.data;
         const sequence = insertedData?.sequence;
+        const winPrize = insertedData?.winPrize;
 
-        if (sequence) {
+        if (sequence && winPrize) {
           const message = `홀짝 게임을 시작하세요!`; 
 
           const resultMessage = await insertMessageRoulette({
@@ -146,6 +147,7 @@ export async function POST(request: NextRequest) {
             telegramId: member.telegramId,
             message,
             sequence: sequence,
+            winPrize: winPrize,
           } );
         }
         

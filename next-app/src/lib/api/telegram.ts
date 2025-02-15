@@ -196,6 +196,7 @@ export async function insertMessageRoulette(
         telegramId,
         message,
         sequence,
+        winPrize,
     }
     :
     {
@@ -204,6 +205,7 @@ export async function insertMessageRoulette(
         telegramId: string,
         message: string,
         sequence: string,
+        winPrize: number,
     }
 ) {
 
@@ -218,6 +220,7 @@ export async function insertMessageRoulette(
             telegramId,
             message,
             sequence,
+            winPrize,
         }
     );
 
