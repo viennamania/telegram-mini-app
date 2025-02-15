@@ -208,7 +208,9 @@ export async function GET(request: NextRequest) {
               // send amount is 0.00001 to 0.001
         //const sendAmount = Number(Math.random() * (0.001 - 0.00001) + 0.00001).toFixed(6);
 
-        const sendAmount = game.settlement;
+        //const sendAmount = game.settlement;
+
+        const sendAmount = game.winPrize;
 
         const transaction = transfer({
           contract: contractUSDT,

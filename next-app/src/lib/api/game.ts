@@ -59,13 +59,19 @@ export async function insertOne(data: any) {
 
       // sequence is last sequence + 1
 
+
+
       const sequence = latestData.sequence + 1;
+
+      const winPrize = Number(Math.random() * (0.1 - 0.00001) + 0.00001).toFixed(6);
+
 
       const result = await collection.insertOne(
         {
           walletAddress: data.walletAddress,
           sequence: sequence,
           status: "opened",
+          winPrize: winPrize,
           usdtAmount: data.usdtAmount,
           krwAmount: data.krwAmount,
           rate: data.rate,
@@ -120,6 +126,7 @@ export async function insertOne(data: any) {
     sequence = findSequence[0].sequence + 1;
   }
 
+  const winPrize = Number(Math.random() * (0.1 - 0.00001) + 0.00001).toFixed(6);
 
 
   const result = await collection.insertOne(
@@ -127,6 +134,7 @@ export async function insertOne(data: any) {
       walletAddress: data.walletAddress,
       sequence: sequence,
       status: "opened",
+      winPrize: winPrize,
       usdtAmount: data.usdtAmount,
       krwAmount: data.krwAmount,
       rate: data.rate,
