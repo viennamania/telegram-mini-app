@@ -1064,7 +1064,7 @@ function AgentPage() {
 
                     {/* title */}
                     <div className="text-2xl font-semibold text-zinc-100">
-                        레퍼럴코드 관리
+                        추천코드 관리
                     </div>
                 </div>
         
@@ -1169,10 +1169,10 @@ function AgentPage() {
                             border border-gray-800
                             p-4 rounded-lg'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                레퍼럴코드 발행
+                                추천코드 발행
                             </div>
                             <span className='text-lg font-semibold'>
-                                레퍼럴코드를 발행받을려면 센터장에게 문의하세요.
+                                추천코드를 발행받을려면 센터장에게 문의하세요.
                             </span>
                         </div>
                     )}
@@ -1293,7 +1293,7 @@ function AgentPage() {
                                     {/* dot */}
                                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                                     <span className='text-lg font-semibold'>
-                                        레퍼럴코드 발행
+                                        추천코드 발행
                                     </span>
                                 </div>
 
@@ -1402,7 +1402,7 @@ function AgentPage() {
                                         {/* dot */}
                                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                         <span className="text-lg font-semibold">
-                                            레퍼럴코드
+                                            추천코드
                                         </span>
                                     </div>
 
