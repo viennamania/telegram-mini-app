@@ -436,6 +436,19 @@ function AgentPage() {
 
             try {
 
+                /*
+                const contractAddress = await deployERC721Contract({
+                        chain,
+                        client,
+                        account,
+                        type: "DropERC721",
+                        params: {
+                        name: "MyNFT",
+                        description: "My NFT contract",
+                        symbol: "NFT",
+                        });
+                                        */
+
 
                 const erc721ContractAddress = await deployERC721Contract({
                     chain: polygon,
@@ -448,9 +461,9 @@ function AgentPage() {
                     | "OpenEditionERC721";
                     */
             
-                    ///type: "DropERC721",
+                    type: "DropERC721",
             
-                    type: "TokenERC721",
+                    ///type: "TokenERC721",
                     
                     
                     params: {
