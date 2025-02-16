@@ -385,13 +385,39 @@ feature.on("callback_query:data", async (ctx) => {
 
 
 
-      const first = racer[0] + '️⃣';
+      //const first = racer[0] + '️⃣';
 
-      const text = timer*10 - i*10 + '미터 남았습니다.'
+      // selectedNumber => race[selectedNumber-1] + '️⃣'
+      // if racer[] is selectedNumber, add emoji
+  
+
+      const racerText = [] as string[];
+
+      for (let j = 0; j < racerCount; j++) {
+        
+        if (racer[j] === parseInt(selectedNumber)) {
+          racerText.push(racer[j] + '️⃣');
+        } else {
+          racerText.push(racer[j] + '');
+        }
+
+      }
+
+      const text = timer*10 - i*10 + '미터 '
+        + ' ' + '🐎 ' + racerText.join(' ');
+
+ 
+
+      /*
+      const text = timer*10 - i*10 + '미터 '
         + ' ' + '🐎 ' + first
         + ' ' +  racer[1] + ' ' +  racer[2] + ' ' +  racer[3] + ' ' +  racer[4] + ' ' +  racer[5] + ' ' +  racer[6] + ' ' +  racer[7];
-      
+      */
+
+
       await ctx.reply(text);
+
+
 
 
       //await ctx.reply("🐎 " + racer.map((r) => r).join(' '));
@@ -671,6 +697,9 @@ feature.on("callback_query:data", async (ctx) => {
     }
     
     const walletAddress = dataGetUser.result.walletAddress;
+
+    const nickname = dataGetUser.result.nickname;
+
 
 
 
@@ -2294,6 +2323,8 @@ publicChat.command('otc', async (ctx) => {
 })
 
 publicChat.command('start', async (ctx) => {
+
+  console.log("ctx", ctx);
 
   const text = "복권방";
   const urlGame = "https://naver.com";

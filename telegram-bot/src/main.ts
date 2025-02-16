@@ -16,12 +16,32 @@ import { privateKeyToAccount } from 'thirdweb/wallets'
 import { createThirdwebClient } from 'thirdweb'
 import { config } from 'dotenv' 
 import { Composer, InlineKeyboard, InputFile } from 'grammy'
+
+
+
+import {
+  getContract,
+} from "thirdweb";
+
+import {
+  polygon,
+  arbitrum,
+  ethereum,
+} from "thirdweb/chains";
+
+import { balanceOf } from "thirdweb/extensions/erc20";
+
 config()
 
 
 
 // Handler for serverless environments
 let botInstance: Bot | null = null;
+
+// sleep for 5 seconds
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
 
@@ -714,7 +734,7 @@ async function pushGame() {
 
     const waitingTime = dataSetGame?.result?.waitingTime;
 
-    const text = '✅ ' + sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
+    const text = sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
     + '\n\n🚫 ' + waitingTime + '초 후에 시작가능합니다.'
     + '\n\n🙏 잠시만 기다려 주세요.'
     + '\n\n👇 아래 버튼을 눌러 홀짝 게임을 시작하세요';
@@ -722,7 +742,7 @@ async function pushGame() {
     //return ctx.reply(text);
 
     const keyboard = new InlineKeyboard()
-    .text('🎲 ' + sequenceEmoji + '회차 홀짝 게임 시작하기', 'roulette')
+    .text(sequenceEmoji + '회차 홀짝 게임 시작하기', 'roulette')
   
     const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-banner.jpg`;
 
@@ -773,6 +793,7 @@ async function pushGame() {
   }
 
 
+  const winPrize = dataSetGame?.result?.data?.winPrize;
 
 
 
@@ -788,7 +809,8 @@ async function pushGame() {
     sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
   }
 
-  const text = '✅ ' + sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
+  const text = sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
+    + '\n\n💲 당첨금: ' + winPrize + ' USDT'
     + '\n\n👇 아래 버튼에서 🚹 홀 또는 🚺 짝을 선택하세요.';
 
   const queryDataOdd = 'roulette-odd' + '-' + sequence;
@@ -933,10 +955,11 @@ async function sendMessages() {
     return;
   }
 
+  try {
 
   const center = botInstance.botInfo.username;
 
-  
+  /*
   const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/getAllMessages`;
 
   const response = await fetch(url, {
@@ -946,12 +969,25 @@ async function sendMessages() {
     },
     body: JSON.stringify({
       center: center,
-      limit: 10,
+      limit: 100,
       page: 0,
     }),
   });
+  */
 
-  //console.log("getAllMessages response=", response);
+  const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/fetchAllMessagesByCenter`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      center: center,
+    }),
+  });
+
+  ///console.log("fetchAllMessagesByCenter response=", response);
 
 
   if (response.status !== 200) {
@@ -960,6 +996,13 @@ async function sendMessages() {
   }
 
   const data = await response.json();
+
+  //const messages = data.result.messages;
+
+
+  //console.log("fetchAllMessagesByCenter data=", data);
+
+
 
   const messages = data.result.messages;
 
@@ -983,13 +1026,49 @@ async function sendMessages() {
     const otherUserAvatar = message?.userTransfer?.otherUser?.avatar;
 
     const sequence = message?.sequence;
+    const winPrize = message?.winPrize;
+
+
+
+
+
+    try {
+      const groupChatId = "-1002295555741";
+      botInstance.api.sendMessage(
+        groupChatId,
+        messageText,
+      )
+    } catch (error) {
+      console.error('Error sending message:', error + '')
+    }
+
+
+
+
 
     try {
 
+
+
+
+      // 7379965971
+      // send message to group chat
+      // GrammyError: Call to 'sendMessage' failed! (403: Forbidden: bots can't send messages to bots)
+
+
+
+
+
+
+
+
       if (category === 'roulette') {
-        
+
 
         if (sequence) {
+
+
+
 
           const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-banner.jpg`;
     
@@ -1003,7 +1082,8 @@ async function sendMessages() {
             sequenceEmoji += sequenceString[i] + '️⃣' + ' ';
           }
         
-          const text = '✅ ' + sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
+          const text = sequenceEmoji + '회차 홀짝 게임을 시작합니다.'
+            + '\n\n💲 당첨금: ' + winPrize + ' USDT'
             + '\n\n👇 아래 버튼에서 🚹 홀 또는 🚺 짝을 선택하세요.';
         
           const queryDataOdd = 'roulette-odd' + '-' + sequence;
@@ -1026,8 +1106,58 @@ async function sendMessages() {
 
 
 
-
       } else if (category === 'wallet') {
+
+
+
+        let balance;
+
+        const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
+
+        const responseGetUser = await fetch(urlGetUser, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            telegramId,
+          }),
+        });
+
+        if (responseGetUser.status === 200) {
+
+          const data = await responseGetUser.json();
+          //console.log("data", data);
+
+          if (data.result && data.result.walletAddress) {
+            const walletAddress = data.result.walletAddress;
+
+
+            // get balance
+            const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+            const clientId = process.env.THIRDWEB_CLIENT_ID;
+            const client = createThirdwebClient({
+              clientId: clientId as string,
+            });
+            const contract = getContract({
+              client,
+              chain: polygon,
+              address: contractAddress,
+            });
+
+            const result = await balanceOf({
+              contract,
+              address: walletAddress,
+            });
+
+            balance = Number(result) / 10 ** 6;
+
+          }
+
+        }
+
+
+
 
 
         const username = telegramId;
@@ -1065,12 +1195,14 @@ async function sendMessages() {
         .webApp('🐎 그랑더비 게임', urlGameGranderby)
         .row()
         .text('🎲 홀짝 게임', 'roulette')
+        .text('🐎 경마 게임', 'race')
         .webApp('💱 USDT 판매', urlSellUsdt)
         // english
         //.webApp('💱 Go to USDT OTC', urlOtc);
 
 
         const caption = '\n\n🚀 ' + messageText
+        + '\n\n' + '💲 지갑잔고: ' + balance + ' USDT'
         + '\n\n' + '👇 아래 버튼을 눌러 원하는 서비스로 이동하세요.';
         // english
         //+ '\n\n' + '👇 Press the button below to go to each service';
@@ -1080,35 +1212,6 @@ async function sendMessages() {
 
         const photo = `${process.env.FRONTEND_APP_ORIGIN}/logo-magic-wallet.webp`;
         
-        //console.log("sendPhoto1");
-
-        /*
-        await botInstance.api.sendPhoto(
-          telegramId,
-          photo,
-          {
-            caption: caption,
-            reply_markup: keyboard,
-          }
-        ).then(() => {
-        //console.log('Message sent');
-        }).catch((error) => {
-          console.error('Error sending photo:', error+'');
-        })
-
-        */
-
-        /*
-        const videoFile = new InputFile(`/home/ubuntu/video/banano-stom.mp4`)
-        await botInstance.api.sendVideo(
-          telegramId,
-          videoFile,
-          {
-            caption: caption,
-            reply_markup: keyboard,
-          }
-        );
-        */
 
         console.log("otherUserAvatar=", otherUserAvatar);
 
@@ -1434,6 +1537,7 @@ async function sendMessages() {
 
 
       // delete message
+      /*
       const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/deleteMessage`;
       await fetch(url, {
         method: "POST",
@@ -1444,6 +1548,7 @@ async function sendMessages() {
           _id: _id,
         }),
       });
+      */
 
 
     } catch (error) {
@@ -1451,6 +1556,7 @@ async function sendMessages() {
       console.error('Error sending message:', error)
 
       // delete message
+      /*
       const url = `${process.env.FRONTEND_APP_ORIGIN}/api/telegram/deleteMessage`;
       await fetch(url, {
         method: "POST",
@@ -1461,6 +1567,7 @@ async function sendMessages() {
           _id: _id,
         }),
       });
+      */
 
 
     }
@@ -1470,15 +1577,16 @@ async function sendMessages() {
 
   }
 
+
+
+  } catch (error) {} 
+
 }
 
 
 
 
-// sleep for 5 seconds
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+
 
 // fetch account data after 5 seconds
 
@@ -1513,6 +1621,7 @@ setInterval(() => {
   sendMessages()
 
 }, 10*1000)
+//}, 1000)
 
 
 
