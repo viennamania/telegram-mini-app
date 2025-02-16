@@ -106,7 +106,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -1118,8 +1118,13 @@ function AgentPage() {
                             border border-gray-800
                             p-4 rounded-lg'>
 
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    회원아이디
+
+                                <div className="flex flex-row gap-2 items-center justify-between">
+                                    {/* dot */}
+                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <span className='text-lg font-semibold'>
+                                        회원아이디
+                                    </span>
                                 </div>
 
                                 <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
@@ -1221,8 +1226,13 @@ function AgentPage() {
                             p-4 rounded-lg'>
 
                             <div className='w-full flex flex-row gap-2 items-center justify-between'>
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    AI 에이전트 계약주소
+
+                                <div className="flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <span className='text-lg font-semibold'>
+                                        NFT 계약주소
+                                    </span>
                                 </div>
 
                                 <span className='text-xs xl:text-lg font-semibold'>
@@ -1318,8 +1328,8 @@ function AgentPage() {
                                                 className='animate-spin'
                                             />
                                         )}
-                                        {mintingAgentNft && 'AI 에이전트 NFT 발행중...'}
-                                        {!mintingAgentNft && 'AI 에이전트 NFT 발행하기'}
+                                        {mintingAgentNft && 'NFT 발행중...'}
+                                        {!mintingAgentNft && 'NFT 발행하기'}
                                     </div>
                                 </button>
 
@@ -1340,7 +1350,7 @@ function AgentPage() {
                                             className='animate-spin'
                                         />
                                         <span className='text-xs font-semibold'>
-                                            AI 에이전트 이미지 생성중...
+                                            NFT 이미지 생성중...
                                         </span>
                                     </div>
                                 )}
