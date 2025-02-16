@@ -47,7 +47,7 @@ import {
     wallet,
 	editionDropContract,
 	editionDropTokenId,
-} from "../../../../constants";
+} from "../../../constants";
 
 
 
@@ -120,8 +120,6 @@ export default function AgentPage({ params }: any) {
   const [loadingAgent, setLoadingAgent] = useState(false);
 
   const [animationUrl, setAnimationUrl] = useState("");
-
-
   useEffect(() => {
       
       const getAgent = async () => {
@@ -146,31 +144,18 @@ export default function AgentPage({ params }: any) {
   
         const data = await response.json();
 
-        ///console.log("getAgentNFTByContractAddressAndTokenId data", data);
+        //console.log("getAgentNFTByContractAddressAndTokenId data", data);
 
 
-   
-  
-        setAgent(data.result);
-
-        // video url
-        // animation_url
-        // raw.metadata.animation_url
-
-        ///console.log(data.result.raw?.metadata?.animation_url);
-
-        // convert 
-        // ipfs://QmVJDX9cTQpLmoHEHAmJZm6bFqaqErmkAwqy21mJoV5gfC/0.mp4
-        // to
-        // https://ipfs.io/ipfs/QmVJDX9cTQpLmoHEHAmJZm6bFqaqErmkAwqy21mJoV5gfC/0.mp4
 
         if (data.result.raw?.metadata?.animation_url) {
             setAnimationUrl(
                 data.result.raw.metadata.animation_url.replace("ipfs://", "https://ipfs.io/ipfs/")
             );
         }
-
-
+  
+  
+        setAgent(data.result);
 
         setOwnerInfo(data?.ownerInfo);
         setHolderWalletAddress(data?.ownerWalletAddress);
@@ -1157,9 +1142,10 @@ export default function AgentPage({ params }: any) {
                             </div>
                         </div>
 
-
                         <div className='flex flex-col items-start justify-start gap-2'>
                             <span className='text-sm text-yellow-500'>
+                                {/* NFT 이미지*/}
+                                {/* english */}
                                 NFT Media
                             </span>
                             {!animationUrl && agent.image && (
@@ -1187,6 +1173,107 @@ export default function AgentPage({ params }: any) {
 
                     </div>
 
+                    <div className='mt-5 w-full flex flex-col items-start justify-between gap-2
+                      border-b border-gray-300 pb-2
+                    '>
+                      {/* owner info */}
+                      <div className='w-full flex flex-col items-start justify-between gap-2'>
+                        
+                        <span className='text-sm text-yellow-500'>
+                            AI 에이전트 NFT 소유자 정보
+                        </span>
+                        
+                        <div className='w-full flex flex-row items-center justify-start gap-2'>
+                            <span className='text-xs text-gray-800'>
+                                소유자 지갑주소: {holderWalletAddress?.slice(0, 5) + '...' + holderWalletAddress?.slice(-5)}
+                            </span>
+                            {/* copy button */}
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(holderWalletAddress);
+                                toast.success("Copied");
+                              }}
+                              className='bg-gray-500 text-white p-2 rounded-lg
+                                hover:bg-gray-600
+                              '
+                            >
+                                Copy
+                            </button>
+                        </div>
+                        
+
+                        <div className='w-full flex flex-row items-center justify-start gap-2
+                        '>
+
+                          <Image
+                            src={ownerInfo?.avatar || '/profile-default.png'}
+                            width={60}
+                            height={60}
+                            alt={ownerInfo?.nickname}
+                            className='rounded-lg object-cover w-10 h-10'
+                          />
+                          <div className='flex flex-col items-start justify-between gap-2'>
+                            <span className='text-xs text-gray-800'>
+                                {ownerInfo?.nickname}
+                            </span>
+                            <span className='text-xs text-gray-800'>
+                                {ownerInfo?.mobile && ownerInfo?.mobile?.slice(0, 3) + '****' + ownerInfo?.mobile?.slice(-4)}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* button for transfer owner */}
+                        {/*
+                        {address && ownerInfo?.walletAddress && address === ownerInfo?.walletAddress && (
+                          <div className='w-full flex flex-col items-center justify-between gap-2'>
+                            
+                            <div className='w-full flex flex-col items-start justify-between gap-2'>
+                              <span className='text-sm text-yellow-500'>
+                                  소유권 이전하기
+                              </span>
+                              <div className='flex flex-row items-center justify-start gap-2'>
+                                <div className='w-3 h-3 bg-red-500 rounded-full'></div>
+                                <span className='text-xs text-gray-800'>
+                                    소유권을 이전하면 소유자 권리를 모두 이전하는 것에 동의하는 것입니다.
+                                </span>
+                              </div>
+                            </div>
+
+                            <input
+                              value={transferToAddress}
+                              onChange={(e) => setTransferToAddress(e.target.value)}
+                              type='text'
+                              placeholder='이전할 지갑주소를 입력하세요.'
+                              className={`w-full p-2 rounded border border-gray-300
+                                ${loadingTransfer ? 'bg-gray-100' : 'bg-white'}
+                              `}
+                              
+                              disabled={loadingTransfer}
+                            />
+                            <button
+                              onClick={() => {
+                                //alert('준비중입니다.');
+                                confirm('소유권을 이전하시겠습니까?') &&
+                                nftTransfer(transferToAddress);
+                              }}
+                              className={`
+                                ${!transferToAddress || loadingTransfer ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600'}
+                                text-white p-2 rounded
+                              `}
+                              disabled={
+                                !transferToAddress ||
+                                loadingTransfer
+                              }
+                            >
+                              {loadingTransfer ? '소유권 이전중...' : '소유권 이전하기'}
+                            </button>
+                          </div>
+                        )}
+                        */}
+
+                      </div>
+
+                    </div>
                     
                   </div>
 
