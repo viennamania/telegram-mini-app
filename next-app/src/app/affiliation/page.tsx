@@ -429,7 +429,7 @@ function AgentPage() {
         
         //if (confirm("Are you sure you want to deploy ERC721 contract?")) {
         // chinese confirm
-        if (confirm("AI 에이전트 계약주소를 생성하시겠습니까?")) {
+        if (confirm("NFT 계약주소를 생성하시겠습니까?")) {
 
             setLoadingDeployErc721Contract(true);
 
@@ -507,9 +507,9 @@ function AgentPage() {
                 console.error("deployErc721Contract error", error);
 
                 if (error instanceof Error) {
-                    alert('AI 에이전트 계약주소 생성 실패.' + error.message);
+                    alert('NFT 계약주소 생성 실패.' + error.message);
                 } else {
-                    alert('AI 에이전트 계약주소 생성 실패: 알 수 없는 오류');
+                    alert('NFT 계약주소 생성 실패: 알 수 없는 오류');
                 }
 
 
@@ -670,7 +670,7 @@ function AgentPage() {
 
         if (!erc721ContractAddress) {
             //toast.error('AI 에이전트 계약주소를 먼저 생성해주세요');
-            setMessageMintingAgentNft('AI 에이전트 계약주소를 먼저 생성해주세요');
+            setMessageMintingAgentNft('NFT 계약주소를 먼저 생성해주세요');
             return;
         }
 
@@ -690,7 +690,7 @@ function AgentPage() {
 
 
 
-        setMessageMintingAgentNft('AI 에이전트 NFT 발행중입니다');
+        setMessageMintingAgentNft('NFT 발행중입니다');
 
 
         setMintingAgentNft(true);
@@ -701,7 +701,7 @@ function AgentPage() {
             setGeneratingAgentImage(true);
 
 
-            setMessageMintingAgentNft('AI 에이전트 이미지 생성중입니다');
+            setMessageMintingAgentNft('NFT 이미지 생성중입니다');
 
             // genrate image from api
             // /api/ai/generateImage
@@ -732,7 +732,7 @@ function AgentPage() {
             setAgentImage(imageUrl);
 
 
-            setMessageMintingAgentNft('AI 에이전트 NFT 발행중입니다');
+            setMessageMintingAgentNft('NFT 발행중입니다');
 
             const contract = getContract({
                 client,
@@ -744,8 +744,13 @@ function AgentPage() {
             
             //const nftName = "Affliate AI Agent";
             // nftName is random number and lower character mixed, length is 10 characters
+            // nftName is 10 characters
 
-            const nftName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            const nftName = Math.random().toString(36).substring(2, 12);
+
+            //const nftName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+
             const nftDesscription = "This is Affliate AI Agent";
             const transaction = mintTo({
                 contract: contract,
@@ -792,10 +797,10 @@ function AgentPage() {
 
 
             if (!transactionResult) {
-                throw new Error('AI 에이전트 NFT 발행 실패. 관리자에게 문의해주세요');
+                throw new Error('NFT 발행 실패. 관리자에게 문의해주세요');
             }
 
-            setMessageMintingAgentNft('AI 에이전트 NFT 발행 완료');
+            setMessageMintingAgentNft('NFT 발행 완료');
 
 
             // fetch the NFTs again
@@ -846,9 +851,9 @@ function AgentPage() {
             ///toast.error('AI 에이전트 NFT 발행 실패');
 
             if (error instanceof Error) {
-                setMessageMintingAgentNft('AI 에이전트 NFT 발행 실패:' + error.message);
+                setMessageMintingAgentNft('NFT 발행 실패:' + error.message);
             } else {
-                setMessageMintingAgentNft('AI 에이전트 NFT 발행 실패: 알 수 없는 오류');
+                setMessageMintingAgentNft('NFT 발행 실패: 알 수 없는 오류');
             }
         }
 
@@ -909,7 +914,7 @@ function AgentPage() {
 
 
         if (confirm(
-            "AI 에이전트 NFT를 다른 사용자에게 전송하시겠습니까?"
+            "NFT를 다른 사용자에게 전송하시겠습니까?"
         ) === false) {
             return;
         }
@@ -963,7 +968,7 @@ function AgentPage() {
                 }
             }));
 
-            alert('AI 에이전트 NFT 전송 완료');
+            alert('NFT 전송 완료');
 
 
             // fetch the NFTs again
