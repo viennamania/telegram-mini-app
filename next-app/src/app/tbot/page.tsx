@@ -3201,7 +3201,7 @@ function HomeContent() {
                                     </span>
                                     ) : (
                                     <span className='text-sm font-semibold text-gray-500'>
-                                        NH 농협은행 301-0357-6583-41 온리윈 주식회사
+                                        농협 301 0346 1572 11 (주)엘투엘
                                     </span>
                                     )}
                                 </div>
@@ -3272,7 +3272,7 @@ function HomeContent() {
                                         {center === "ppump_orry_bot" ? (
                                         "KB국민은행 342301-04-169235 (주)프로젝트오리진"
                                         ) : (
-                                        "NH 농협은행 301-0357-6583-41 온리윈 주식회사"
+                                        "농협 301 0346 1572 11 (주)엘투엘"
                                         )}
                                     </span>
                                 </div>

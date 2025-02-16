@@ -374,7 +374,7 @@ feature.on("callback_query:data", async (ctx) => {
 
 
 
-    const urlGetOneGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/getOneRaceGame`;
+    const urlGetOneGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/getRaceGame`;
   
     const responseGetOneGame = await fetch(urlGetOneGame, {
       method: "POST",
@@ -383,6 +383,7 @@ feature.on("callback_query:data", async (ctx) => {
       },
       body: JSON.stringify({
         walletAddress,
+        sequence: selectedSequence,
       }),
     });
 
@@ -394,6 +395,7 @@ feature.on("callback_query:data", async (ctx) => {
 
 
 
+    console.log("dataGetOneGame=", dataGetOneGame);
 
 
     const horse = dataGetOneGame.result?.data?.horses[Number(selectedNumber) - 1];

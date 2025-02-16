@@ -590,7 +590,7 @@ function AgentPage() {
         )
         */
     {/* 결제계좌 */}
-    {/* NH 농협은행 301-0357-6583-41 온리윈 주식회사 */}
+    {/* 농협 301 0346 1572 11 (주)엘투엘 */}
     const paymentInfo = {
         bankName: "NH 농협은행",
         accountHolder: "온리윈 주식회사",
