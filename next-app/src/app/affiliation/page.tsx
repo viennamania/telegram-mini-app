@@ -674,6 +674,7 @@ function AgentPage() {
             return;
         }
 
+        /*
         if (agentName.length < 5 || agentName.length > 15) {
             //toast.error('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
             setMessageMintingAgentNft('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
@@ -685,7 +686,7 @@ function AgentPage() {
             setMessageMintingAgentNft('에이전트 설명은 5자 이상 100자 이하로 입력해주세요');
             return;
         }
-
+        */
 
 
 
@@ -1282,9 +1283,14 @@ function AgentPage() {
                                 bg-yellow-100 border border-gray-300
                                 p-4 rounded-lg'>
                                 
-                                <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    레퍼럴코드 발행
-                                </span>
+
+                                <div className="flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <span className='text-lg font-semibold'>
+                                        레퍼럴코드 발행
+                                    </span>
+                                </div>
 
                                 {/*
                                 <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
@@ -1386,9 +1392,14 @@ function AgentPage() {
 
                                 {/* my NFTs */}
                                 <div className='mt-10 flex flex-row gap-2 items-start justify-between'>
-                                    <span className="flex bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        레퍼럴코드
-                                    </span>
+
+                                    <div className='flex flex-row items-center justify-start gap-2'>
+                                        {/* dot */}
+                                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                        <span className="text-lg font-semibold">
+                                            레퍼럴코드
+                                        </span>
+                                    </div>
 
                                     <div className='flex flex-row items-center justify-start gap-2'>
                                         <button
