@@ -740,7 +740,26 @@ function AgentPage() {
 
               });
 
+            
+            //const nftName = "Affliate AI Agent";
+            // nftName is random number and lower character mixed, length is 10 characters
 
+            const nftName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            const nftDesscription = "This is Affliate AI Agent";
+            const transaction = mintTo({
+                contract: contract,
+                to: address as string,
+                nft: {
+                    name: nftName,
+                    description: nftDesscription,
+
+                    ////image: agentImage,
+                    image: imageUrl,
+
+                },
+            });
+
+            /*
             const transaction = mintTo({
                 contract: contract,
                 to: address as string,
@@ -753,6 +772,7 @@ function AgentPage() {
 
                 },
             });
+            */
 
             //await sendTransaction({ transaction, account: activeAccount as any });
 
@@ -1077,19 +1097,6 @@ function AgentPage() {
                                     복사
                                 </Button>
 
-                                {/* polygon scan */}
-                                <Button
-                                    onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
-                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                                >
-                                    <Image
-                                        src="/logo-polygon.png"
-                                        alt="Polygon"
-                                        width={20}
-                                        height={20}
-                                        className="rounded"
-                                    />
-                                </Button>
                                 
                             </div>
                         ) : (
@@ -1145,58 +1152,58 @@ function AgentPage() {
 
                     {/* if not centerOwner show message */}
                     {/* NFT를 발행받을려면 센터장에게 문의하세요. */}
+                    {/*
                     {address && userCode && !isCenterOwner && (
                         <div className='w-full flex flex-col gap-2 items-center justify-between
                             border border-gray-800
                             p-4 rounded-lg'>
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                AI 에이전트 NFT 발행
+                                레퍼럴코드 발행
                             </div>
                             <span className='text-lg font-semibold'>
-                                AI 에이전트 NFT를 발행받을려면 센터장에게 문의하세요.
+                                레퍼럴코드를 발행받을려면 센터장에게 문의하세요.
                             </span>
                         </div>
                     )}
+                    */}
 
 
                     {/* if centerOwner show message */}
                     {/* AI 에이전트 계약주소 생성하기 */}
                     {
-                        address && userCode && !erc721ContractAddress && isCenterOwner && (
+                        ////address && userCode && !erc721ContractAddress && isCenterOwner && (
+
+                        address && userCode && !erc721ContractAddress && (
+
                     <>
 
-
-
-                        {address && userCode && !erc721ContractAddress && (
-
     
-                            <button
-                                disabled={loadingDeployErc721Contract}
-                                onClick={deployErc721Contract}
-                                className={`
-                                    ${loadingDeployErc721Contract ? 'bg-gray-300 text-gray-400' : 'bg-green-500 text-zinc-100'}
-                                    p-2 rounded-lg text-sm font-semibold
-                                `}
-                            >
-                                <div className='flex flex-row gap-2 items-center justify-center'>
-                                    {/* rotating icon */}
-                                    {address && loadingDeployErc721Contract && (
-                                        <Image
-                                            src="/loading.png"
-                                            alt="loding"
-                                            width={30}
-                                            height={30}
-                                            className='animate-spin'
-                                        />
-                                    )}
-                                    {address && loadingDeployErc721Contract && 'AI 에이전트 계약주소 생성중...'}
-                                    {address && !erc721ContractAddress && !loadingDeployErc721Contract && 'AI 에이전트 계약주소 생성하기'}
-    
-                                </div>
+                        <button
+                            disabled={loadingDeployErc721Contract}
+                            onClick={deployErc721Contract}
+                            className={`
+                                ${loadingDeployErc721Contract ? 'bg-gray-300 text-gray-400' : 'bg-green-500 text-zinc-100'}
+                                p-2 rounded-lg text-sm font-semibold
+                            `}
+                        >
+                            <div className='flex flex-row gap-2 items-center justify-center'>
+                                {/* rotating icon */}
+                                {address && loadingDeployErc721Contract && (
+                                    <Image
+                                        src="/loading.png"
+                                        alt="loding"
+                                        width={30}
+                                        height={30}
+                                        className='animate-spin'
+                                    />
+                                )}
+                                {address && loadingDeployErc721Contract && 'AI 에이전트 계약주소 생성중...'}
+                                {address && !erc721ContractAddress && !loadingDeployErc721Contract && 'AI 에이전트 계약주소 생성하기'}
 
-                            </button>
+                            </div>
 
-                        )}
+                        </button>
+
 
                     </>
                     )}
@@ -1204,7 +1211,10 @@ function AgentPage() {
                     {/* My Referral Code */}
                     {/* address */}
                     {
-                        address && userCode && erc721ContractAddress && isCenterOwner && (
+                        //address && userCode && erc721ContractAddress && isCenterOwner && (
+
+                        address && userCode && erc721ContractAddress && (
+
 
                         <div className='w-full flex flex-col gap-2 items-center justify-between
                             border border-gray-800
@@ -1263,9 +1273,10 @@ function AgentPage() {
                                 p-4 rounded-lg'>
                                 
                                 <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    AI 에이전트 NFT 발행
+                                    레퍼럴코드 발행
                                 </span>
 
+                                {/*
                                 <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                     <input 
                                         className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
@@ -1286,6 +1297,7 @@ function AgentPage() {
                                         value={agentDescription}
                                     />
                                 </div>
+                                */}
 
                                 <button
                                     disabled={mintingAgentNft}
@@ -1353,162 +1365,6 @@ function AgentPage() {
                         </div>
 
                     )}
-
-
-
-                    {/* for test */ }
-                    {
-                        address && address === '0x542197103Ca1398db86026Be0a85bc8DcE83e440' && (
-
-                        <div className='w-full flex flex-col gap-2 items-center justify-between
-                            border border-gray-800
-                            p-4 rounded-lg'>
-
-                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    AI 에이전트 계약주소
-                                </div>
-
-                                <span className='text-xs xl:text-lg font-semibold'>
-                                    {erc721ContractAddress.substring(0, 6) + '...' + erc721ContractAddress.substring(erc721ContractAddress.length - 4)}
-                                </span>
-
-
-
-
-                                {/* https://opensea.io/assets/matic/0xC1F501331E5d471230189E4A57E5268f10d0072A */}
-                                {/* open new window */}
-                                
-                                <button
-                                    onClick={() => {
-                                        window.open('https://opensea.io/assets/matic/' + erc721ContractAddress);
-                                    }}
-                                    className="p-2 rounded hover:bg-gray-300"
-                                >
-                                    <Image
-                                        src="/logo-opensea.png"
-                                        alt="OpenSea"
-                                        width={30}
-                                        height={30}
-                                        className="rounded-lg"
-                                    />
-                                </button>
-                                
-
-
-                                {/* verified icon */}
-
-                                <Image
-                                    src="/verified.png"
-                                    alt="Verified"
-                                    width={20}
-                                    height={20}
-                                    className="rounded-lg"
-                                />
-
-
-                            </div>
-
-                            
-
-                            {/* mint AI Agent NFT */}
-                            <div className='w-full flex flex-col gap-2 items-start justify-between
-                                bg-yellow-100 border border-gray-300
-                                p-4 rounded-lg'>
-                                
-                                <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    AI 에이전트 NFT 발행
-                                </span>
-
-                                <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
-                                    <input 
-                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                        placeholder="에이전트 이름"
-                                        type='text'
-                                        onChange={(e) => {
-                                            setAgentName(e.target.value);
-                                        }}
-                                        value={agentName}
-                                    />
-                                    <input 
-                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                        placeholder="에이전트 설명"
-                                        type='text'
-                                        onChange={(e) => {
-                                            setAgentDescription(e.target.value);
-                                        }}
-                                        value={agentDescription}
-                                    />
-                                </div>
-
-                                <button
-                                    disabled={mintingAgentNft}
-                                    onClick={mintAgentNft}
-                                    className={`
-                                        ${mintingAgentNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
-                                        p-2 rounded-sm text-sm font-semibold
-                                    `}
-                                >
-                                    <div className='flex flex-row gap-2 items-center justify-center'>
-                                        {/* rotating icon */}
-                                        {mintingAgentNft && (
-                                            <Image
-                                                src="/loading.png"
-                                                alt="loding"
-                                                width={30}
-                                                height={30}
-                                                className='animate-spin'
-                                            />
-                                        )}
-                                        {mintingAgentNft && 'AI 에이전트 NFT 발행중...'}
-                                        {!mintingAgentNft && 'AI 에이전트 NFT 발행하기'}
-                                    </div>
-                                </button>
-
-                                {messageMintingAgentNft && (
-                                    <span className='text-lg font-semibold text-red-500
-                                        border border-gray-300 p-4 rounded-lg'>
-                                        {messageMintingAgentNft}
-                                    </span>
-                                )}
-
-                                {ganeratingAgentImage && (
-                                    <div className='flex flex-row gap-2 items-center justify-center'>
-                                        <Image
-                                            src="/loading.png"
-                                            alt="loding"
-                                            width={30}
-                                            height={30}
-                                            className='animate-spin'
-                                        />
-                                        <span className='text-xs font-semibold'>
-                                            AI 에이전트 이미지 생성중...
-                                        </span>
-                                    </div>
-                                )}
-
-                                {agentImage && (
-                                    <Image
-                                        src={agentImage}
-                                        alt="AI Agent"
-                                        width={200}
-                                        height={200}
-                                        className="rounded-lg"
-                                    />
-                                )}
-                            
-
-
-
-
-                            </div>
-
-
-                        </div>
-
-                    )}
-
-
 
 
 
@@ -1521,7 +1377,7 @@ function AgentPage() {
                                 {/* my NFTs */}
                                 <div className='mt-10 flex flex-row gap-2 items-start justify-between'>
                                     <span className="flex bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        My AI 에이전트 NFT
+                                        레퍼럴코드
                                     </span>
 
                                     <div className='flex flex-row items-center justify-start gap-2'>
