@@ -553,6 +553,24 @@ export async function insertOneRaceGame(data: any) {
 
 
 
+// getOneRaceGameByWalletAddressAndSequence
+export async function getOneRaceGameByWalletAddressAndSequence(walletAddress: string, sequence: number) {
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('raceGames');
+
+  const result = await collection.findOne(
+    { walletAddress: walletAddress, sequence: sequence }
+  );
+
+
+  if (result) {
+    return result;
+  } else {
+    return null;
+  }
+
+}
+
 
 
 export async function updateRaceGameResultByWalletAddressAndSequence(

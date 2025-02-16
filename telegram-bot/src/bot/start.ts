@@ -331,15 +331,90 @@ feature.on("callback_query:data", async (ctx) => {
     const selectedSequence = dataSplit[2];
     
 
-    /*
-    if (selectedOddOrEven === "odd") {
-      await ctx.reply("🚹 홀을 선택하셨습니다.");
-    } else if (selectedOddOrEven === "even") {
-      await ctx.reply("🚺 짝을 선택하셨습니다.");
-    }
-    */
 
-    await ctx.reply("🐎 " + selectedNumber + '️⃣' + ' 번 말을 우승마로 선택하셨습니다.');
+    if (!selectedNumber) {
+      return ctx.reply("Failed to get selected number");
+    }
+
+    if (!selectedSequence) {
+      return ctx.reply("Failed to get selected sequence");
+    }
+
+
+
+
+
+    const telegramId = ctx.from?.id+"";
+
+    const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
+  
+    const responseGetUser = await fetch(urlGetUser, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        telegramId,
+      }),
+    });
+  
+    if (responseGetUser.status !== 200) {
+      return ctx.reply("Failed to get user");
+    }
+
+    const dataGetUser = await responseGetUser.json();
+    //console.log("data", data);
+
+    if (!dataGetUser?.result?.walletAddress) {
+      return ctx.reply("Failed to get wallet address");
+    }
+    
+    const walletAddress = dataGetUser.result.walletAddress;
+
+
+
+
+    const urlGetOneGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/getOneRaceGame`;
+  
+    const responseGetOneGame = await fetch(urlGetOneGame, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        walletAddress,
+      }),
+    });
+
+    if (responseGetOneGame.status !== 200) {
+      return ctx.reply("Failed to get one game");
+    }
+
+    const dataGetOneGame = await responseGetOneGame.json();
+
+
+
+
+
+    const horse = dataGetOneGame.result?.data?.horses[Number(selectedNumber) - 1];
+
+
+    const horseImageUrl = horse?.nft?.metadata?.image;
+
+    if (horseImageUrl) {
+
+      await ctx.replyWithPhoto(
+        horseImageUrl,
+        {
+          caption: '🐎 ' + selectedNumber + '️⃣' + ' 번 말을 우승마로 선택하셨습니다.'
+        }
+      )
+
+    } else {
+
+      await ctx.reply("🐎 " + selectedNumber + '️⃣' + ' 번 말을 우승마로 선택하셨습니다.');
+
+    }
 
 
 
@@ -479,33 +554,10 @@ feature.on("callback_query:data", async (ctx) => {
 
 
 
-    const telegramId = ctx.from?.id+"";
 
-    const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
-  
-    const responseGetUser = await fetch(urlGetUser, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        telegramId,
-      }),
-    });
-  
-    if (responseGetUser.status !== 200) {
-      return ctx.reply("🚫 Failed to get user");
-    }
 
-    const dataUser = await responseGetUser.json();
-    //console.log("dataUser", dataUser);
 
-    if (!dataUser?.result?.walletAddress) {
-      return ctx.reply("🚫 Failed to get wallet address");
-    }
-    
-    const walletAddress = dataUser.result.walletAddress;
-    
+
 
 
     // horse ranking array
