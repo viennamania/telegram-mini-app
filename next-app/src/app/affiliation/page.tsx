@@ -1221,8 +1221,8 @@ function AgentPage() {
                                         className='animate-spin'
                                     />
                                 )}
-                                {address && loadingDeployErc721Contract && 'AI 에이전트 계약주소 생성중...'}
-                                {address && !erc721ContractAddress && !loadingDeployErc721Contract && 'AI 에이전트 계약주소 생성하기'}
+                                {address && loadingDeployErc721Contract && 'NFT 계약주소 생성중...'}
+                                {address && !erc721ContractAddress && !loadingDeployErc721Contract && 'NFT 계약주소 생성하기'}
 
                             </div>
 
