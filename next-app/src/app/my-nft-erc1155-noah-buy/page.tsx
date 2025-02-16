@@ -2180,10 +2180,12 @@ function AgentPage() {
 
 
                         {!loadingOwnedNfts && ownedNfts.length > 0 && (
-                            <div className="w-full flex flex-col gap-2 items-center justify-between">
+
+                            <div className="w-full flex flex-col gap-10 items-center justify-between">
+
                                 {ownedNfts.map((nft, index) => (
-                                    <div key={index} className="w-full flex flex-col gap-2 items-center justify-between
-                                        border border-gray-800
+                                    <div key={index} className="w-full flex flex-col gap-2 items-center justify-between p-4
+                                        border border-gray-200
                                         rounded-lg">
 
 
