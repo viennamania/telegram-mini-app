@@ -223,7 +223,7 @@ function AgentPage() {
                 setIsAgent(data.result.agent);
 
                 ///setReferralCode(data.result.erc721ContractAddress);
-                setErc721ContractAddress(data.result.erc721ContractAddress);
+                ////setErc721ContractAddress(data.result.erc721ContractAddress);
 
                 setUserCenter(data.result.center);
 
