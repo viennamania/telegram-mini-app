@@ -1,8 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import {
-	getAllMessagesByCenter,
-  deleteAllMessagesByCenter,
+  fetchAllMessagesByCenter,
 } from '@lib/api/telegram';
 
 
@@ -12,16 +11,10 @@ export async function POST(request: NextRequest) {
 
   const { center } = body;
 
-  const result = await getAllMessagesByCenter( center );
+  const result = await fetchAllMessagesByCenter( center );
 
-  // delete all messages by center
-  const deleteResult = await deleteAllMessagesByCenter( center );
 
-  if (!result || !deleteResult) {
-    return NextResponse.error();
-  }
 
- 
   return NextResponse.json({
 
     result,

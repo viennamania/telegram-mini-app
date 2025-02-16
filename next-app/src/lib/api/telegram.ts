@@ -157,6 +157,37 @@ export async function deleteAllMessagesByCenter(center: string) {
 }
 
 
+// get and delete all messages by center
+// one transaction
+export async function fetchAllMessagesByCenter(center: string) {
+
+    const client = await clientPromise;
+
+    const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+
+    const messages = await collectionTelegramMessages
+    .find({
+        center,
+    })
+    .sort({ _id: -1 })
+    .toArray();
+
+    await collectionTelegramMessages.deleteMany(
+        {
+            center,
+        }
+    );
+
+    return {
+        messages,
+    }
+
+}
+
+
+
+
+
 // deleteMessage
 export async function deleteMessage(_id: string) {
 
