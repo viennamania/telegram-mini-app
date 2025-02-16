@@ -591,10 +591,11 @@ function AgentPage() {
         */
     {/* 결제계좌 */}
     {/* 농협 301 0346 1572 11 (주)엘투엘 */}
+    {/* 농협 301 0346 1572 11 (주)엘투엘 */}
     const paymentInfo = {
-        bankName: "NH 농협은행",
-        accountHolder: "온리윈 주식회사",
-        accountNumber: "301-0357-6583-41",
+        bankName: "농협",
+        accountHolder: "(주)엘투엘",
+        accountNumber: "301-0346-1572-11",
     };
 
 
