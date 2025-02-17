@@ -65,9 +65,8 @@ import { updateUser } from "@/lib/api/user";
 import { send } from "@fal-ai/serverless-client/src/function";
 
 
-//const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // NOAHS 포인트 on Polygon
 
-const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAHS on Polygon
+const contractAddress = "0xdd200c6EF8e5fe9b1332224a86b5980D202d4d9d"; // NOAHS on Polygon
 
 
 function ProfilePage() {

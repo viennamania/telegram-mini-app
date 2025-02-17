@@ -119,6 +119,22 @@ export async function GET(request: NextRequest) {
     
 
 
+    const tokenidParam = request.nextUrl.searchParams.get('tokenid');
+
+    console.log("tokenidParam: ", tokenidParam);
+
+  
+
+    
+    if (tokenidParam !== "0" && tokenidParam !== "1" && tokenidParam !== "2" && tokenidParam !== "3" && tokenidParam !== "4" && tokenidParam !== "5") {
+        return NextResponse.error();
+    }
+    
+
+    const tokenId = BigInt(tokenidParam);
+
+
+
     // check time 
     /*
     const date = new Date();
@@ -197,7 +213,7 @@ export async function GET(request: NextRequest) {
 
 
     
-    const tokenId = BigInt(5);
+
 
 
     /*
@@ -423,7 +439,9 @@ export async function GET(request: NextRequest) {
 
           if (tokenId === BigInt(0)) {
 
-            const shareTotalAmount = 100.0 * balance;
+            //const shareTotalAmount = 100.0 * balance;
+
+            const shareTotalAmount = 10.0 * balance;
 
             masterAmount = shareTotalAmount * 0.3;
             agentAmount = shareTotalAmount * 0.6;
@@ -432,7 +450,10 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(1)) {
 
-            const shareTotalAmount = 300.0 * balance;
+            ///const shareTotalAmount = 300.0 * balance;
+
+            const shareTotalAmount = 30.0 * balance;
+
             masterAmount = shareTotalAmount * 0.4;
             agentAmount = shareTotalAmount * 0.5;
             centerAmount = shareTotalAmount * 0.1;
@@ -440,7 +461,10 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(2)) {
 
-            const shareTotalAmount = 500.0 * balance;
+            //const shareTotalAmount = 500.0 * balance;
+            
+            const shareTotalAmount = 50.0 * balance;
+
             masterAmount = shareTotalAmount * 0.5;
             agentAmount = shareTotalAmount * 0.4;
             centerAmount = shareTotalAmount * 0.1;
@@ -448,7 +472,11 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(3)) {
 
-            const shareTotalAmount = 1000.0 * balance;
+            //const shareTotalAmount = 1000.0 * balance;
+
+            const shareTotalAmount = 100.0 * balance;
+
+
             masterAmount = shareTotalAmount * 0.6;
             agentAmount = shareTotalAmount * 0.3;
             centerAmount = shareTotalAmount * 0.1;
@@ -456,7 +484,11 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(4)) {
 
-            const shareTotalAmount = 5000.0 * balance;
+            ///const shareTotalAmount = 5000.0 * balance;
+
+            const shareTotalAmount = 500.0 * balance;
+
+
             masterAmount = shareTotalAmount * 0.7;
             agentAmount = shareTotalAmount * 0.2;
             centerAmount = shareTotalAmount * 0.1;
@@ -465,7 +497,7 @@ export async function GET(request: NextRequest) {
           } else if (tokenId === BigInt(5)) {
 
             //const shareTotalAmount = 10000.0 * balance;
-            const shareTotalAmount = 10.0 * balance;
+            const shareTotalAmount = 1000.0 * balance;
 
 
             masterAmount = shareTotalAmount * 0.8;

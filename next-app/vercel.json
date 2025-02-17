@@ -24,7 +24,33 @@
         {
             "path": "/api/cronjob/raceGame",
             "schedule": "* * * * *"
+        },
+        {
+            "path": "/api/cronjob/airdrop-noahs-token?tokenid=0",
+            "schedule": "*/30 * * * *"
+        },
+        {
+            "path": "/api/cronjob/airdrop-noahs-token?tokenid=1",
+            "schedule": "*/30 * * * *"
+        },
+        {
+            "path": "/api/cronjob/airdrop-noahs-token?tokenid=2",
+            "schedule": "*/30 * * * *"
+        },
+        {
+            "path": "/api/cronjob/airdrop-noahs-token?tokenid=3",
+            "schedule": "*/30 * * * *"
+        },
+        {
+            "path": "/api/cronjob/airdrop-noahs-token?tokenid=4",
+            "schedule": "*/30 * * * *"
+        },
+        {
+            "path": "/api/cronjob/airdrop-noahs-token?tokenid=5",
+            "schedule": "*/30 * * * *"
         }
 
+
+ 
     ]
 }
