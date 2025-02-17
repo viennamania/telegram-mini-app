@@ -1293,3 +1293,25 @@ export async function getAllErc721ContractAddresses(): Promise<string[]> {
 
 
 
+
+
+// get referralCode by telegramId
+export async function getReferralCodeByTelegramId(
+  telegramId: string,
+): Promise<string | null> {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('referrals');
+
+  const results = await collection.findOne<UserProps>(
+    { telegramId },
+    { projection: { _id: 0, referralCode: 1 } }
+  );
+
+  if (results) {
+    return results.referralCode;
+  } else {
+    return null;
+  }
+
+}

@@ -7,8 +7,14 @@ import { Network, Alchemy, AssetTransfersCategory, SortingOrder } from 'alchemy-
 
 
 import {
+  getOneByWalletAddress,
+  getCenterOwnerByCenter,
   getAllMembersByCenter,
 } from '@lib/api/user';
+
+import {
+  getReferralCodeByTelegramId,
+} from '@lib/api/referral';
 
 import {
     createThirdwebClient,
@@ -100,16 +106,16 @@ export async function GET(request: NextRequest) {
     //const center = searchParams.get('center');
 
     //console.log("center: ", center);
-    const center = request.nextUrl.searchParams.get('center');
+    //const center = request.nextUrl.searchParams.get('center');
 
-    console.log("center: ", center);
+    //console.log("center: ", center);
 
   
 
     
-    if (!center) {
-        return NextResponse.error();
-    }
+    //if (!center) {
+    //    return NextResponse.error();
+   // }
     
 
 
@@ -130,11 +136,54 @@ export async function GET(request: NextRequest) {
     });
 
 
+
+    const tokenContractAddressNOAHS = '0xdd200c6EF8e5fe9b1332224a86b5980D202d4d9d';
+
+
+    const contractNOAHS = getContract(
+      //contractOptions
+      {
+        client: client,
+        chain: chain,
+        address: tokenContractAddressNOAHS,
+      }
+    );
+  
+    const noahsWalletPrivateKey = process.env.NOAHS_WALLET_PRIVATE_KEY || "";
+  
+    const personalAccount = privateKeyToAccount({
+      client,
+      privateKey: noahsWalletPrivateKey,
+    });
+  
+    const wallet = smartWallet({
+      chain: chain,
+      sponsorGas: true,
+    });
+  
+    const account = await wallet.connect({
+      client: client,
+      personalAccount: personalAccount,
+    });
+  
+    const noahsWalletAddress = account.address;
+  
+    console.log("noahsWalletAddress: ", noahsWalletAddress);
+
+
+
+
+
+
+
+
+
+
+
     const tokenContractAddressErc1155 = '0xE6BeA856Cd054945cE7A9252B2dc360703841028';
 
 
 
-    const tokenContractAddressNOAHS = '0xdd200c6EF8e5fe9b1332224a86b5980D202d4d9d';
 
 
 
@@ -147,10 +196,11 @@ export async function GET(request: NextRequest) {
     );
 
 
+    
     const tokenId = BigInt(5);
 
 
-
+    /*
     const nft = await getNFT({
       contract: contractErc1155,
       //tokenId: 0n,
@@ -158,8 +208,9 @@ export async function GET(request: NextRequest) {
 
       tokenId: tokenId,
     });
+    */
 
-    console.log("nft", nft);
+    //console.log("nft", nft);
     /*
     nft {
       metadata: {
@@ -186,7 +237,7 @@ export async function GET(request: NextRequest) {
       id: tokenId,
     });
 
-    console.log("totalSupplyResult", totalSupplyResult);
+    console.log("totalSupplyResult", totalSupplyResult.toString());
 
 
 
@@ -250,26 +301,19 @@ export async function GET(request: NextRequest) {
     // if tokenId is 5,
     // then 0.8%, 0.1%, 0.1%, 0.2%
 
-    const masterWalletAddress = "0x1ab86ceA8DcFBdD56DF8086f5190a2C6d5795C94";
-    let masterAmount = 0.0;
-    const agentWalletAddress = "0x3C9C78c24148e52393221347af3D3F74A5729e5f";
-    let agentAmount = 0.0;
-    const centerWalletAddress = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
-    let centerAmount = 0.0;
-    const platformWalletAddress = "0x58a9E653ded2004ff94e5Fa3f342412a7B4cc563";
-    let platformAmount = 0.0;
 
 
-
-
+    let transactions = [] as any;
 
     
     if (result && result.owners && result.owners.length > 0) {
 
-      result.owners.map(async (owner : any) => {
+      //result.owners.map(async (owner : any) => {
+      //result.owners.forEach(async (owner : any) => {
+
+      for (const owner of result.owners) {
 
         //const owner = result.owners[0];
-
         
         const balanceResult = await balanceOf({
             contract: contractErc1155,
@@ -281,7 +325,7 @@ export async function GET(request: NextRequest) {
 
         // balanceResult 1n
 
-        const balance = balanceResult.toString();
+        const balance = parseFloat(balanceResult.toString());
 
         /*
         const airdropAmount = 10;
@@ -292,62 +336,221 @@ export async function GET(request: NextRequest) {
         console.log("owner: ", owner, "balance: ", balance, "share: ", share);
         */
 
+        if (balance > 0.0) {
+
+
+          const masterWalletAddress = owner;
+          let masterAmount = 0.0;
+
+
+          // getOneByWalletAddress
+          const user = await getOneByWalletAddress( masterWalletAddress );
+          if (!user) {
+            return NextResponse.error();
+          }
+
+          const telegramId = user?.telegramId || "";
+          const center = user?.center || "";
+
+          console.log("telegramId: ", telegramId, "center: ", center);
+
+
+          if (!telegramId || !center) {
+            return NextResponse.error();
+          }
+
+          // get referrer from telegramId
+          /*
+          {
+            "_id": {
+              "$oid": "677e0dd317d6c41796ada511"
+            },
+            "telegramId": "7779739539",
+            "referralCode": "0x929BEeB406aB304d0ae5A800D07ab2A0694d723b_0"
+          }
+          */
+
+          const referralCode = await getReferralCodeByTelegramId( telegramId );
+
+          if (!referralCode) {
+            return NextResponse.error();
+          }
+
+          const referralContractAddress = referralCode?.split("_")[0] || "";
+          const referralTokenId = BigInt(referralCode?.split("_")[1] || "0");
+
+          // get onwer of nft
+          const response = await alchemy.nft.getOwnersForNft(referralContractAddress, referralTokenId);
+          // { owners: [ '0xf5fff32cf83a1a614e15f25ce55b0c0a6b5f8f2c' ] }
+
+          const agentWalletAddress = response?.owners[0] || "";
+
+          console.log("agentWalletAddress: ", agentWalletAddress);
+
+          if (!agentWalletAddress) {
+
+            return NextResponse.error();
+          }
 
 
 
+          // getCenterOwnerByCenter
+          const userCenter = await getCenterOwnerByCenter( center );
+          if (!userCenter) {
+            return NextResponse.error();
+          }
 
-        let shareTotalAmount = 0.0;
+          const centerWalletAddress = userCenter?.walletAddress || "";
 
-        if (tokenId === BigInt(0)) {
-          shareTotalAmount = 100.0;
-          masterAmount = shareTotalAmount * 0.3;
-          agentAmount = shareTotalAmount * 0.6;
-          centerAmount = shareTotalAmount * 0.1;
-          platformAmount = shareTotalAmount * 0.2;
-        } else if (tokenId === BigInt(1)) {
-          shareTotalAmount = 100.0;
-          masterAmount = shareTotalAmount * 0.4;
-          agentAmount = shareTotalAmount * 0.5;
-          centerAmount = shareTotalAmount * 0.1;
-          platformAmount = shareTotalAmount * 0.2;
-        } else if (tokenId === BigInt(2)) {
-          shareTotalAmount = 100.0;
-          masterAmount = shareTotalAmount * 0.5;
-          agentAmount = shareTotalAmount * 0.4;
-          centerAmount = shareTotalAmount * 0.1;
-          platformAmount = shareTotalAmount * 0.2;
-        } else if (tokenId === BigInt(3)) {
-          shareTotalAmount = 100.0;
-          masterAmount = shareTotalAmount * 0.6;
-          agentAmount = shareTotalAmount * 0.3;
-          centerAmount = shareTotalAmount * 0.1;
-          platformAmount = shareTotalAmount * 0.2;
-        } else if (tokenId === BigInt(4)) {
-          shareTotalAmount = 100.0;
-          masterAmount = shareTotalAmount * 0.7;
-          agentAmount = shareTotalAmount * 0.2;
-          centerAmount = shareTotalAmount * 0.1;
-          platformAmount = shareTotalAmount * 0.2;
-        } else if (tokenId === BigInt(5)) {
-          shareTotalAmount = 10.0;
-          masterAmount = shareTotalAmount * 0.8;
-          agentAmount = shareTotalAmount * 0.1;
-          centerAmount = shareTotalAmount * 0.1;
-          platformAmount = shareTotalAmount * 0.2;
+          console.log("centerWalletAddress: ", centerWalletAddress);
+
+          if (!centerWalletAddress) {
+            return NextResponse.error();
+          }
+
+
+
+          const platformWalletAddress = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+
+
+
+          let agentAmount = 0.0;
+
+          let centerAmount = 0.0;
+          
+          let platformAmount = 0.0;
+
+
+          if (tokenId === BigInt(0)) {
+            const shareTotalAmount = 100.0 * balance;
+            masterAmount = shareTotalAmount * 0.3;
+            agentAmount = shareTotalAmount * 0.6;
+            centerAmount = shareTotalAmount * 0.1;
+            platformAmount = shareTotalAmount * 0.2;
+          } else if (tokenId === BigInt(1)) {
+            const shareTotalAmount = 300.0 * balance;
+            masterAmount = shareTotalAmount * 0.4;
+            agentAmount = shareTotalAmount * 0.5;
+            centerAmount = shareTotalAmount * 0.1;
+            platformAmount = shareTotalAmount * 0.2;
+          } else if (tokenId === BigInt(2)) {
+            const shareTotalAmount = 500.0 * balance;
+            masterAmount = shareTotalAmount * 0.5;
+            agentAmount = shareTotalAmount * 0.4;
+            centerAmount = shareTotalAmount * 0.1;
+            platformAmount = shareTotalAmount * 0.2;
+          } else if (tokenId === BigInt(3)) {
+            const shareTotalAmount = 1000.0 * balance;
+            masterAmount = shareTotalAmount * 0.6;
+            agentAmount = shareTotalAmount * 0.3;
+            centerAmount = shareTotalAmount * 0.1;
+            platformAmount = shareTotalAmount * 0.2;
+          } else if (tokenId === BigInt(4)) {
+            const shareTotalAmount = 5000.0 * balance;
+            masterAmount = shareTotalAmount * 0.7;
+            agentAmount = shareTotalAmount * 0.2;
+            centerAmount = shareTotalAmount * 0.1;
+            platformAmount = shareTotalAmount * 0.2;
+          } else if (tokenId === BigInt(5)) {
+            const shareTotalAmount = 10000.0 * balance;
+            masterAmount = shareTotalAmount * 0.8;
+            agentAmount = shareTotalAmount * 0.1;
+            centerAmount = shareTotalAmount * 0.1;
+            platformAmount = shareTotalAmount * 0.2;
+          }
+
+          console.log("masterWalletAddress: ", masterWalletAddress, "masterAmount: ", masterAmount, "agentWalletAddress: ", agentWalletAddress, "agentAmount: ", agentAmount, "centerWalletAddress: ", centerWalletAddress, "centerAmount: ", centerAmount, "platformWalletAddress: ", platformWalletAddress, "platformAmount: ", platformAmount);
+
+
+          const transactionMaster = transfer({
+            contract: contractNOAHS,
+            to: masterWalletAddress,
+            amount: masterAmount,
+          });
+          transactions.push(transactionMaster);
+
+          const transactionAgent = transfer({
+            contract: contractNOAHS,
+            to: agentWalletAddress,
+            amount: agentAmount,
+          });
+          transactions.push(transactionAgent);
+
+          const transactionCenter = transfer({
+            contract: contractNOAHS,
+            to: centerWalletAddress,
+            amount: centerAmount,
+          });
+          transactions.push(transactionCenter);
+
+          const transactionPlatform = transfer({
+            contract: contractNOAHS,
+            to: platformWalletAddress,
+            amount: platformAmount,
+          });
+          transactions.push(transactionPlatform);
+
+
+
         }
 
 
+      }
 
 
 
 
+      const batchOptions: SendBatchTransactionOptions = {
+        account: account,
+        transactions: transactions,
+      };
+  
 
-      });
+      try {
+
+        const batchResponse = await sendBatchTransaction(
+          batchOptions
+        );
+    
+        console.log("batchResponse: ", batchResponse);
+    
+        if (!batchResponse) {
+          return NextResponse.error();
+        }
+
+        return NextResponse.json({
+            
+            result: {
+                transactions,
+                batchResponse,
+            },
+        });
+
+      } catch (error) {
+        console.error("error", error);
+        return NextResponse.json({
+            
+            result: {
+                transactions,
+                error,
+            },
+        });
+
+      }
+
+
 
     }
 
 
 
+
+    return NextResponse.json({
+        
+        result: {
+            transactions,
+        },
+    });
 
 
 
@@ -369,7 +572,7 @@ export async function GET(request: NextRequest) {
 
 
 
-
+      /*
       const members = await getAllMembersByCenter({
         center: center,
         limit: 500,
@@ -389,6 +592,7 @@ export async function GET(request: NextRequest) {
             members,
         },
       });
+      */
 
 
       /*
