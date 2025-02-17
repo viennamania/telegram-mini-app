@@ -669,6 +669,7 @@ function AgentPage() {
     const [messageMintingAgentNft, setMessageMintingAgentNft] = useState("");
     const mintAgentNft = async () => {
 
+
         if (mintingAgentNft) {
             //toast.error('이미 실행중입니다');
             setMessageMintingAgentNft('이미 실행중입니다');
@@ -701,6 +702,11 @@ function AgentPage() {
         }
         */
 
+        if (
+            confirm("추천코드 NFT를 발행하시겠습니까?") === false
+        ) {
+            return;
+        }
 
 
         setMessageMintingAgentNft('NFT 발행중입니다');
@@ -1296,6 +1302,35 @@ function AgentPage() {
 
                             
 
+                            <div className='w-full flex flex-col gap-2 items-start justify-between'>
+
+                                <div className="flex flex-row items-center justify-start gap-5">
+                                    {/* dot */}
+                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <span className="text-sm xl:text-lg font-semibold">
+                                        추천코드로 회원가입을 유치하면 가입보상으로 1 USDT를 받습니다.
+                                    </span>
+                                </div>
+                                <div className="flex flex-row items-center justify-start gap-5">
+                                    {/* dot */}
+                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <span className="text-sm xl:text-lg font-semibold">
+                                        가입한 회원의 채굴보상에서 28%를 채굴보상으로 받습니다.
+                                    </span>
+                                </div>
+                                <div className="flex flex-row items-center justify-start gap-5">
+                                    {/* dot */}
+                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <span className="text-sm xl:text-lg font-semibold">
+                                        NFT 소유권을 이전하면 이전한 이후부터 채굴보상은 이전 받은 소유자에게 지급됩니다.
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+
+
                             {/* mint AI Agent NFT */}
                             <div className='w-full flex flex-col gap-2 items-start justify-between
                                 bg-yellow-100 border border-gray-300
@@ -1335,7 +1370,12 @@ function AgentPage() {
 
                                 <button
                                     disabled={mintingAgentNft}
-                                    onClick={mintAgentNft}
+                                    onClick={
+
+    
+                                        mintAgentNft
+
+                                    }
                                     className={`
                                         ${mintingAgentNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
                                         p-2 rounded-sm text-sm font-semibold
@@ -1409,7 +1449,7 @@ function AgentPage() {
                         <div className='w-full flex flex-col gap-2 items-start justify-between'>
 
                                 {/* my NFTs */}
-                                <div className='mt-10 flex flex-row gap-2 items-start justify-between'>
+                                <div className='mt-10 w-full flex flex-row gap-2 items-start justify-between'>
 
                                     <div className='flex flex-row items-center justify-start gap-2'>
                                         {/* dot */}
@@ -1505,7 +1545,7 @@ function AgentPage() {
                                         <div
                                             key={index}
                                             className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
-                                            bg-yellow-100'
+                                            bg-gray-800 bg-opacity-90'
                                         >
 
                                             <div className='w-full flex flex-col gap-2 items-center justify-between'>
@@ -1537,44 +1577,20 @@ function AgentPage() {
 
                                                                 't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
                                                             );
-                                                            //toast.success('레퍼럴 URL 복사 완료');
-                                                            alert('레퍼럴 복사되었습니다.');
+                                                            //toast.success('추천코드 URL 복사 완료');
+                                                            alert('추천코드 복사되었습니다.');
                                                         }}
                                                         className="p-2 bg-blue-500 text-zinc-100 rounded
                                                         hover:bg-blue-600 text-lg xl:text-xl font-semibold"
                                                     >
-                                                        레퍼럴 복사하기
+                                                        추천코드 복사하기
                                                     </button>
 
                                                 </div>
 
                                         
 
-                                                <div className='w-full flex flex-col gap-2 items-start justify-between'>
-
-                                                    <div className="flex flex-row items-center justify-start gap-5">
-                                                        {/* dot */}
-                                                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                                        <span className="text-sm xl:text-lg font-semibold">
-                                                            레퍼럴로 회원가입을 유치하면 가입보상으로 1 USDT를 받습니다.
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex flex-row items-center justify-start gap-5">
-                                                        {/* dot */}
-                                                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                                        <span className="text-sm xl:text-lg font-semibold">
-                                                            가입한 회원의 채굴보상에서 28%를 채굴보상으로 받습니다.
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex flex-row items-center justify-start gap-5">
-                                                        {/* dot */}
-                                                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                                        <span className="text-sm xl:text-lg font-semibold">
-                                                            NFT 소유권을 이전하면 이전한 이후부터 채굴보상은 이전 받은 소유자에게 지급됩니다.
-                                                        </span>
-                                                    </div>
-
-                                                </div>
+ 
 
                                             </div>
 
@@ -1607,7 +1623,7 @@ function AgentPage() {
 
                                                 <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                                     {/* contract address */}
-                                                    <div className='text-sm font-semibold'>
+                                                    <div className='text-sm font-semibold text-yellow-500'>
                                                         계약주소: {nft?.contract?.address && nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
                                                     </div>
                                                     <div className='text-xl font-semibold text-blue-500'>
@@ -1616,9 +1632,11 @@ function AgentPage() {
                                                     <div className='text-lg font-semibold text-green-500'>
                                                         이름: {nft?.name}
                                                     </div>
-                                                    <div className='text-xs font-semibold'>
+                                                    {/*
+                                                    <div className='text-xs font-semibold text-green-500'>
                                                         설명: {nft?.description}
                                                     </div>
+                                                    */}
 
                                                 </div>
 
@@ -1644,8 +1662,8 @@ function AgentPage() {
                                                         소유권 이전하기
                                                     </span>
                                                     <div className='flex flex-row items-center justify-start gap-2'>
-                                                        <div className='w-3 h-3 bg-red-500 rounded-full'></div>
-                                                        <span className='text-xs text-gray-800'>
+                                                        <div className='w-2 h-2 bg-red-500 rounded-full'></div>
+                                                        <span className='text-sm text-gray-400 font-semibold'>
                                                             소유권을 이전하면 소유자 권리를 모두 이전하는 것에 동의하는 것입니다.
                                                         </span>
                                                     </div>
