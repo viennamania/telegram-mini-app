@@ -65,9 +65,9 @@ import { updateUser } from "@/lib/api/user";
 import { send } from "@fal-ai/serverless-client/src/function";
 
 
-//const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // NOAH-K 포인트 on Polygon
+//const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // NOAHS 포인트 on Polygon
 
-const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAH-K on Polygon
+const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAHS on Polygon
 
 
 function ProfilePage() {
@@ -698,7 +698,7 @@ function ProfilePage() {
         try {
 
 
-            // send NOAH-K 포인트
+            // send NOAHS 포인트
             // Call the extension function to prepare the transaction
             const transaction = transfer({
                 contract: contract,
@@ -714,7 +714,7 @@ function ProfilePage() {
             
             if (transactionHash) {
 
-                alert('NOAH-K 포인트를 성공적으로 보냈습니다');
+                alert('NOAHS 포인트를 성공적으로 보냈습니다');
 
                 setSendAmount('');
 
@@ -758,7 +758,7 @@ function ProfilePage() {
 
             } else {
 
-                alert('Failed to send NOAH-K 포인트');
+                alert('Failed to send NOAHS 포인트');
 
             }  
 
@@ -767,7 +767,7 @@ function ProfilePage() {
             
             console.error("error", error);
 
-            alert('Failed to send NOAH-K 포인트');
+            alert('Failed to send NOAHS 포인트');
         }
 
         setSending(false);
@@ -963,7 +963,7 @@ function ProfilePage() {
 
                                     <Image
                                         src="/logo-noahs-erc20.png"
-                                        alt="NOAH-K 포인트"
+                                        alt="NOAHS 포인트"
                                         width={30}
                                         height={30}
                                         className="rounded"
@@ -985,19 +985,19 @@ function ProfilePage() {
 
                                             }
                                         </span>
-                                        <span className="p-2 text-gray-500 text-lg font-semibold">NOAH-K 포인트</span>
+                                        <span className="p-2 text-gray-500 text-lg font-semibold">NOAHS 포인트</span>
 
                                     </div>
                                 </div>
 
-                                {/* send NOAH-K 포인트 */}
+                                {/* send NOAHS 포인트 */}
 
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
                                     bg-yellow-500 bg-opacity-50'>
                                     
                                     {/*
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        NOAH-K 포인트 보내기
+                                        NOAHS 포인트 보내기
                                     </div>
                                     */}
                                     <div className="flex flex-row gap-2 items-center justify-between">
@@ -1006,7 +1006,7 @@ function ProfilePage() {
                                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                         {/* text */}                             
                                         <span className="text-lg font-semibold">
-                                            NOAH-K 포인트 보내기
+                                            NOAHS 포인트 보내기
                                         </span>
 
                                     </div>
@@ -1100,7 +1100,7 @@ function ProfilePage() {
                                             <button
                                                 disabled={sending || !sendAmount || !toWalletAddress}
                                                 onClick={() => {
-                                                    confirm('NOAH-K 포인트를 보내시겠습니까?') &&
+                                                    confirm('NOAHS 포인트를 보내시겠습니까?') &&
                                                     sendUsdt();
                                                 }}
                                                 className={`p-2 bg-blue-500 text-zinc-100 rounded
@@ -1136,7 +1136,7 @@ function ProfilePage() {
                                 {/*
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        {Send_NOAH-K 포인트}
+                                        {Send_NOAHS 포인트}
                                     </div>
                                     <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                         <input

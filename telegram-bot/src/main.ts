@@ -30,6 +30,7 @@ import {
 } from "thirdweb/chains";
 
 import { balanceOf } from "thirdweb/extensions/erc20";
+import { contractType } from 'thirdweb/extensions/thirdweb'
 
 config()
 
@@ -93,8 +94,10 @@ async function startPolling(config: PollingConfig) {
     .then((commands) => {
       //if (commands.length === 0) {
         bot.api.setMyCommands([
-          { command: "start", description: "시작하기" },
-          { command: "noah", description: "NOAH SKY 시작하기"},
+          //{ command: "profile", description: "나의 프로필 관리"},
+          { command: "start", description: "NOAH SKY 시작하기"},
+          { command: "affiliation", description: "추천코드 관리하기" },
+          { command: "okx", description: "OKX" },
           { command: "wallet", description: "매직월렛"},
           { command: "game", description: "게임"},
           { command: "otc", description: "USDT 개인간 거래"},
@@ -482,7 +485,7 @@ async function fetchAccountData() {
 
 
             /*
-            botInstance.api.sendPhoto(
+            await botInstance.api.sendPhoto(
               telegramId,
               masterBotImageUrl,
               {
@@ -756,14 +759,18 @@ async function pushGame() {
     )
     */
 
-    await botInstance.api.sendPhoto(
-      telegramId,
-      photoUrl,
-      {
-        caption: text,
-        reply_markup: keyboard
-      }
-    )
+    try {
+      botInstance.api.sendPhoto(
+        telegramId,
+        photoUrl,
+        {
+          caption: text,
+          reply_markup: keyboard
+        }
+      )
+    } catch( error ) {}
+
+
 
     return;
 
@@ -830,14 +837,19 @@ async function pushGame() {
   )
     */
 
-  await botInstance.api.sendPhoto(
-    telegramId,
-    photoUrl,
-    {
-      caption: text,
-      reply_markup: keyboard
-    }
-  )
+  try {
+    botInstance.api.sendPhoto(
+      telegramId,
+      photoUrl,
+      {
+        caption: text,
+        reply_markup: keyboard
+      }
+    )
+  } catch (error) {
+    console.log("error=", error+'');
+  }
+  
   return;
     
 
@@ -1022,6 +1034,11 @@ async function sendMessages() {
 
     const category = message.category; // "wallet", "settlement", "agent", "center"
 
+
+    const contractAddress = message?.userTransfer?.transferData?.contractAddress;
+
+    const user = message?.userTransfer?.user;
+
     const otherUserNickname = message?.userTransfer?.otherUser?.nickname;
     const otherUserAvatar = message?.userTransfer?.otherUser?.avatar;
 
@@ -1029,33 +1046,56 @@ async function sendMessages() {
     const winPrize = message?.winPrize;
 
 
+    const groupChatMessageText = "😀 " + user?.nickname + " 💰 " + messageText;
+
+
+    
+    console.log("contractAddress=", contractAddress);
 
 
 
+
+    
     try {
+
+
       const groupChatId = "-1002295555741";
+
+
+      /*
       botInstance.api.sendMessage(
         groupChatId,
-        messageText,
+        groupChatMessageText,
       )
+      */
+
+      const urlLeaderBoard = `${process.env.FRONTEND_APP_ORIGIN}/leaderboard?center=${center}`;
+
+      const keyboard = new InlineKeyboard()
+        //.text('🚹 홀 🚺 짝 게임', "roulette")
+        .webApp('🎮 상세보기', urlLeaderBoard)
+
+      const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/roulette-banner.jpg`;
+      await botInstance.api.sendPhoto(
+        groupChatId,
+        photoUrl,
+        {
+          caption: groupChatMessageText,
+          ///reply_markup: keyboard
+        }
+      )
+
+
+
+
     } catch (error) {
       console.error('Error sending message:', error + '')
     }
-
-
+      
 
 
 
     try {
-
-
-
-
-      // 7379965971
-      // send message to group chat
-      // GrammyError: Call to 'sendMessage' failed! (403: Forbidden: bots can't send messages to bots)
-
-
 
 
 
@@ -1106,11 +1146,25 @@ async function sendMessages() {
 
 
 
+
+
       } else if (category === 'wallet') {
 
+        const clientId = process.env.THIRDWEB_CLIENT_ID;
+        const client = createThirdwebClient({
+          clientId: clientId as string,
+        });
 
 
-        let balance;
+
+        const contractAddressUsdt = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+        const contractAddressNoahs = "0xdd200c6EF8e5fe9b1332224a86b5980D202d4d9d";
+
+
+        let balanceUsdt;
+
+        let balanceNoahs;
+
 
         const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
 
@@ -1134,23 +1188,34 @@ async function sendMessages() {
 
 
             // get balance
-            const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
-            const clientId = process.env.THIRDWEB_CLIENT_ID;
-            const client = createThirdwebClient({
-              clientId: clientId as string,
-            });
-            const contract = getContract({
+
+            const contractUsdt = getContract({
               client,
               chain: polygon,
-              address: contractAddress,
+              address: contractAddressUsdt,
             });
-
-            const result = await balanceOf({
-              contract,
+            const resultUsdt = await balanceOf({
+              contract: contractUsdt,
               address: walletAddress,
             });
 
-            balance = Number(result) / 10 ** 6;
+            balanceUsdt = Number(resultUsdt) / 10 ** 6;
+
+
+            // get noahs balance
+
+            const contractNoahs = getContract({
+              client,
+              chain: polygon,
+              address: contractAddressNoahs,
+            });
+            const resultNoahs = await balanceOf({
+              contract: contractNoahs,
+              address: walletAddress,
+            });
+
+            balanceNoahs = Number(resultNoahs) / 10 ** 18;
+
 
           }
 
@@ -1171,7 +1236,22 @@ async function sendMessages() {
           message,
         });
 
-        const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
+
+
+        let urlMyWallet = '';
+
+
+        // lower case
+        if (  contractAddress?.toLowerCase() === contractAddressUsdt.toLowerCase() ) {
+
+          urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
+        }
+
+        if (  contractAddress?.toLowerCase() === contractAddressNoahs.toLowerCase() ) {
+          urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet-noahs`;
+        }
+
+
 
         const urlGame = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/game`;
 
@@ -1187,22 +1267,21 @@ async function sendMessages() {
         .webApp('💰 나의 지갑 보러가기', urlMyWallet)
         // english
         //.webApp('💰 Go to My Wallet', urlMyWallet)
-        .row()
-        
-        //.webApp('🎮 게임 하러가기', urlGame)
 
+        .row()
         .webApp('🎮 탭투언 게임', urlGame)
         .webApp('🐎 그랑더비 게임', urlGameGranderby)
         .row()
         .text('🎲 홀짝 게임', 'roulette')
         .text('🐎 경마 게임', 'race')
         .webApp('💱 USDT 판매', urlSellUsdt)
-        // english
-        //.webApp('💱 Go to USDT OTC', urlOtc);
+
+
 
 
         const caption = '\n\n🚀 ' + messageText
-        + '\n\n' + '💲 지갑잔고: ' + balance + ' USDT'
+        + '\n\n' + '💲 지갑잔고: ' + balanceUsdt + ' USDT'
+        + '\n\n' + '💲 지갑잔고: ' + balanceNoahs + ' NOAHS'
         + '\n\n' + '👇 아래 버튼을 눌러 원하는 서비스로 이동하세요.';
         // english
         //+ '\n\n' + '👇 Press the button below to go to each service';
@@ -1408,7 +1487,7 @@ async function sendMessages() {
             .webApp('💰 나의 마스트봇 보상내역 보러가기', urlMySettement)
 
             /*
-            botInstance.api.sendMessage(
+            await botInstance.api.sendMessage(
               telegramId,
               caption,
               {
@@ -1461,7 +1540,7 @@ async function sendMessages() {
         + '\n\n' + '👇 아래 버튼을 눌러 나의 에이전트봇 보상을 확인하세요.';
         
         /*
-        botInstance.api.sendMessage(
+        await botInstance.api.sendMessage(
           telegramId,
           caption,
           {
@@ -1508,7 +1587,7 @@ async function sendMessages() {
         + '\n\n' + '👇 아래 버튼을 눌러 나의 보상으로 이동하세요.';
 
         /*
-        botInstance.api.sendMessage(
+        await botInstance.api.sendMessage(
           telegramId,
           caption,
           {
