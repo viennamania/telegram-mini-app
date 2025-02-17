@@ -148,6 +148,11 @@ export async function insertOne(data: any) {
 
         if (response) {
 
+            // get one userTransfer by response.insertedId
+            const userTransfer = await collectionUserTransfers.findOne(
+                { _id: response.insertedId }
+            );
+
         
             const walletAddress = userToAddress.walletAddress;
             const telegramId = userToAddress.telegramId;
@@ -171,6 +176,7 @@ export async function insertOne(data: any) {
                     telegramId: telegramId,
                     message: message,
                     timestamp: data.timestamp,
+                    userTransfer: userTransfer,
                 }
                 );
 
