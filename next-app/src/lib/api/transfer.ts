@@ -9,6 +9,7 @@ import clientPromise from '../mongodb';
 */
 
 export interface TransferProps {
+    contractAddress: string;
     transactionHash: string;
     transactionIndex: string;
     fromAddress: string;
@@ -24,6 +25,7 @@ export async function insertOne(data: any) {
     }
 
     const transferData = {
+        contractAddress: data.contractAddress,
         transactionHash: data.transactionHash,
         transactionIndex: data.transactionIndex,
         fromAddress: data.fromAddress,
@@ -146,7 +148,6 @@ export async function insertOne(data: any) {
                     telegramId: telegramId,
                     message: message,
                     timestamp: data.timestamp,
-
                     userTransfer: userTransfer,
                 }
                 );

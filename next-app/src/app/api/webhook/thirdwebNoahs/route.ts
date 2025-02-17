@@ -150,6 +150,7 @@ export async function POST(request: NextRequest) {
   */
 
   const result = insertOne({
+    contractAddress,
     transactionHash,
     transactionIndex,
     fromAddress,

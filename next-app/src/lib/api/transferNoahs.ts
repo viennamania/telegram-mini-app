@@ -10,6 +10,7 @@ import { wallet } from '@/app/constants';
 */
 
 export interface TransferProps {
+    contractAddress: string;
     transactionHash: string;
     transactionIndex: string;
     fromAddress: string;
@@ -25,6 +26,7 @@ export async function insertOne(data: any) {
     }
 
     const transferData = {
+        contractAddress: data.contractAddress,
         transactionHash: data.transactionHash,
         transactionIndex: data.transactionIndex,
         fromAddress: data.fromAddress,
