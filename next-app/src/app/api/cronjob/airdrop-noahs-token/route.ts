@@ -410,7 +410,7 @@ export async function GET(request: NextRequest) {
 
 
 
-          const platformWalletAddress = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+          const platformWalletAddress = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C"; // sonapa metamask wallet
 
 
 
@@ -422,41 +422,57 @@ export async function GET(request: NextRequest) {
 
 
           if (tokenId === BigInt(0)) {
+
             const shareTotalAmount = 100.0 * balance;
+
             masterAmount = shareTotalAmount * 0.3;
             agentAmount = shareTotalAmount * 0.6;
             centerAmount = shareTotalAmount * 0.1;
             platformAmount = shareTotalAmount * 0.2;
+
           } else if (tokenId === BigInt(1)) {
+
             const shareTotalAmount = 300.0 * balance;
             masterAmount = shareTotalAmount * 0.4;
             agentAmount = shareTotalAmount * 0.5;
             centerAmount = shareTotalAmount * 0.1;
             platformAmount = shareTotalAmount * 0.2;
+
           } else if (tokenId === BigInt(2)) {
+
             const shareTotalAmount = 500.0 * balance;
             masterAmount = shareTotalAmount * 0.5;
             agentAmount = shareTotalAmount * 0.4;
             centerAmount = shareTotalAmount * 0.1;
             platformAmount = shareTotalAmount * 0.2;
+
           } else if (tokenId === BigInt(3)) {
+
             const shareTotalAmount = 1000.0 * balance;
             masterAmount = shareTotalAmount * 0.6;
             agentAmount = shareTotalAmount * 0.3;
             centerAmount = shareTotalAmount * 0.1;
             platformAmount = shareTotalAmount * 0.2;
+
           } else if (tokenId === BigInt(4)) {
+
             const shareTotalAmount = 5000.0 * balance;
             masterAmount = shareTotalAmount * 0.7;
             agentAmount = shareTotalAmount * 0.2;
             centerAmount = shareTotalAmount * 0.1;
             platformAmount = shareTotalAmount * 0.2;
+
           } else if (tokenId === BigInt(5)) {
-            const shareTotalAmount = 10000.0 * balance;
+
+            //const shareTotalAmount = 10000.0 * balance;
+            const shareTotalAmount = 10.0 * balance;
+
+
             masterAmount = shareTotalAmount * 0.8;
             agentAmount = shareTotalAmount * 0.1;
             centerAmount = shareTotalAmount * 0.1;
             platformAmount = shareTotalAmount * 0.2;
+
           }
 
           console.log("masterWalletAddress: ", masterWalletAddress, "masterAmount: ", masterAmount, "agentWalletAddress: ", agentWalletAddress, "agentAmount: ", agentAmount, "centerWalletAddress: ", centerWalletAddress, "centerAmount: ", centerAmount, "platformWalletAddress: ", platformWalletAddress, "platformAmount: ", platformAmount);
