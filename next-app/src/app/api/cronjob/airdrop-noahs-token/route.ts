@@ -102,14 +102,15 @@ export async function GET(request: NextRequest) {
     //console.log("center: ", center);
     const center = request.nextUrl.searchParams.get('center');
 
-    //console.log("center: ", center);
+    console.log("center: ", center);
 
   
 
-
+    
     if (!center) {
         return NextResponse.error();
     }
+    
 
 
     // check time 
@@ -133,6 +134,8 @@ export async function GET(request: NextRequest) {
 
 
 
+    const tokenContractAddressNOAHS = '0xdd200c6EF8e5fe9b1332224a86b5980D202d4d9d';
+
 
 
     const contractErc1155 = getContract(
@@ -143,9 +146,17 @@ export async function GET(request: NextRequest) {
       }
     );
 
+
+    const tokenId = BigInt(5);
+
+
+
     const nft = await getNFT({
       contract: contractErc1155,
-      tokenId: 0n,
+      //tokenId: 0n,
+      //tokenId: BigInt(0),
+
+      tokenId: tokenId,
     });
 
     console.log("nft", nft);
@@ -172,16 +183,17 @@ export async function GET(request: NextRequest) {
     // total supply of the nft contract
     const totalSupplyResult = await totalSupply({
       contract: contractErc1155,
-      id: 0n,
+      id: tokenId,
     });
 
     console.log("totalSupplyResult", totalSupplyResult);
 
 
 
-
+    /*
     try {
 
+      
       let pageKey;
 
       
@@ -209,7 +221,7 @@ export async function GET(request: NextRequest) {
     } catch (error) {
       console.error("error", error);
     }
-
+    */
 
 
 
@@ -235,6 +247,22 @@ export async function GET(request: NextRequest) {
     }
     */
 
+    // if tokenId is 5,
+    // then 0.8%, 0.1%, 0.1%, 0.2%
+
+    const masterWalletAddress = "0x1ab86ceA8DcFBdD56DF8086f5190a2C6d5795C94";
+    let masterAmount = 0.0;
+    const agentWalletAddress = "0x3C9C78c24148e52393221347af3D3F74A5729e5f";
+    let agentAmount = 0.0;
+    const centerWalletAddress = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    let centerAmount = 0.0;
+    const platformWalletAddress = "0x58a9E653ded2004ff94e5Fa3f342412a7B4cc563";
+    let platformAmount = 0.0;
+
+
+
+
+
     
     if (result && result.owners && result.owners.length > 0) {
 
@@ -242,24 +270,75 @@ export async function GET(request: NextRequest) {
 
         //const owner = result.owners[0];
 
+        
         const balanceResult = await balanceOf({
             contract: contractErc1155,
             owner: owner,
-            tokenId: BigInt(0),
+            tokenId: tokenId,
         });
 
         //console.log("balanceResult", balanceResult);
+
         // balanceResult 1n
 
         const balance = balanceResult.toString();
 
-
+        /*
         const airdropAmount = 10;
 
         const share = ((Number(balance) / Number(totalSupplyResult.toString())) * airdropAmount).toFixed(6);
-
+      
 
         console.log("owner: ", owner, "balance: ", balance, "share: ", share);
+        */
+
+
+
+
+
+        let shareTotalAmount = 0.0;
+
+        if (tokenId === BigInt(0)) {
+          shareTotalAmount = 100.0;
+          masterAmount = shareTotalAmount * 0.3;
+          agentAmount = shareTotalAmount * 0.6;
+          centerAmount = shareTotalAmount * 0.1;
+          platformAmount = shareTotalAmount * 0.2;
+        } else if (tokenId === BigInt(1)) {
+          shareTotalAmount = 100.0;
+          masterAmount = shareTotalAmount * 0.4;
+          agentAmount = shareTotalAmount * 0.5;
+          centerAmount = shareTotalAmount * 0.1;
+          platformAmount = shareTotalAmount * 0.2;
+        } else if (tokenId === BigInt(2)) {
+          shareTotalAmount = 100.0;
+          masterAmount = shareTotalAmount * 0.5;
+          agentAmount = shareTotalAmount * 0.4;
+          centerAmount = shareTotalAmount * 0.1;
+          platformAmount = shareTotalAmount * 0.2;
+        } else if (tokenId === BigInt(3)) {
+          shareTotalAmount = 100.0;
+          masterAmount = shareTotalAmount * 0.6;
+          agentAmount = shareTotalAmount * 0.3;
+          centerAmount = shareTotalAmount * 0.1;
+          platformAmount = shareTotalAmount * 0.2;
+        } else if (tokenId === BigInt(4)) {
+          shareTotalAmount = 100.0;
+          masterAmount = shareTotalAmount * 0.7;
+          agentAmount = shareTotalAmount * 0.2;
+          centerAmount = shareTotalAmount * 0.1;
+          platformAmount = shareTotalAmount * 0.2;
+        } else if (tokenId === BigInt(5)) {
+          shareTotalAmount = 10.0;
+          masterAmount = shareTotalAmount * 0.8;
+          agentAmount = shareTotalAmount * 0.1;
+          centerAmount = shareTotalAmount * 0.1;
+          platformAmount = shareTotalAmount * 0.2;
+        }
+
+
+
+
 
 
 
@@ -304,7 +383,12 @@ export async function GET(request: NextRequest) {
       }
 
 
-      return NextResponse.error();
+      return NextResponse.json({
+        
+        result: {
+            members,
+        },
+      });
 
 
       /*

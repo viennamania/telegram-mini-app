@@ -139,7 +139,7 @@ function AgentPage() {
     // fee 5%
     const fee = 0.05;
 
-    const rate = 1550;
+    const rate = 1500;
     // tax 10%
     const tax = 0.1;
 
@@ -1520,7 +1520,7 @@ function AgentPage() {
         "usdtPrice": 100,
         "fee": 0.05,
         "tax": 0.1,
-        "rate": 1550,
+        "rate": 1500,
         "krwPrice": 179025
     },
     "createdAt": "2025-02-11T02:39:52.982Z",

@@ -1351,7 +1351,7 @@ export async function insertBuyOrder(data: any) {
     "walletAddress":"0xC426C1a1b7bEC05CD5CCFc2c85Ae7A2245BE2263",
     "usdtAmount":0.71,
     "krwAmount":1000,
-    "rate":1400,
+    "rate":1500,
     "privateSale":false,
     "buyer":{"depositBankName":"국민은행","depositName":"송수영"}
   }

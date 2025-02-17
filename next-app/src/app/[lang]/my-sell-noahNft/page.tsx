@@ -714,7 +714,7 @@ export default function Index({ params }: any) {
         "usdtPrice": 300,
         "fee": 0.05,
         "tax": 0.1,
-        "rate": 1550,
+        "rate": 1500,
         "krwPrice": 537075,
         "paymentInfo": {
             "bankName": "국민은행",
