@@ -1557,6 +1557,7 @@ function AgentPage() {
                                                     className="rounded-lg"
                                                 />
                                                 */}
+                                                {/*
                                                 <video
                                                     src={
                                                         nft.metadata?.animation_url.startsWith('ipfs://') ?
@@ -1569,6 +1570,82 @@ function AgentPage() {
                                                     controls
                                                     className="w-full rounded-lg border border-gray-300"
                                                 />
+                                                */}
+
+
+                                                {nft.tokenId === "0" && (
+                                                    <video
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        playsInline
+                                                        className="w-full h-full rounded-lg"
+                                                    >
+                                                        <source src="/noah-100-blue-mining.mp4" type="video/mp4" />
+                                                    </video>
+                                                )}
+
+                                                {nft.tokenId === "1" && (
+                                                    <video
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        playsInline
+                                                        className="w-full h-full rounded-lg"
+                                                    >
+                                                        <source src="/noah-300-green-mining.mp4" type="video/mp4" />
+                                                    </video>
+                                                )}
+
+                                                {nft.tokenId === "2" && (
+                                                    <video
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        playsInline
+                                                        className="w-full h-full rounded-lg"
+                                                    >
+                                                        <source src="/noah-500-red-mining.mp4" type="video/mp4" />
+                                                    </video>
+                                                )}
+
+                                                {nft.tokenId === "3" && (
+                                                    <video
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        playsInline
+                                                        className="w-full h-full rounded-lg"
+                                                    >
+                                                        <source src="/noah-1000-purple-mining.mp4" type="video/mp4" />
+                                                    </video>
+                                                )}
+
+                                                {nft.tokenId === "4" && (
+                                                    <video
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        playsInline
+                                                        className="w-full h-full rounded-lg"
+                                                    >
+                                                        <source src="/noah-5000-orange-mining.mp4" type="video/mp4" />
+                                                    </video>
+                                                )}
+
+                                                {nft.tokenId === "5" && (
+                                                    <video
+                                                        autoPlay
+                                                        loop
+                                                        muted
+                                                        playsInline
+                                                        className="w-full h-full rounded-lg"
+                                                    >
+                                                        <source src="/noah-10000-gold-mining.mp4" type="video/mp4" />
+                                                    </video>
+                                                )}
+
+
 
 
                                             </div>
