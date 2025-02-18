@@ -806,65 +806,10 @@ function ProfilePage() {
 
                     {/* title */}
                     <div className="text-2xl font-semibold text-zinc-100">
-                        나의 지갑
+                        보상내역
                     </div>
                 </div>
 
-
-
-                <div className="w-full flex flex-col gap-4 items-start justify-center
-                    bg-zinc-800 bg-opacity-90
-                    p-4 rounded-lg
-                    mt-4">
-                    <div className="flex flex-row gap-2 items-center justify-start">
-                        {/* dot */}
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        {/* text */}
-                        <div className="text-sm text-zinc-400">
-                            포인트는 회사의 서비스 내에서만 사용 가능하며, 외부 플랫폼이나 현금화는 불가능합니다.
-                        </div>
-                    </div>
-                    <div className="flex flex-row gap-2 items-center justify-start">
-                        {/* dot */}
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        {/* text */}
-                        <div className="text-sm text-zinc-400">
-                            회원 간 양도나 거래는 회사 시스템 내에서만 이루어지며, 외부 유통은 금지됩니다.
-                        </div>
-                    </div>
-                </div>
-                {/* english */}
-                <div className="w-full flex flex-col gap-4 items-start justify-center
-                    bg-zinc-800 bg-opacity-90
-                    p-4 rounded-lg
-                    mt-4">
-                    <div className="flex flex-row gap-2 items-center justify-start">
-                        {/* dot */}
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        {/* text */}
-                        <div className="text-sm text-zinc-400">
-
-                            {/*Points can only be used within the company's services and cannot be converted to cash or used on external platforms.*/}
-                            {/* `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;` */}
-                            Points can only be used within the company&apos;s services and cannot be converted to cash or used on external platforms.
-                        
-                        </div>
-                    </div>
-                    <div className="flex flex-row gap-2 items-center justify-start">
-                        {/* dot */}
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        {/* text */}
-                        <div className="text-sm text-zinc-400">
-                            {/*Transfers or transactions between members are only allowed within the company's system, and external distribution is prohibited.*/}
-
-                            Traansfers or transactions between members are only allowed within the company&apos;s system, and external distribution is prohibited.
-                        </div>
-                    </div>
-                </div>
-
-
-        
- 
 
                 <div className="flex flex-col items-start justify-center space-y-4">
 
@@ -898,21 +843,7 @@ function ProfilePage() {
                                 >
                                     복사
                                 </Button>
-
-                                {/* polygon scan */}
-                                <Button
-                                    onClick={() => (window as any).Telegram.WebApp.openLink(`https://polygonscan.com/address/${address}`)}
-                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                                >
-                                    <Image
-                                        src="/logo-polygon.png"
-                                        alt="Polygon"
-                                        width={20}
-                                        height={20}
-                                        className="rounded"
-                                    />
-                                </Button>
-                                
+ 
                             </div>
                         ) : (
                             <p className="text-sm text-zinc-800">
