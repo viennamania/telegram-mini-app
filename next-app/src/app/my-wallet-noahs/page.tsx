@@ -697,7 +697,7 @@ function ProfilePage() {
         try {
 
 
-            // send NOAHS 포인트
+            // send NOAHS
             // Call the extension function to prepare the transaction
             const transaction = transfer({
                 contract: contract,
@@ -713,7 +713,7 @@ function ProfilePage() {
             
             if (transactionHash) {
 
-                alert('NOAHS 포인트를 성공적으로 보냈습니다');
+                alert('NOAHS를 성공적으로 보냈습니다');
 
                 setSendAmount('');
 
@@ -757,7 +757,7 @@ function ProfilePage() {
 
             } else {
 
-                alert('Failed to send NOAHS 포인트');
+                alert('Failed to send NOAHS');
 
             }  
 
@@ -766,7 +766,7 @@ function ProfilePage() {
             
             console.error("error", error);
 
-            alert('Failed to send NOAHS 포인트');
+            alert('Failed to send NOAHS');
         }
 
         setSending(false);
@@ -893,7 +893,7 @@ function ProfilePage() {
 
                                     <Image
                                         src="/logo-noahs-erc20.png"
-                                        alt="NOAHS 포인트"
+                                        alt="NOAHS"
                                         width={30}
                                         height={30}
                                         className="rounded"
@@ -915,19 +915,19 @@ function ProfilePage() {
 
                                             }
                                         </span>
-                                        <span className="p-2 text-gray-500 text-lg font-semibold">NOAHS 포인트</span>
+                                        <span className="p-2 text-gray-500 text-lg font-semibold">NOAHS</span>
 
                                     </div>
                                 </div>
 
-                                {/* send NOAHS 포인트 */}
+                                {/* send NOAHS */}
 
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
                                     bg-yellow-500 bg-opacity-50'>
                                     
                                     {/*
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        NOAHS 포인트 보내기
+                                        NOAHS 보내기
                                     </div>
                                     */}
                                     <div className="flex flex-row gap-2 items-center justify-between">
@@ -936,7 +936,7 @@ function ProfilePage() {
                                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                         {/* text */}                             
                                         <span className="text-lg font-semibold">
-                                            NOAHS 포인트 보내기
+                                            NOAHS 보내기
                                         </span>
 
                                     </div>
@@ -1030,7 +1030,7 @@ function ProfilePage() {
                                             <button
                                                 disabled={sending || !sendAmount || !toWalletAddress}
                                                 onClick={() => {
-                                                    confirm('NOAHS 포인트를 보내시겠습니까?') &&
+                                                    confirm('NOAHS를 보내시겠습니까?') &&
                                                     sendUsdt();
                                                 }}
                                                 className={`p-2 bg-blue-500 text-zinc-100 rounded
@@ -1066,7 +1066,7 @@ function ProfilePage() {
                                 {/*
                                 <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
                                     <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        {Send_NOAHS 포인트}
+                                        {Send_NOAHS}
                                     </div>
                                     <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
                                         <input
