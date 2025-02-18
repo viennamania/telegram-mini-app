@@ -612,7 +612,7 @@ function AgentPage() {
     }, [address, erc1155ContractAddress]);
 
 
-    ///console.log("ownedNfts", ownedNfts);
+    //console.log("ownedNfts", ownedNfts);
 
 
     // safeTransferFrom
@@ -1573,7 +1573,7 @@ function AgentPage() {
                                                 */}
 
 
-                                                {nft.tokenId === "0" && (
+                                                {nft.id.toString() === "0" && (
                                                     <video
                                                         autoPlay
                                                         loop
@@ -1585,7 +1585,7 @@ function AgentPage() {
                                                     </video>
                                                 )}
 
-                                                {nft.tokenId === "1" && (
+                                                {nft.id.toString() === "1" && (
                                                     <video
                                                         autoPlay
                                                         loop
@@ -1597,7 +1597,7 @@ function AgentPage() {
                                                     </video>
                                                 )}
 
-                                                {nft.tokenId === "2" && (
+                                                {nft.id.toString() === "2" && (
                                                     <video
                                                         autoPlay
                                                         loop
@@ -1609,7 +1609,7 @@ function AgentPage() {
                                                     </video>
                                                 )}
 
-                                                {nft.tokenId === "3" && (
+                                                {nft.id.toString() === "3" && (
                                                     <video
                                                         autoPlay
                                                         loop
@@ -1621,7 +1621,7 @@ function AgentPage() {
                                                     </video>
                                                 )}
 
-                                                {nft.tokenId === "4" && (
+                                                {nft.id.toString() === "4" && (
                                                     <video
                                                         autoPlay
                                                         loop
@@ -1633,7 +1633,7 @@ function AgentPage() {
                                                     </video>
                                                 )}
 
-                                                {nft.tokenId === "5" && (
+                                                {nft.id.toString() === "5" && (
                                                     <video
                                                         autoPlay
                                                         loop
