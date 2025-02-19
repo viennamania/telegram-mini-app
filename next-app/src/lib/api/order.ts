@@ -58,6 +58,8 @@ export interface UserProps {
   buyer: any,
 
   transactionHash: string,
+
+  virtualAccount: string,
 }
 
 export interface ResultProps {
@@ -159,11 +161,12 @@ export async function updatePrice(data: any) {
 
 
 
+
 export async function insertSellOrder(data: any) {
 
   //console.log('insertSellOrder data: ' + JSON.stringify(data));
 
-  if (!data.walletAddress || !data.usdtAmount || !data.krwAmount || !data.rate) {
+  if (!data.walletAddress || !data.sellAmount || !data.krwAmount || !data.rate) {
     return null;
   }
 
@@ -199,6 +202,8 @@ export async function insertSellOrder(data: any) {
 
   const seller = user.seller;
 
+  const virtualAccount = user.virtualAccount;
+
 
 
   const collection = client.db('shinemywinter').collection('orders');
@@ -214,12 +219,13 @@ export async function insertSellOrder(data: any) {
       mobile: mobile,
       avatar: avatar,
       seller: seller,
-      usdtAmount: data.usdtAmount,
+      sellAmount: data.sellAmount,
       krwAmount: data.krwAmount,
       rate: data.rate,
       createdAt: new Date().toISOString(),
       status: 'ordered',
       privateSale: data.privateSale,
+      virtualAccount: virtualAccount,
     }
   );
 
