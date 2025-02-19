@@ -98,7 +98,7 @@ interface SellOrder {
 
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
 
-//const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAH-K on Polygon
+//const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // USDT on Polygon
 
 
 // get a contract
@@ -573,7 +573,7 @@ export default function Index({ params }: any) {
 
       if (sellAmount > balance) {
         //toast.error('Insufficient balance');
-        alert('판매할수 있는 NOAH-K가 부족합니다.');
+        alert('판매할수 있는 USDT가 부족합니다.');
         return;
       }
 
@@ -813,15 +813,15 @@ export default function Index({ params }: any) {
 
 
             //toast.success('Payment requested');
-            alert('판매자 지갑에서 에스크로 지갑으로 NOAH-K가 전송되었고 구매자에게 결제 요청을 하였습니다.');
+            alert('판매자 지갑에서 에스크로 지갑으로 USDT가 전송되었고 구매자에게 결제 요청을 하였습니다.');
           } else {
             //toast.error('Payment request failed');
-            alert('에스크로 지갑으로 NOAH-K 전송이 실패했습니다.');
+            alert('에스크로 지갑으로 USDT 전송이 실패했습니다.');
           }
 
         } else {
 
-          alert('에스크로 지갑으로 NOAH-K 전송이 실패했습니다.');
+          alert('에스크로 지갑으로 USDT 전송이 실패했습니다.');
 
         }
 
@@ -829,7 +829,7 @@ export default function Index({ params }: any) {
         
         //console.log('error', error);
 
-        alert('에스크로 지갑으로 NOAH-K 전송이 실패했습니다.');
+        alert('에스크로 지갑으로 USDT 전송이 실패했습니다.');
 
       }
 
@@ -954,7 +954,7 @@ export default function Index({ params }: any) {
                   />
                   <div className="text-2xl font-semibold">
                     {/*Sell_USDT*/}
-                    NOAH-K 포인트 판매하기
+                    USDT 포인트 판매하기
                   </div>
 
 
