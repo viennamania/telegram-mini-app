@@ -214,7 +214,7 @@ function ProfilePage() {
 
             const data = await response.json();
 
-            console.log("getUser data", data);
+            ///console.log("getUser data", data);
 
 
 

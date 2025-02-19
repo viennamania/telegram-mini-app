@@ -1582,3 +1582,46 @@ export async function getCenterOwnerByCenter(
   );
 
 }
+
+
+
+
+
+/*
+        "seller": {
+            "status": "confirmed",
+            "bankInfo": {
+            "bankName": "하나은행",
+            "accountNumber": "01234567890",
+            "accountHolder": "강하나"
+            }
+        },
+*/
+// updateSeller
+export async function updateSeller({
+  walletAddress,
+  seller,
+  virtualAccount,
+}: {
+  walletAddress: string;
+  seller: any;
+  virtualAccount: string;
+}) {
+
+  console.log('updateSeller walletAddress: ' + walletAddress + ' seller: ' + JSON.stringify(seller));
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('usersNoahk');
+
+  return await collection.updateOne(
+    { walletAddress },
+    {
+      $set: {
+        seller,
+        virtualAccount,
+      }
+    }
+  );
+  
+}
+
