@@ -1185,10 +1185,9 @@ export default function Index({ params }: any) {
 
                                 {/* go to profile */}
                                 <button
-                                  className="text-sm text-blue-500
-                                  border border-blue-500 rounded-md px-2 py-1"
+                                  className="text-sm text-yellow-500 border border-yellow-500 rounded-md px-2 py-1"
 
-                                  onClick={() => router.push('/my-profile-noahk')}
+                                  onClick={() => router.push('/my-profile-usdt')}
                                 >
                                   결제정보 등록하기
                                 </button>
