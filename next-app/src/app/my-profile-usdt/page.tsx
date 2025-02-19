@@ -1109,7 +1109,7 @@ function ProfilePage() {
                                     {/* dot */}
                                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                     <span className='text-sm font-semibold text-gray-200'>
-                                        포인트를 판매할 때 결제용으로 사용할 은행계좌 정보입니다.
+                                        USDT를 판매할 때 결제용으로 사용할 은행계좌 정보입니다.
                                     </span>
                                 </div>
 
