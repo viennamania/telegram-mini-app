@@ -1011,7 +1011,7 @@ export async function confirmPayment(data: any) {
     return null;
   }
 
-  if (!data.transactionHash) {
+  if (!data.escrowTransactionHash) {
     return null;
   }
 
@@ -1029,9 +1029,14 @@ export async function confirmPayment(data: any) {
 
     { $set: {
       status: 'paymentConfirmed',
-      paymentAmount: paymentAmount,
-      queueId: data.queueId,
-      transactionHash: data.transactionHash,
+      payment: {
+        method: data.paymentMethod,
+        amount: paymentAmount,
+        proof: data.paymentProof,
+        memo: data.paymentMemo,
+        escrowTransactionHash: data.escrowTransactionHash,
+      },
+
       paymentConfirmedAt: new Date().toISOString(),
     } }
   );
@@ -1047,6 +1052,7 @@ export async function confirmPayment(data: any) {
   }
   
 }
+
 
 
 
