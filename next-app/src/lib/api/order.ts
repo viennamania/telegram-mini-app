@@ -736,7 +736,7 @@ export async function getSellOrdersForBuyer(
     const results = await collection.find<UserProps>(
       {
         'buyer.walletAddress': walletAddress,
-        status: { $ne: 'paymentConfirmed' },
+        ///status: { $ne: 'paymentConfirmed' },
       },
       
       //{ projection: { _id: 0, emailVerified: 0 } }
