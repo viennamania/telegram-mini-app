@@ -1089,7 +1089,7 @@ export default function Index({ params }: any) {
                             <th className="p-2">OTC 거래번호</th>
                             <th className="p-2">보낸지갑</th>
                             <th className="p-2">받은지갑</th>
-                            <th className="p-2">수량</th>
+                            <th className="p-2">수량(USDT)</th>
                             <th className="p-2">날짜</th>
                           </tr>
                         </thead>
@@ -1134,7 +1134,7 @@ export default function Index({ params }: any) {
                               <td className="p-2 text-xl font-semibold text-green-500 text-right pr-5">
 
                                 {
-                                Number(item.transferData.value) / 10 ** 6
+                                  Number(parseFloat(item.transferData.value) / 10 ** 6).toFixed(2)
                                 }
                               </td>
                               <td className="p-2 text-sm text-gray-400 text-center">
