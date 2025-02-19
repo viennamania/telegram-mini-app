@@ -1953,7 +1953,7 @@ export default function Index({ params }: any) {
                                         <span className="text-lg text-green-500 font-semibold">
                                           판매자가 입금을 기다리는 중입니다...
                                         </span>
-                                        <span className="text-sm text-zinc-400">
+                                        <span className="text-lg text-zinc-400">
                                           입금액: {
                                             item.krwAmount.toLocaleString('ko-KR', {
                                               style: 'currency',
@@ -1962,7 +1962,7 @@ export default function Index({ params }: any) {
                                           }
                                         </span>
                                         {/* 입금은행 */}
-                                        <span className="text-sm text-zinc-400">
+                                        <span className="text-lg text-zinc-400">
                                           입금은행: {
                                             item.seller?.bankInfo.bankName === '090' ? '카카오뱅크' :
                                             item.seller?.bankInfo.bankName === '089' ? '케이뱅크' :
@@ -1991,13 +1991,32 @@ export default function Index({ params }: any) {
                                           }
                                         </span>
                                         {/* 입금계좌 */}
-                                        <span className="text-sm text-zinc-400">
-                                          입금계좌: {item.seller?.bankInfo.accountNumber}
-                                        </span>
+                                        <div className="flex flex-row items-center gap-2">
+                                          <span className="text-lg text-zinc-400">
+                                            입금계좌: {item.seller?.bankInfo.accountNumber}
+                                          </span>
+                                          {/* 복사 버튼 */}
+                                          <button
+                                            className="bg-white text-black px-2 py-1 rounded-md"
+                                            onClick={() => {
+                                              navigator.clipboard.writeText(item.seller?.bankInfo.accountNumber);
+                                              alert('계좌번호가 복사되었습니다.');
+                                            }}
+                                          >
+                                            <Image
+                                              src="/icon-copy.png"
+                                              alt="Copy"
+                                              width={20}
+                                              height={20}
+                                            />
+                                          </button>
+                                        </div>
                                         {/* 입금자명 */}
-                                        <span className="text-sm text-zinc-400">
-                                          예금주: {item.seller?.bankInfo.accountHolder}
-                                        </span>
+                                        <div className="flex flex-row items-center gap-2">
+                                          <span className="text-lg text-zinc-400">
+                                            예금주명: {item.seller?.bankInfo.accountHolder}
+                                          </span>
+                                        </div>
                                       </div>
 
 
