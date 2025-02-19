@@ -2104,3 +2104,48 @@ export async function updateBuyOrderByQueueId(data: any) {
   }
 
 }
+
+
+
+
+
+
+
+
+// getAllSellOpenOrders
+// exclude my orders
+export async function getAllSellOpenOrders(
+
+  {
+    limit,
+    page,
+    walletAddress,
+  }: {
+    limit: number;
+    page: number;
+    walletAddress: string;
+  
+  }
+
+): Promise<ResultProps> {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('orders');
+
+  // status is 'ordered'
+  // exclude my orders
+
+  const results = await collection.find<UserProps>(
+    {
+      walletAddress: { $ne: walletAddress },
+      status: 'ordered',
+      privateSale: { $ne: true },
+    }
+  ).sort({ createdAt: -1 }).limit(limit).skip(page * limit).toArray();
+
+  return {
+    totalCount: results.length,
+    orders: results,
+  };
+
+}

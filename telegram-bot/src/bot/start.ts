@@ -77,6 +77,9 @@ feature.on("callback_query:data", async (ctx) => {
   if (data === "race") {
 
 
+    ctx.reply('🐎 ' + "경마게임을 시작합니다. 출전마를 배정중이니 잠시만 기다려주세요...");
+
+
     const telegramId = ctx.from?.id+"";
 
     const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
@@ -253,35 +256,35 @@ feature.on("callback_query:data", async (ctx) => {
       .text('1️⃣ 번말: ' + horses[0].tokenId, 'race-1' + '-' + sequence)
 
       // https://granderby.io/horse-details/4149 보러가기
-      .webApp(horses[0].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[0].tokenId)
+      .webApp('🐎 ' + horses[0].tokenId + " NFT" + ' ➡️', 'https://granderby.io/horse-details/' + horses[0].tokenId)
 
       .row()
       .text('2️⃣ 번말: ' + horses[1].tokenId, 'race-2' + '-' + sequence)
-      .webApp(horses[1].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[1].tokenId)
+      .webApp('🐎 ' + horses[1].tokenId + " NFT" + ' ➡️', 'https://granderby.io/horse-details/' + horses[1].tokenId)
 
       .row()
       .text('3️⃣ 번말: ' + horses[2].tokenId, 'race-3' + '-' + sequence)
-      .webApp(horses[2].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[2].tokenId)
+      .webApp('🐎 ' + horses[2].tokenId + " NFT" + ' ➡️', 'https://granderby.io/horse-details/' + horses[2].tokenId)
 
       .row()
       .text('4️⃣ 번말: ' + horses[3].tokenId, 'race-4' + '-' + sequence)
-      .webApp(horses[3].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[3].tokenId)
+      .webApp('🐎 ' + horses[3].tokenId + " NFT" + ' ➡️', 'https://granderby.io/horse-details/' + horses[3].tokenId)
 
       .row()
       .text('5️⃣ 번말: ' + horses[4].tokenId, 'race-5' + '-' + sequence)
-      .webApp(horses[4].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[4].tokenId)
+      .webApp('🐎 ' + horses[4].tokenId + " NFT" + ' ➡️', 'https://granderby.io/horse-details/' + horses[4].tokenId)
 
       .row()
       .text('6️⃣ 번말: ' + horses[5].tokenId, 'race-6' + '-' + sequence)
-      .webApp(horses[5].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[5].tokenId)
+      .webApp('🐎 ' + horses[5].tokenId + " NFT" + ' ➡️', 'https://granderby.io/horse-details/' + horses[5].tokenId)
 
       .row()
       .text('7️⃣ 번말: ' + horses[6].tokenId, 'race-7' + '-' + sequence)
-      .webApp(horses[6].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[6].tokenId)
+      .webApp('🐎 ' + horses[6].tokenId + " NFT" + ' ➡️', 'https://granderby.io/horse-details/' + horses[6].tokenId)
 
       .row()
       .text('8️⃣ 번말: ' + horses[7].tokenId, 'race-8' + '-' + sequence)
-      .webApp(horses[7].tokenId + " NFT 보러가기", 'https://granderby.io/horse-details/' + horses[7].tokenId)
+      .webApp('🐎 ' + horses[7].tokenId + " NFT" + ' ➡️', 'https://granderby.io/horse-details/' + horses[7].tokenId)
       
 
     /*
@@ -315,13 +318,6 @@ feature.on("callback_query:data", async (ctx) => {
     // race-3
 
 
-    /*
-    if (selectedOddOrEven === "odd") {
-      await ctx.reply("🚹 홀을 선택하셨습니다.");
-    } else if (selectedOddOrEven === "even") {
-      await ctx.reply("🚺 짝을 선택하셨습니다.");
-    }
-    */
 
 
     const dataSplit = data.split('-');
@@ -341,6 +337,9 @@ feature.on("callback_query:data", async (ctx) => {
     }
 
 
+
+
+    ctx.reply('🐎 ' + selectedNumber + '️⃣' + ' 번말 정보를 읽어오는 중이니 잠시만 기다려주세요...');
 
 
 
@@ -374,9 +373,9 @@ feature.on("callback_query:data", async (ctx) => {
 
 
 
-    const urlGetOneGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/getRaceGame`;
+    const urlGetGame = `${process.env.FRONTEND_APP_ORIGIN}/api/game/getRaceGame`;
   
-    const responseGetOneGame = await fetch(urlGetOneGame, {
+    const responseGetGame = await fetch(urlGetGame, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -387,18 +386,20 @@ feature.on("callback_query:data", async (ctx) => {
       }),
     });
 
-    if (responseGetOneGame.status !== 200) {
+    if (responseGetGame.status !== 200) {
       return ctx.reply("Failed to get one game");
     }
 
-    const dataGetOneGame = await responseGetOneGame.json();
+    const dataGetGame = await responseGetGame.json();
 
 
 
-    console.log("dataGetOneGame=", dataGetOneGame);
+    console.log("dataGetGame=", dataGetGame);
 
 
-    const horse = dataGetOneGame.result?.data?.horses[Number(selectedNumber) - 1];
+    const horse = dataGetGame.result?.horses[Number(selectedNumber) - 1];
+
+    //console.log("horse=", horse);
 
 
     const horseImageUrl = horse?.nft?.metadata?.image;
@@ -419,6 +420,7 @@ feature.on("callback_query:data", async (ctx) => {
     }
 
 
+    const chatResponse = await ctx.reply("출발!!!");
 
 
     const timer = 50;
@@ -444,10 +446,30 @@ feature.on("callback_query:data", async (ctx) => {
     }
 
 
+    ///const chatResponse = await ctx.reply("🐎 " + "경주마 배정이 완료되었습니다. 경주를 시작합니다.");
 
   
+    /*
+    const racerText = [] as string[];
 
-    for (let i = 0; i < timer; i++) {
+    for (let j = 0; j < racerCount; j++) {
+      
+      if (racer[j] === parseInt(selectedNumber)) {
+        racerText.push(racer[j] + '️⃣');
+      } else {
+        racerText.push(racer[j] + '');
+      }
+
+    }
+
+    const textStart = timer*10 + '미터 '
+      + ' ' + '🐎 ' + racerText.join(' ');
+
+    const chatResponse = await ctx.reply(textStart);
+    */
+    
+
+    for (let i = 0; i < (timer+1); i++) {
 
       //await ctx.reply("1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ 7️⃣ 8️⃣ 8️⃣ 🔟");
 
@@ -485,15 +507,31 @@ feature.on("callback_query:data", async (ctx) => {
 
  
 
+      //console.log("text=", text);
+
       /*
       const text = timer*10 - i*10 + '미터 '
         + ' ' + '🐎 ' + first
         + ' ' +  racer[1] + ' ' +  racer[2] + ' ' +  racer[3] + ' ' +  racer[4] + ' ' +  racer[5] + ' ' +  racer[6] + ' ' +  racer[7];
       */
 
+      await chatResponse.delete();
 
-      await ctx.reply(text);
+      const result = await ctx.reply(text);
 
+      //await chatResponse.editText(text);
+
+      //await chatResponse.editCaption(text);
+
+
+      /*
+      await ctx.editMessageText("hi", { parse_mode: "HTML" })
+      */
+
+      // editMessageText
+
+      //const response = await chatResponse.editText(text);
+      
 
 
 
@@ -526,23 +564,44 @@ feature.on("callback_query:data", async (ctx) => {
     }
 
 
+
+
+    ctx.reply("⚖️ " + '경기결과를 확인중이니 잠시만 기다려주세요...');
+
+
+
     let firstHorseNumber = racer[0];
 
     const win = firstHorseNumber === parseInt(selectedNumber);
 
 
 
-    /*
-    if (resultOddOrEven === "odd") {
-      await ctx.reply("💥 결과: 🚹 홀");
+
+
+ 
+
+    //await ctx.reply("🐎 " + firstHorseNumber + '️⃣' + ' 번 말이 1등으로 도착하였습니다.');
+
+
+    const winHorse = dataGetGame.result?.horses[Number(firstHorseNumber) - 1];
+
+
+    const winHorseImageUrl = winHorse?.nft?.metadata?.image;
+
+    if (winHorseImageUrl) {
+
+      await ctx.replyWithPhoto(
+        winHorseImageUrl,
+        {
+          caption: '🏆 ' + firstHorseNumber + '️⃣' + ' 번 말이 1등으로 도착하였습니다.'
+        }
+      )
+
     } else {
-      await ctx.reply("💥 결과: 🚺 짝");
+
+      await ctx.reply("🏆 " + firstHorseNumber + '️⃣' + ' 번 말이 1등으로 도착하였습니다.');
+
     }
-    */
-
-    await ctx.reply("🐎 " + firstHorseNumber + '️⃣' + ' 번 말이 1등으로 도착하였습니다.');
-
-
 
 
 
@@ -913,7 +972,14 @@ feature.on("callback_query:data", async (ctx) => {
 
     //const randomNumber = Math.floor(Math.random() * 2);
 
-    const randomNumber = Math.floor(Math.random() * 20);
+    //const randomNumber = Math.floor(Math.random() * 20);
+
+    // random number with seed number, seed number is time
+    // random number is 0, 1, 2, .. , 19
+
+    const seed = new Date().getTime();
+    const randomNumber = Math.floor(Math.abs(Math.sin(seed)) * 20);
+
 
 
     //const result = randomNumber === 0 ? "🚺 짝" : "🚹 홀";
@@ -1556,9 +1622,12 @@ feature.command('wallet', async (ctx) => {
 
 
 
-feature.command('start', async (ctx) => {
+feature.command('okx', async (ctx) => {
 
-  console.log('start command');
+  console.log('okx command');
+
+  ctx.reply('⏳ ' + "OKX를 시작합니다. 잠시만 기다려주세요...");
+
 
   const center = ctx.me.username;
 
@@ -1603,34 +1672,8 @@ feature.command('start', async (ctx) => {
       // 당신을 봇을 사용할 수 없습니다.
       // link to the center
 
-      const welecomePhoto = `${process.env.FRONTEND_APP_ORIGIN}/logo-centerbot.png`;
-
-      const welecomeVideo = `${process.env.FRONTEND_APP_ORIGIN}/logo-centerbot.gif`;
-
       const videoFile = new InputFile(`/home/ubuntu/video/logo-centerbot.gif`)
 
-      //const videoFile = new InputFile(welecomeVideo)
-      
-      /*
-      const keyboard = new InlineKeyboard()
-      .text("ABCD")
-      .row()
-      //.webApp('소속 센터봇으로 이동하기', '@owin_anawin_bot')
-      //.url('소속 센터봇으로 이동하기', 'https://t.me/owin_anawin_bot')
-      .url('소속 센터봇으로 이동하기', 'https://naver.com')
-      */
-      
-      /*
-      return ctx.replyWithPhoto(
-        welecomePhoto,
-        {
-          caption: "🚫 당신은 이 봇을 사용할 수 없습니다.\n\n" + "소속 센터봇: " + data.result.center,
-          // english
-          //caption: "🚫 You cannot use this bot.\n\n" + "Center Bot: " + data.result.center,
-          //reply_markup: keyboard
-        }
-      )
-      */
 
       return ctx.replyWithVideo(
         videoFile,
@@ -1814,6 +1857,9 @@ feature.command('start', async (ctx) => {
   const urlNftBuy = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-nft-erc1155-noah-buy`;
 
 
+
+
+
   let totalAccountCount = "";
   let totalTradingAccountBalance = "";
 
@@ -1871,6 +1917,9 @@ feature.command('start', async (ctx) => {
     
   }
 
+
+
+
   let keyboard = null;
   
   if (referralCode || isCenterOwner) {
@@ -1882,7 +1931,8 @@ feature.command('start', async (ctx) => {
     .webApp('🤖 나의 에이전트봇', urlReferral)
     .webApp('🤖 나의 마스터봇', urlTbot)
     .row()
-    .webApp('💰 나의 마스트봇 보상내역 보러가기', urlClaim)
+    .webApp('📆 나의 마스트봇 보상내역 보러가기', urlClaim)
+
 
     /*
     .row()
@@ -1992,9 +2042,14 @@ feature.command('start', async (ctx) => {
 
 
 
-feature.command('noah', async (ctx) => {
+feature.command('start', async (ctx) => {
 
-  console.log('noah command');
+  console.log('start command');
+
+
+  ctx.reply('⏳ ' + "NOAH SKY를 시작합니다. 잠시만 기다려주세요...");
+
+
 
   const center = ctx.me.username;
 
@@ -2028,6 +2083,31 @@ feature.command('noah', async (ctx) => {
   } else {
     const data = await responseGetUser.json();
     //console.log("data", data);
+
+
+
+    if (data.result && data.result.center !== center) {
+
+      // 당신을 봇을 사용할 수 없습니다.
+      // link to the center
+
+      const videoFile = new InputFile(`/home/ubuntu/video/logo-centerbot.gif`)
+
+
+      return ctx.replyWithVideo(
+        videoFile,
+        {
+          caption: "🚫 당신은 이 봇을 사용할 수 없습니다.\n\n" + "소속 센터봇: " + data.result.center,
+          // english
+          //caption: "🚫 You cannot use this bot.\n\n" + "Center Bot: " + data.result.center,
+          //reply_markup: keyboard
+        }
+      )
+
+
+    }
+
+
 
 
 
@@ -2196,14 +2276,22 @@ feature.command('noah', async (ctx) => {
 
 
 
+  //const urlClaim = `${process.env.FRONTEND_APP_ORIGIN}/claim?walletAddress=${walletAddress}`;
+  const urlClaim = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet-noahs`;
+
+
 
   let keyboard = null;
   
   if (referralCode || isCenterOwner) {
     keyboard = new InlineKeyboard()
+    .webApp('🚻 나의 프로필 보러가기', urlMyProfile)
+    .row()
     .webApp('💰 나의 NOAH 채굴 NFT 보러가기', urlNft)
     .row()
-    .webApp('💰 나의 NOAH 채굴 NFT 구매신청하기', urlNftBuy)
+    .webApp('🎟️ 나의 NOAH 채굴 NFT 구매신청하기', urlNftBuy)
+    .row()
+    .webApp('📆 나의 채굴 보상내역 보러가기', urlClaim)
     .row()
     .webApp('💹 NOAH 코인 시세보기', urlMarket);
 
@@ -2239,7 +2327,7 @@ feature.command('noah', async (ctx) => {
 
 
 
-  const title = 'NOAH SKY에 오신것을 환영합니다.'
+  const title = '©️ ' + 'NOAH SKY에 오신것을 환영합니다.'
   + (nickname ? '\n\n✅ 회원아이디: ' + nickname : '')
   + (walletAddress ? '\n\n✅ 나의 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6) : '')
   + '\n\n' + referralCodeText
@@ -2282,6 +2370,140 @@ feature.command('noah', async (ctx) => {
   //return ctx.replyWithGame('tictactoe')
 
 })
+
+
+
+
+
+
+
+
+
+
+
+// show game
+feature.command('affiliation', async (ctx) => {
+  
+  const telegramId = ctx.from?.id+"";
+
+  const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/getUserByTelegramId`;
+
+  const responseGetUser = await fetch(urlGetUser, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      telegramId,
+    }),
+  });
+
+  if (responseGetUser.status !== 200) {
+    return ctx.reply("Failed to get user");
+  } else {
+    const data = await responseGetUser.json();
+    //console.log("data", data);
+
+    if (data.result && data.result.walletAddress) {
+      const walletAddress = data.result.walletAddress;
+
+
+      // get balance
+      const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+      const clientId = process.env.THIRDWEB_CLIENT_ID;
+      const client = createThirdwebClient({
+        clientId: clientId as string,
+      });
+      const contract = getContract({
+        client,
+        chain: polygon,
+        address: contractAddress,
+      });
+
+      const result = await balanceOf({
+        contract,
+        address: walletAddress,
+      });
+
+      const balance = Number(result) / 10 ** 6;
+
+
+
+      const center = ctx.me.username+"";
+      const username = ctx.from?.id+"";
+      const expiration = Date.now() + 60000_000; // valid for 100 minutes
+      const message = JSON.stringify({
+        username,
+        expiration,
+      });
+    
+      const authCode = await adminAccount.signMessage({
+        message,
+      });
+
+
+
+
+
+
+      const urlAffiliation = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/affiliation`;
+
+
+      const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
+      + '\n\n' + '💲 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 추천코드 관리로 이동하세요.';
+      // english
+      //+ '\n\n' + '✅ Wallet Address: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
+      //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to go to the game.';
+
+      const keyboard = new InlineKeyboard()
+        //.webApp('💰 게임하러가기', urlGame)
+        // english
+        //.webApp('💰 Go to the game', urlGame)
+
+        .webApp('♻️ 나의 추천코드 관리하기 ♻️', urlAffiliation)
+
+
+      const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/banner-affiliate.webp`;
+
+
+      
+      return ctx.replyWithPhoto(
+        photoUrl,
+        {
+          caption: text,
+          reply_markup: keyboard
+        }
+      )
+      
+
+      /*
+      const videoUrl = `${process.env.FRONTEND_APP_ORIGIN}/connecting.gif`;
+      const videoFile = new InputFile(videoUrl)
+
+      ctx.replyWithVideo(
+        videoFile,
+        {
+          caption: text,
+          reply_markup: keyboard
+        }
+      )
+      */
+
+
+
+    }
+  }
+
+  return ctx.reply("Failed to get wallet address");
+
+})
+
+
+
+
+
+
+
 
 
 
