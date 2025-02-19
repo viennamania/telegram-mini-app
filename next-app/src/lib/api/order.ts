@@ -821,7 +821,10 @@ export async function acceptSellOrder(data: any) {
 
 
 
-  if (!data.orderId || !data.buyerWalletAddress ) {
+  if (!data.orderId || !data.buyerWalletAddress
+    || !data.escrowWalletAddress
+    || !data.escrowWalletPrivateKey
+  ) {
     return null;
   }
 
@@ -836,7 +839,7 @@ export async function acceptSellOrder(data: any) {
 
 
   const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('orders');
+  const collection = client.db('shinemywinter').collection('ordersNoahk');
 
   // random number for tradeId
   // 100000 ~ 999999 string
@@ -878,6 +881,12 @@ export async function acceptSellOrder(data: any) {
         memo: buyerMemo,
         depositName: depositName,
         depositBankName: depositBankName,
+      },
+      escrow: {
+        processing: false,
+        escrowed: false,
+        walletAddress: data.escrowWalletAddress,
+        walletPrivateKey: data.escrowWalletPrivateKey,
       },
     } }
   );
@@ -941,6 +950,10 @@ export async function acceptSellOrder(data: any) {
   }
   
 }
+
+
+
+
 
 
 
