@@ -839,7 +839,7 @@ export async function acceptSellOrder(data: any) {
 
 
   const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('ordersNoahk');
+  const collection = client.db('shinemywinter').collection('orders');
 
   // random number for tradeId
   // 100000 ~ 999999 string
@@ -1829,8 +1829,6 @@ export async function acceptBuyOrder(data: any) {
       { _id: new ObjectId(data.orderId + '') }
     );
 
-    ///console.log('acceptSellOrder updated: ' + JSON.stringify(updated));
-
 
 
     return updated;
@@ -1848,8 +1846,6 @@ export async function acceptBuyOrder(data: any) {
 
 
 export async function buyOrderRequestPayment(data: any) {
-  
-  ///console.log('acceptSellOrder data: ' + JSON.stringify(data));
 
   if (!data.orderId) {
     return null;
