@@ -968,6 +968,8 @@ export default function Index({ params }: any) {
 
 
             <div className="mt-5 flex flex-row gap-2 items-center justify-between">
+
+              {/*
               <Link href="/console-noah?center=noah_wallet_bot">
                 
                 <Button
@@ -977,8 +979,9 @@ export default function Index({ params }: any) {
                 </Button>
 
               </Link>
+              */}
 
-              <Link href="/kr/my-buy-noahk?walletAddress=0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C">
+              <Link href="/kr/my-buy-usdt?walletAddress=0x26DDA44952BbDD2779c71Ba779Ab7cC4C05A978a">
                 
                 <Button
                   className="bg-green-500 text-white p-2 rounded"
