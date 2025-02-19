@@ -954,7 +954,7 @@ export default function Index({ params }: any) {
                   />
                   <div className="text-2xl font-semibold">
                     {/*Sell_USDT*/}
-                    USDT 포인트 판매하기
+                    USDT 판매하기
                   </div>
 
 
