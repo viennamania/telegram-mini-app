@@ -1611,7 +1611,7 @@ export async function updateSeller({
   console.log('updateSeller walletAddress: ' + walletAddress + ' seller: ' + JSON.stringify(seller));
 
   const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('usersNoahk');
+  const collection = client.db('shinemywinter').collection('users');
 
   return await collection.updateOne(
     { walletAddress },
