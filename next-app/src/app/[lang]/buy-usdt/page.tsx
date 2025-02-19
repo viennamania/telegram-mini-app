@@ -63,7 +63,7 @@ interface SellOrder {
   limit: string;
   paymentMethods: string[];
 
-  usdtAmount: number;
+  sellAmount: number;
   krwAmount: number;
   rate: number;
 
@@ -301,7 +301,13 @@ export default function Index({ params }: any) {
   
 
 
-      const address = account?.address;
+    const address = account?.address;
+
+
+    // test address
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+  
+
 
 
     const router = useRouter();
@@ -329,7 +335,7 @@ export default function Index({ params }: any) {
   
       setBalance( Number(result) / 10 ** 6 );
 
-
+      /*
       await fetch('/api/user/getBalanceByWalletAddress', {
         method: 'POST',
         headers: {
@@ -346,6 +352,7 @@ export default function Index({ params }: any) {
       .then(data => {
           setNativeBalance(data.result?.displayValue);
       });
+      */
 
 
 
@@ -514,7 +521,7 @@ export default function Index({ params }: any) {
     
 
 
-    const [searchMyTrades, setSearchMyTrades] = useState(false);
+    const [searchMyTrades, setSearchMyTrades] = useState(true);
 
 
     
@@ -902,6 +909,7 @@ export default function Index({ params }: any) {
                           </div>
                       </div>
                       {/* checkbox for search my trades */}
+                      {/*
                       <div className="flex flex-row items-center gap-2">
                         <input
                           disabled={!address}
@@ -912,6 +920,8 @@ export default function Index({ params }: any) {
                         />
                         <label className="text-sm text-zinc-400">{Search_my_trades}</label>
                       </div>
+                      */}
+
                     </div>
 
                   </div>
@@ -941,6 +951,7 @@ export default function Index({ params }: any) {
                     </button>
 
                     {/* select table view or card view */}
+                    {/*
                     <div className="flex flex-row items-center space-x-4">
                         <div className="text-sm">{Table_View}</div>
                         <input
@@ -950,6 +961,7 @@ export default function Index({ params }: any) {
                           className="w-5 h-5 rounded-full"
                         />
                     </div>
+                    */}
 
                   </div>
 
@@ -1054,13 +1066,13 @@ export default function Index({ params }: any) {
                                 }
                               </div>
                               <div className="text-sm font-semibold text-white">
-                              {Rate}{' '}{Number(item.krwAmount / item.usdtAmount).toFixed(2)}
+                              {Rate}{' '}{Number(item.krwAmount / item.sellAmount).toFixed(2)}
                               </div>
                             </td>
 
                             <td className="p-2">
                               <div className="text-sm font-semibold text-white">
-                                {item.usdtAmount} USDT
+                                {item.sellAmount} USDT
                               </div>
                             </td>
 
@@ -1434,7 +1446,7 @@ export default function Index({ params }: any) {
 
 
                                   <p className="text-sm font-semibold text-green-500 ">
-                                    {item.tradeId}
+                                    #{item.tradeId}
                                   </p>
 
                                   {item.status === 'cancelled' ? (
@@ -1532,11 +1544,11 @@ export default function Index({ params }: any) {
                                 <div className="mt-2 flex flex-row items-start gap-2">
 
                                   <p className="text-4xl font-semibold text-white">
-                                    {item.usdtAmount}{' '}USDT
+                                    {item.sellAmount}{' '}USDT
                                   </p>
                                   <p className="text-lg font-semibold text-white">{Rate}: {
 
-                                    Number(item.krwAmount / item.usdtAmount).toFixed(2)
+                                    Number(item.krwAmount / item.sellAmount).toFixed(2)
 
                                     }</p>
                                 </div>
@@ -1558,12 +1570,67 @@ export default function Index({ params }: any) {
 
                               </div>
 
-                      
+                    
+
+
+{/*
+                                    item.seller?.bankInfo.bankName === '090' ? '카카오뱅크' :
+                                    item.seller?.bankInfo.bankName === '089' ? '케이뱅크' :
+                                    item.seller?.bankInfo.bankName === '092' ? '토스뱅크' :
+
+                                    item.seller?.bankInfo.bankName === '004' ? '국민은행' :
+                                    item.seller?.bankInfo.bankName === '020' ? '우리은행' :
+                                    item.seller?.bankInfo.bankName === '088' ? '신한은행' :
+                                    item.seller?.bankInfo.bankName === '011' ? '농협' :
+                                    item.seller?.bankInfo.bankName === '003' ? '기업은행' :
+                                    item.seller?.bankInfo.bankName === '081' ? '하나은행' :
+                                    item.seller?.bankInfo.bankName === '002' ? '외환은행' :
+                                    item.seller?.bankInfo.bankName === '032' ? '부산은행' :
+                                    item.seller?.bankInfo.bankName === '031' ? '대구은행' :
+                                    item.seller?.bankInfo.bankName === '037' ? '전북은행' :
+                                    item.seller?.bankInfo.bankName === '071' ? '경북은행' :
+                                    item.seller?.bankInfo.bankName === '034' ? '광주은행' :
+                                    item.seller?.bankInfo.bankName === '071' ? '우체국' :
+                                    item.seller?.bankInfo.bankName === '007' ? '수협' :
+                                    item.seller?.bankInfo.bankName === '027' ? '씨티은행' :
+                                    item.seller?.bankInfo.bankName === '055' ? '대신은행' :
+                                    item.seller?.bankInfo.bankName === '054' ? '동양종합금융' :
+                                    item.seller?.bankInfo.bankName === '230' ? '미래에셋증권' :
+
+                                    item.seller?.bankInfo.bankName
+*/}
 
                               <div className="mt-4 mb-4 flex flex-col items-start text-sm
                                 text-zinc-400
                               ">
-                                {Payment}: {Bank_Transfer} ({item.seller?.bankInfo.bankName})
+                                {Payment}: (
+                                  {
+                                    item.seller?.bankInfo.bankName === '090' ? '카카오뱅크' :
+                                    item.seller?.bankInfo.bankName === '089' ? '케이뱅크' :
+                                    item.seller?.bankInfo.bankName === '092' ? '토스뱅크' :
+
+                                    item.seller?.bankInfo.bankName === '004' ? '국민은행' :
+                                    item.seller?.bankInfo.bankName === '020' ? '우리은행' :
+                                    item.seller?.bankInfo.bankName === '088' ? '신한은행' :
+                                    item.seller?.bankInfo.bankName === '011' ? '농협' :
+                                    item.seller?.bankInfo.bankName === '003' ? '기업은행' :
+                                    item.seller?.bankInfo.bankName === '081' ? '하나은행' :
+                                    item.seller?.bankInfo.bankName === '002' ? '외환은행' :
+                                    item.seller?.bankInfo.bankName === '032' ? '부산은행' :
+                                    item.seller?.bankInfo.bankName === '031' ? '대구은행' :
+                                    item.seller?.bankInfo.bankName === '037' ? '전북은행' :
+                                    item.seller?.bankInfo.bankName === '071' ? '경북은행' :
+                                    item.seller?.bankInfo.bankName === '034' ? '광주은행' :
+                                    item.seller?.bankInfo.bankName === '071' ? '우체국' :
+                                    item.seller?.bankInfo.bankName === '007' ? '수협' :
+                                    item.seller?.bankInfo.bankName === '027' ? '씨티은행' :
+                                    item.seller?.bankInfo.bankName === '055' ? '대신은행' :
+                                    item.seller?.bankInfo.bankName === '054' ? '동양종합금융' :
+                                    item.seller?.bankInfo.bankName === '230' ? '미래에셋증권' :
+
+                                    item.seller?.bankInfo.bankName
+                                  }
+                                )
                               </div>
 
 
@@ -1732,7 +1799,7 @@ export default function Index({ params }: any) {
 
                                     <div className="flex flex-col gap-2 items-start">
                                       <span>
-                                        {Waiting_for_seller_to_deposit} {item.usdtAmount} USDT {to_escrow}...
+                                        {Waiting_for_seller_to_deposit} {item.sellAmount} USDT {to_escrow}...
                                       </span>
 
                                       <span className="text-sm text-zinc-400">
@@ -1848,7 +1915,9 @@ export default function Index({ params }: any) {
                                         width={32}
                                         height={32}
                                       />
-                                      <div>{Escrow}: {item.usdtAmount} USDT</div>
+                                      <span className="text-lg text-green-500 font-semibold">
+                                        {Escrow}: {item.sellAmount} USDT
+                                      </span>
                                       <button
                                         className="bg-white text-black px-2 py-2 rounded-md"
                                         onClick={() => {
@@ -1880,12 +1949,57 @@ export default function Index({ params }: any) {
                                         className="animate-spin"
                                       />
 
-                                      <div>Waiting for buyer to send {
-                                      item.krwAmount.toLocaleString('ko-KR', {
-                                        style: 'currency',
-                                        currency: 'KRW',
-                                      })} to seller...</div>
-                                    
+                                      <div className="flex flex-col gap-2 items-start">
+                                        <span className="text-lg text-green-500 font-semibold">
+                                          판매자가 입금을 기다리는 중입니다...
+                                        </span>
+                                        <span className="text-sm text-zinc-400">
+                                          입금액: {
+                                            item.krwAmount.toLocaleString('ko-KR', {
+                                              style: 'currency',
+                                              currency: 'KRW',
+                                            })
+                                          }
+                                        </span>
+                                        {/* 입금은행 */}
+                                        <span className="text-sm text-zinc-400">
+                                          입금은행: {
+                                            item.seller?.bankInfo.bankName === '090' ? '카카오뱅크' :
+                                            item.seller?.bankInfo.bankName === '089' ? '케이뱅크' :
+                                            item.seller?.bankInfo.bankName === '092' ? '토스뱅크' :
+
+                                            item.seller?.bankInfo.bankName === '004' ? '국민은행' :
+                                            item.seller?.bankInfo.bankName === '020' ? '우리은행' :
+                                            item.seller?.bankInfo.bankName === '088' ? '신한은행' :
+                                            item.seller?.bankInfo.bankName === '011' ? '농협' :
+                                            item.seller?.bankInfo.bankName === '003' ? '기업은행' :
+                                            item.seller?.bankInfo.bankName === '081' ? '하나은행' :
+                                            item.seller?.bankInfo.bankName === '002' ? '외환은행' :
+                                            item.seller?.bankInfo.bankName === '032' ? '부산은행' :
+                                            item.seller?.bankInfo.bankName === '031' ? '대구은행' :
+                                            item.seller?.bankInfo.bankName === '037' ? '전북은행' :
+                                            item.seller?.bankInfo.bankName === '071' ? '경북은행' :
+                                            item.seller?.bankInfo.bankName === '034' ? '광주은행' :
+                                            item.seller?.bankInfo.bankName === '071' ? '우체국' :
+                                            item.seller?.bankInfo.bankName === '007' ? '수협' :
+                                            item.seller?.bankInfo.bankName === '027' ? '씨티은행' :
+                                            item.seller?.bankInfo.bankName === '055' ? '대신은행' :
+                                            item.seller?.bankInfo.bankName === '054' ? '동양종합금융' :
+                                            item.seller?.bankInfo.bankName === '230' ? '미래에셋증권' :
+
+                                            item.seller?.bankInfo.bankName
+                                          }
+                                        </span>
+                                        {/* 입금계좌 */}
+                                        <span className="text-sm text-zinc-400">
+                                          입금계좌: {item.seller?.bankInfo.accountNumber}
+                                        </span>
+                                        {/* 입금자명 */}
+                                        <span className="text-sm text-zinc-400">
+                                          예금주: {item.seller?.bankInfo.accountHolder}
+                                        </span>
+                                      </div>
+
 
                                     </div>
 
@@ -1990,7 +2104,7 @@ export default function Index({ params }: any) {
 
                                               }}
                                             >
-                                              {Buy} {item.usdtAmount} USDT
+                                              {Buy} {item.sellAmount} USDT
                                             </button>
 
 
