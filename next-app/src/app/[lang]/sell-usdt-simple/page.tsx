@@ -2569,8 +2569,8 @@ export default function Index({ params }: any) {
                                         */}
                                         <div className="flex flex-row items-center gap-2">
                                           {/* dot */}
-                                          <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
-                                          <span className="text-lg text-green-500 font-semibold">
+                                          <div className="w-2 h-2 bg-yellow-500 rounded-full inline-block mr-2"></div>
+                                          <span className="text-lg text-yellow-500 font-semibold">
                                             {Buyer}가 {
                                             Number(item.krwAmount).toLocaleString('ko-KR', {
                                               style: 'currency',
@@ -2582,9 +2582,9 @@ export default function Index({ params }: any) {
                                         {/* 만약 구매자가 결제한것을 확인하고 거래완료를 하지 않으면 판매자 권한을 회수할 수 있습니다. */}
                                         <div className="flex flex-row items-center gap-2">
                                           {/* dot */}
-                                          <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
-                                          <span className="text-sm text-zinc-400">
-                                            {Buyer}가 결제한것을 확인하고 거래완료를 하지 않으면 판매자 권한을 회수할 수 있습니다.
+                                          <div className="w-2 h-2 bg-yellow-500 rounded-full inline-block mr-2"></div>
+                                          <span className="text-lg text-yellow-500 font-semibold">
+                                            {Buyer}가 결제한것을 확인하고 10분내로 거래완료를 하지 않으면 판매자 권한을 회수할 수 있습니다.
                                           </span>
                                         </div>
 
