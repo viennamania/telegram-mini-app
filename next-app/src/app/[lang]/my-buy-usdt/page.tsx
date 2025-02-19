@@ -385,7 +385,7 @@ export default function Index({ params }: any) {
       setBalance( Number(result) / 10 ** 6 );
 
 
-      await fetch('/api/userNoahk/getBalanceByWalletAddress', {
+      await fetch('/api/user/getBalanceByWalletAddress', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -495,7 +495,7 @@ export default function Index({ params }: any) {
 
 
 
-      await fetch('/api/userNoahK/getBalanceByWalletAddress', {
+      await fetch('/api/user/getBalanceByWalletAddress', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -534,7 +534,7 @@ export default function Index({ params }: any) {
         return;
     }
 
-    fetch('/api/userNoahk/getUser', {
+    fetch('/api/user/getUser', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
