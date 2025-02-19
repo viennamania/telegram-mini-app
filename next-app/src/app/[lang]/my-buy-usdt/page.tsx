@@ -102,7 +102,7 @@ const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on
 
 //const contractAddressArbitrum = "0x2f2a2543B76A4166549F7aab2e75Bef0aefC5B0f"; // USDT on Arbitrum
 
-//const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // NOAH-K on Polygon
+//const contractAddress = "0x9948328fa1813037a37F3d35C0b1e009d6d9a563"; // USDT on Polygon
 
 
 
@@ -894,6 +894,7 @@ export default function Index({ params }: any) {
         })
         .then(response => response.json())
         .then(data => {
+            data && data.result &&
             setTransfers(data.result.transfers);
         })
         .catch((error) => {
@@ -1395,7 +1396,7 @@ export default function Index({ params }: any) {
 
                             <td className="p-2">
                               <div className="text-sm font-semibold text-white">
-                                {item.sellAmount} NOAH-K
+                                {item.sellAmount} USDT
                               </div>
                             </td>
 
@@ -1940,7 +1941,7 @@ export default function Index({ params }: any) {
                                 <div className="mt-2 flex flex-row items-start gap-2">
 
                                   <p className="text-2xl font-semibold text-green-500">
-                                    {item.sellAmount}{' '}NOAH-K
+                                    {item.sellAmount}{' '}USDT
                                   </p>
                                   <p className="text-lg font-semibold text-white">{Rate}: {
 
@@ -2208,7 +2209,7 @@ export default function Index({ params }: any) {
                                     <div className="flex flex-col gap-2 items-start">
                                       {/*
                                       <span>
-                                        {Waiting_for_seller_to_deposit} {item.sellAmount} NOAH-K {to_escrow}...
+                                        {Waiting_for_seller_to_deposit} {item.sellAmount} USDT {to_escrow}...
                                       </span>
                                       */}
 
@@ -2216,7 +2217,7 @@ export default function Index({ params }: any) {
                                         {/* dot */}
                                         <div className="w-4 h-4 bg-green-500 rounded-full"></div>
                                         <span className="text-sm text-zinc-400">
-                                        판매자가 에스크로에 {item.sellAmount} NOAH-K를 입금하기를 기다리는 중입니다.
+                                        판매자가 에스크로에 {item.sellAmount} USDT를 입금하기를 기다리는 중입니다.
                                         </span>
                                       </div>
 
@@ -2352,7 +2353,7 @@ export default function Index({ params }: any) {
                                         height={32}
                                       />
                                       <span className="text-sm text-zinc-400">
-                                        {Escrow}: {item.sellAmount} NOAH-K
+                                        {Escrow}: {item.sellAmount} USDT
                                       </span>
                                       <button
                                         className="bg-white text-black px-2 py-2 rounded-md"
@@ -2533,7 +2534,7 @@ export default function Index({ params }: any) {
 
                                                 }}
                                               >
-                                                {item.sellAmount} NOAH-K 구매하기
+                                                {item.sellAmount} USDT 구매하기
                                               </button>
                                             </div>
 
