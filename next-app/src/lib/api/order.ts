@@ -528,6 +528,44 @@ export async function getOneSellOrder(
 
 
 
+
+
+// get sell order for escrow info
+export async function getOneSellOrderForEscrow(
+
+  {
+    orderId,
+  }: {
+    orderId: string;
+  }
+
+): Promise<any> {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('orders');
+
+  // check orderId is valid ObjectId
+  if (!ObjectId.isValid(orderId)) {
+    return null;
+  }
+
+  const result = await collection.findOne<UserProps>(
+    { _id: new ObjectId(orderId) }
+  );
+
+  if (result) {
+    return result;
+  } else {
+    return null;
+  }
+
+}
+
+
+
+
+
+
 // deleete sell order by orderId
 export async function deleteSellOrder(
 

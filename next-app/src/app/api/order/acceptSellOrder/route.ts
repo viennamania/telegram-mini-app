@@ -1,13 +1,42 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import {
-  UserProps,
-	acceptSellOrder,
+  acceptSellOrder,
+  getOneSellOrderForEscrow,
 } from '@lib/api/order';
 
-// Download the helper library from https://www.twilio.com/docs/node/install
-import twilio from "twilio";
-import { idCounter } from "thirdweb/extensions/farcaster/idRegistry";
+
+import {
+  getOneByWalletAddress,
+} from '@lib/api/user';
+
+import {
+  insertOtcMessageByWalletAddress
+} from '@lib/api/telegram';
+
+
+
+
+import { ethers } from "ethers";
+
+import {
+  createThirdwebClient,
+
+} from "thirdweb";
+
+//import { polygonAmoy } from "thirdweb/chains";
+import {
+  polygon,
+  arbitrum,
+ } from "thirdweb/chains";
+
+import {
+  privateKeyToAccount,
+  smartWallet,
+  getWalletBalance,
+  
+ } from "thirdweb/wallets";
+
 
 
 export async function POST(request: NextRequest) {
@@ -17,6 +46,72 @@ export async function POST(request: NextRequest) {
   const { lang, chain, orderId, buyerWalletAddress, buyerNickname, buyerAvatar, buyerMobile, buyerMemo, depositName, depositBankName } = body;
 
   console.log("orderId", orderId);
+
+
+
+
+
+  const escrowWalletPrivateKey = ethers.Wallet.createRandom().privateKey;
+
+  //console.log("escrowWalletPrivateKey", escrowWalletPrivateKey);
+
+  if (!escrowWalletPrivateKey) {
+    return NextResponse.json({
+      result: null,
+    });
+  }
+
+
+
+  const client = createThirdwebClient({
+    secretKey: process.env.THIRDWEB_SECRET_KEY || "",
+  });
+
+  if (!client) {
+    return NextResponse.json({
+      result: null,
+    });
+  }
+
+
+  const personalAccount = privateKeyToAccount({
+    client,
+    privateKey: escrowWalletPrivateKey,
+  });
+    
+
+  if (!personalAccount) {
+    return NextResponse.json({
+      result: null,
+    });
+  }
+  
+  const wallet = smartWallet({
+    chain: polygon,
+    sponsorGas: true,
+  });
+
+
+  // Connect the smart wallet
+  const account = await wallet.connect({
+    client: client,
+    personalAccount: personalAccount,
+  });
+
+  if (!account) {
+    return NextResponse.json({
+      result: null,
+    });
+  }
+
+
+  const escrowWalletAddress = account.address;
+
+    
+
+
+
+
   
 
   const result = await acceptSellOrder({
@@ -30,91 +125,59 @@ export async function POST(request: NextRequest) {
     buyerMemo: buyerMemo,
     depositName: depositName,
     depositBankName: depositBankName,
+    escrowWalletAddress: escrowWalletAddress,
+    escrowWalletPrivateKey: escrowWalletPrivateKey,
 
   });
 
-  ////console.log("result", result);
+  ///console.log("result", result);
 
 
-
-  const {
-    mobile: mobile,
-    seller: seller,
-    buyer: buyer,
-    tradeId: tradeId,
-  } = result as UserProps;
-
-
-  // if mobile number is not prefix with country code don't send sms
-  if (!mobile.startsWith('+')) {
+  if (!result) {
     return NextResponse.json({
-      result,
+      result: null,
     });
   }
 
+  // telegram message to seller
 
-    // send sms
+  const sellOrder = await getOneSellOrderForEscrow({
+    orderId: orderId,
+  });
 
-    const to = mobile;
+  if (sellOrder) {
+    
+    
 
+    const sellerWalletAddress = sellOrder.seller.walletAddress;
 
-    const accountSid = process.env.TWILIO_ACCOUNT_SID;
-    const authToken = process.env.TWILIO_AUTH_TOKEN;
-    const client = twilio(accountSid, authToken);
+    const user = await getOneByWalletAddress(sellerWalletAddress);
 
-
-
-    let message = null;
-
-   
-
-    try {
-
-      let msgBody = '';
-
-      if (lang === 'en') {
-        msgBody = `[GTETHER] TID[${tradeId}] Your sell order has been accepted by ${buyer?.nickname}! You must escrow USDT to proceed with the trade in 10 minutes!`;
-      } else if (lang === 'kr') {
-        msgBody = `[GTETHER] TID[${tradeId}] ${buyer?.nickname}님이 판매 주문을 수락했습니다! 거래를 계속하기 위해 USDT를 에스크로해야 합니다!`;
-      } else {
-        msgBody = `[GTETHER] TID[${tradeId}] Your sell order has been accepted by ${buyer?.nickname}! You must escrow USDT to proceed with the trade in 10 minutes!`;
-      }
-
-
-
-      message = await client.messages.create({
-        body: msgBody,
-        from: "+17622254217",
-        to: to,
-      });
-
-      console.log(message.sid);
-
+    if (user) {
       
-      /*
-      let msgBody2 = '';
+      const center = user.center;
+      
+      if (sellerWalletAddress) {
 
-      if (lang === 'en') { 
-        msgBody2 = `[GTETHER] TID[${tradeId}] Check the trade: https://gold.goodtether.com/${lang}/${chain}/sell-usdt/${orderId}`;
-      } else if (lang === 'kr') {
-        msgBody2 = `[GTETHER] TID[${tradeId}] 거래 확인: https://gold.goodtether.com/${lang}/${chain}/sell-usdt/${orderId}`;
-      } else {
-        msgBody2 = `[GTETHER] TID[${tradeId}] Check the trade: https://gold.goodtether.com/${lang}/${chain}/sell-usdt/${orderId}`;
+        const messagetext = '구매자가 구매를 신청하였습니다.'
+          + '\n\n겨래번호: ' + '#' + sellOrder.tradeId
+          + '\n\n구매자 입금자명: ' + depositName
+
+        const result = await insertOtcMessageByWalletAddress({
+          center: center,
+          walletAddress: sellerWalletAddress,
+          sellOrder: sellOrder,
+          message: messagetext,
+        } );
+
+        //console.log("insertOtcMessageByWalletAddress result", JSON.stringify(result));
+
       }
 
-
-      message = await client.messages.create({
-        body: msgBody2,
-        from: "+17622254217",
-        to: to,
-      });
-
-      console.log(message.sid);
-      */
-
-    } catch (e) {
-      console.error('error', e);
     }
+
+  }
+
 
 
 
