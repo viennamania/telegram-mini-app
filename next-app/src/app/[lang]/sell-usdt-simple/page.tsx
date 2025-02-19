@@ -1129,11 +1129,66 @@ export default function Index({ params }: any) {
                                   <div className="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></div>
 
 
+{/*
+                                    item.seller?.bankInfo.bankName === '090' ? '카카오뱅크' :
+                                    item.seller?.bankInfo.bankName === '089' ? '케이뱅크' :
+                                    item.seller?.bankInfo.bankName === '092' ? '토스뱅크' :
+
+                                    item.seller?.bankInfo.bankName === '004' ? '국민은행' :
+                                    item.seller?.bankInfo.bankName === '020' ? '우리은행' :
+                                    item.seller?.bankInfo.bankName === '088' ? '신한은행' :
+                                    item.seller?.bankInfo.bankName === '011' ? '농협' :
+                                    item.seller?.bankInfo.bankName === '003' ? '기업은행' :
+                                    item.seller?.bankInfo.bankName === '081' ? '하나은행' :
+                                    item.seller?.bankInfo.bankName === '002' ? '외환은행' :
+                                    item.seller?.bankInfo.bankName === '032' ? '부산은행' :
+                                    item.seller?.bankInfo.bankName === '031' ? '대구은행' :
+                                    item.seller?.bankInfo.bankName === '037' ? '전북은행' :
+                                    item.seller?.bankInfo.bankName === '071' ? '경북은행' :
+                                    item.seller?.bankInfo.bankName === '034' ? '광주은행' :
+                                    item.seller?.bankInfo.bankName === '071' ? '우체국' :
+                                    item.seller?.bankInfo.bankName === '007' ? '수협' :
+                                    item.seller?.bankInfo.bankName === '027' ? '씨티은행' :
+                                    item.seller?.bankInfo.bankName === '055' ? '대신은행' :
+                                    item.seller?.bankInfo.bankName === '054' ? '동양종합금융' :
+                                    item.seller?.bankInfo.bankName === '230' ? '미래에셋증권' :
+
+                                    item.seller?.bankInfo.bankName
+*/}
   
 
                                     <span className="text-sm text-zinc-400">
-                                      {Payment}:{' '}({seller?.bankInfo.bankName}{' '}
-                                      {seller?.bankInfo.accountNumber}{' '}{seller?.bankInfo.accountHolder})
+
+                                      {Payment}:{' '}(
+
+                                        {
+                                          seller?.bankInfo.bankName === '090' ? '카카오뱅크'
+                                          : seller?.bankInfo.bankName === '089' ? '케이뱅크'
+                                          : seller?.bankInfo.bankName === '092' ? '토스뱅크'
+
+                                          : seller?.bankInfo.bankName === '004' ? '국민은행'
+                                          : seller?.bankInfo.bankName === '020' ? '우리은행'
+                                          : seller?.bankInfo.bankName === '088' ? '신한은행'
+                                          : seller?.bankInfo.bankName === '011' ? '농협'
+                                          : seller?.bankInfo.bankName === '003' ? '기업은행'
+                                          : seller?.bankInfo.bankName === '081' ? '하나은행'
+                                          : seller?.bankInfo.bankName === '002' ? '외환은행'
+                                          : seller?.bankInfo.bankName === '032' ? '부산은행'
+                                          : seller?.bankInfo.bankName === '031' ? '대구은행'
+                                          : seller?.bankInfo.bankName === '037' ? '전북은행'
+                                          : seller?.bankInfo.bankName === '071' ? '경북은행'
+                                          : seller?.bankInfo.bankName === '034' ? '광주은행'
+                                          : seller?.bankInfo.bankName === '071' ? '우체국'
+                                          : seller?.bankInfo.bankName === '007' ? '수협'
+                                          : seller?.bankInfo.bankName === '027' ? '씨티은행'
+                                          : seller?.bankInfo.bankName === '055' ? '대신은행'
+                                          : seller?.bankInfo.bankName === '054' ? '동양종합금융'
+                                          : seller?.bankInfo.bankName === '230' ? '미래에셋증권'
+
+                                          : seller?.bankInfo.bankName
+                                        }
+
+                                      {' '}{seller?.bankInfo.accountNumber}{' '}{seller?.bankInfo.accountHolder})
                                     </span>
 
                     
