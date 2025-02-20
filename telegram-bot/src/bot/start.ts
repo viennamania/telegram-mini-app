@@ -74,7 +74,40 @@ feature.on("callback_query:data", async (ctx) => {
 
   ////return ctx.reply(data);
 
-  if (data === "race") {
+
+  if (data === "centerbot-") {
+
+    const dataSplit = data.split('-');
+
+    const changedCenter = dataSplit[1];
+
+
+
+    const telegramId = ctx.from?.id+"";
+
+    const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/setUserCenterByTelegramId`;
+  
+    const responseGetUser = await fetch(urlGetUser, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        telegramId: telegramId,
+        center: changedCenter,
+      }),
+    });
+  
+    if (responseGetUser.status !== 200) {
+      return ctx.reply("Failed to change center");
+    }
+
+    ctx.reply("센터가 변경되었습니다.");
+
+
+
+
+  } else if (data === "race") {
 
 
     ctx.reply('🐎 ' + "경마게임을 시작합니다. 출전마를 배정중이니 잠시만 기다려주세요...");
@@ -515,7 +548,7 @@ feature.on("callback_query:data", async (ctx) => {
         + ' ' +  racer[1] + ' ' +  racer[2] + ' ' +  racer[3] + ' ' +  racer[4] + ' ' +  racer[5] + ' ' +  racer[6] + ' ' +  racer[7];
       */
 
-      await chatResponse.delete();
+      ///await chatResponse.delete();
 
       const result = await ctx.reply(text);
 
@@ -1344,7 +1377,7 @@ feature.command('otc', async (ctx) => {
       //+ '\n\n' + '✅ Wallet Address: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
       //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to sell/buy USDT.';
 
-      const urlSellUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/sell-usdt`;
+      const urlSellUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/sell-usdt-simple`;
       const urlBuyUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/buy-usdt`;
 
 
@@ -1928,10 +1961,10 @@ feature.command('okx', async (ctx) => {
     //.row()
     .webApp('🚻 나의 프로필 보러가기', urlMyProfile)
     .row()
-    .webApp('🤖 나의 에이전트봇', urlReferral)
+    //.webApp('🤖 나의 에이전트봇', urlReferral)
     .webApp('🤖 나의 마스터봇', urlTbot)
-    .row()
-    .webApp('📆 나의 마스트봇 보상내역 보러가기', urlClaim)
+    //.row()
+    .webApp('📆 나의 보상내역 보러가기', urlClaim)
 
 
     /*
@@ -2094,14 +2127,18 @@ feature.command('start', async (ctx) => {
       const videoFile = new InputFile(`/home/ubuntu/video/logo-centerbot.gif`)
 
 
+      // 소속 센터봇 변경하기
+      const keyboard = new InlineKeyboard()
+        .text('🚻 소속 센터봇 변경하기', 'centerbot-' + center);
+      
       return ctx.replyWithVideo(
         videoFile,
         {
           caption: "🚫 당신은 이 봇을 사용할 수 없습니다.\n\n" + "소속 센터봇: " + data.result.center,
           // english
           //caption: "🚫 You cannot use this bot.\n\n" + "Center Bot: " + data.result.center,
-          //reply_markup: keyboard
-        }
+          reply_markup: keyboard
+        },
       )
 
 

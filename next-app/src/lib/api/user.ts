@@ -1625,3 +1625,29 @@ export async function updateSeller({
   
 }
 
+
+
+// updateCenterByTelegramId
+export async function updateCenterByTelegramId({
+  telegramId,
+  center,
+}: {
+  telegramId: string;
+  center: string;
+}) {
+
+  console.log('updateCenterByTelegramId telegramId: ' + telegramId + ' center: ' + center);
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('users');
+
+  return await collection.updateOne(
+    { telegramId },
+    {
+      $set: {
+        center,
+      }
+    }
+  );
+  
+}
