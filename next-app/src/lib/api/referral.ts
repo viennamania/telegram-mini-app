@@ -66,36 +66,79 @@ export async function insertOne(data: any) {
     return null;
   }
 
+
+
   const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
 
-  // check duplicat telegramId
-  const checkTelegramId = await collection.findOne<UserProps>(
-    { telegramId: data.telegramId }
-  );
 
-  if (checkTelegramId) {
-    return null;
-  }
+  if (data.center === 'owin_eagle_bot') {
 
-  // insert and return inserted user
+    const collection = client.db('shinemywinter').collection('referrals_center');
 
-  const result = await collection.insertOne(
-    {
-      telegramId: data.telegramId,
-      referralCode: data.referralCode,
+    // check duplicat telegramId, center
+    const checkTelegramId = await collection.findOne<UserProps>(
+      {
+        telegramId: data.telegramId,
+        center: data.center,
+      }
+    );
+
+    if (checkTelegramId) {
+      return null;
     }
-  );
 
-  if (result) {
-    return {
-      telegramId: data.telegramId,
-      referralCode: data.referralCode,
-    };
+    // insert and return inserted user
+
+    const result = await collection.insertOne(
+      {
+        telegramId: data.telegramId,
+        center: data.center,
+        referralCode: data.referralCode,
+      }
+    );
+
+    if (result) {
+      return {
+        telegramId: data.telegramId,
+        center: data.center,
+        referralCode: data.referralCode,
+      };
+    } else {
+      return null
+    }
+
   } else {
-    return null;
+
+    const collection = client.db('shinemywinter').collection('referrals');
+
+    // check duplicat telegramId
+    const checkTelegramId = await collection.findOne<UserProps>(
+      { telegramId: data.telegramId }
+    );
+
+    if (checkTelegramId) {
+      return null;
+    }
+
+    // insert and return inserted user
+
+    const result = await collection.insertOne(
+      {
+        telegramId: data.telegramId,
+        referralCode: data.referralCode,
+      }
+    );
+
+    if (result) {
+      return {
+        telegramId: data.telegramId,
+        referralCode: data.referralCode,
+      };
+    } else {
+      return null;
+    }
+
   }
-  
 
 }
 
@@ -359,19 +402,38 @@ export async function getOneByWalletAddress(
 // getOneByTelegramId
 export async function getOneByTelegramId(
   telegramId: string,
+  center: string,
 ): Promise<UserProps | null> {
   
   //console.log('getOneByWalletAddress walletAddress: ' + walletAddress);
 
   const client = await clientPromise;
 
-  const collection = client.db('shinemywinter').collection('referrals');
+  if (center === 'owin_eagle_bot') {
 
-  const results = await collection.findOne<UserProps>(
-    { telegramId: telegramId },
-  );
+    const collection = client.db('shinemywinter').collection('referrals_center');
 
-  return results;
+    const results = await collection.findOne<UserProps>(
+      {
+        telegramId: telegramId,
+        center: center,
+      },
+    );
+
+    return results;
+
+
+
+  } else {
+    const collection = client.db('shinemywinter').collection('referrals');
+
+    const results = await collection.findOne<UserProps>(
+      { telegramId: telegramId },
+    );
+
+    return results;
+  }
+
 
 }
 

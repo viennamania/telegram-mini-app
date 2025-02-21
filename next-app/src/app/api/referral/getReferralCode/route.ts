@@ -10,11 +10,11 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
-  const { telegramId } = body;
+  const { telegramId, center } = body;
 
 
 
-  const result = await getOneByTelegramId(telegramId);
+  const result = await getOneByTelegramId(telegramId, center);
 
  
   return NextResponse.json({

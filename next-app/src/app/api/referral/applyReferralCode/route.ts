@@ -10,12 +10,13 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
-  const { telegramId, referralCode } = body;
+  const { telegramId, center, referralCode } = body;
 
 
 
   const result = await insertOne({
     telegramId,
+    center,
     referralCode,
   });
 
