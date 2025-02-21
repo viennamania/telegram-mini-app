@@ -763,7 +763,7 @@ function AgentPage() {
               });
 
             
-            //const nftName = "Affliate AI Agent";
+            //const nftName = "Affiliate AI Agent";
             // nftName is random number and lower character mixed, length is 10 characters
             // nftName is 10 characters
 
@@ -772,7 +772,7 @@ function AgentPage() {
             //const nftName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
 
-            const nftDesscription = "This is Affliate AI Agent";
+            const nftDesscription = "This is Affiliate AI Agent";
             const transaction = mintTo({
                 contract: contract,
                 to: address as string,
@@ -822,7 +822,7 @@ function AgentPage() {
 
             const nftName = Math.random().toString(36).substring(2, 12);
 
-            const nftDesscription = "This is Affliate AI Agent";
+            const nftDesscription = "This is Affiliate AI Agent";
 
 
             const response = await fetch("/api/affiliation/mintAgentNft", {
