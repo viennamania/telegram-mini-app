@@ -119,7 +119,7 @@ export async function POST(request: NextRequest) {
 
     } catch (error) {
 
-        console.error("error: ", error+"");
+        console.error("error: ", JSON.stringify(error, null, 2));
 
         // TypeError: Do not know how to serialize a BigInt
 
