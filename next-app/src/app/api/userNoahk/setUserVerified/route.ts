@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
   });
 
 
-  const user = await getOneByTelegramId(telegramId);
+  const user = await getOneByTelegramId(telegramId, center);
 
   if (user) {
     const referralCode = user.referralCode;
