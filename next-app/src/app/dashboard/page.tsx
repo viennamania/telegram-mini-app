@@ -878,7 +878,9 @@ function HomeContent() {
                               <th className="p-2">회원아이디</th>
                               <th className="p-2">지갑주소</th>
                               <th className="p-2">레퍼럴코드</th>
+                              {/*
                               <th className="p-2">센터장</th>
+                              */}
                               <th className="p-2">에이전트</th>
                           </tr>
                       </thead>
@@ -962,6 +964,7 @@ function HomeContent() {
                                       </Button>
                                     </div>
                                   </td>
+                                  {/*
                                   <td className="p-2 text-center">
                                     {user?.centerOwner && (
                                       <span className="text-white font-semibold bg-green-500 p-1 rounded">
@@ -969,6 +972,7 @@ function HomeContent() {
                                       </span>
                                     )}
                                   </td>
+                                  */}
                                   <td className="p-2 text-center">
                                     <input
                                       type="radio"
