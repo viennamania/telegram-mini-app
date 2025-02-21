@@ -529,7 +529,7 @@ function HomeContent() {
   const [sendingRaceGameAll, setSendingRaceGameAll] = useState(false);
   const sendRaceGameAll = async () => {
     
-      setSendingRouletteAll(true);
+      setSendingRaceGameAll(true);
       // api call sendToUserTelegramId
       const response = await fetch("/api/game/sendRaceGameAll", {
           method: "POST",
@@ -1103,7 +1103,7 @@ function HomeContent() {
             </div>
 
 
-            {/* 전체회원에게 게임 보내기 */}
+            {/* 전체회원에게 경마게임 보내기 */}
             <div className="w-full flex flex-row gap-2 items-start justify-end">
               <Button
                 disabled={sendingRaceGameAll}
@@ -1113,7 +1113,7 @@ function HomeContent() {
                 }}
                 className={`${sendingRaceGameAll ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
               >
-                {sendingRaceGameAll ? "전송중..." : "전체회원에게 경주게임 보내기"}
+                {sendingRaceGameAll ? "전송중..." : "전체회원에게 경마게임 보내기"}
               </Button>
             </div>
 
