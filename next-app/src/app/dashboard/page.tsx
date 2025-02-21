@@ -669,15 +669,14 @@ function HomeContent() {
 
                   const fetchData = async () => {
                     setLoadingCenters(true);
-                    const response = await fetch("/api/user/getAllCenters", {
+                    const response = await fetch("/api/user/getApplicationsForCenter", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            limit: 100,
-                            page: 0,
-                            marketingCenter: marketingCenter,
+                            walletAddress: address,
+                            center: selectCenter,
                         }),
                     });
 
