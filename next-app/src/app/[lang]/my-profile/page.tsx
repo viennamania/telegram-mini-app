@@ -911,11 +911,11 @@ function ProfilePage() {
                                 복사
                             </button>
 
-                            {isCenterOwner && (
+                            {/*isCenterOwner && (
                                 <span className='text-xs font-semibold text-green-500'>
                                     센터 소유자 입니다.
                                 </span>
-                            )}
+                            )*/}
                         </div>
                     )}
 
