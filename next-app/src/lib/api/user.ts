@@ -599,60 +599,114 @@ export async function getAllUsersTelegramIdByCenter(
   // join with referrals collection and get referralCode
 
 
-  const referralsCollection = client.db('shinemywinter').collection('referrals');
+  ///const referralsCollection = client.db('shinemywinter').collection('referrals');
 
-  const users = await collection.aggregate([
-    {
-      $match: {
-        center: center,
-        telegramId: { $exists: true, $ne: '' },
 
-        // errmsg: '$regex has to be a string',
+  if (center === 'owin_eagle_bot') {
 
-        nickname: { $regex: searchNickname, $options: 'i' },
+    // referrals_center collection
 
-      
+    const users = await collection.aggregate([
+      {
+        $match: {
+          center: center,
+          telegramId: { $exists: true, $ne: '' },
 
+          nickname: { $regex: searchNickname, $options: 'i' },
+
+        }
+      },
+      {
+        $lookup: {
+          from: 'referrals_center',
+          localField: 'telegramId',
+          foreignField: 'telegramId',
+          as: 'referral'
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          telegramId: 1,
+          nickname: 1,
+          walletAddress: 1,
+          createdAt: 1,
+          avatar: 1,
+          center: 1,
+          centerOwner: 1,
+
+          referralCode: { $arrayElemAt: ['$referral.referralCode', 0] }
+        }
+      },
+      {
+        $limit: limit,
+      },
+      {
+        $skip: page * limit,
+      },
+
+      // order by createdAt desc
+      {
+        $sort: { createdAt: -1 }
       }
-    },
-    {
-      $lookup: {
-        from: 'referrals',
-        localField: 'telegramId',
-        foreignField: 'telegramId',
-        as: 'referral'
+    ]).toArray();
+
+    return users;
+
+
+  } else {
+
+    const users = await collection.aggregate([
+      {
+        $match: {
+          center: center,
+          telegramId: { $exists: true, $ne: '' },
+
+          // errmsg: '$regex has to be a string',
+
+          nickname: { $regex: searchNickname, $options: 'i' },
+
+        
+
+        }
+      },
+      {
+        $lookup: {
+          from: 'referrals',
+          localField: 'telegramId',
+          foreignField: 'telegramId',
+          as: 'referral'
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          telegramId: 1,
+          nickname: 1,
+          walletAddress: 1,
+          createdAt: 1,
+          avatar: 1,
+          center: 1,
+          centerOwner: 1,
+
+          referralCode: { $arrayElemAt: ['$referral.referralCode', 0] }
+        }
+      },
+      {
+        $limit: limit,
+      },
+      {
+        $skip: page * limit,
+      },
+      // order by createdAt desc
+      {
+        $sort: { createdAt: -1 }
       }
-    },
-    {
-      $project: {
-        _id: 0,
-        telegramId: 1,
-        nickname: 1,
-        walletAddress: 1,
-        createdAt: 1,
-        avatar: 1,
-        center: 1,
-        centerOwner: 1,
+    ]).toArray();
 
-        referralCode: { $arrayElemAt: ['$referral.referralCode', 0] }
-      }
-    },
-    {
-      $limit: limit,
-    },
-    {
-      $skip: page * limit,
-    },
-    // order by createdAt desc
-    {
-      $sort: { createdAt: -1 }
-    }
-  ]).toArray();
+    return users;
 
-  
-
-
-  return users;
+  }
 
 }
 
