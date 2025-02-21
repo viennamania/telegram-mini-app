@@ -106,7 +106,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -1584,56 +1584,8 @@ function AgentPage() {
                                             bg-gray-800 bg-opacity-90'
                                         >
 
-                                            <div className='w-full flex flex-col gap-2 items-center justify-between'>
-
-                                                <div className="w-full flex flex-row items-start justify-between gap-2">
-                                                
-
-                                                    <button
-                                                        onClick={() => {
-                                                            router.push('/referral/' + nft.contract.address + '/' + nft.tokenId);
-                                                        }}
-                                                        className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                        hover:bg-blue-600 text-lg xl:text-xl font-semibold"
-                                                    >
-                                                            상세보기
-                                                    </button>
-
-                                                    {/* referral link button */}
-                                                    
-                                                    <button
-                                                        onClick={() => {
-                                                            navigator.clipboard.writeText(
-                                                                /*
-                                                                referralUrl + '/?center=' + center +
-                                                                '&agent=' + nft.contract.address + 
-                                                                '&tokenId=' + nft.tokenId
-                                                                */
-                                                                //'t.me/ppump_orry_bot?start=' + nft.contract.address + '_' + nft.tokenId
-
-                                                                't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
-                                                            );
-                                                            //toast.success('추천코드 URL 복사 완료');
-                                                            alert('추천코드 복사되었습니다.');
-                                                        }}
-                                                        className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                        hover:bg-blue-600 text-lg xl:text-xl font-semibold"
-                                                    >
-                                                        추천코드 복사하기
-                                                    </button>
-
-                                                </div>
-
-                                        
-
- 
-
-                                            </div>
-
-
-                                            <div className='mt-5 w-full flex flex-row gap-2 items-start justify-center'>
-
-
+                                            <div className="w-full flex flex-row items-start justify-between gap-2">
+                                            
                                                 <button
                                                     onClick={() => {
                                                         window.open('https://opensea.io/assets/matic/' + nft.contract.address + '/' + nft.tokenId);
@@ -1642,27 +1594,73 @@ function AgentPage() {
                                                     hover:bg-blue-600
                                                     " 
                                                 >
-                                                    <div className="flex flex-col gap-2 items-center justify-center">
-                                                        <Image
-                                                            src="/logo-opensea.png"
-                                                            alt="OpenSea"
-                                                            width={30}
-                                                            height={30}
-                                                            className="rounded-lg"
-                                                        />
-                                                        <span className='text-sm font-semibold'>
-                                                            OpenSea에서 확인하기
-                                                        </span>
-                                                    </div>
+                                                    <Image
+                                                        src="/logo-opensea.png"
+                                                        alt="OpenSea"
+                                                        width={30}
+                                                        height={30}
+                                                        className="rounded-lg"
+                                                    />
                                                 </button>
 
 
-                                                <div className='w-full flex flex-col gap-2 items-start justify-between'>
+                                                <button
+                                                    onClick={() => {
+                                                        router.push('/referral/' + nft.contract.address + '/' + nft.tokenId);
+                                                    }}
+                                                    className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                    hover:bg-blue-600 text-lg font-semibold"
+                                                >
+                                                        상세보기
+                                                </button>
+
+
+                                                {/* referral link button */}
+                                                
+                                                <button
+                                                    onClick={() => {
+                                                        navigator.clipboard.writeText(
+                                                            /*
+                                                            referralUrl + '/?center=' + center +
+                                                            '&agent=' + nft.contract.address + 
+                                                            '&tokenId=' + nft.tokenId
+                                                            */
+                                                            //'t.me/ppump_orry_bot?start=' + nft.contract.address + '_' + nft.tokenId
+
+                                                            't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
+                                                        );
+                                                        //toast.success('추천코드 URL 복사 완료');
+                                                        alert('추천코드 복사되었습니다.');
+                                                    }}
+                                                    className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                    hover:bg-blue-600 text-lg font-semibold"
+                                                >
+                                                    추천코드 복사하기
+                                                </button>
+
+                                            </div>
+   
+
+
+                                            <div className='mt-5 w-full flex flex-row gap-2 items-start justify-between'>
+                                                
+                                                
+                                                <div className="w-28 flex flex-row gap-2 items-center justify-start">
+                                                    <Image
+                                                        src={nft?.image?.pngUrl}
+                                                        alt="NFT"
+                                                        width={500}
+                                                        height={500}
+                                                        className="rounded-lg"
+                                                    />
+                                                </div>
+
+                                                <div className='flex flex-col gap-2 items-start justify-between'>
                                                     {/* contract address */}
                                                     <div className='text-sm font-semibold text-yellow-500'>
                                                         계약주소: {nft?.contract?.address && nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
                                                     </div>
-                                                    <div className='text-xl font-semibold text-blue-500'>
+                                                    <div className='text-xl font-semibold text-yellow-500'>
                                                         계약번호: #{nft?.tokenId?.length > 10 ? nft.tokenId.slice(0, 10) + '...' : nft.tokenId}
                                                     </div>
                                                     <div className='text-lg font-semibold text-green-500'>
@@ -1678,17 +1676,6 @@ function AgentPage() {
 
                                             </div>
 
-                                            
-                                            <Image
-                                                src={nft?.image?.pngUrl}
-                                                alt="NFT"
-                                                width={500}
-                                                height={500}
-                                                className="w-full rounded-lg border border-gray-300"
-                                            />
-
-
-
                                             {/* transfer NFT */}
                                             
                                             <div className='mt-5 w-full flex flex-col gap-2 items-end justify-between'>
@@ -1698,7 +1685,7 @@ function AgentPage() {
                                                         소유권 이전하기
                                                     </span>
                                                     <div className='flex flex-row items-center justify-start gap-2'>
-                                                        <div className='w-2 h-2 bg-red-500 rounded-full'></div>
+                                                        <div className='w-3 h-3 bg-red-500 rounded-full'></div>
                                                         <span className='text-sm text-gray-400 font-semibold'>
                                                             소유권을 이전하면 소유자 권리를 모두 이전하는 것에 동의하는 것입니다.
                                                         </span>
