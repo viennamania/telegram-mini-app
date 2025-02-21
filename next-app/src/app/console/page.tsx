@@ -521,6 +521,51 @@ function HomeContent() {
   }
 
 
+
+
+
+
+  // send roulette game to all users
+  const [sendingRaceGameAll, setSendingRaceGameAll] = useState(false);
+  const sendRaceGameAll = async () => {
+    
+      setSendingRouletteAll(true);
+      // api call sendToUserTelegramId
+      const response = await fetch("/api/game/sendRaceGameAll", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            center: selectCenter,
+          }),
+      });
+
+      console.log("sendRaceGameAll response", response);
+
+      if (!response.ok) {
+          console.error("Error sending");
+          alert("전송에 실패했습니다.");
+          setSendingRaceGameAll(false);
+          return;
+      }
+
+      const data = await response.json();
+
+      //console.log("send data", data);
+
+
+      alert("전송이 완료되었습니다.");
+
+
+      setSendingRaceGameAll(false);
+
+  }
+
+
+
+
+
   // send roulette game
   const [sendRouletteTelegramId, setSendRouletteTelegramId] = useState("");
   const [sendRouletteAmount, setSendRouletteAmount] = useState(0);
@@ -1054,6 +1099,21 @@ function HomeContent() {
                 className={`${sendingRouletteAll ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
               >
                 {sendingRouletteAll ? "전송중..." : "전체회원에게 게임 보내기"}
+              </Button>
+            </div>
+
+
+            {/* 전체회원에게 게임 보내기 */}
+            <div className="w-full flex flex-row gap-2 items-start justify-end">
+              <Button
+                disabled={sendingRaceGameAll}
+                onClick={() => {
+                  // send
+                  confirm("전송하시겠습니까?") && sendRaceGameAll();
+                }}
+                className={`${sendingRaceGameAll ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
+              >
+                {sendingRaceGameAll ? "전송중..." : "전체회원에게 경주게임 보내기"}
               </Button>
             </div>
 

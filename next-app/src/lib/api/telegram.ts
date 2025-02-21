@@ -306,6 +306,49 @@ export async function insertMessageRoulette(
 
 
 
+export async function insertMessageRaceGame(
+    {
+        center,
+        category,
+        telegramId,
+        message,
+        sequence,
+        winPrize,
+    }
+    :
+    {
+        center: string,
+        category: string,
+        telegramId: string,
+        message: string,
+        sequence: string,
+        winPrize: number,
+    }
+) {
+
+    const client = await clientPromise;
+
+    const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
+
+    await collectionTelegramMessages.insertOne(
+        {
+            center,
+            category,
+            telegramId,
+            message,
+            sequence,
+            winPrize,
+        }
+    );
+
+    return {
+        result: "success",
+    };
+
+}
+
+
+
 
 // insertMessageByWalletAddress
 export async function insertMessageByWalletAddress(
