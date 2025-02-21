@@ -637,9 +637,17 @@ function ProfilePage() {
                                 
                             </div>
                         ) : (
-                            <p className="text-sm text-zinc-400">
-                                연결된 지갑이 없습니다. 지갑을 연결해 주세요.
-                            </p>
+                            <div className="flex flex-col gap-2 items-center justify-center">
+                                <p className="text-sm text-zinc-400">
+                                    연결된 지갑이 없습니다. 지갑을 연결해 주세요.
+                                </p>
+                                {/* telegramId */}
+
+                                <span className='text-sm font-semibold text-gray-500'>
+                                    텔레그램 ID: {telegramId}
+                                </span>
+
+                            </div>
                         )}      
                     </div>
 
