@@ -106,7 +106,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -514,7 +514,7 @@ function AgentPage() {
 
                 setErc721ContractAddress(erc721ContractAddress);
                 
-                ///toast.success('AI 에이전트 계약주소 생성 완료');
+                ///toast.success('NFT 계약주소 생성 완료');
 
             } catch (error) {
                 console.error("deployErc721Contract error", error);
@@ -683,7 +683,7 @@ function AgentPage() {
         }
 
         if (!erc721ContractAddress) {
-            //toast.error('AI 에이전트 계약주소를 먼저 생성해주세요');
+            //toast.error('NFT 계약주소를 먼저 생성해주세요');
             setMessageMintingAgentNft('NFT 계약주소를 먼저 생성해주세요');
             return;
         }
@@ -1558,7 +1558,7 @@ function AgentPage() {
                                 {loadingMyNfts && (
                                     <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                         <span className='text-lg font-semibold text-green-500'>
-                                            AI 에이전트 NFT를 불러오는 중입니다.
+                                            NFT를 불러오는 중입니다.
                                         </span>
                                     </div>
                                 )}
@@ -1568,7 +1568,7 @@ function AgentPage() {
                                 {address && myNfts.length === 0 && (
                                     <div className='w-full flex flex-col gap-2 items-start justify-between'>
                                         <span className='text-lg font-semibold text-red-500'>
-                                            AI 에이전트 NFT가 없습니다.
+                                            NFT가 없습니다.
                                         </span>
                                     </div>
                                 )}
@@ -1606,7 +1606,7 @@ function AgentPage() {
 
                                                 <button
                                                     onClick={() => {
-                                                        router.push('/referral/' + nft.contract.address + '/' + nft.tokenId);
+                                                        router.push('/affiliation/' + nft.contract.address + '/' + nft.tokenId);
                                                     }}
                                                     className="p-2 bg-blue-500 text-zinc-100 rounded
                                                     hover:bg-blue-600 text-lg font-semibold"
