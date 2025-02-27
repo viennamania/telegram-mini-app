@@ -1453,16 +1453,19 @@ export default function Index({ params }: any) {
                             </td>
 
                             <td className="p-2">
-                              <div className="text-lg font-semibold text-white">
-                                {
-                                  // currency
-                                  Number(item?.orderInfo?.krwPrice).toLocaleString('ko-KR', {
-                                    style: 'currency',
-                                    currency: 'KRW',
-                                  })
-                                }
+                              <div className="flex flex-col gap-2 items-start">
+                              
+                                
+                                <span className="text-lg font-semibold text-white">
+                                  {
+                                    // currency
+                                    Number(item?.orderInfo?.krwPrice).toLocaleString('ko-KR', {
+                                      style: 'currency',
+                                      currency: 'KRW',
+                                    })
+                                  }
+                                </span>
                               </div>
-
                             </td>
 
                             <td className="p-2">

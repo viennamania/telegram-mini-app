@@ -327,6 +327,9 @@ export async function GET(request: NextRequest) {
       //result.owners.map(async (owner : any) => {
       //result.owners.forEach(async (owner : any) => {
 
+      console.log("result.owners", result.owners);
+
+
       for (const owner of result.owners) {
 
         //const owner = result.owners[0];
@@ -342,6 +345,9 @@ export async function GET(request: NextRequest) {
         // balanceResult 1n
 
         const balance = parseFloat(balanceResult.toString());
+
+        console.log("owner: ", owner, "balance: ", balance);
+
 
         /*
         const airdropAmount = 10;
@@ -362,7 +368,13 @@ export async function GET(request: NextRequest) {
           // getOneByWalletAddress
           const user = await getOneByWalletAddress( masterWalletAddress );
           if (!user) {
-            return NextResponse.error();
+
+            console.log("user is empty");
+
+            //return NextResponse.error();
+
+            continue;
+
           }
 
           const telegramId = user?.telegramId || "";
@@ -372,6 +384,8 @@ export async function GET(request: NextRequest) {
 
 
           if (!telegramId || !center) {
+
+            console.log("telegramId or center is empty");
             return NextResponse.error();
           }
 
@@ -389,6 +403,9 @@ export async function GET(request: NextRequest) {
           const referralCode = await getReferralCodeByTelegramId( telegramId );
 
           if (!referralCode) {
+
+            console.log("referralCode is empty");
+
             return NextResponse.error();
           }
 
@@ -439,10 +456,9 @@ export async function GET(request: NextRequest) {
 
           if (tokenId === BigInt(0)) {
 
-            //const shareTotalAmount = 100.0 * balance;
+            const shareTotalAmount = 100.0 * balance;
 
-            const shareTotalAmount = 10.0 * balance;
-
+      
             masterAmount = shareTotalAmount * 0.3;
             agentAmount = shareTotalAmount * 0.6;
             centerAmount = shareTotalAmount * 0.1;
@@ -450,10 +466,9 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(1)) {
 
-            ///const shareTotalAmount = 300.0 * balance;
+            const shareTotalAmount = 300.0 * balance;
 
-            const shareTotalAmount = 30.0 * balance;
-
+       
             masterAmount = shareTotalAmount * 0.4;
             agentAmount = shareTotalAmount * 0.5;
             centerAmount = shareTotalAmount * 0.1;
@@ -461,10 +476,9 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(2)) {
 
-            //const shareTotalAmount = 500.0 * balance;
+            const shareTotalAmount = 500.0 * balance;
             
-            const shareTotalAmount = 50.0 * balance;
-
+   
             masterAmount = shareTotalAmount * 0.5;
             agentAmount = shareTotalAmount * 0.4;
             centerAmount = shareTotalAmount * 0.1;
@@ -472,9 +486,7 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(3)) {
 
-            //const shareTotalAmount = 1000.0 * balance;
-
-            const shareTotalAmount = 100.0 * balance;
+            const shareTotalAmount = 1000.0 * balance;
 
 
             masterAmount = shareTotalAmount * 0.6;
@@ -484,10 +496,9 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(4)) {
 
-            ///const shareTotalAmount = 5000.0 * balance;
+            const shareTotalAmount = 5000.0 * balance;
 
-            const shareTotalAmount = 500.0 * balance;
-
+        
 
             masterAmount = shareTotalAmount * 0.7;
             agentAmount = shareTotalAmount * 0.2;
@@ -496,9 +507,8 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(5)) {
 
-            //const shareTotalAmount = 10000.0 * balance;
-            const shareTotalAmount = 1000.0 * balance;
-
+            const shareTotalAmount = 10000.0 * balance;
+      
 
             masterAmount = shareTotalAmount * 0.8;
             agentAmount = shareTotalAmount * 0.1;
@@ -540,11 +550,15 @@ export async function GET(request: NextRequest) {
 
 
 
+          //console.log("transactions length: ", transactions.length);
+
+
         }
 
 
       }
 
+      //console.log("transactions: ", transactions);
 
 
 
