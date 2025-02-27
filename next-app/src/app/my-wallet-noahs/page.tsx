@@ -907,7 +907,7 @@ function ProfilePage() {
 
                                                 //Number(balance).toFixed(0)
 
-                                                Number(balance).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                                Number(balance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
 
 
@@ -1347,7 +1347,7 @@ function ProfilePage() {
                                             >
                                                 {
                                                     //Number(transfer.transferData.value / 10 ** 18).toFixed(0)
-                                                    Number(transfer.transferData.value / 10 ** 18).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                                    Number(transfer.transferData.value / 10 ** 18).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                                 }
 
                                             </td>
