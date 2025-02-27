@@ -84,7 +84,13 @@ export async function insertOne(data: any) {
     );
 
     if (checkTelegramId) {
-      return null;
+
+      return {
+        telegramId: data.telegramId,
+        center: data.center,
+        referralCode: data.referralCode,
+      }
+      //return null;
     }
 
     // insert and return inserted user
