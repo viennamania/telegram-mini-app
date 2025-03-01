@@ -1210,7 +1210,9 @@ function AgentPage() {
                         {address ? (
                             <div className="flex flex-row gap-2 items-center justify-between">
 
-                                <div className=" flex flex-col xl:flex-row items-center justify-start gap-5">
+                                <div className="flex flex-row gap-2 items-center justify-between
+                                    bg-gray-200 bg-opacity-90
+                                    p-2 rounded-lg">
                                     <Image
                                     src="/icon-wallet-live.gif"
                                     alt="Wallet"
