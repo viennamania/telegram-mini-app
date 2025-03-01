@@ -1851,7 +1851,17 @@ function AgentPage() {
                                             <div className='text-sm font-semibold'>
                                                 {
                                                     //transfer.transferData.timestamp
-                                                    new Date(transfer.transferData.timestamp).toLocaleString()
+                                                    //new Date(transfer.transferData.timestamp).toLocaleString()
+                                                    // 방금, 1분전, 1시간전, 1일전, 1주전, 1달전, 1년전
+
+                                                    (new Date().getTime() - transfer.timestamp) < 60000 ? '방금' :
+                                                    (new Date().getTime() - transfer.timestamp) < 3600000 ? Math.floor((new Date().getTime() - transfer.timestamp) / 60000) + '분 전' :
+                                                    (new Date().getTime() - transfer.timestamp) < 86400000 ? Math.floor((new Date().getTime() - transfer.timestamp) / 3600000) + '시간 전' :
+                                                    (new Date().getTime() - transfer.timestamp) < 604800000 ? Math.floor((new Date().getTime() - transfer.timestamp) / 86400000) + '일 전' :
+                                                    (new Date().getTime() - transfer.timestamp) < 2592000000 ? Math.floor((new Date().getTime() - transfer.timestamp) / 604800000) + '주 전' :
+                                                    (new Date().getTime() - transfer.timestamp) < 31536000000 ? Math.floor((new Date().getTime() - transfer.timestamp) / 2592000000) + '달 전' :
+                                                    Math.floor((new Date().getTime() - transfer.timestamp) / 31536000000) + '년 전'
+                                                    
                                                 }
                                             </div>
                                         </div>
