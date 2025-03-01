@@ -1632,11 +1632,14 @@ function AgentPage() {
                                             {nft?.raw?.metadata?.animation_url ? (
                                                 <div className='w-full flex flex-col gap-2 items-center justify-between'>
                                                     <video
+                                                        /*
                                                         src={
                                                             nft?.raw?.metadata?.animation_url.startsWith('ipfs://') ?
                                                             'https://ipfs.io/ipfs/' + nft?.raw?.metadata?.animation_url.slice(7) :
                                                             nft?.raw?.metadata?.animation_url
                                                         }
+                                                        */
+                                                        src="/noah10000.mp4"
                                                         autoPlay
                                                         loop
                                                         muted
