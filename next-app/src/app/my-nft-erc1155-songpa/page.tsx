@@ -1213,7 +1213,7 @@ function AgentPage() {
                             </button>
                             
                             {messageClaimingNft && (
-                                <span className="text-lg text-green-500 font-semibold">
+                                <span className="text-lg text-red-500 font-semibold">
                                     {messageClaimingNft}
                                 </span>
                             )}
