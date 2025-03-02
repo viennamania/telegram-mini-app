@@ -1164,9 +1164,8 @@ function AgentPage() {
 
                     {/* claim NFT */}
                     {address && (
-                        <div className="w-full flex flex-col gap-2 items-center justify-between
-                            border border-gray-800
-                            p-4 rounded-lg">
+                        <div className="w-full flex flex-col gap-2 items-center justify-between">
+
                             <div className="w-full flex flex-row gap-2 items-center justify-start">
                                 {/* dot */}
                                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
@@ -1175,63 +1174,70 @@ function AgentPage() {
                                 </div>
                             </div>
 
-                            {/* 보유하고 있는 USDT로 NOAH 채굴 NFT를 직접 발행받을 수 있습니다. */}
-                            <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                {/* dot */}
-                                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                <span className="text-sm text-yellow-500 font-semibold">
-                                    보유하고 있는 USDT로 NOAH 채굴 NFT를 직접 발행받을 수 있습니다.
-                                </span>
-                            </div>
-                            <span className="text-lg text-zinc-400 font-semibold">
-                                NOAH 채굴 NFT를 발행받을려면 아래 버튼을 클릭하세요.
-                            </span>
-                            <button
-                                disabled={claimingNft}
-                                onClick={() =>
-                                    confirm("NOAH 채굴 NFT를 발행하시겠습니까?") &&
-                                    claimNft(erc1155ContractAddress, "0"
-                                )}
-                                className={`
-                                    ${claimingNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
-                                    p-2 rounded-lg text-lg font-semibold
-                                `}
-                            >
-                                <div className="flex flex-row gap-2 items-center justify-center">
-                                    {claimingNft && (
-                                        <Image
-                                            src="/loading.png"
-                                            alt="loding"
-                                            width={30}
-                                            height={30}
-                                            className="animate-spin"
-                                        />
-                                    )}
-                                    {claimingNft && '100 NOAH 채굴 NFT 발행중...'}
-                                    {!claimingNft && '100 NOAH 채굴 NFT 발행하기'}
-                                </div>
-                            </button>
-                            
-                            {messageClaimingNft && (
-                                <span className="text-lg text-red-500 font-semibold">
-                                    {messageClaimingNft}
-                                </span>
-                            )}
+                            <div className="w-full flex flex-col gap-2 items-start justify-between
+                                border border-gray-200
+                                p-4 rounded-lg">
 
-                            <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                {/* dot */}
-                                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                <span className="text-lg text-yellow-500 font-semibold">
-                                    NFT 발행 금액은 {price} USDT 입니다.
+                                {/* 보유하고 있는 USDT로 NOAH 채굴 NFT를 직접 발행받을 수 있습니다. */}
+                                <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <span className="text-sm text-yellow-500 font-semibold">
+                                        보유하고 있는 USDT로 NOAH 채굴 NFT를 직접 발행받을 수 있습니다.
+                                    </span>
+                                </div>
+                                <span className="text-lg text-zinc-400 font-semibold">
+                                    NOAH 채굴 NFT를 발행받을려면 아래 버튼을 클릭하세요.
                                 </span>
-                            </div>
-                            {/* 지갑에 USDT가 있어야 발행 가능합니다. */}
-                            <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                {/* dot */}
-                                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                <span className="text-lg text-yellow-500 font-semibold">
-                                    지갑에 USDT가 있어야 발행 가능합니다.
-                                </span>
+                                <button
+                                    disabled={claimingNft}
+                                    onClick={() =>
+                                        confirm("NOAH 채굴 NFT를 발행하시겠습니까?") &&
+                                        claimNft(erc1155ContractAddress, "0"
+                                    )}
+                                    className={`
+                                        ${claimingNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
+                                        p-2 rounded-lg text-lg font-semibold
+                                    `}
+                                >
+                                    <div className="flex flex-row gap-2 items-center justify-center">
+                                        {claimingNft && (
+                                            <Image
+                                                src="/loading.png"
+                                                alt="loding"
+                                                width={30}
+                                                height={30}
+                                                className="animate-spin"
+                                            />
+                                        )}
+                                        {claimingNft && '100 NOAH 채굴 NFT 발행중...'}
+                                        {!claimingNft && '100 NOAH 채굴 NFT 발행하기'}
+                                    </div>
+                                </button>
+                                
+                                {messageClaimingNft && (
+                                    <span className="text-lg text-red-500 font-semibold">
+                                        {messageClaimingNft}
+                                    </span>
+                                )}
+
+                                <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <span className="text-lg text-yellow-500 font-semibold">
+                                        NFT 발행 금액은 {price} USDT 입니다.
+                                    </span>
+                                </div>
+                                {/* 지갑에 USDT가 있어야 발행 가능합니다. */}
+                                <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <span className="text-lg text-yellow-500 font-semibold">
+                                        지갑에 USDT가 있어야 발행 가능합니다.
+                                    </span>
+                                </div>
+
+
                             </div>
 
                         </div>
@@ -1301,163 +1307,6 @@ function AgentPage() {
                     )*/}
 
 
-
-                    {/* My Referral Code */}
-                    {/* address */}
-                    {
-                        address && userCode && erc721ContractAddress && isCenterOwner && (
-
-                        <div className='w-full flex flex-col gap-2 items-center justify-between
-                            border border-gray-800
-                            p-4 rounded-lg'>
-
-                            <div className='w-full flex flex-row gap-2 items-center justify-between'>
-                                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    교환권 계약주소
-                                </div>
-
-                                <span className='text-xs xl:text-lg font-semibold'>
-                                    {erc721ContractAddress.substring(0, 6) + '...' + erc721ContractAddress.substring(erc721ContractAddress.length - 4)}
-                                </span>
-
-
-
-
-                                {/* https://opensea.io/assets/matic/0xC1F501331E5d471230189E4A57E5268f10d0072A */}
-                                {/* open new window */}
-                                
-                                <button
-                                    onClick={() => {
-                                        window.open('https://opensea.io/assets/matic/' + erc721ContractAddress);
-                                    }}
-                                    className="bg-blue-500 text-zinc-100 p-2 rounded-lg text-sm font-semibold"
-                                >
-                                    <div className="flex flex-row gap-2 items-center justify-center">
-                                        <Image
-                                            src="/logo-opensea.png"
-                                            alt="OpenSea"
-                                            width={30}
-                                            height={30}
-                                            className="rounded-lg"
-                                        />
-                                        <span className="text-sm font-semibold">
-                                            오픈씨에서 보기
-                                        </span>
-                                    </div>
-                                </button>
-                                
-
-
-                                {/* verified icon */}
-
-                                <Image
-                                    src="/verified.png"
-                                    alt="Verified"
-                                    width={20}
-                                    height={20}
-                                    className="rounded-lg"
-                                />
-
-
-                            </div>
-
-                            
-
-                            {/* mint AI Agent NFT */}
-                            {/*
-                            <div className='w-full flex flex-col gap-2 items-start justify-between
-                                bg-yellow-100 border border-gray-300
-                                p-4 rounded-lg'>
-                                
-                                <span className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                    AI 에이전트 NFT 발행
-                                </span>
-
-                                <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
-                                    <input 
-                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                        placeholder="에이전트 이름"
-                                        type='text'
-                                        onChange={(e) => {
-                                            setAgentName(e.target.value);
-                                        }}
-                                        value={agentName}
-                                    />
-                                    <input 
-                                        className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                        placeholder="에이전트 설명"
-                                        type='text'
-                                        onChange={(e) => {
-                                            setAgentDescription(e.target.value);
-                                        }}
-                                        value={agentDescription}
-                                    />
-                                </div>
-
-                                <button
-                                    disabled={mintingAgentNft}
-                                    onClick={mintAgentNft}
-                                    className={`
-                                        ${mintingAgentNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
-                                        p-2 rounded-sm text-sm font-semibold
-                                    `}
-                                >
-                                    <div className='flex flex-row gap-2 items-center justify-center'>
-                                       
-                                        {mintingAgentNft && (
-                                            <Image
-                                                src="/loading.png"
-                                                alt="loding"
-                                                width={30}
-                                                height={30}
-                                                className='animate-spin'
-                                            />
-                                        )}
-                                        {mintingAgentNft && 'AI 에이전트 NFT 발행중...'}
-                                        {!mintingAgentNft && 'AI 에이전트 NFT 발행하기'}
-                                    </div>
-                                </button>
-
-                                {messageMintingAgentNft && (
-                                    <span className='text-lg font-semibold text-red-500
-                                        border border-gray-300 p-4 rounded-lg'>
-                                        {messageMintingAgentNft}
-                                    </span>
-                                )}
-
-                                {ganeratingAgentImage && (
-                                    <div className='flex flex-row gap-2 items-center justify-center'>
-                                        <Image
-                                            src="/loading.png"
-                                            alt="loding"
-                                            width={30}
-                                            height={30}
-                                            className='animate-spin'
-                                        />
-                                        <span className='text-xs font-semibold'>
-                                            AI 에이전트 이미지 생성중...
-                                        </span>
-                                    </div>
-                                )}
-
-                                {agentImage && (
-                                    <Image
-                                        src={agentImage}
-                                        alt="AI Agent"
-                                        width={200}
-                                        height={200}
-                                        className="rounded-lg"
-                                    />
-                                )}
-
-                            </div>
-                            */}
-
-
-                        </div>
-
-                    )}
-      
 
                     {/* owned NFTs */}
                     <div className="w-full flex flex-col gap-2 items-center justify-between
