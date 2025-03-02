@@ -1164,7 +1164,7 @@ function AgentPage() {
 
                     {/* claim NFT */}
                     {address && (
-                        <div className="w-full flex flex-col gap-2 items-center justify-between">
+                        <div className="mt-5 w-full flex flex-col gap-2 items-center justify-between">
 
                             <div className="w-full flex flex-row gap-2 items-center justify-start">
                                 {/* dot */}
@@ -1189,31 +1189,33 @@ function AgentPage() {
                                 <span className="text-lg text-zinc-400 font-semibold">
                                     NOAH 채굴 NFT를 발행받을려면 아래 버튼을 클릭하세요.
                                 </span>
-                                <button
-                                    disabled={claimingNft}
-                                    onClick={() =>
-                                        confirm("NOAH 채굴 NFT를 발행하시겠습니까?") &&
-                                        claimNft(erc1155ContractAddress, "0"
-                                    )}
-                                    className={`
-                                        ${claimingNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
-                                        p-2 rounded-lg text-lg font-semibold
-                                    `}
-                                >
-                                    <div className="flex flex-row gap-2 items-center justify-center">
-                                        {claimingNft && (
-                                            <Image
-                                                src="/loading.png"
-                                                alt="loding"
-                                                width={30}
-                                                height={30}
-                                                className="animate-spin"
-                                            />
+                                <div className="p-5 w-full flex flex-row gap-2 items-center justify-center">
+                                    <button
+                                        disabled={claimingNft}
+                                        onClick={() =>
+                                            confirm("NOAH 채굴 NFT를 발행하시겠습니까?") &&
+                                            claimNft(erc1155ContractAddress, "0"
                                         )}
-                                        {claimingNft && '100 NOAH 채굴 NFT 발행중...'}
-                                        {!claimingNft && '100 NOAH 채굴 NFT 발행하기'}
-                                    </div>
-                                </button>
+                                        className={`
+                                            ${claimingNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
+                                            p-2 rounded-lg text-lg font-semibold
+                                        `}
+                                    >
+                                        <div className="flex flex-row gap-2 items-center justify-center">
+                                            {claimingNft && (
+                                                <Image
+                                                    src="/loading.png"
+                                                    alt="loding"
+                                                    width={30}
+                                                    height={30}
+                                                    className="animate-spin"
+                                                />
+                                            )}
+                                            {claimingNft && '100 NOAH 채굴 NFT 발행중...'}
+                                            {!claimingNft && '100 NOAH 채굴 NFT 발행하기'}
+                                        </div>
+                                    </button>
+                                </div>
                                 
                                 {messageClaimingNft && (
                                     <span className="text-lg text-red-500 font-semibold">
@@ -1309,9 +1311,7 @@ function AgentPage() {
 
 
                     {/* owned NFTs */}
-                    <div className="w-full flex flex-col gap-2 items-center justify-between
-                        border border-gray-800
-                        p-4 rounded-lg">
+                    <div className="mt-5 w-full flex flex-col gap-2 items-center justify-between">
                         <div className="w-full flex flex-row gap-2 items-center justify-start">
                             {/* dot */}
                             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
