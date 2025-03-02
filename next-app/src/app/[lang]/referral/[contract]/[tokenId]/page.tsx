@@ -1159,9 +1159,6 @@ export default function AgentPage({ params }: any) {
 
 
                         <div className='flex flex-col items-start justify-start gap-2'>
-                            <span className='text-sm text-yellow-500'>
-                                NFT Media
-                            </span>
                             {!animationUrl && agent.image && (
                                 <Image
                                     //src={agent?.image?.thumbnailUrl}
