@@ -71,7 +71,9 @@ export async function insertOne(data: any) {
   const client = await clientPromise;
 
 
-  if (data.center === 'owin_eagle_bot') {
+  if (data.center === 'owin_eagle_bot'
+    || data.center === 'we_gogo_bot'
+  ) {
 
     const collection = client.db('shinemywinter').collection('referrals_center');
 
@@ -405,6 +407,7 @@ export async function getOneByWalletAddress(
 
 }
 
+
 // getOneByTelegramId
 export async function getOneByTelegramId(
   telegramId: string,
@@ -415,7 +418,9 @@ export async function getOneByTelegramId(
 
   const client = await clientPromise;
 
-  if (center === 'owin_eagle_bot') {
+  if (center === 'owin_eagle_bot'
+    || center === 'we_gogo_bot'
+  ) {
 
     const collection = client.db('shinemywinter').collection('referrals_center');
 
