@@ -2263,10 +2263,21 @@ function AgentPage() {
                                                 />
                                                 */}
                                                 <video
+                                                    /*
                                                     src={
                                                         nft.metadata?.animation_url.startsWith('ipfs://') ?
                                                         'https://ipfs.io/ipfs/' + nft.metadata?.animation_url.slice(7) :
                                                         nft.metadata?.animation_url
+                                                    }
+                                                    */
+                                                    src={
+                                                        nft.tokenId === "0" && '/noah-100-blue-mining.mp4'
+                                                        || nft.tokenId === "1" && '/noah-300-green-mining.mp4'
+                                                        || nft.tokenId === "2" && '/noah-500-red-mining.mp4'
+                                                        || nft.tokenId === "3" && '/noah-1000-purple-mining.mp4'
+                                                        || nft.tokenId === "4" && '/noah-5000-orange-mining.mp4'
+                                                        || nft.tokenId === "5" && '/noah-10000-gold-mining.mp4'
+                                                        || '/noah-100-blue-mining.mp4'
                                                     }
                                                     autoPlay
                                                     loop
