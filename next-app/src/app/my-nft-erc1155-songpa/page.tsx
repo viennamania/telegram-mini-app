@@ -1207,8 +1207,8 @@ function AgentPage() {
                                             className="animate-spin"
                                         />
                                     )}
-                                    {claimingNft && 'NOAH 채굴 NFT 발행중...'}
-                                    {!claimingNft && 'NOAH 채굴 NFT 발행하기'}
+                                    {claimingNft && '100 NOAH 채굴 NFT 발행중...'}
+                                    {!claimingNft && '100 NOAH 채굴 NFT 발행하기'}
                                 </div>
                             </button>
                             
@@ -1221,15 +1221,15 @@ function AgentPage() {
                             <div className="w-full flex flex-row gap-2 items-center justify-start">
                                 {/* dot */}
                                 <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                <span className="text-sm text-yellow-500 font-semibold">
-                                    NOAH 채굴 NFT 발행 금액은 {price} USDT 입니다.
+                                <span className="text-lg text-yellow-500 font-semibold">
+                                    NFT 발행 금액은 {price} USDT 입니다.
                                 </span>
                             </div>
                             {/* 지갑에 USDT가 있어야 발행 가능합니다. */}
                             <div className="w-full flex flex-row gap-2 items-center justify-start">
                                 {/* dot */}
                                 <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                <span className="text-sm text-yellow-500 font-semibold">
+                                <span className="text-lg text-yellow-500 font-semibold">
                                     지갑에 USDT가 있어야 발행 가능합니다.
                                 </span>
                             </div>
