@@ -1194,7 +1194,7 @@ function AgentPage() {
                                 )}
                                 className={`
                                     ${claimingNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
-                                    p-2 rounded-lg text-sm font-semibold
+                                    p-2 rounded-lg text-lg font-semibold
                                 `}
                             >
                                 <div className="flex flex-row gap-2 items-center justify-center">
