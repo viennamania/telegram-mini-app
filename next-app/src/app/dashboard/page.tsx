@@ -477,7 +477,7 @@ function HomeContent() {
    
     <main
       className="
-        p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-lg mx-auto
+        p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-xl mx-auto
         bg-cover bg-center bg-no-repeat
         "
     >
@@ -713,17 +713,16 @@ function HomeContent() {
         {/* radio checkboxes */}
         <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
             
+            {/*
             <div className="flex flex-row gap-2 items-center justify-between">
               <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                   텔레그램 봇센터
               </div>
-              {/* center count */}
+
               <div className="bg-gray-800 text-sm text-zinc-100 p-2 rounded">
                   {centerList.length}개
               </div>
-              {/* 전체 회원수
-              세터별 회원수 전체합계
-              */}
+
               <div className="bg-gray-800 text-sm text-zinc-100 p-2 rounded">
                 전체 회원수:
                 {
@@ -731,7 +730,6 @@ function HomeContent() {
                 }
               </div>
 
-              {/* airDropAll */}
               <div className="bg-gray-800 text-sm text-zinc-100 p-2 rounded">
                 <input
                   type="number"
@@ -755,6 +753,7 @@ function HomeContent() {
               </div>
 
             </div>
+            */}
             
             <div className='w-full flex flex-col gap-2 items-start justify-between'>
                 {loadingCenters ? (
@@ -875,7 +874,9 @@ function HomeContent() {
                   <table className="w-full">
                       <thead>
                           <tr className="bg-zinc-800 text-zinc-100">
+                              
                               <th className="p-2">회원아이디</th>
+                              <th className="p-2">가입날짜</th>
                               <th className="p-2">지갑주소</th>
                               <th className="p-2">레퍼럴코드</th>
                               {/*
@@ -904,6 +905,13 @@ function HomeContent() {
                                       </span>
                                     </div>
                                   </td>
+                                  {/* 가입날짜 */}
+                                  <td className="p-2">
+                                    <span className="text-sm">
+                                      {new Date(user?.createdAt).toLocaleString()}
+                                    </span>
+                                  </td>
+                                  {/* 지갑주소 */}
                                   <td className="p-2">
                                     <div className="flex flex-row gap-2 items-center justify-start">
                                       <span className="text-sm">
