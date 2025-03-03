@@ -202,7 +202,7 @@ function ProfilePage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch("/api/user/getUser", {
+            const response = await fetch("/api/userGogo/getUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -294,7 +294,7 @@ function ProfilePage() {
 
     const checkNicknameIsDuplicate = async ( nickname: string ) => {
 
-        const response = await fetch("/api/user/checkUserByNickname", {
+        const response = await fetch("/api/userGogo/checkUserByNickname", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -348,7 +348,7 @@ function ProfilePage() {
         if (nicknameEdit) {
 
 
-            const response = await fetch("/api/user/updateUser", {
+            const response = await fetch("/api/userGogo/updateUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -387,7 +387,7 @@ function ProfilePage() {
 
         } else {
 
-            const response = await fetch("/api/user/setUserVerified", {
+            const response = await fetch("/api/userGogo/setUserVerified", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -435,7 +435,7 @@ function ProfilePage() {
         
         setLoadingSetUserTelegramId(true);
 
-        const response = await fetch("/api/user/updateUserTelegramId", {
+        const response = await fetch("/api/userGogo/updateUserTelegramId", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -464,13 +464,13 @@ function ProfilePage() {
 
 
     // update User mobile
-    // /api/user/updateUserMobile
+    // /api/userGogo/updateUserMobile
     const [loadingSetUserMobile, setLoadingSetUserMobile] = useState(false);
     const setUserMobile = async () => {
         
         setLoadingSetUserMobile(true);
 
-        const response = await fetch("/api/user/updateUserMobile", {
+        const response = await fetch("/api/userGogo/updateUserMobile", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -497,7 +497,7 @@ function ProfilePage() {
             alert('핸드폰번호가 저장되었습니다.');
 
             // get user data
-            const response = await fetch("/api/user/getUser", {
+            const response = await fetch("/api/userGogo/getUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -541,7 +541,7 @@ function ProfilePage() {
 
         setLoadingSetSeller(true);
 
-        const response = await fetch("/api/user/updateSeller", {
+        const response = await fetch("/api/userGogo/updateSeller", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -568,7 +568,7 @@ function ProfilePage() {
             alert('판매자 정보가 저장되었습니다.');
 
             // get user data
-            const response = await fetch("/api/user/getUser", {
+            const response = await fetch("/api/userGogo/getUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

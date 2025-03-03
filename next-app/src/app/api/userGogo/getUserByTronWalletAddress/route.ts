@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import {
 	getOneByTronWalletAddress,
-} from '@lib/api/user';
+} from '@lib/api/userGogo';
 
 
 

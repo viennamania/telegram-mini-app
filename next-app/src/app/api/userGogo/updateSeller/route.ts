@@ -4,7 +4,7 @@ import {
   getOneByWalletAddress,
 	updateSeller,
   setEscrowWalletAddressByWalletAddress,
-} from '@lib/api/userNoahk';
+} from '@lib/api/userGogo';
 
 
 
