@@ -1196,6 +1196,9 @@ function ProfilePage() {
                                                                     width={50}
                                                                     height={50}
                                                                     className="rounded-full"
+                                                                    style={{
+                                                                        objectFit: 'cover',
+                                                                    }}
                                                                 />
                                                             
 
