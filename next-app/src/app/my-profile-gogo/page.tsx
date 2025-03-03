@@ -933,12 +933,12 @@ function ProfilePage() {
                         )}
 
                         {/* 핸드폰번호 just view */}
+                        {/*
                         {address && userCode && user?.mobile && (
                             <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
                             bg-zinc-800 bg-opacity-90
                             '>
                                 <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                    {/* dot */}
                                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                     <span className="text-sm font-semibold text-gray-200">
                                         핸드폰번호
@@ -953,17 +953,18 @@ function ProfilePage() {
 
                             </div>
                         )}
+                        */}
 
                             
 
 
                         {/* 핸드폰번호 저장하기 */}
+                        {/*
                         {address && userCode && !user?.mobile && (
                             <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
                             bg-zinc-800 bg-opacity-90
                             '>
                                 <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                    {/* dot */}
                                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                     <span className="text-sm font-semibold text-gray-200">
                                         핸드폰번호
@@ -987,7 +988,6 @@ function ProfilePage() {
                                     />
                                 </div>
 
-                                {/* check if the mobile number is valid */}
                                 {mobile && !/^\d{11}$/.test(mobile) ? (
                                     <div className='flex flex-row gap-2 items-center justify-between'>
                                         <span className='text-sm font-semibold text-red-500'>
@@ -1034,7 +1034,7 @@ function ProfilePage() {
 
                             </div>
                         )}
-
+                        */}
 
 
                         {/* seller */}
