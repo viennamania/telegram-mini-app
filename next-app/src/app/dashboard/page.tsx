@@ -666,7 +666,7 @@ function HomeContent() {
               <Button
                 onClick={() => {
                   // fetch centers
-
+                  /*
                   const fetchData = async () => {
                     setLoadingCenters(true);
                     const response = await fetch("/api/user/getApplicationsForCenter", {
@@ -701,7 +701,39 @@ function HomeContent() {
                   setSelectUser(null);
                   setUsers([]);
                   setApplications([]);
+                  */
+
+                  // getAllUsersTelegramIdByCenter
+                  const fetchData = async () => {
+                    setLoadingUsers(true);
+                    const response = await fetch("/api/user/getAllUsersTelegramIdByCenter", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            center: selectCenter,
+                        }),
+                    });
+
+                    if (!response.ok) {
+                        console.error("Error fetching users");
+                        setLoadingUsers(false);
+                        return;
+                    }
+
+                    const data = await response.json();
+
+                    setUsers(data?.result);
+
+                    setLoadingUsers(false);
+
+                  }
+
+                  fetchData();
+
                 }}
+
                 className={`${loadingCenters ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
               >
                 {loadingCenters ? "로딩중..." : "새로고침"}
