@@ -1182,10 +1182,27 @@ function AgentPage() {
                                 <div className="w-full flex flex-row gap-2 items-center justify-start">
                                     {/* dot */}
                                     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                    <span className="text-sm text-yellow-500 font-semibold">
+                                    <span className="text-lg text-yellow-500 font-semibold">
                                         보유하고 있는 USDT로 NOAH 채굴 NFT를 직접 발행받을 수 있습니다.
                                     </span>
                                 </div>
+                                <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <span className="text-lg text-yellow-500 font-semibold">
+                                        NFT 발행 금액은 {price} USDT 입니다.
+                                    </span>
+                                </div>
+                                {/* 지갑에 USDT가 있어야 발행 가능합니다. */}
+                                <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <span className="text-lg text-yellow-500 font-semibold">
+                                        지갑에 USDT가 있어야 발행 가능합니다.
+                                    </span>
+                                </div>
+
+
                                 <span className="text-lg text-zinc-400 font-semibold">
                                     NOAH 채굴 NFT를 발행받을려면 아래 버튼을 클릭하세요.
                                 </span>
@@ -1223,21 +1240,7 @@ function AgentPage() {
                                     </span>
                                 )}
 
-                                <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                    {/* dot */}
-                                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                    <span className="text-lg text-yellow-500 font-semibold">
-                                        NFT 발행 금액은 {price} USDT 입니다.
-                                    </span>
-                                </div>
-                                {/* 지갑에 USDT가 있어야 발행 가능합니다. */}
-                                <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                    {/* dot */}
-                                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                    <span className="text-lg text-yellow-500 font-semibold">
-                                        지갑에 USDT가 있어야 발행 가능합니다.
-                                    </span>
-                                </div>
+
 
 
                             </div>
