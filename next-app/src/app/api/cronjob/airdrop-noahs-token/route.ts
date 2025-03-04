@@ -386,7 +386,9 @@ export async function GET(request: NextRequest) {
           if (!telegramId || !center) {
 
             console.log("telegramId or center is empty");
-            return NextResponse.error();
+            ///return NextResponse.error();
+
+            continue;
           }
 
           // get referrer from telegramId
@@ -406,7 +408,8 @@ export async function GET(request: NextRequest) {
 
             console.log("referralCode is empty");
 
-            return NextResponse.error();
+            //return NextResponse.error();
+            continue;
           }
 
           const referralContractAddress = referralCode?.split("_")[0] || "";
@@ -422,7 +425,10 @@ export async function GET(request: NextRequest) {
 
           if (!agentWalletAddress) {
 
-            return NextResponse.error();
+            console.log("agentWalletAddress is empty");
+
+            //return NextResponse.error();
+            continue;
           }
 
 
@@ -430,7 +436,9 @@ export async function GET(request: NextRequest) {
           // getCenterOwnerByCenter
           const userCenter = await getCenterOwnerByCenter( center );
           if (!userCenter) {
-            return NextResponse.error();
+            //return NextResponse.error();
+            console.log("userCenter is empty");
+            continue;
           }
 
           const centerWalletAddress = userCenter?.walletAddress || "";
@@ -438,7 +446,9 @@ export async function GET(request: NextRequest) {
           console.log("centerWalletAddress: ", centerWalletAddress);
 
           if (!centerWalletAddress) {
-            return NextResponse.error();
+            //return NextResponse.error();
+            console.log("centerWalletAddress is empty");
+            continue;
           }
 
 
@@ -456,7 +466,8 @@ export async function GET(request: NextRequest) {
 
           if (tokenId === BigInt(0)) {
 
-            const shareTotalAmount = 100.0 * balance;
+            //const shareTotalAmount = 100.0 * balance;
+            const shareTotalAmount = 10.0 * balance;
 
       
             masterAmount = shareTotalAmount * 0.3;
@@ -466,7 +477,9 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(1)) {
 
-            const shareTotalAmount = 300.0 * balance;
+            //const shareTotalAmount = 300.0 * balance;
+
+            const shareTotalAmount = 30.0 * balance;
 
        
             masterAmount = shareTotalAmount * 0.4;
@@ -476,7 +489,9 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(2)) {
 
-            const shareTotalAmount = 500.0 * balance;
+            //const shareTotalAmount = 500.0 * balance;
+
+            const shareTotalAmount = 50.0 * balance;
             
    
             masterAmount = shareTotalAmount * 0.5;
@@ -486,7 +501,8 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(3)) {
 
-            const shareTotalAmount = 1000.0 * balance;
+            //const shareTotalAmount = 1000.0 * balance;
+            const shareTotalAmount = 100.0 * balance;
 
 
             masterAmount = shareTotalAmount * 0.6;
@@ -496,7 +512,9 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(4)) {
 
-            const shareTotalAmount = 5000.0 * balance;
+            //const shareTotalAmount = 5000.0 * balance;
+
+            const shareTotalAmount = 500.0 * balance;
 
         
 
@@ -507,7 +525,9 @@ export async function GET(request: NextRequest) {
 
           } else if (tokenId === BigInt(5)) {
 
-            const shareTotalAmount = 10000.0 * balance;
+            //const shareTotalAmount = 10000.0 * balance;
+
+            const shareTotalAmount = 1000.0 * balance;
       
 
             masterAmount = shareTotalAmount * 0.8;
