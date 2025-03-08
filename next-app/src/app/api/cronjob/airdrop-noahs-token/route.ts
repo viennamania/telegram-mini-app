@@ -467,7 +467,7 @@ export async function GET(request: NextRequest) {
           if (tokenId === BigInt(0)) {
 
             //const shareTotalAmount = 100.0 * balance;
-            const shareTotalAmount = 10.0 * balance;
+            const shareTotalAmount = 1.0 * balance;
 
       
             masterAmount = shareTotalAmount * 0.3;
@@ -479,7 +479,7 @@ export async function GET(request: NextRequest) {
 
             //const shareTotalAmount = 300.0 * balance;
 
-            const shareTotalAmount = 30.0 * balance;
+            const shareTotalAmount = 3.0 * balance;
 
        
             masterAmount = shareTotalAmount * 0.4;
@@ -491,7 +491,7 @@ export async function GET(request: NextRequest) {
 
             //const shareTotalAmount = 500.0 * balance;
 
-            const shareTotalAmount = 50.0 * balance;
+            const shareTotalAmount = 5.0 * balance;
             
    
             masterAmount = shareTotalAmount * 0.5;
@@ -502,7 +502,7 @@ export async function GET(request: NextRequest) {
           } else if (tokenId === BigInt(3)) {
 
             //const shareTotalAmount = 1000.0 * balance;
-            const shareTotalAmount = 100.0 * balance;
+            const shareTotalAmount = 10.0 * balance;
 
 
             masterAmount = shareTotalAmount * 0.6;
@@ -514,7 +514,7 @@ export async function GET(request: NextRequest) {
 
             //const shareTotalAmount = 5000.0 * balance;
 
-            const shareTotalAmount = 500.0 * balance;
+            const shareTotalAmount = 50.0 * balance;
 
         
 
@@ -527,7 +527,7 @@ export async function GET(request: NextRequest) {
 
             //const shareTotalAmount = 10000.0 * balance;
 
-            const shareTotalAmount = 1000.0 * balance;
+            const shareTotalAmount = 100.0 * balance;
       
 
             masterAmount = shareTotalAmount * 0.8;
