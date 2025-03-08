@@ -112,7 +112,7 @@ function AgentPage() {
     const address = account?.address;
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
   
 
 
@@ -719,6 +719,7 @@ function AgentPage() {
 
 
 
+        setTransferringNft(transferringNft.map((value, i) => i === index ? true : value));
     
         
 
@@ -820,8 +821,8 @@ function AgentPage() {
 
         }
 
-        ///setTransferringNft(false);
-        transferringNft[index] = false;
+
+        setTransferringNft(transferringNft.map((value, i) => i === index ? false : value));
 
 
 
@@ -1580,13 +1581,6 @@ function AgentPage() {
 
                                             </button>
 
-                                            {/*
-                                            {messageTransferringNft && (
-                                                <span className="text-lg text-green-500 font-semibold">
-                                                    {messageTransferringNft}
-                                                </span>
-                                            )}
-                                            */}
                                             {messageTransferringNft[index] && (
                                                 <span className="text-lg text-green-500 font-semibold">
                                                     {messageTransferringNft[index]}
