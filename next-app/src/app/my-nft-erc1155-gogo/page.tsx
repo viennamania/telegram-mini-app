@@ -1187,7 +1187,7 @@ function AgentPage() {
                                 <span className="text-lg text-zinc-400 font-semibold">
                                     채굴 NFT를 발행받을려면 아래 버튼을 클릭하세요.
                                 </span>
-                                <div className="p-5 w-full flex flex-row gap-2 items-center justify-center">
+                                <div className="p-5 w-full flex flex-col gap-2 items-center justify-center">
 
 
                                     {/* 발행금액 */}
