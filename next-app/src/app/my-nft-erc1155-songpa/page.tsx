@@ -408,12 +408,45 @@ function AgentPage() {
 
     const erc1155ContractAddress = "0xE6BeA856Cd054945cE7A9252B2dc360703841028";
 
-    const price = 105;
+
+    /*
+    100 NOAH NFT: 105 USDT
+    300 NOAH NFT: 315 USDT
+    500 NOAH NFT: 525 USDT
+    1000 NOAH NFT: 1050 USDT
+    5000 NOAH NFT: 5250 USDT
+    10000 NOAH NFT: 10500 USDT
+    */
+
+
+    // select tokenId
+    const [selectedTokenId, setSelectedTokenId] = useState("0");
+    const [price, setPrice] = useState(0);
+    useEffect(() => {
+        if (selectedTokenId === "0") {
+            setPrice(105);
+        } else if (selectedTokenId === "1") {
+            setPrice(315);
+        } else if (selectedTokenId === "2") {
+            setPrice(525);
+        } else if (selectedTokenId === "3") {
+            setPrice(1050);
+        } else if (selectedTokenId === "4") {
+            setPrice(5250);
+        } else if (selectedTokenId === "5") {
+            setPrice(10500);
+        }
+    } , [selectedTokenId]);
+
+
+
+    ///const price = 105;
+
 
     // claim NFT
     const [claimingNft, setClaimingNft] = useState(false);
     const [messageClaimingNft, setMessageClaimingNft] = useState("");
-    const claimNft = async (contractAddress: string, tokenId: string) => {
+    const claimNft = async (contractAddress: string) => {
 
         if (claimingNft) {
             //toast.error('이미 실행중입니다');
@@ -492,7 +525,8 @@ function AgentPage() {
 
                 //tokenId: BigInt(tokenId),
 
-                tokenId: 0n,
+                //tokenId: 0n,
+                tokenId: BigInt(selectedTokenId),
 
 
                 to: address as string,
@@ -896,6 +930,8 @@ function AgentPage() {
 
 
 
+
+
     return (
 
         <main
@@ -1186,13 +1222,7 @@ function AgentPage() {
                                         보유하고 있는 USDT로 NOAH 채굴 NFT를 직접 발행받을 수 있습니다.
                                     </span>
                                 </div>
-                                <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                    {/* dot */}
-                                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                    <span className="text-lg text-yellow-500 font-semibold">
-                                        NFT 발행 금액은 {price} USDT 입니다.
-                                    </span>
-                                </div>
+
                                 {/* 지갑에 USDT가 있어야 발행 가능합니다. */}
                                 <div className="w-full flex flex-row gap-2 items-center justify-start">
                                     {/* dot */}
@@ -1206,13 +1236,61 @@ function AgentPage() {
                                 <span className="text-lg text-zinc-400 font-semibold">
                                     NOAH 채굴 NFT를 발행받을려면 아래 버튼을 클릭하세요.
                                 </span>
-                                <div className="p-5 w-full flex flex-row gap-2 items-center justify-center">
+
+
+                                {/* select tokenId */}
+                                <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                    {/* dot */}
+                                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <div className="text-sm text-zinc-100 font-semibold">
+                                        NOAH 채굴 NFT 선택
+                                    </div>
+                                </div>
+
+                                <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                    <select
+                                        value={selectedTokenId}
+                                        onChange={(e) => setSelectedTokenId(e.target.value)}
+                                        className="w-72 p-2 rounded-lg text-lg font-semibold"
+                                    >
+                                        <option value="0">100 NOAH NFT: 105 USDT</option>
+                                        <option value="1">300 NOAH NFT: 315 USDT</option>
+                                        <option value="2">500 NOAH NFT: 525 USDT</option>
+                                        <option value="3">1000 NOAH NFT: 1050 USDT</option>
+                                        <option value="4">5000 NOAH NFT: 5250 USDT</option>
+                                        <option value="5">10000 NOAH NFT: 10500 USDT</option>
+                                    </select>
+                                </div>
+
+
+                                <div className="p-5 w-full flex flex-col gap-2 items-center justify-center">
+
+
+                                    {/* 발행금액 */}
+                                    <span className="text-2xl text-green-500 font-semibold">
+                                        발행금액: {price} USDT
+                                    </span>
+                                    <span className="text-lg text-zinc-400 font-semibold">
+                                        USDT 잔액: {balance} USDT
+                                    </span>
+                                    {price > balance ? (
+                                        <span className="text-lg text-red-500 font-semibold">
+                                            USDT 잔액이 부족합니다.
+                                        </span>
+                                    ) : (
+                                        <span className="text-lg text-green-500 font-semibold">
+                                            발행후 USDT 잔액: {(balance - price).toFixed(6)} USDT
+                                        </span>
+                                    )}
+
+
                                     <button
                                         disabled={claimingNft}
                                         onClick={() =>
                                             confirm("NOAH 채굴 NFT를 발행하시겠습니까?") &&
-                                            claimNft(erc1155ContractAddress, "0"
-                                        )}
+                                            claimNft(erc1155ContractAddress)
+                                        }
+
                                         className={`
                                             ${claimingNft ? 'bg-gray-300 text-gray-400' : 'bg-blue-500 text-zinc-100'}
                                             p-2 rounded-lg text-lg font-semibold
@@ -1228,8 +1306,8 @@ function AgentPage() {
                                                     className="animate-spin"
                                                 />
                                             )}
-                                            {claimingNft && '100 NOAH 채굴 NFT 발행중...'}
-                                            {!claimingNft && '100 NOAH 채굴 NFT 발행하기'}
+                                            {claimingNft && 'NOAH 채굴 NFT 발행중...'}
+                                            {!claimingNft && 'NOAH 채굴 NFT 발행하기'}
                                         </div>
                                     </button>
                                 </div>
