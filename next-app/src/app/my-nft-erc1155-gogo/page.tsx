@@ -1173,13 +1173,7 @@ function AgentPage() {
                                         보유하고 있는 USDT로 채굴 NFT를 직접 발행받을 수 있습니다.
                                     </span>
                                 </div>
-                                <div className="w-full flex flex-row gap-2 items-center justify-start">
-                                    {/* dot */}
-                                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                    <span className="text-lg text-yellow-500 font-semibold">
-                                        NFT 발행 금액은 {price} USDT 입니다.
-                                    </span>
-                                </div>
+
                                 {/* 지갑에 USDT가 있어야 발행 가능합니다. */}
                                 <div className="w-full flex flex-row gap-2 items-center justify-start">
                                     {/* dot */}
@@ -1194,6 +1188,27 @@ function AgentPage() {
                                     채굴 NFT를 발행받을려면 아래 버튼을 클릭하세요.
                                 </span>
                                 <div className="p-5 w-full flex flex-row gap-2 items-center justify-center">
+
+
+                                    {/* 발행금액 */}
+                                    <span className="text-2xl text-green-500 font-semibold">
+                                        발행금액: {price} USDT
+                                    </span>
+                                    <span className="text-lg text-zinc-400 font-semibold">
+                                        USDT 잔액: {balance} USDT
+                                    </span>
+                                    {price > balance ? (
+                                        <span className="text-lg text-red-500 font-semibold">
+                                            USDT 잔액이 부족합니다.
+                                        </span>
+                                    ) : (
+                                        <span className="text-lg text-green-500 font-semibold">
+                                            발행후 USDT 잔액: {(balance - price).toFixed(6)} USDT
+                                        </span>
+                                    )}
+
+
+
                                     <button
                                         disabled={claimingNft}
                                         onClick={() =>
