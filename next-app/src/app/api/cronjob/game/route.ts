@@ -248,11 +248,15 @@ export async function GET(request: NextRequest) {
    
         const user = await getOneByWalletAddress(toWalletAddress);
 
+        //console.log("user: ", user);
+
         if (user) {
           const telegramId = user.telegramId;
           const center = user.center;
 
           const response = await getOneByTelegramId(telegramId, center);
+
+          //console.log("response: ", response);
 
           /*
           {
@@ -265,7 +269,7 @@ export async function GET(request: NextRequest) {
           */
 
           if (response && response.referralCode) {
-            
+
             const referralCode = response.referralCode;
 
             // get contract address and tokenId from referralCode
@@ -273,23 +277,39 @@ export async function GET(request: NextRequest) {
             const contractAddress = referralCodeArray[0];
             const tokenId = referralCodeArray[1];
 
+
+            console.log("contractAddress: ", contractAddress);
+            console.log("tokenId: ", tokenId);
+
             // Get owner of NFT
             const owner = await alchemy.nft.getOwnersForNft(
               contractAddress,
               tokenId
             );
 
+            console.log("owner: ", owner);
+
+
+
             const ownerWalletAddress = owner?.owners?.[0];
+
+            console.log("ownerWalletAddress: ", ownerWalletAddress );
+
+
+            const ownerAmount = Number(parseFloat(sendAmount) * 0.1).toFixed(6);
+
+            console.log("ownerAmount: ", ownerAmount );
+
 
             if (ownerWalletAddress) {
 
-              const transaction = transfer({
+              const owinerTransaction = transfer({
                 contract: contractUSDT,
                 to: ownerWalletAddress,
-                amount: sendAmount * 0.1,
+                amount: ownerAmount,
               });
 
-              transactions.push(transaction);
+              transactions.push(owinerTransaction);
 
             }
 
@@ -320,6 +340,15 @@ export async function GET(request: NextRequest) {
       } );
     
     
+
+      if (transactions.length === 0) {
+        return NextResponse.json({
+          result: "no data found",
+        });
+      }
+
+
+      //console.log("transactions: ", transactions);
 
     
       const batchOptions: SendBatchTransactionOptions = {
