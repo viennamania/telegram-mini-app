@@ -238,6 +238,8 @@ export async function POST(request: NextRequest) {
 }
   */
 
+
+  /*
   const response2 = await fetch('https://na.winglobalpay.com/api/v1/vactFcs', {
     method: 'POST',
     headers: {
@@ -267,6 +269,8 @@ export async function POST(request: NextRequest) {
   
 
   console.log("response2Json: ", response2Json);
+  */
+
 
   /*
 response2Json:  {
@@ -406,6 +410,7 @@ response2Json:  {
 
 
   // 성공
+  /*
   if (response2Json.result.resultCd === '0000') {
 
     //console.log("account: ", response2Json.vact.account);
@@ -416,12 +421,12 @@ response2Json:  {
     if (virtualAccount) {
 
 
-      /*
-      return NextResponse.json({
-        result: null,
-        error: response2Json.result.advanceMsg,
-      });
-      */
+      
+      //return NextResponse.json({
+      //  result: null,
+      //  error: response2Json.result.advanceMsg,
+      //});
+      
 
     }
 
@@ -439,10 +444,28 @@ response2Json:  {
   }
 
 
+
   return NextResponse.json({
     result: null,
     error: response2Json.result.advanceMsg,
   });
+  */
+
+
+
+  const virtualAccount = "1234567890";
+
+  const result = await updateSeller({
+    walletAddress: walletAddress,
+    seller: seller,
+    virtualAccount: virtualAccount,
+  });
+
+  return NextResponse.json({
+    result,
+    error: "",
+  });
+
 
 
 }
