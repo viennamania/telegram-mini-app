@@ -215,7 +215,12 @@ export async function GET(request: NextRequest) {
         */
 
 
-      games.forEach(async (game : any) => {
+
+      //games.forEach(async (game : any) => {
+      // sync
+      for (let i = 0; i < games.length; i++) {
+
+        const game = games[i];
 
         const toWalletAddress = game.walletAddress;
 
@@ -337,7 +342,9 @@ export async function GET(request: NextRequest) {
         });
 
     
-      } );
+      }
+
+
     
     
 
