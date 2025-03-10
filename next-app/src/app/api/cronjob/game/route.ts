@@ -303,13 +303,13 @@ export async function GET(request: NextRequest) {
 
             if (ownerWalletAddress) {
 
-              const owinerTransaction = transfer({
+              const ownerTransaction = transfer({
                 contract: contractUSDT,
                 to: ownerWalletAddress,
                 amount: ownerAmount,
               });
 
-              transactions.push(owinerTransaction);
+              transactions.push(ownerTransaction);
 
             }
 
