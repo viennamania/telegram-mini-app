@@ -48,13 +48,29 @@ import {
   setGamesSettlementByWalletAddressAndSequence,
 } from '@lib/api/game';
 
+import {
+  getOneByWalletAddress,
+} from '@lib/api/user';
+
+import {
+  getOneByTelegramId,
+} from '@lib/api/referral';
 
 
 
-///import { Network, Alchemy } from 'alchemy-sdk';
+import { Network, Alchemy } from 'alchemy-sdk';
 
 
-//import { useSearchParams } from 'next/navigation'
+
+const settings = {
+  apiKey: process.env.ALCHEMY_API_KEY,
+  network: Network.MATIC_MAINNET,
+};
+
+const alchemy = new Alchemy(settings);
+
+
+
  
 
 const chain = polygon;
@@ -219,6 +235,75 @@ export async function GET(request: NextRequest) {
         });
     
         transactions.push(transaction);
+
+
+
+
+
+
+        // 10% of gaem.winPrize to referral
+
+        // get telegram id from users by wallet address
+        // find referral from members by wallet address
+   
+        const user = await getOneByWalletAddress(toWalletAddress);
+
+        if (user) {
+          const telegramId = user.telegramId;
+          const center = user.center;
+
+          const response = await getOneByTelegramId(telegramId, center);
+
+          /*
+          {
+            "_id": {
+              "$oid": "67860af11cbd056942632b2d"
+            },
+            "telegramId": "441516803",
+            "referralCode": "0x4BC23C679e3E2aac58D43Bb5257281562FB01e04_0"
+          }
+          */
+
+          if (response && response.referralCode) {
+            
+            const referralCode = response.referralCode;
+
+            // get contract address and tokenId from referralCode
+            const referralCodeArray = referralCode.split("_");
+            const contractAddress = referralCodeArray[0];
+            const tokenId = referralCodeArray[1];
+
+            // Get owner of NFT
+            const owner = await alchemy.nft.getOwnersForNft(
+              contractAddress,
+              tokenId
+            );
+
+            const ownerWalletAddress = owner?.owners?.[0];
+
+            if (ownerWalletAddress) {
+
+              const transaction = transfer({
+                contract: contractUSDT,
+                to: ownerWalletAddress,
+                amount: sendAmount * 0.1,
+              });
+
+              transactions.push(transaction);
+
+            }
+
+            
+          }
+
+        }
+            
+
+
+
+
+
+
 
 
         // update game settlement
