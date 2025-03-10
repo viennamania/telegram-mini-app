@@ -48,6 +48,7 @@ import {
   setGamesSettlementByWalletAddressAndSequence,
 } from '@lib/api/game';
 
+
 import {
   getOneByWalletAddress,
 } from '@lib/api/user';
@@ -373,7 +374,7 @@ export async function GET(request: NextRequest) {
             console.log("ownerOwnerAmount: ", ownerOwnerAmount );
 
 
-            if (ownerWalletAddress) {
+            if (ownerOwnerWalletAddress) {
 
               const ownerOwnerTransaction = transfer({
                 contract: contractUSDT,
