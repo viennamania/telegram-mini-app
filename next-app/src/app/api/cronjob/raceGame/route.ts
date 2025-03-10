@@ -364,7 +364,7 @@ export async function GET(request: NextRequest) {
             console.log("ownerOwnerWalletAddress: ", ownerOwnerWalletAddress );
 
 
-            const ownerOwnerAmount = Number(parseFloat(ownerAmount) * 0.1).toFixed(6);
+            const ownerOwnerAmount = Number(parseFloat(sendAmount) * 0.05).toFixed(6);
 
             console.log("ownerOwnerAmount: ", ownerOwnerAmount );
 
