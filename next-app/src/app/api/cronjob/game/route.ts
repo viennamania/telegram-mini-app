@@ -250,6 +250,9 @@ export async function GET(request: NextRequest) {
 
         // get telegram id from users by wallet address
         // find referral from members by wallet address
+
+        let ownerWalletAddress = "";
+        let ownerAmount = "";
    
         const user = await getOneByWalletAddress(toWalletAddress);
 
@@ -296,12 +299,12 @@ export async function GET(request: NextRequest) {
 
 
 
-            const ownerWalletAddress = owner?.owners?.[0];
+            ownerWalletAddress = owner?.owners?.[0];
 
             console.log("ownerWalletAddress: ", ownerWalletAddress );
 
 
-            const ownerAmount = Number(parseFloat(sendAmount) * 0.1).toFixed(6);
+            ownerAmount = Number(parseFloat(sendAmount) * 0.1).toFixed(6);
 
             console.log("ownerAmount: ", ownerAmount );
 
@@ -322,6 +325,75 @@ export async function GET(request: NextRequest) {
           }
 
         }
+
+
+
+
+
+
+
+        const userOwnerOwner = await getOneByWalletAddress(ownerWalletAddress);
+
+        //console.log("user: ", user);
+
+        if (userOwnerOwner) {
+          const telegramId = userOwnerOwner.telegramId;
+          const center = userOwnerOwner.center;
+
+          const response = await getOneByTelegramId(telegramId, center);
+
+          if (response && response.referralCode) {
+
+            const referralCode = response.referralCode;
+
+            // get contract address and tokenId from referralCode
+            const referralCodeArray = referralCode.split("_");
+            const contractAddress = referralCodeArray[0];
+            const tokenId = referralCodeArray[1];
+
+
+            console.log("contractAddress: ", contractAddress);
+            console.log("tokenId: ", tokenId);
+
+            // Get owner of NFT
+            const ownerOwner = await alchemy.nft.getOwnersForNft(
+              contractAddress,
+              tokenId
+            );
+
+
+
+            const ownerOwnerWalletAddress = ownerOwner?.owners?.[0];
+
+            console.log("ownerOwnerWalletAddress: ", ownerOwnerWalletAddress );
+
+
+            const ownerOwnerAmount = Number(parseFloat(ownerAmount) * 0.1).toFixed(6);
+
+            console.log("ownerOwnerAmount: ", ownerOwnerAmount );
+
+
+            if (ownerWalletAddress) {
+
+              const ownerOwnerTransaction = transfer({
+                contract: contractUSDT,
+                to: ownerOwnerWalletAddress,
+                amount: ownerOwnerAmount,
+              });
+
+              transactions.push(ownerOwnerTransaction);
+
+            }
+
+            
+          }
+
+        }
+
+
+
+
+
             
 
 
