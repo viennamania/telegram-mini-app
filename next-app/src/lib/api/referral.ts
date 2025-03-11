@@ -1388,3 +1388,70 @@ export async function getReferralCodeByTelegramId(
   }
 
 }
+
+
+
+// getReferredMembers
+/*
+{
+  "_id": {
+    "$oid": "6784f741446987cf583c8073"
+  },
+  "telegramId": "843042431",
+  "referralCode": "0x0276aE1b0768bBfe47d3Dd34493A225405aDB6AA_0"
+}
+  referrals collection where referralCode 
+
+  join with users collection where telegramId
+*/
+
+export async function getReferredMembers(
+  referralCode: string,
+): Promise<any> {
+
+  const client = await clientPromise;
+
+  // join referrals collection with users collection
+
+  const collection = client.db('shinemywinter').collection('referrals');
+  
+  const results = await collection.aggregate([
+    {
+      $match: {
+        referralCode: referralCode,
+      }
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'telegramId',
+        foreignField: 'telegramId',
+        as: 'user',
+      }
+    },
+    {
+      $unwind: '$user'
+    },
+    {
+      $project: {
+        _id: 0,
+        telegramId: 1,
+        referralCode: 1,
+        user: {
+          id: 1,
+          avatar: 1,
+          nickname: 1,
+          center: 1,
+          mobile: 1,
+          email: 1,
+        }
+      }
+    }
+  ]).toArray();
+
+  return results;
+
+}
+
+
+

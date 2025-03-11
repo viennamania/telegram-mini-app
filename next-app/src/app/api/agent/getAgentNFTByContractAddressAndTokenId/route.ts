@@ -122,7 +122,7 @@ API KEY : pk_096e-0d7e93-200-a34f0
   const response2Json = await response2.json();
 
 
-  console.log("response2Json: ", response2Json);
+  //console.log("response2Json: ", response2Json);
   // response2Json:  { msg: '키를 확인해주세요.', flag: 'fail' }
 
   /*

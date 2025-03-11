@@ -266,7 +266,7 @@ export async function POST(request: NextRequest) {
   const response2Json = await response2.json();
   
 
-  console.log("response2Json: ", response2Json);
+  ///console.log("response2Json: ", response2Json);
 
   /*
 response2Json:  {

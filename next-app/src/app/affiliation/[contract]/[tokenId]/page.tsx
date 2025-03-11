@@ -432,6 +432,50 @@ export default function AgentPage({ params }: any) {
 
 
 
+  // get referred members
+  const [referredMembers, setReferredMembers] = useState([] as any);
+  useEffect(() => {
+    const getReferredMembers = async () => {
+      const response = await fetch('/api/referral/getReferredMembers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          referralCode: agentContractAddress + "_" + agentTokenId,
+        }),
+      });
+
+      const data = await response.json();
+
+      setReferredMembers(data.result);
+
+    } 
+
+    if (agentContractAddress
+      && agentTokenId
+    ) getReferredMembers();
+
+  }
+  , [agentContractAddress, agentTokenId]);
+
+  //console.log("referredMembers", referredMembers);
+  /*
+  [
+  {
+    "telegramId": "1558409753",
+    "referralCode": "0x0276aE1b0768bBfe47d3Dd34493A225405aDB6AA_0",
+    "user": {
+        "id": 442301,
+        "avatar": "https://thirdweb-assets.s3.ap-northeast-2.amazonaws.com/profile-default.png",
+        "center": "owin_anawin_bot",
+        "nickname": "tel1842",
+        "mobile": "",
+        "email": null
+    }
+  }
+  ]
+  */
 
 
 
@@ -750,6 +794,70 @@ export default function AgentPage({ params }: any) {
                 </div>
 
 
+                {/* referred members */}
+                {referredMembers.length > 0 && (
+                  <div className='w-full flex flex-col items-start justify-start gap-2'>
+
+                    <div className='w-full flex flex-row items-center justify-start gap-2
+                      border-b border-gray-300 pb-2
+                    '>
+                        {/* dot */}
+                        <div className='w-3 h-3 bg-red-500 rounded-full'></div>
+                        <span className='text-lg font-semibold text-gray-800'>
+                            추천인 목록
+                        </span>
+                    </div>
+
+                    <div className='w-full flex flex-col items-start justify-start gap-2'>
+
+                        {referredMembers.map((member: any, index: number) => (
+
+                            <div
+                              key={index}
+                              className='w-full grid grid-cols-3 items-start justify-start gap-2
+                                border-b border-gray-300 pb-2
+                              '
+                            >
+
+                              <Image
+                                  src={member.user.avatar || '/profile-default.png'}
+                                  width={40}
+                                  height={40}
+                                  alt={member.user.nickname}
+                                  className='rounded-lg object-cover w-6 h-6'
+                              />
+
+                              <div className='flex flex-col items-start justify-between gap-2'>
+                                  <span className='text-xs text-gray-800'>
+                                    {member.user.nickname}
+                                  </span>
+                                  <span className='text-xs text-gray-800'>
+                                    {member.user.mobile && member.user.mobile.slice(0, 3) + '****' + member.user.mobile.slice(-4)}
+                                  </span>
+                              </div>
+
+                              <div className='flex flex-col items-start justify-between gap-2'>
+                                <span className='text-xs text-gray-800'>
+                                  {member.user.center}
+                                </span>
+                                <span className='text-xs text-gray-800'>
+                                  {member.telegramId}
+                                </span>
+                              </div>
+                    
+                            
+
+                            </div>
+                        ))}
+
+                    </div>
+
+                  </div>
+                )}
+
+                  
+
+                  
 
 
 
