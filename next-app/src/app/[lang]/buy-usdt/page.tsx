@@ -521,7 +521,9 @@ export default function Index({ params }: any) {
     
 
 
-    const [searchMyTrades, setSearchMyTrades] = useState(true);
+    //const [searchMyTrades, setSearchMyTrades] = useState(true);
+
+    const [searchMyTrades, setSearchMyTrades] = useState(false);
 
 
     
