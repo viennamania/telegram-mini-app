@@ -1113,7 +1113,7 @@ function ProfilePage() {
                                     {/* dot */}
                                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                     <span className='text-sm font-semibold text-gray-200'>
-                                        포인트를 판매할 때 결제용으로 사용할 은행계좌 정보입니다.
+                                        판매할 때 결제용으로 사용할 은행계좌 정보입니다.
                                     </span>
                                 </div>
 
@@ -1229,7 +1229,8 @@ function ProfilePage() {
 
 
                         {/* 판매자 정보 저장하기 */}
-                        {address && !user?.virtualAccount && (
+                        {address && (
+
                             <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
                             bg-zinc-800 bg-opacity-90
                             '>
