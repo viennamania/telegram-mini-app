@@ -1799,7 +1799,7 @@ export default function Index({ params }: any) {
                                     />
 
                                     <div className="flex flex-col gap-2 items-start">
-                                      <span>
+                                      <span className="text-lg text-green-500 font-semibold">
                                         {Waiting_for_seller_to_deposit} {item.sellAmount} USDT {to_escrow}...
                                       </span>
 
