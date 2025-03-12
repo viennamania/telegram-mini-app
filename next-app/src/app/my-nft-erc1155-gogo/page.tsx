@@ -893,7 +893,23 @@ function AgentPage() {
     }   
     */
 
+    /* 서비스 죵료 */
+    
+    return (
 
+        <main
+
+           
+            className="p-4 pb-28 min-h-[100vh] flex items-start justify-center container max-w-screen-lg mx-auto
+                bg-zinc-900 bg-opacity-90 backdrop-blur-md
+                rounded-lg shadow-xl"
+        >
+            <div className="w-full text-center text-4xl text-white font-bold">
+                서비스 종료
+            </div>
+        </main>
+
+    )
 
 
 
