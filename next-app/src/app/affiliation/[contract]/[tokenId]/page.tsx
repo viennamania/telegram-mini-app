@@ -828,7 +828,7 @@ export default function AgentPage({ params }: any) {
                               />
 
                               <div className='flex flex-col items-start justify-between gap-2'>
-                                  <span className='text-xs text-gray-800'>
+                                  <span className='text-lg text-green-500 font-semibold'>
                                     {member.user.nickname}
                                   </span>
                                   <span className='text-xs text-gray-800'>
@@ -837,10 +837,10 @@ export default function AgentPage({ params }: any) {
                               </div>
 
                               <div className='flex flex-col items-start justify-between gap-2'>
-                                <span className='text-xs text-gray-800'>
+                                <span className='text-sm text-gray-800'>
                                   {member.user.center}
                                 </span>
-                                <span className='text-xs text-gray-800'>
+                                <span className='text-sm text-gray-800'>
                                   {member.telegramId}
                                 </span>
                               </div>
