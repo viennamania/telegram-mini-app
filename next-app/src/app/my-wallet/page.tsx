@@ -1124,20 +1124,30 @@ function ProfilePage() {
                     <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
 
 
-                        <div className="w-full flex flex-row gap-2 items-center justify-start">
-                            {/* dot */}
-                            <div className="bg-green-500 w-3 h-3 rounded-full"></div>
-                            <span className="text-lg font-semibold text-zinc-800">
-                                최근 10개 거래내역
-                            </span>
+                        <div className="w-full flex flex-row gap-2 items-center justify-between">
+
+                            <div className="w-full flex flex-row gap-2 items-center justify-start">
+                                {/* dot */}
+                                <div className="bg-green-500 w-3 h-3 rounded-full"></div>
+                                <span className="text-lg font-semibold text-zinc-800">
+                                    최근 10개 거래내역
+                                </span>
+                            </div>
+
+                            {loadingTransfers && (
+                                <div className="flex flex-row gap-2 items-center justify-end">
+                                    <Image
+                                        src="/loading.png"
+                                        alt="Loading"
+                                        width={25}
+                                        height={25}
+                                        className="animate-spin"
+                                    />
+                                </div>
+                            )}
+
                         </div>
 
-
-                        {loadingTransfers && (
-                            <span className="text-sm text-zinc-800">
-                                거래내역 로딩중...
-                            </span>
-                        )}
 
                         {!loadingTransfers && transfers?.length === 0 && (
                             <span className="text-sm text-zinc-800">
