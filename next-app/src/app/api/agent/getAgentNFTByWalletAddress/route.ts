@@ -107,6 +107,10 @@ export async function POST(request: NextRequest) {
   const response = await alchemy.nft.getNftsForOwner(
     walletAddress, {
     omitMetadata: false, // // Flag to omit metadata
+
+    // https://opensea.io/collection/ai-agent-306
+    contractAddresses: ["0x0276aE1b0768bBfe47d3Dd34493A225405aDB6AA"], // contractAddresses: [erc721ContractAddress],
+
   });
 
   ///console.log("response?.ownedNfts", response?.ownedNfts);
@@ -124,6 +128,7 @@ export async function POST(request: NextRequest) {
     // api call to get application count for the agent
     */
 
+    /*
     if (nft.tokenType === 'ERC721') {
 
       // granderby horse nft
@@ -139,6 +144,9 @@ export async function POST(request: NextRequest) {
       finalResult.push(nft);
 
     }
+    */
+
+    finalResult.push(nft);
 
   });
 
