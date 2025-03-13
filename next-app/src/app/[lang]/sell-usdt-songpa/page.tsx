@@ -814,6 +814,7 @@ export default function Index({ params }: any) {
 
             //toast.success('Payment requested');
             alert('판매자 지갑에서 에스크로 지갑으로 USDT가 전송되었고 구매자에게 결제 요청을 하였습니다.');
+            
           } else {
             //toast.error('Payment request failed');
             alert('에스크로 지갑으로 USDT 전송이 실패했습니다.');
@@ -829,7 +830,7 @@ export default function Index({ params }: any) {
         
         //console.log('error', error);
 
-        alert('에스크로 지갑으로 USDT 전송이 실패했습니다.');
+        alert('에스크로 지갑으로 USDT 전송이 실패했습니다.' + '-' + error);
 
       }
 
