@@ -753,7 +753,8 @@ function AgentPage() {
 
 
 
-    
+        setTransferringNft(transferringNft.map((item, i) => i === index ? true : item));
+        
         
 
         try {
@@ -855,7 +856,8 @@ function AgentPage() {
         }
 
         ///setTransferringNft(false);
-        transferringNft[index] = false;
+        //transferringNft[index] = false;
+        setTransferringNft(transferringNft.map((item, i) => i === index ? false : item));
 
 
 
