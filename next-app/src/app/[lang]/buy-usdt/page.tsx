@@ -1556,7 +1556,7 @@ export default function Index({ params }: any) {
 
 
 
-                                <p className="text-2xl text-zinc-400">
+                                <p className="text-2xl text-yellow-500 font-semibold">
                                   {Price}: {
                                     // currency
                                   
@@ -1952,7 +1952,7 @@ export default function Index({ params }: any) {
 
                                       <div className="flex flex-col gap-2 items-start">
                                         <span className="text-lg text-green-500 font-semibold">
-                                          판매자가 입금을 기다리는 중입니다...
+                                          판매자가 입금을 기다리는 중입니다. 아래 계좌로 입금을 완료하면 에스크로되어 있는 USDT가 구매자에게 전달됩니다.
                                         </span>
                                         <span className="text-lg text-zinc-400">
                                           입금액: {
