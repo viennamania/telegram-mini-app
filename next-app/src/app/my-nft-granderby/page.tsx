@@ -1119,7 +1119,7 @@ function AgentPage() {
 
                     {/* title */}
                     <div className="text-2xl font-semibold text-zinc-100">
-                        나의 NFT
+                        나의 GRANDERBY NFT
                     </div>
                 </div>
         
