@@ -264,10 +264,17 @@ function HomeContent() {
 
   const [applicationData, setApplicationData] = useState(null);
 
+
+  const [granderbyNft, setGranderbyNft] = useState([] as any[]);
+
+
   useEffect(() => {
 
       const fetchNfts = async () => {
+
           setLoadingAgentNft(true);
+
+
           const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
               method: "POST",
               headers: {
@@ -303,11 +310,62 @@ function HomeContent() {
 
           setAgentNft(data.result.ownedNfts);
 
+
           setLoadingAgentNft(false);
 
       };
 
+
+
+      const fetchGranderbyNfts = async () => {
+
+        setLoadingAgentNft(true);
+
+
+        const response = await fetch("/api/granderby/getAgentNFTByWalletAddress", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                walletAddress: selectUser,
+            }),
+        });
+
+        if (!response.ok) {
+            console.error("Error fetching agentNft");
+            setLoadingAgentNft(false);
+            return;
+        }
+
+        const data = await response.json();
+
+        //console.log("getAgentNft data", data);
+        /*
+        [
+          {
+
+              "name": "미자부자다",
+              "tokenUri": "https://alchemy.mypinata.cloud/ipfs/QmPdQJ5HjqvVSbqqsMno5HrAatopNw8UEBRSdg7cqEPdGu/0",
+              "image": {
+                  "thumbnailUrl": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/matic-mainnet/c0dfa75257307f42ad3d6467ba13563a",
+              },
+          },
+
+      ]
+        */
+
+        setGranderbyNft(data.result.ownedNfts);
+
+
+        setLoadingAgentNft(false);
+
+    };
+
+
+
       // fetch one application by walletAddress
+      /*
       const fetchApplication = async () => {
 
         const response = await fetch("/api/agent/getOneApplication", {
@@ -333,6 +391,7 @@ function HomeContent() {
 
 
       }
+      */
 
 
 
@@ -345,7 +404,9 @@ function HomeContent() {
 
         fetchNfts();
 
-        fetchApplication();
+        fetchGranderbyNfts();
+
+        //fetchApplication();
 
       }
 
@@ -1170,7 +1231,8 @@ function HomeContent() {
                                 <th className="p-2">지갑주소</th>
                                 <th className="p-2">레퍼럴코드</th>
                                 <th className="p-2">센터장</th>
-                                <th className="p-2">에이전트</th>
+                                <th className="p-2">NFT</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -1340,16 +1402,20 @@ function HomeContent() {
                 selectUser && (
 
                 <>
+
+
                   {loadingAgentNft ? (
                     <div className="flex flex-col items-center justify-center">
                         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
                     </div>
                   ) : (
+
+
                     <div className="w-full flex flex-col gap-2 items-start justify-between">
                         <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                             에이전트 NFT 목록
                         </div>
-                        <div className="w-full flex flex-col gap-2 items-start justify-between">
+                        <div className="w-full grid grid-cols-8 gap-5 items-start justify-between">
                             {agentNft && agentNft.length === 0 && (
                                 <div className="w-full flex flex-col items-center justify-center">
                                     <span className="text-sm text-gray-400">
@@ -1359,6 +1425,114 @@ function HomeContent() {
                             )}
 
                             {agentNft && agentNft.map((nft : any, index : number) => (
+                                <div
+                                    key={index}
+                                    className="flex flex-col gap-2 items-center justify-between"
+                                >
+                                    <div className="
+                                      border border-gray-300 p-4 rounded-lg
+                                      flex flex-col gap-1 items-center justify-start">
+
+                                        <div className="flex flex-col gap-2 items-start justify-between">
+                                          <span className="text-sm">
+                                            {nft.name && nft.name?.slice(0, 10) + "..."}
+                                          </span>
+                                          <span className="text-sm text-gray-400">
+                                            {nft.description && nft.description?.slice(0, 10) + "..."}
+                                          </span>
+                                        </div>
+
+                                        <div className="flex flex-row gap-2 items-center justify-start">
+
+
+                                          <Image
+                                            src={nft?.image?.thumbnailUrl || "/icon-nft.png"}
+                                            alt={nft?.name}
+                                            width={100}
+                                            height={100}
+                                            className="rounded w-10 h-10"
+                                          />
+                                        
+                                          <Button
+                                            onClick={() => {
+                                                (window as any).Telegram.WebApp.openLink(
+                                                  "https://opensea.io/assets/matic/" + nft.contract.address + "/" + nft.tokenId
+                                                );
+                                            }}
+                                            className="
+                                            inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                            "
+                                          >
+                                            <div className="flex flex-row gap-2 items-center justify-start">
+                                              <Image
+                                                src="/logo-opensea.png"
+                                                alt="OpenSea"
+                                                width={20}
+                                                height={20}
+                                                className="rounded"
+                                              />
+                                            </div>
+                                          </Button>
+
+                                        </div>
+
+                                    </div>
+
+                                    {/* copy telegram link */}
+                                    <div className="flex flex-row gap-2 items-center justify-start">
+                                      <Button
+                                        onClick={() => {
+                                          navigator.clipboard.writeText(
+                                            "https://t.me/" + selectCenter + "/?start=" + nft.contract.address + "_" + nft.tokenId
+                                          );
+                                          alert(`레퍼럴 링크 복사되었습니다.`);
+                                        }}
+                                        className="
+                                          inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                        "
+                                      >
+                                        레퍼럴 복사하기
+                                      </Button>
+                                    </div>
+
+
+
+                                </div>
+                            ))}
+
+                        </div>
+                    </div>
+
+
+
+
+
+                  )}
+
+
+
+                  {loadingAgentNft ? (
+                    <div className="mt-5 flex flex-col items-center justify-center">
+                        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
+                    </div>
+                  ) : (
+
+
+                    <div className="mt-5 w-full flex flex-col gap-2 items-start justify-between">
+                        <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                            GRANDERBY NFT 목록
+                        </div>
+                        <div className="w-full grid grid-cols-8 gap-2 items-start justify-between">
+
+                            {granderbyNft && granderbyNft.length === 0 && (
+                                <div className="w-full flex flex-col items-center justify-center">
+                                    <span className="text-sm text-gray-400">
+                                        NFT가 없습니다.
+                                    </span>
+                                </div>
+                            )}
+
+                            {granderbyNft && granderbyNft.map((nft : any, index : number) => (
                                 <div
                                     key={index}
                                     className="flex flex-row gap-2 items-center justify-between"
@@ -1413,43 +1587,22 @@ function HomeContent() {
                                     </div>
 
 
-
-
-                                    {nft.name === "MasterBot" ? (
-                                      <span className="text-sm text-green-500 font-semibold bg-green-100 p-2 rounded">
-                                        마스터봇
-                                      </span>
-                                    ) : (
-
-                                    <>    
-                                      {/* copy telegram link */}
-                                      <div className="flex flex-row gap-2 items-center justify-start">
-                                        <Button
-                                          onClick={() => {
-                                            navigator.clipboard.writeText(
-                                              "https://t.me/" + selectCenter + "/?start=" + nft.contract.address + "_" + nft.tokenId
-                                            );
-                                            alert(`레퍼럴 링크 복사되었습니다.`);
-                                          }}
-                                          className="
-                                            inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                          "
-                                        >
-                                          레퍼럴 복사하기
-                                        </Button>
-                                      </div>
-                                    </>
-
-
-                                    )}
-
-
                                 </div>
                             ))}
 
                         </div>
                     </div>
+
+
+
+
+
                   )}
+
+
+
+
+
                 </>
 
               )}
@@ -1459,184 +1612,6 @@ function HomeContent() {
           </div>
 
 
-          {/* application list */}
-          {/* table */}
-          <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-            
-              <div className="flex flex-row gap-2 items-center justify-between">
-                <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                    OKX 신청 목록
-                </div>
-              </div>
-
-              <div className='w-full flex flex-col gap-2 items-start justify-between'>
-                  <div className="w-full flex flex-row items-center gap-2">
-                      <span className='w-1/2 text-sm text-gray-800 font-semibold'>
-                          총 거래 계정 수: 
-                      </span>
-                      <span className='
-                        w-1/2 text-right
-                        text-xl text-green-500 font-semibold bg-green-100 p-2 rounded'>
-                      
-                      {
-                          totalTradingAccountCount ? totalTradingAccountCount : 0
-                      }
-                      </span>
-                  </div>
-
-                  <div className="w-full flex flex-row items-center gap-2">
-                      <span className='w-1/2 text-sm font-semibold text-gray-800'>
-                          총 거래 계정 잔고: 
-                      </span>
-                      <span className='
-                        w-1/2 text-right
-                        text-xl text-green-500 font-semibold bg-green-100 p-2 rounded'>
-                          {
-                            totalTradingAccountBalance &&
-                              Number(totalTradingAccountBalance).toLocaleString('en-US', {
-                                  style: 'currency',
-                                  currency: 'USD'
-                              })
-                          }
-                      </span>
-                  </div>
-              </div>
-
-            {
-              //address && (
-              false && (
-
-              <>          
-                {loadingApplications ? (
-                  <div className="w-full flex flex-col items-center justify-center">
-                      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
-                  </div>
-                ) : (
-                  <table className="w-full">
-                      <thead>
-                          <tr className="bg-zinc-800 text-zinc-100">
-                              <th className="p-2">신청번호</th>
-                              {/*
-                              <th className="p-2">OKX UID</th>
-                              */}
-                              <th className="p-2">닉네임</th>
-                              <th className="p-2">전화번호</th>
-                              <th className="p-2">NFT</th>
-                              <th className="p-2">거래계정 잔고</th>
-                              <th className="p-2">정산</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {applications.map((application, index) => (
-                              <tr key={index} className="bg-zinc-800 text-zinc-100">
-                                  <td className="p-2">#{application?.id}</td>
-                                  {/*
-                                  <td className="p-2">
-                                    {application?.okxUid.slice(0, 6) + "..."}
-                                  </td>
-                                  */}
-                                  <td className="p-2">{application?.userName}</td>
-                                  <td className="p-2">
-                                    {application?.userPhoneNumber?.slice(0, 6) + "..."}
-                                  </td>
-                                  <td className="p-2">
-                                    
-                                    <div className="flex flex-row gap-2 items-start justify-center">
-                                    
-                                      <div className="flex flex-col gap-2 items-center justify-start">
-                                        <Image
-                                          src={application?.agentBotNft?.image?.thumbnailUrl || "/icon-nft.png"}
-                                          alt={application?.agentBotNft?.name}
-                                          width={50}
-                                          height={50}
-                                          className="rounded"
-                                        />
-                                        <span className="text-xs">
-                                          {application?.agentBotNft?.name?.slice(0, 10) + "..."}
-                                        </span>
-                                      </div>
-                                      {/* open sea link */}
-                                      <Button
-                                        onClick={() => {
-                                          (window as any).Telegram.WebApp.openLink(
-                                            "https://opensea.io/assets/matic/" + application?.agentBotNft?.contract.address + "/" + application?.agentBotNft?.tokenId
-                                          );
-                                        }}
-                                        className="
-                                          inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
-                                        "
-                                      >
-                                        <div className="flex flex-row gap-2 items-center justify-start">
-                                          <Image
-                                            src="/logo-opensea.png"
-                                            alt="OpenSea"
-                                            width={20}
-                                            height={20}
-                                            className="rounded"
-                                          />
-                                        </div>
-                                      </Button>
-
-                                    </div>
-
-                                  </td>
-                                  <td className="p-2 text-right">
-                                    {application?.tradingAccountBalance?.balance &&
-                                    Number(application?.tradingAccountBalance?.balance).toLocaleString('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD'
-                                    })}
-                                  </td>
-                                  {/* affiliateInvitee.data.volMonth */}
-                                  {/* claimedTradingVolume */}
-                                  <td className="p2 text-right flex flex-row gap-2 items-center justify-end pr-2">
-                                    <span className="text-green-500">
-                                      {application?.claimedTradingVolume &&
-                                      application?.claimedTradingVolume?.toFixed(0)}
-                                    </span>{' '}/{' '}
-                                    <span className="text-red-500">
-                                      {application?.affiliateInvitee?.data?.volMonth && application?.claimedTradingVolume &&
-                                      Number(application?.affiliateInvitee?.data?.volMonth - application?.claimedTradingVolume)?.toFixed(0)}
-                                    </span>
-                                    {/* button */}
-                                    <Button
-                                      onClick={async () => {
-                                        const response = await fetch("/api/agent/claimTradingVolume", {
-                                            method: "POST",
-                                            headers: {
-                                                "Content-Type": "application/json",
-                                            },
-                                            body: JSON.stringify({
-                                                walletAddress: address,
-                                                applicationId: application?.id,
-                                            }),
-                                        });
-
-                                        if (!response.ok) {
-                                            console.error("Error claiming trading volume");
-                                            return;
-                                        }
-
-                                        const data = await response.json();
-
-                                        console.log("claimTradingVolume data", data);
-
-                                        alert("정산 완료되었습니다.");
-
-                                      }}
-                                      className="bg-green-500 text-zinc-100 p-2 rounded"
-                                    >
-                                      정산
-                                    </Button>
-                                  </td>
-                              </tr>
-                          ))}
-                      </tbody>
-                  </table>
-                )}
-              </>
-            )}
-          </div>
 
         </div>
 
