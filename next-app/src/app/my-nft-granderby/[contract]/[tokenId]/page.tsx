@@ -105,6 +105,10 @@ export default function AgentPage({ params }: any) {
   const searchParams = useSearchParams();
  
  
+  //?back=ok
+
+  const back = searchParams.get("back");
+
 
   //console.log("agentContractAddress", agentContractAddress);
 
@@ -508,10 +512,12 @@ export default function AgentPage({ params }: any) {
             bg-zinc-800 bg-opacity-90
             backdrop-blur-md
             p-4 rounded-lg
-            w-full flex flex-row items-center justify-between">
+            w-full flex flex-col gap-2 items-start justify-between">
 
             {/* title */}
             {/* 돌아가기 버튼 */}
+
+            {back === "ok" && (
             <button
                 onClick={() => {
                     router.back();
@@ -526,11 +532,39 @@ export default function AgentPage({ params }: any) {
                         height={20}
                         className="rounded-lg"
                     />
-                    <span className='text-lg font-semibold'>
+                    <span className='text-sm font-semibold'>
                         돌아가기
                     </span>
                 </div>
             </button>
+            )}
+
+            {back !== "ok" && (
+
+              <button
+                  onClick={() => {
+                      router.push("/my-nft-granderby");
+                  }}
+                  className="p-2 bg-gray-500 text-white rounded"
+              >
+                  <div className='flex flex-row gap-2 items-center justify-center'>
+                      <Image
+                          src="/icon-nft.png"
+                          alt="NFT"
+                          width={20}
+                          height={20}
+                          className="rounded-lg"
+                      />
+                      <span className='text-sm font-semibold'>
+                        나의 GRANDERBY NFT 보러가기
+                      </span>
+                    </div>
+              </button>
+
+            )}
+
+
+
         </div>
 
 
