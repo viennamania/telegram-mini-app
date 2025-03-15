@@ -601,7 +601,7 @@ export async function getAllUsersTelegramIdByCenter(
 
   // if searchNickname is not empty, search by nickname
 
-  const referralsCollection = client.db('shinemywinter').collection('referrals');
+  //const referralsCollection = client.db('shinemywinter').collection('referrals');
 
   const users = await collection.aggregate([
     {
@@ -612,16 +612,35 @@ export async function getAllUsersTelegramIdByCenter(
         // search by nickname
 
 
-        nickname: { $regex: searchNickname, $options: 'i' },
+        //nickname: { $regex: searchNickname, $options: 'i' },
       }
     },
 
 
+    // referrals_center collection join
+    // telegramId and center is center
     {
       $lookup: {
-        from: 'referrals',
-        localField: 'telegramId',
-        foreignField: 'telegramId',
+        from: 'referrals_center',
+
+        //localField: 'telegramId',
+        //foreignField: 'telegramId',
+
+        let: { telegramId: '$telegramId' },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  { $eq: ['$telegramId', '$$telegramId'] },
+                  { $eq: ['$center', center] },
+                ]
+              }
+            }
+          }
+        ],
+
+
         as: 'referral'
       }
     },
