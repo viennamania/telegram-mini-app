@@ -1332,7 +1332,7 @@ function HomeContent() {
                                       <div className="flex flex-row gap-2 items-center justify-start">
                                         <span className="text-sm">
                                           
-                                          {user?.referralCode?.slice(0, 6) + "..."}
+                                          {user?.referralCode?.slice(0, 6) + "..." + user?.referralCode?.slice(-6)}
 
                                         </span>
                                         <Button
