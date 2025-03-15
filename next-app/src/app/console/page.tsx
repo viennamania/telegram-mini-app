@@ -1434,6 +1434,10 @@ function HomeContent() {
                                       flex flex-col gap-1 items-center justify-start">
 
                                         <div className="flex flex-col gap-2 items-start justify-between">
+                                          {/* tokenId */}
+                                          <span className="text-sm">
+                                            번호: #{nft.tokenId}
+                                          </span>
                                           <span className="text-sm">
                                             {nft.name && nft.name?.slice(0, 10) + "..."}
                                           </span>
@@ -1542,6 +1546,10 @@ function HomeContent() {
                                       flex flex-col gap-1 items-center justify-start">
 
                                         <div className="flex flex-col gap-2 items-start justify-between">
+                                          {/* tokenId */}
+                                          <span className="text-sm">
+                                            번호: #{nft.tokenId}
+                                          </span>
                                           <span className="text-sm">
                                             {nft.name && nft.name?.slice(0, 10) + "..."}
                                           </span>
