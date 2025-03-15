@@ -834,7 +834,7 @@ export default function AgentPage({ params }: any) {
 
                             <div
                               key={index}
-                              className='w-full grid grid-cols-3 items-start justify-start gap-2
+                              className='w-full flex flex-row items-start justify-start gap-2
                                 border-b border-gray-300 pb-2
                               '
                             >
@@ -847,12 +847,12 @@ export default function AgentPage({ params }: any) {
                                   className='rounded-lg object-cover w-6 h-6'
                               />
 
-                              <div className='flex flex-col items-start justify-between gap-2'>
+                              <div className=' w-48 flex flex-col items-start justify-between gap-2'>
                                   <span className='text-lg text-green-500 font-semibold'>
                                     {member.user.nickname}
                                   </span>
                                   <span className='text-xs text-gray-800'>
-                                    {member.user.mobile && member.user.mobile.slice(0, 3) + '****' + member.user.mobile.slice(-4)}
+                                    {member.user.walletAddress && member.user.walletAddress.slice(0, 5) + '...' + member.user.walletAddress.slice(-5)}
                                   </span>
                               </div>
 
