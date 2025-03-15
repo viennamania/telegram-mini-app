@@ -1,3 +1,4 @@
+import { wallet } from '@/app/constants';
 import clientPromise from '../mongodb';
 
 
@@ -1405,6 +1406,8 @@ export async function getReferralCodeByTelegramId(
   join with users collection where telegramId
 */
 
+
+
 export async function getReferredMembers(
   referralCode: string,
 ): Promise<any> {
@@ -1439,6 +1442,62 @@ export async function getReferredMembers(
         referralCode: 1,
         user: {
           id: 1,
+          avatar: 1,
+          nickname: 1,
+          center: 1,
+          mobile: 1,
+          email: 1,
+        }
+      }
+    }
+  ]).toArray();
+
+  return results;
+
+}
+
+
+
+
+
+
+export async function getReferredMembersByCenter(
+  referralCode: string,
+  center: string,
+): Promise<any> {
+
+  const client = await clientPromise;
+
+  // join referrals collection with users collection
+
+  const collection = client.db('shinemywinter').collection('referrals_center');
+  
+  const results = await collection.aggregate([
+    {
+      $match: {
+        referralCode: referralCode,
+        center: center,
+      }
+    },
+    {
+      $lookup: {
+        from: 'userGogo',
+        localField: 'telegramId',
+        foreignField: 'telegramId',
+        as: 'user',
+      }
+    },
+    {
+      $unwind: '$user'
+    },
+    {
+      $project: {
+        _id: 0,
+        telegramId: 1,
+        referralCode: 1,
+        user: {
+          id: 1,
+          walletAddress: 1,
           avatar: 1,
           nickname: 1,
           center: 1,

@@ -432,6 +432,9 @@ export default function AgentPage({ params }: any) {
 
 
 
+
+
+
   // get referred members
   const [referredMembers, setReferredMembers] = useState([] as any);
   useEffect(() => {
@@ -792,6 +795,23 @@ export default function AgentPage({ params }: any) {
 
 
                 </div>
+
+
+                {referredMembers.length === 0 && (
+                  <div className='w-full flex flex-col items-start justify-start gap-2'>
+                    <div className='w-full flex flex-row items-center justify-start gap-2'>
+                        {/* dot */}
+                        <div className='w-3 h-3 bg-red-500 rounded-full'></div>
+                        <span className='text-lg font-semibold text-gray-800'>
+                            추천인 목록
+                        </span>
+                    </div>
+                    <span className='text-sm text-gray-800'>
+                        추천인이 없습니다.
+                    </span>
+                  </div>
+                )}
+
 
 
                 {/* referred members */}
