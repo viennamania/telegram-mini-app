@@ -802,20 +802,6 @@ feature.on("callback_query:data", async (ctx) => {
 
   } else if (data === "roulette") {
 
-    //const center = ctx.me.username+"";
-    //const url = `${process.env.FRONTEND_APP_ORIGIN}/leaderboard?center=${center}`;
-
-    //return ctx.answerCallbackQuery({ url });
-
-    /*
-    await ctx.reply("Hi! I can only read messages that explicitly reply to me!", {
-      // Make Telegram clients automatically show a reply interface to the user.
-      reply_markup: { force_reply: true },
-    });
-    */
-
-    //return ctx.reply("안녕");
-
 
     const telegramId = ctx.from?.id+"";
 
@@ -984,7 +970,6 @@ feature.on("callback_query:data", async (ctx) => {
 
 
 
-  ///} else if (data === "roulette-odd" || data === "roulette-even") {
 
   } else if (data.startsWith("roulette-")) {
 
