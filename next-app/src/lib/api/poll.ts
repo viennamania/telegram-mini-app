@@ -218,6 +218,83 @@ export async function getOneRecentPoll() {
 }
 
 
+// updateUserOne
+export async function updateUserOne(
+  {
+    sequence,
+    user,
+    selectedOddOrEven,
+  } : {
+    sequence: number,
+    user: any,
+    selectedOddOrEven: string,
+  }
+) {
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('polls');
+
+  // check sequence and status is opened
+  const checkSequence = await collection.findOne(
+    {
+      sequence: sequence,
+      status: "opened"
+    }
+  );
+
+  if (!checkSequence) {
+    return {
+      status: "fail",
+      message: "no data found"
+    };
+  }
+
+  // checkSequence.participants
+
+  const participants = checkSequence.participants || [];
+
+  // check if user already participated
+  const findUser = participants.find((item: any) => item.walletAddress === user.walletAddress);
+
+
+  if (findUser) {
+    return {
+      status: "fail",
+      message: "already participated"
+    };
+  }
+
+  // update participants
+  const result = await collection.updateOne(
+    {
+      sequence: sequence,
+      status: "opened"
+    },
+    {
+      $push: {
+        participants: {
+          walletAddress: user.walletAddress,
+          selectedOddOrEven: selectedOddOrEven,
+          createdAt: new Date().toISOString()
+        } as any
+      }
+    }
+  );
+
+  if (result) {
+    return {
+      status: "success",
+      message: "success"
+    };
+  } else {
+    return {
+      status: "fail",
+      message: "fail to update"
+    };
+  }
+
+}
+
+
 
 
 
