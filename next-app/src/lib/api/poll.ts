@@ -207,7 +207,7 @@ export async function getOneRecentPoll() {
       {
         status: "opened"
       }
-    ).sort({ createdAt: -1 }).limit(1).toArray();
+    ).sort({ sequnce: -1 }).limit(1).toArray();
 
   if (result.length > 0) {
     return result[0];
