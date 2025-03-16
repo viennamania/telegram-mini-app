@@ -222,6 +222,10 @@ export async function getOneRecentPoll(walletAddress: string) {
   
     if (findUser) {
 
+
+      //const createdAt = findUser.createdAt;
+
+
       const selectedOddOrEven = findUser.selectedOddOrEven;
 
       const oddParticipants = participants.filter((item: any) => item.selectedOddOrEven === "odd");
