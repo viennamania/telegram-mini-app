@@ -669,6 +669,46 @@ function HomeContent() {
   }
 
 
+
+
+  // send survey to all users
+  const [sendingSurveyAll, setSendingSurveyAll] = useState(false);
+
+  const sendSurveyAll = async () => {
+    
+      setSendingSurveyAll(true);
+      // api call sendToUserTelegramId
+      const response = await fetch("/api/poll/sendPollAll", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            center: selectCenter,
+          }),
+      });
+
+      console.log("sendSurveyAll response", response);
+
+      if (!response.ok) {
+          console.error("Error sending");
+          alert("전송에 실패했습니다.");
+          setSendingSurveyAll(false);
+          return;
+      }
+
+      const data = await response.json();
+
+      //console.log("send data", data);
+
+
+      alert("전송이 완료되었습니다.");
+
+      setSendingSurveyAll(false);
+
+  }
+
+
   
   return (
 
@@ -1146,6 +1186,20 @@ function HomeContent() {
                 </Button>
               </div>
         
+            </div>
+
+            {/* 전체회원에게 설문조사 보내기 */}
+            <div className="w-full flex flex-row gap-2 items-start justify-end">
+              <Button
+                disabled={sendingSurveyAll}
+                onClick={() => {
+                  // send
+                  confirm("전송하시겠습니까?") && sendSurveyAll();
+                }}
+                className={`${sendingSurveyAll ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
+              >
+                {sendingSurveyAll ? "전송중..." : "전체회원에게 설문조사 보내기"}
+              </Button>
             </div>
 
 

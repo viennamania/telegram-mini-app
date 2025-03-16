@@ -52,13 +52,14 @@ import {
 import { Network, Alchemy } from 'alchemy-sdk';
 
 
-
+/*
 import {
 	insertOne,
 } from '@lib/api/game';
+ */
 
 import {
-	insertMessageRoulette
+	insertMessage,
 } from '@lib/api/telegram';
 
 
@@ -124,34 +125,51 @@ export async function POST(request: NextRequest) {
 
 
     if (userWalletAddress) {
+
+
+      /*
       const result = await insertOne({
         walletAddress: userWalletAddress,
         usdtAmount: 0,
         krwAmount: 0,
         rate: 0,
       });
+      */
 
 
-
+      /*
       if (result?.status === "success") {
-        const insertedData = result.data;
-        const sequence = insertedData?.sequence;
-        const winPrize = insertedData?.winPrize;
+      */
 
-        if (sequence && winPrize) {
-          const message = `홀짝 게임을 시작하세요!`; 
 
-          const resultMessage = await insertMessageRoulette({
+        //const insertedData = result.data;
+
+
+        //const sequence = insertedData?.sequence;
+        //const winPrize = insertedData?.winPrize;
+
+        //if (sequence && winPrize) {
+
+
+          const message = `폴 게임을 시작하세요!`; 
+
+          const resultMessage = await insertMessage({
             center: center,
-            category: "roulette",
+            category: "poll",
             telegramId: member.telegramId,
             message,
-            sequence: sequence,
-            winPrize: winPrize,
+            //sequence: sequence,
+            //winPrize: winPrize,
           } );
-        }
+
+
+        //}
+
+      /*
         
       }
+
+      */
 
 
     }
