@@ -15,7 +15,9 @@ export async function POST(request: NextRequest) {
   //console.log("walletAddress", walletAddress);
   
 
-  const result = await getOneRecentPoll();
+  const result = await getOneRecentPoll(
+    walletAddress,
+  );
 
 
  

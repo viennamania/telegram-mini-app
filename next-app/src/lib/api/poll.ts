@@ -198,7 +198,7 @@ export function isWithinOneMinute(createdAt: string) {
 
 
 // getOneRecentPoll
-export async function getOneRecentPoll() {
+export async function getOneRecentPoll(walletAddress: string) {
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('polls');
 
@@ -211,7 +211,31 @@ export async function getOneRecentPoll() {
     ).sort({ sequnce: -1 }).limit(1).toArray();
 
   if (result.length > 0) {
-    return result[0];
+
+    const currentPoll = result[0];
+
+    const participants = currentPoll.participants || [];
+
+    // check if user already participated
+    const findUser = participants.find((item: any) => item.walletAddress === walletAddress);
+  
+  
+    if (findUser) {
+      return {
+        data: currentPoll,
+        status: "fail",
+        statusCode: 200,
+        message: "이미 참여하셨습니다."
+      };
+    }
+
+
+
+
+
+
+
+    return currentPoll;
   } else {
     return null;
   }
