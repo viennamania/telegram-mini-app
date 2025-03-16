@@ -95,12 +95,13 @@ async function startPolling(config: PollingConfig) {
       //if (commands.length === 0) {
         bot.api.setMyCommands([
           //{ command: "profile", description: "나의 프로필 관리"},
-          { command: "start", description: "NOAH SKY 시작하기"},
+          //{ command: "start", description: "NOAH SKY 시작하기"},
+          { command: "start", description: "USDT 개인간 거래"},
           { command: "affiliation", description: "추천코드 관리하기" },
-          { command: "okx", description: "OKX" },
-          { command: "wallet", description: "매직월렛"},
+          //{ command: "okx", description: "OKX" },
+          { command: "wallet", description: "내 지갑"},
           { command: "game", description: "게임"},
-          { command: "otc", description: "USDT 개인간 거래"},
+
 
         ])
       //}
@@ -1032,7 +1033,9 @@ async function sendMessages() {
 
     const nftInfo = message?.nftInfo;
 
-    const category = message.category; // "wallet", "settlement", "agent", "center"
+    const category = message.category; // "wallet", "settlement", "agent", "center", "nft"
+
+    console.log("category=", category);
 
 
     const contractAddress = message?.userTransfer?.transferData?.contractAddress;
@@ -1059,7 +1062,9 @@ async function sendMessages() {
     try {
 
 
-      const groupChatId = "-1002295555741";
+      //const groupChatId = "-1002295555741";
+
+      const groupChatId = "-1002252842181";
 
 
       /*
@@ -1089,8 +1094,12 @@ async function sendMessages() {
 
 
     } catch (error) {
-      console.error('Error sending message:', error + '')
+      console.error('Group chat Error sending message:', error + '')
     }
+
+
+
+
       
 
 
@@ -1260,7 +1269,7 @@ async function sendMessages() {
 
         const urlOtc = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/otc`;
 
-        const urlSellUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/sell-usdt`;
+        const urlSellUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/sell-usdt-simple`;
 
 
         const keyboard = new InlineKeyboard()
@@ -1281,7 +1290,9 @@ async function sendMessages() {
 
         const caption = '\n\n🚀 ' + messageText
         + '\n\n' + '💲 지갑잔고: ' + balanceUsdt + ' USDT'
-        + '\n\n' + '💲 지갑잔고: ' + balanceNoahs + ' NOAHS'
+        
+        //+ '\n\n' + '💲 지갑잔고: ' + balanceNoahs + ' NOAHS'
+
         + '\n\n' + '👇 아래 버튼을 눌러 원하는 서비스로 이동하세요.';
         // english
         //+ '\n\n' + '👇 Press the button below to go to each service';
@@ -1398,7 +1409,9 @@ async function sendMessages() {
 
       } else if (category === 'nft') {
 
+        //console.log("nftInfo=", nftInfo);
 
+        /*
         const username = telegramId;
         const expiration = Date.now() + 6000_000; // valid for 100 minutes
         const message = JSON.stringify({
@@ -1409,13 +1422,29 @@ async function sendMessages() {
         const authCode = await adminAccount.signMessage({
           message,
         });
+        */
 
 
-        const urlNFT = `${process.env.FRONTEND_APP_ORIGIN}/nft/${nftInfo.contract.address}/${nftInfo.tokenId}`;
+        let urlNFT = '';
+
+
+        if (nftInfo.contract.address === '0x41FBA0bd9f4DC9a968a10aEBb792af6A09969F60') { // granderby
+          urlNFT = `${process.env.FRONTEND_APP_ORIGIN}/my-nft-granderby/${nftInfo.contract.address}/${nftInfo.tokenId}`;
+        } else {
+          urlNFT = `${process.env.FRONTEND_APP_ORIGIN}/nft/${nftInfo.contract.address}/${nftInfo.tokenId}`;
+        }
+
+        //console.log("urlNFT=", urlNFT);
+
+
+        const urlOpensea = `https://opensea.io/assets/matic/${nftInfo.contract.address}/${nftInfo.tokenId}`;
+
+
 
 
         const keyboard = new InlineKeyboard()
         .webApp('💰 나의 NFT 보러가기', urlNFT)
+        .webApp('✅ OpenSea 보러가기', urlOpensea);
         // english
         //.webApp('💰 Go to My NFT', urlNFT')
         
@@ -1424,15 +1453,24 @@ async function sendMessages() {
 
 
         const caption = '\n\n🚀 ' + messageText
+        + '\n\n' + '✅ ' + '번호: ' + '#' + nftInfo.tokenId
+        + '\n' + '✅ ' + '이름: ' + nftInfo.name
+        + '\n' + '✅ ' + '설명: ' + nftInfo.description
+
+
         + '\n\n' + '👇 아래 버튼을 눌러 나의 NFT로 이동하세요.';
         // english
         //+ '\n\n' + '👇 Press the button below to go to My Wallet.';
 
 
-        const photo = nftInfo?.image?.pngUrl ? nftInfo.image.pngUrl
-        : `${process.env.FRONTEND_APP_ORIGIN}/logo-nft-wallet.avif`;
+        ////const photo = nftInfo?.image?.pngUrl ? nftInfo.image.pngUrl
+        const photo = nftInfo?.image?.originalUrl ? nftInfo.image.originalUrl
+        : `${process.env.FRONTEND_APP_ORIGIN}/banner-nft.png`;
+
+
         
-        //console.log("sendPhoto1");
+        console.log("photo=", photo);
+
 
         await botInstance.api.sendPhoto(
           telegramId,
@@ -1632,7 +1670,7 @@ async function sendMessages() {
 
     } catch (error) {
       
-      console.error('Error sending message:', error)
+      console.error('Private chat Error sending message:', error)
 
       // delete message
       /*
@@ -1652,7 +1690,7 @@ async function sendMessages() {
     }
 
 
-    await sleep(10);
+    //await sleep(10);
 
   }
 

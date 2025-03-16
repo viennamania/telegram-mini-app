@@ -776,6 +776,84 @@ export default function Index({ params }: any) {
     }
 
 
+
+
+    // liquidate escrow
+    const [liquidatingEscrow, setLiquidatingEscrow] = useState([] as boolean[]);
+
+    const liquidateEscrow = async (
+      orderId: string,
+      index: number,
+    ) => {
+
+      if (liquidatingEscrow[index]) {
+        return;
+      }
+
+      setLiquidatingEscrow(
+        liquidatingEscrow.map((item, i) => i === index ? true : item)
+      );
+
+      const response = await fetch('/api/order/liquidateEscrow', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          orderId: orderId,
+          walletAddress: address
+        })
+      });
+
+      if (!response.ok) {
+        //toast.error('Escrow has been failed');
+        alert('Escrow has been failed');
+
+        setLiquidatingEscrow(
+          liquidatingEscrow.map((item, i) => i === index ? false : item)
+        );
+
+        return;
+      }
+
+      const data = await response.json();
+
+      if (data.result) {
+
+        //toast.success('Escrow has been liquidated');
+        alert('Escrow has been liquidated');
+
+        await fetch('/api/order/getAllSellOrdersForBuyer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(
+
+            {
+              walletAddress: address,
+              searchMyTrades: searchMyTrades,
+            }
+
+          ),
+        }).then(async (response) => {
+          const data = await response.json();
+          //console.log('data', data);
+          if (data.result) {
+            setSellOrders(data.result.orders);
+          }
+        });
+
+      } else {
+        //toast.error('Escrow has been failed');
+        alert('Escrow has been failed');
+      }
+
+      setLiquidatingEscrow(
+        liquidatingEscrow.map((item, i) => i === index ? false : item)
+      );
+
+    }
   
 
 
@@ -2022,6 +2100,44 @@ export default function Index({ params }: any) {
 
 
                                     </div>
+
+
+
+                                    {/* liquidate escrow */}
+                                    <button
+                                      className={
+                                        `text-lg text-white px-4 py-2 rounded-md
+                                        ${liquidatingEscrow[index] ? 'bg-zinc-800' : 'bg-green-500 hover:bg-green-600'}
+                                        `
+                                      }
+                                      disabled={liquidatingEscrow[index]}
+                                      onClick={() => {
+                                        // liquidate escrow
+                                        liquidateEscrow(item._id, index);
+                                      }}
+                                    >
+                                      <div className="flex flex-row items-center gap-2">
+                                        {liquidatingEscrow[index] ? (
+                                          <Image
+                                            src="/loading.png"
+                                            alt="Loading"
+                                            width={20}
+                                            height={20}
+                                            className="animate-spin"
+                                          />
+                                        ) : (
+                                          <Image
+                                            src="/icon-liquidate.png"
+                                            alt="Liquidate"
+                                            width={20}
+                                            height={20}
+                                          />
+                                        )}
+                                        청상하기
+                                      </div>
+                                    </button>
+
+
 
 
                                   </div>

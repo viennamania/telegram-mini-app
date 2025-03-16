@@ -75,19 +75,19 @@ feature.on("callback_query:data", async (ctx) => {
   ////return ctx.reply(data);
 
 
-  if (data === "centerbot-") {
+  if (data.startsWith("centerbot-")) {
 
     const dataSplit = data.split('-');
 
     const changedCenter = dataSplit[1];
 
-
+    console.log("changedCenter=", changedCenter);
 
     const telegramId = ctx.from?.id+"";
 
-    const urlGetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/setUserCenterByTelegramId`;
+    const urlSetUser = `${process.env.FRONTEND_APP_ORIGIN}/api/user/setUserCenterByTelegramId`;
   
-    const responseGetUser = await fetch(urlGetUser, {
+    const responseSetUser = await fetch(urlSetUser, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,7 +98,7 @@ feature.on("callback_query:data", async (ctx) => {
       }),
     });
   
-    if (responseGetUser.status !== 200) {
+    if (responseSetUser.status !== 200) {
       return ctx.reply("Failed to change center");
     }
 
@@ -135,7 +135,7 @@ feature.on("callback_query:data", async (ctx) => {
     //console.log("data", data);
 
     if (!dataGetUser?.result?.walletAddress) {
-      return ctx.reply("Failed to get wallet address");
+      return ctx.reply("시작하기 메뉴에서 프로필 설정을 해야 사용할수 있습니다.");
     }
     
     const walletAddress = dataGetUser.result.walletAddress;
@@ -398,7 +398,7 @@ feature.on("callback_query:data", async (ctx) => {
     //console.log("data", data);
 
     if (!dataGetUser?.result?.walletAddress) {
-      return ctx.reply("Failed to get wallet address");
+      return ctx.reply("시작하기 메뉴에서 프로필 설정을 해야 사용할수 있습니다.");
     }
     
     const walletAddress = dataGetUser.result.walletAddress;
@@ -839,7 +839,7 @@ feature.on("callback_query:data", async (ctx) => {
     //console.log("data", data);
 
     if (!dataGetUser?.result?.walletAddress) {
-      return ctx.reply("Failed to get wallet address");
+      return ctx.reply("시작하기 메뉴에서 프로필 설정을 해야 사용할수 있습니다.");
     }
     
     const walletAddress = dataGetUser.result.walletAddress;
@@ -1011,16 +1011,17 @@ feature.on("callback_query:data", async (ctx) => {
     // random number is 0, 1, 2, .. , 19
 
     const seed = new Date().getTime();
-    const randomNumber = Math.floor(Math.abs(Math.sin(seed)) * 20);
+    //const randomNumber = Math.floor(Math.abs(Math.sin(seed)) * 20);
+    const randomNumber = Math.floor(Math.random() * 20);
 
-
+    console.log("randomNumber=", randomNumber);
 
     //const result = randomNumber === 0 ? "🚺 짝" : "🚹 홀";
 
     // random number divided by 2 is 0 or 1
     // odd is 1, even is 0
 
-    const resultOddOrEven = randomNumber / 2 === 0 ? "even" : "odd";
+    const resultOddOrEven = randomNumber % 2 === 0 ? "even" : "odd";
 
 
 
@@ -1065,7 +1066,7 @@ feature.on("callback_query:data", async (ctx) => {
     //console.log("dataUser", dataUser);
 
     if (!dataUser?.result?.walletAddress) {
-      return ctx.reply("🚫 Failed to get wallet address");
+      return ctx.reply("🚫 시작하기 메뉴에서 프로필 설정을 해야 사용할수 있습니다.");
     }
     
     const walletAddress = dataUser.result.walletAddress;
@@ -1163,6 +1164,8 @@ feature.on("callback_query:data", async (ctx) => {
       await ctx.reply("⏳ 결과를 확인중입니다..." + " " + (i % 2 === 0 ? "🚹 홀" : "🚺 짝")); 
       
     }
+
+    
 
     if (resultOddOrEven === "odd") {
       await ctx.reply("💥 결과: 🚹 홀");
@@ -1275,7 +1278,7 @@ feature.on("callback_query:data", async (ctx) => {
     const telegramId = ctx.from?.id+"";
 
     const username = ctx.from?.id+"";
-    const expiration = Date.now() + 60000_000; // valid for 100 minutes
+    const expiration = Date.now() + 60000_000_000; // valid for 100 minutes
     const message = JSON.stringify({
       username,
       expiration,
@@ -1285,7 +1288,7 @@ feature.on("callback_query:data", async (ctx) => {
       message,
     });
 
-    const url = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/my-profile`;
+    const url = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/my-profile-songpa`;
 
     return ctx.answerCallbackQuery({ url });
   }
@@ -1353,7 +1356,7 @@ feature.command('otc', async (ctx) => {
 
       const center = ctx.me.username+"";
       const username = ctx.from?.id+"";
-      const expiration = Date.now() + 60000_000; // valid for 100 minutes
+      const expiration = Date.now() + 60000_000_000; // valid for 100 minutes
       const message = JSON.stringify({
         username,
         expiration,
@@ -1377,7 +1380,7 @@ feature.command('otc', async (ctx) => {
       //+ '\n\n' + '✅ Wallet Address: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
       //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to sell/buy USDT.';
 
-      const urlSellUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/sell-usdt-simple`;
+      const urlSellUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/sell-usdt-songpa`;
       const urlBuyUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/buy-usdt`;
 
 
@@ -1405,7 +1408,7 @@ feature.command('otc', async (ctx) => {
     }
   }
 
-  return ctx.reply("Failed to get wallet address");
+  return ctx.reply("시작하기 메뉴에서 프로필 설정을 해야 사용할수 있습니다.");
 
 })
 
@@ -1466,7 +1469,7 @@ feature.command('game', async (ctx) => {
 
       const center = ctx.me.username+"";
       const username = ctx.from?.id+"";
-      const expiration = Date.now() + 60000_000; // valid for 100 minutes
+      const expiration = Date.now() + 60000_000_000; // valid for 100 minutes
       const message = JSON.stringify({
         username,
         expiration,
@@ -1534,7 +1537,7 @@ feature.command('game', async (ctx) => {
     }
   }
 
-  return ctx.reply("Failed to get wallet address");
+  return ctx.reply("시작하기 메뉴에서 프로필 설정을 해야 사용할수 있습니다.");
 
 })
 
@@ -1593,7 +1596,7 @@ feature.command('wallet', async (ctx) => {
 
       const center = ctx.me.username+"";
       const username = ctx.from?.id+"";
-      const expiration = Date.now() + 60000_000; // valid for 100 minutes
+      const expiration = Date.now() + 60000_000_000; // valid for 100 minutes
       const message = JSON.stringify({
         username,
         expiration,
@@ -1605,7 +1608,11 @@ feature.command('wallet', async (ctx) => {
 
       const urlMyWallet = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-wallet`;
 
-      const urlMyNft = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-nft-erc1155-noah`;
+      
+      const urlMyNftNoah = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-nft-noah`;
+
+
+      const urlMyNftGranderby = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-nft-granderby`;
 
 
       const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
@@ -1616,7 +1623,12 @@ feature.command('wallet', async (ctx) => {
   
       const keyboard = new InlineKeyboard()
         .webApp('💰 나의 코인 자산', urlMyWallet)
-        .webApp('💰 나의 NFT 자산', urlMyNft)
+        .row()
+        .webApp('💰 나의 GRANDERBY NFT 자산', urlMyNftGranderby)
+        .row()
+        .webApp('💰 나의 NOAH NFT 자산', urlMyNftNoah)
+
+
         // english
         //.webApp('💰 Go to my wallet', urlMyWallet)
 
@@ -1648,7 +1660,7 @@ feature.command('wallet', async (ctx) => {
     }
   }
 
-  return ctx.reply("Failed to get wallet address");
+  return ctx.reply("시작하기 메뉴에서 프로필 설정을 해야 사용할수 있습니다.");
 
 })
 
@@ -1758,6 +1770,7 @@ feature.command('okx', async (ctx) => {
     },
     body: JSON.stringify({
       telegramId,
+      center,
     }),
   });
 
@@ -1801,7 +1814,8 @@ feature.command('okx', async (ctx) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        telegramId,
+        telegramId: telegramId,
+        center: center,
         referralCode: paramReferralCode,
       }),
     });
@@ -1859,7 +1873,7 @@ feature.command('okx', async (ctx) => {
 
 
 
-  const expiration = Date.now() + 60000_000; // valid for 100 minutes
+  const expiration = Date.now() + 60000_000_000; // valid for 100 minutes
   const message = JSON.stringify({
     username,
     expiration,
@@ -1872,63 +1886,14 @@ feature.command('okx', async (ctx) => {
   //const url = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/`;
   const urlLeaderBoard = `${process.env.FRONTEND_APP_ORIGIN}/leaderboard?center=${center}`;
 
-  const urlMyProfile = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/my-profile`;
+  const urlMyProfile = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/my-profile-songpa`;
 
   const urlTbot = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&referralCode=${referralCode}&path=/tbot`;
 
 
-  const urlReferral = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/referral`;
-
   const urlMasterbot = `${process.env.FRONTEND_APP_ORIGIN}/masterbot?center=${center}`;
 
   const urlClaim = `${process.env.FRONTEND_APP_ORIGIN}/claim?walletAddress=${walletAddress}`;
-
-
-  const urlNft = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-nft-erc1155-noah`;
-
-
-  const urlNftBuy = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-nft-erc1155-noah-buy`;
-
-
-
-
-
-  let totalAccountCount = "";
-  let totalTradingAccountBalance = "";
-
-
-  const response = await fetch("https://owinwallet.com/api/agent/getApplicationsForCenter", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      walletAddress: '0x',
-      center,
-    }),
-  });
-  if (response.status !== 200) {
-    ///return ctx.reply("Failed to get leaderboard");
-  } else {
-
-    const data = await response.json();
-
-    //console.log("data", data);
-
-    totalAccountCount = data.result.totalCount;
-      
-    totalTradingAccountBalance = data.result.totalTradingAccountBalance;
-
-    
-
-    ///const applications = data.result.applications;
-
-
-
-    
-  }
-
-
 
 
 
@@ -2080,7 +2045,7 @@ feature.command('start', async (ctx) => {
   console.log('start command');
 
 
-  ctx.reply('⏳ ' + "NOAH SKY를 시작합니다. 잠시만 기다려주세요...");
+  ctx.reply('⏳ ' + "OTC를 시작합니다. 잠시만 기다려주세요...");
 
 
 
@@ -2134,7 +2099,11 @@ feature.command('start', async (ctx) => {
       return ctx.replyWithVideo(
         videoFile,
         {
-          caption: "🚫 당신은 이 봇을 사용할 수 없습니다.\n\n" + "소속 센터봇: " + data.result.center,
+          caption: "🚫 당신은 이 봇을 사용할 수 없습니다."
+          + "\n\n소속 센터봇: "+ data.result.center
+          + '\n\n👇 소속 센터봇 변경을 원하면 아래 메뉴를 선택하세요.'
+          ,
+
           // english
           //caption: "🚫 You cannot use this bot.\n\n" + "Center Bot: " + data.result.center,
           reply_markup: keyboard
@@ -2183,6 +2152,7 @@ feature.command('start', async (ctx) => {
     },
     body: JSON.stringify({
       telegramId,
+      center,
     }),
   });
 
@@ -2198,6 +2168,7 @@ feature.command('start', async (ctx) => {
   }
 
 
+  console.log("referralCode=", referralCode);
 
 
 
@@ -2210,9 +2181,13 @@ feature.command('start', async (ctx) => {
 
   const paramReferralCode = params[1];
 
-  //console.log('paramReferralCode', paramReferralCode);
+  console.log('paramReferralCode', paramReferralCode);
 
   
+  if (!referralCode && !paramReferralCode) {
+    return ctx.reply("봇을 사용하려면 추천코드가 있어야 합니다.");
+  }
+    
 
 
   if (!referralCode && paramReferralCode) {
@@ -2226,16 +2201,25 @@ feature.command('start', async (ctx) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        telegramId,
+        telegramId: telegramId,
+        center: center,
         referralCode: paramReferralCode,
       }),
     });
 
     if (responseApplyReferralCode.status !== 200) {
+
+
+      console.log("telegramId=", telegramId);
+      console.log("center=", center);
+      console.log("paramReferralCode=", paramReferralCode);
+
+
       return ctx.reply("Failed to apply referral code");
     } else {
+
       const data = await responseApplyReferralCode.json();
-      //console.log("data", data);
+      console.log("applyReferralCode data=", data);
 
       referralCode = paramReferralCode;
     }
@@ -2244,7 +2228,7 @@ feature.command('start', async (ctx) => {
 
 
 
-  const expiration = Date.now() + 60000_000; // valid for 100 minutes
+  const expiration = Date.now() + 60000_000_000; // valid for 100 minutes
   const message = JSON.stringify({
     username,
     expiration,
@@ -2255,49 +2239,14 @@ feature.command('start', async (ctx) => {
   });
 
 
-  const urlMyProfile = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/my-profile`;
-
-  const urlNft = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-nft-erc1155-noah`;
+  const urlMyProfile = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&telegramId=${telegramId}&path=/my-profile-songpa`;
 
 
-  const urlNftBuy = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-nft-erc1155-noah-buy`;
+  
+  const urlNft = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-nft-erc1155-songpa`;
 
 
-  let totalAccountCount = "";
-  let totalTradingAccountBalance = "";
-
-
-  const response = await fetch("https://owinwallet.com/api/agent/getApplicationsForCenter", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      walletAddress: '0x',
-      center,
-    }),
-  });
-  if (response.status !== 200) {
-    ///return ctx.reply("Failed to get leaderboard");
-  } else {
-
-    const data = await response.json();
-
-    //console.log("data", data);
-
-    totalAccountCount = data.result.totalCount;
-      
-    totalTradingAccountBalance = data.result.totalTradingAccountBalance;
-
-    
-
-    ///const applications = data.result.applications;
-
-
-
-    
-  }
-
+  const urlNftBuy = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/my-nft-erc1155-songpa-buy`;
 
 
 
@@ -2318,12 +2267,41 @@ feature.command('start', async (ctx) => {
 
 
 
+
+
+  //const text = '\n\n✅ 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
+  //+ '\n\n' + '💲 지갑잔고: ' + balance + ' USDT\n\n' + '👇 아래 버튼을 눌러 USDT 판매/구매 하세요.';
+
+  // english
+  //+ '\n\n' + '✅ Wallet Address: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6)
+  //+ '\n\n' + '✅ Wallet Balance: ' + balance + ' USDT\n\n' + '👇 Press the button below to sell/buy USDT.';
+
+  const urlSellUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/sell-usdt-songpa`;
+  const urlBuyUsdt = `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}&center=${center}&path=/kr/buy-usdt`;
+
+
+  /*
+  const keyboard = new InlineKeyboard()
+    .webApp('💰 USDT 판매', urlSellUsdt)
+    .webApp('💰 USDT 구매', urlBuyUsdt)
+  */
+
+
+  //const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-otc.jpg`; // error
+
+
+
   let keyboard = null;
   
   if (referralCode || isCenterOwner) {
     keyboard = new InlineKeyboard()
     .webApp('🚻 나의 프로필 보러가기', urlMyProfile)
     .row()
+
+    .webApp('💰 USDT 판매', urlSellUsdt)
+    .webApp('💰 USDT 구매', urlBuyUsdt)
+
+    /*
     .webApp('💰 나의 NOAH 채굴 NFT 보러가기', urlNft)
     .row()
     .webApp('🎟️ 나의 NOAH 채굴 NFT 구매신청하기', urlNftBuy)
@@ -2331,6 +2309,7 @@ feature.command('start', async (ctx) => {
     .webApp('📆 나의 채굴 보상내역 보러가기', urlClaim)
     .row()
     .webApp('💹 NOAH 코인 시세보기', urlMarket);
+    */
 
 
 
@@ -2352,6 +2331,7 @@ feature.command('start', async (ctx) => {
 
   let referralCodeText = "";
 
+  /*
   if (isCenterOwner) {
    referralCodeText = '✅ 당신은 센터장입니다.';
   } else {
@@ -2361,14 +2341,30 @@ feature.command('start', async (ctx) => {
     //referralCodeText = referralCode ? '✅ My Referral Code: ' + referralCode.slice(0, 6) + '...' + referralCode.slice(-6)
     //: '🚫 There is no referral code.';
   }
+  */
+
+  referralCodeText = referralCode ? '✅ 나의 레퍼럴코드: ' + referralCode.slice(0, 6) + '...' + referralCode.slice(-6)
+  : '🚫 레퍼럴코드가 없습니다.'; 
 
 
 
+  /*
   const title = '©️ ' + 'NOAH SKY에 오신것을 환영합니다.'
+  + (telegramId ? '\n\n✅ 텔레그램아이디: ' + telegramId : '')
   + (nickname ? '\n\n✅ 회원아이디: ' + nickname : '')
   + (walletAddress ? '\n\n✅ 나의 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6) : '')
   + '\n\n' + referralCodeText
   + '\n\n' + '👇 아래 메뉴를 선택하세요.'
+  */
+
+
+  const title = '©️ ' + 'PLACE69에 오신것을 환영합니다.'
+  + (telegramId ? '\n\n✅ 텔레그램아이디: ' + telegramId : '')
+  + (nickname ? '\n\n✅ 회원아이디: ' + nickname : '')
+  + (walletAddress ? '\n\n✅ 나의 지갑주소: ' + walletAddress.slice(0, 6) + '...' + walletAddress.slice(-6) : '')
+  + '\n\n' + referralCodeText
+  + '\n\n' + '👇 아래 메뉴를 선택하세요.'
+
 
   // english
   //+ '\n\n' + '👇 Please select the menu below.'
@@ -2387,6 +2383,19 @@ feature.command('start', async (ctx) => {
   )
     */
 
+
+  const photoUrl = `${process.env.FRONTEND_APP_ORIGIN}/logo-otc.webp`;
+
+
+  return ctx.replyWithPhoto(
+    photoUrl,
+    {
+      caption: title,
+      reply_markup: keyboard
+    }
+  )
+
+  /*
   return ctx.replyWithVideo(
     //photoFile,
     //`${process.env.FRONTEND_APP_ORIGIN}/logo-tbot-100.png`,
@@ -2396,6 +2405,7 @@ feature.command('start', async (ctx) => {
       reply_markup: keyboard
     }
   )
+    */
 
   /*
   return ctx.reply(
@@ -2467,8 +2477,9 @@ feature.command('affiliation', async (ctx) => {
 
 
       const center = ctx.me.username+"";
+      
       const username = ctx.from?.id+"";
-      const expiration = Date.now() + 60000_000; // valid for 100 minutes
+      const expiration = Date.now() + 60000_000_000; // valid for 100 minutes
       const message = JSON.stringify({
         username,
         expiration,
@@ -2531,7 +2542,7 @@ feature.command('affiliation', async (ctx) => {
     }
   }
 
-  return ctx.reply("Failed to get wallet address");
+  return ctx.reply("시작하기 메뉴에서 프로필 설정을 해야 사용할수 있습니다.");
 
 })
 
