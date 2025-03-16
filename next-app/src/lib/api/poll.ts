@@ -222,6 +222,8 @@ export async function getOneRecentPoll(walletAddress: string) {
   
     if (findUser) {
 
+      const selectedOddOrEven = findUser.selectedOddOrEven;
+
       const oddParticipants = participants.filter((item: any) => item.selectedOddOrEven === "odd");
       const evenParticipants = participants.filter((item: any) => item.selectedOddOrEven === "even");
   
@@ -231,6 +233,7 @@ export async function getOneRecentPoll(walletAddress: string) {
 
       return {
         data: currentPoll,
+        selectedOddOrEven: selectedOddOrEven,
         oddCount: oddCount,
         evenCount: evenCount,
         status: "fail",
