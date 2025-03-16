@@ -225,6 +225,18 @@ export async function getOneRecentPoll(walletAddress: string) {
 
       //const createdAt = findUser.createdAt;
 
+      const closingDate = findUser.closingDate;
+
+      // remaining time
+      const now = new Date();
+      const closingDateDate = new Date(closingDate);
+
+      const diff = closingDateDate.getTime() - now.getTime();
+
+      const remainingTime = diff / 1000;
+
+
+
 
       const selectedOddOrEven = findUser.selectedOddOrEven;
 
@@ -237,6 +249,7 @@ export async function getOneRecentPoll(walletAddress: string) {
 
       return {
         data: currentPoll,
+        remainingTime: remainingTime,
         selectedOddOrEven: selectedOddOrEven,
         oddCount: oddCount,
         evenCount: evenCount,
