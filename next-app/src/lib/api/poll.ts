@@ -310,6 +310,7 @@ export async function updateUserOne(
   if (!checkSequence) {
     return {
       status: "fail",
+      statusCode: 100,
       message: "no data found"
     };
   }
@@ -325,7 +326,8 @@ export async function updateUserOne(
   if (findUser) {
     return {
       status: "fail",
-      message: "already participated"
+      statusCode: 200,
+      message: "이미 참여하셨습니다."
     };
   }
 
