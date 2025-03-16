@@ -221,8 +221,18 @@ export async function getOneRecentPoll(walletAddress: string) {
   
   
     if (findUser) {
+
+      const oddParticipants = participants.filter((item: any) => item.selectedOddOrEven === "odd");
+      const evenParticipants = participants.filter((item: any) => item.selectedOddOrEven === "even");
+  
+      const oddCount = oddParticipants.length;
+      const evenCount = evenParticipants.length;
+
+
       return {
         data: currentPoll,
+        oddCount: oddCount,
+        evenCount: evenCount,
         status: "fail",
         statusCode: 200,
         message: "이미 참여하셨습니다."
