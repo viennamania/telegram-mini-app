@@ -8,6 +8,14 @@ import {
 
 export async function POST(request: NextRequest) {
 
+
+  /*
+          sequence: selectedSequence,
+        user: dataUser,
+        selectedOddOrEven: selectedOddOrEven,
+  */
+
+
   const body = await request.json();
 
   const {

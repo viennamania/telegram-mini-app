@@ -202,6 +202,7 @@ export async function getOneRecentPoll() {
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('polls');
 
+
   const result
     = await collection.find(
       {
@@ -215,7 +216,72 @@ export async function getOneRecentPoll() {
     return null;
   }
 
+
+
 }
+
+/*
+{
+  "_id": {
+    "$oid": "67d62c30f5733ea621f7d6dd"
+  },
+  "sequence": 1,
+  "status": "opened",
+  "winPrize": "1.32",
+  "participants": [
+    {
+      "walletAddress": null,
+      "selectedOddOrEven": "odd",
+      "createdAt": "2025-03-16T05:46:40.467Z"
+    }
+  ]
+}
+*/
+
+// getOnePollBySequence
+// sum of odd and even
+/// odd count, even count
+// odd total amount, even total amount
+export async function getOnePollBySequence(sequence: number) {
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('polls');
+
+  const result
+    = await collection.findOne(
+      {
+        sequence: sequence
+      }
+    ); 
+
+  if (result) {
+
+    const participants = result.participants || [];
+
+    const oddParticipants = participants.filter((item: any) => item.selectedOddOrEven === "odd");
+    const evenParticipants = participants.filter((item: any) => item.selectedOddOrEven === "even");
+
+    const oddCount = oddParticipants.length;
+    const evenCount = evenParticipants.length;
+
+    //const oddTotalAmount = oddParticipants.reduce((acc: number, item: any) => acc + item.usdtAmount, 0);
+    //const evenTotalAmount = evenParticipants.reduce((acc: number, item: any) => acc + item.usdtAmount, 0);
+
+    return {
+      ...result,
+      oddCount: oddCount,
+      evenCount: evenCount,
+      //oddTotalAmount: oddTotalAmount,
+      //evenTotalAmount: evenTotalAmount,
+    };
+  }
+
+  return null;
+}
+
+
+
+
+
 
 
 // updateUserOne
@@ -282,6 +348,7 @@ export async function updateUserOne(
 
   if (result) {
     return {
+      
       status: "success",
       message: "success"
     };
