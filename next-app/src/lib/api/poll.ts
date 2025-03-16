@@ -338,6 +338,7 @@ export async function updateUserOne(
     {
       $push: {
         participants: {
+          user: user,
           walletAddress: user.walletAddress,
           selectedOddOrEven: selectedOddOrEven,
           createdAt: new Date().toISOString()
