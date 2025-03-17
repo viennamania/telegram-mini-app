@@ -27,7 +27,7 @@
         },
         {
             "path": "/api/cronjob/poll?sequence=1",
-            "schedule": "*/5 * * * *"
+            "schedule": "*/1 * * * *"
         }
 
 
