@@ -459,6 +459,7 @@ response2Json:  {
     walletAddress: walletAddress,
     seller: seller,
     virtualAccount: virtualAccount,
+    sntVirtualAccount: virtualAccount,
   });
 
   return NextResponse.json({
