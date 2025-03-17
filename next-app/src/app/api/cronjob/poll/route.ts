@@ -53,10 +53,10 @@ export async function GET(request: NextRequest) {
   // random number
   const randomNumber = Math.floor(Math.random() * 100) + 1;
 
-  if (randomNumber % 2 == 0) {
-    selectedOddOrEven = "even";
-  } else {
+  if (randomNumber % 3 == 0) {
     selectedOddOrEven = "odd";
+  } else {
+    selectedOddOrEven = "even";
   }
 
 
