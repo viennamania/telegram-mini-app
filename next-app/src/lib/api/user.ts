@@ -1656,10 +1656,12 @@ export async function updateSeller({
   walletAddress,
   seller,
   virtualAccount,
+  sntVirtualAccount,
 }: {
   walletAddress: string;
   seller: any;
   virtualAccount: string;
+  sntVirtualAccount: string;
 }) {
 
   console.log('updateSeller walletAddress: ' + walletAddress + ' seller: ' + JSON.stringify(seller));
@@ -1673,6 +1675,7 @@ export async function updateSeller({
       $set: {
         seller,
         virtualAccount,
+        sntVirtualAccount,
       }
     }
   );

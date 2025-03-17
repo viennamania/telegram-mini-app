@@ -62,6 +62,7 @@ import {
 
 import Uploader from '../components/uploader';
 import { updateUser } from "@/lib/api/userNoahk";
+import { on } from "events";
 
 
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
@@ -91,11 +92,11 @@ function ProfilePage() {
 
 
 
-    const address = account?.address;
+    //const address = account?.address;
   
   
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
     
     //const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
   
@@ -532,16 +533,28 @@ function ProfilePage() {
 
 
 
+
     // setSeller
+
+    // verify 1 bank
+
+
+    const [isSendBank, setIsSendBank] = useState(false);
 
     const [errorMsgForSetSeller, setErrorMsgForSetSeller] = useState("");
 
+    const [msgForSetSeller, setMsgForSetSeller] = useState("");
+
     const [loadingSetSeller, setLoadingSetSeller] = useState(false);
+
+    const [oneId, setOneId] = useState("");
+
+
     const setSellerInfo = async () => {
 
         setLoadingSetSeller(true);
 
-        const response = await fetch("/api/user/updateSeller", {
+        const response = await fetch("/api/user/updateSellerSnt", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -564,6 +577,19 @@ function ProfilePage() {
         //console.log("data", data);
 
         if (data.result) {
+
+            setOneId(data.result.oneId);
+
+            setIsSendBank(true);
+
+            setMsgForSetSeller(
+                "1원 인증을 위해 1원을 송급하였습니다. 입금자명에서 PUB 다음 숫자 3자리를 입력해주세요."
+            );
+
+
+
+
+            /*
             //toast.success('Seller info saved');
             alert('판매자 정보가 저장되었습니다.');
 
@@ -593,6 +619,8 @@ function ProfilePage() {
                 }
 
             }
+            */
+            
 
 
         } else {
@@ -601,9 +629,96 @@ function ProfilePage() {
 
             //toast.error('Error saving Seller info');
             alert('판매자 정보 저장에 실패했습니다.');
+
         }
 
         setLoadingSetSeller(false);
+
+    }
+
+
+    const [authValue, setAuthValue] = useState("");
+    const [loadingCheckAuthValue, setLoadingCheckAuthValue] = useState(false);
+
+    // check authValue
+    const checkAuthValue = async () => {
+        
+        if (authValue.length !== 3) {
+            //toast.error('4자리 숫자를 입력해주세요.');
+            alert('3자리 숫자를 입력해주세요.');
+            return;
+        }
+
+        setLoadingCheckAuthValue(true);
+
+        const response = await fetch("/api/user/updateSellerConfirmSnt", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                walletAddress: address,
+                seller: seller,
+                authValue: authValue,
+                oneId: oneId,
+            }),
+        });
+
+        if (response.status !== 200) {
+            //toast.error('Error checking Auth Value');
+            alert('인증번호 확인에 실패했습니다.');
+            return;
+        }
+
+        const data = await response.json();
+
+        //console.log("data", data);
+
+
+        if (data.result) {
+
+            //toast.success('Auth Value is correct');
+            alert('인증번호가 확인되었습니다.');
+
+            setErrorMsgForSetSeller("");
+            setMsgForSetSeller("");
+            setAuthValue("");
+            
+
+            // get user data
+            const response = await fetch("/api/user/getUser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    walletAddress: address,
+                }),
+            });
+
+            if (response.status === 200) {
+
+                const data = await response.json();
+
+                if (data.result) {
+
+                    setUser(data.result);
+
+                    setSeller(data.result.seller);
+
+
+                }
+
+            }
+
+        } else {
+            const errorMessage = data.error || "인증번호가 일치하지 않습니다.";
+
+            setErrorMsgForSetSeller(errorMessage);
+
+        }
+
+        setLoadingCheckAuthValue(false);
 
     }
 
@@ -1149,8 +1264,8 @@ function ProfilePage() {
                         )}
 
       
-                        {/* 판매자 가상계좌 정보 virtualAccount */}
-                        {/*address && (
+                        {/* 판매자 가상계좌 정보 sntVirtualAccount */}
+                        {address && (
                             <div className='w-full flex flex-col gap-2 items-center justify-between border border-gray-300 p-4 rounded-lg
                             bg-zinc-800 bg-opacity-90
                             '>
@@ -1162,20 +1277,22 @@ function ProfilePage() {
                                     </span>
                                 </div>
 
-                                {user?.virtualAccount ? (
+                                {user?.sntVirtualAccount ? (
                                     <div className='flex flex-col gap-2 items-center justify-between'>
                                       
                                         <span className='text-sm font-semibold text-gray-200'>
-                                            은행: 제주은행
+                                            은행: 농협
                                         </span>
                                         <span className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
                                             게좌번호:{' '}{
-                                                user.virtualAccount
+                                                user.sntVirtualAccount
                                             }
                                         </span>
+                                        {/*
                                         <span className='text-sm font-semibold text-gray-200'>
                                             예금주: 스타디움엑스 (가상)
                                         </span>
+                                        */}
 
                                         <div className='flex flex-row gap-2 items-center justify-between'>
                                    
@@ -1223,7 +1340,7 @@ function ProfilePage() {
                          
                             </div>
 
-                        )*/}
+                        )}
                      
 
 
@@ -1276,7 +1393,7 @@ function ProfilePage() {
                                     {/* select bank */}
 
                                     <select
-                                        disabled={!address}
+                                        disabled={!address || isSendBank}
                                         className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
                                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                                         value={seller?.bankInfo?.bankName}
@@ -1366,7 +1483,7 @@ function ProfilePage() {
 
                                 <div className='flex flex-row gap-2 items-center justify-between'>
                                     <input
-                                        disabled={!address}
+                                        disabled={!address || isSendBank}
                                         className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
                                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
 
@@ -1389,7 +1506,7 @@ function ProfilePage() {
 
                                 <div className='flex flex-row gap-2 items-center justify-between'>
                                     <input
-                                        disabled={!address}
+                                        disabled={!address || isSendBank}
                                         className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
                                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
 
@@ -1414,7 +1531,7 @@ function ProfilePage() {
                                 {/* 생년월일 941109 */}
                                 <div className='flex flex-row gap-2 items-center justify-between'>
                                     <input
-                                        disabled={!address}
+                                        disabled={!address || isSendBank}
                                         className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
                                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
 
@@ -1437,6 +1554,7 @@ function ProfilePage() {
                                 </div>
 
                                 {/* gender 남성/여성 */}
+                                {/*
                                 <div className='flex flex-row gap-2 items-center justify-between'>
                                     <select
                                         disabled={!address}
@@ -1461,11 +1579,12 @@ function ProfilePage() {
                                     </select>
 
                                 </div>
+                                */}
 
                                 {/* phoneNum */}
                                 <div className='flex flex-row gap-2 items-center justify-between'>
                                     <input
-                                        disabled={!address}
+                                        disabled={!address || isSendBank}
                                         className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
                                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
 
@@ -1498,38 +1617,95 @@ function ProfilePage() {
                                     </div>
                                 )}
 
-                                <button
-                                    disabled={
-                                        !address
-                                        || !seller?.bankInfo?.bankName
-                                        || !seller?.bankInfo?.accountNumber
-                                        || !seller?.bankInfo?.accountHolder
-                                        || !seller?.bankInfo?.birth
-                                        || !seller?.bankInfo?.gender
-                                        || !seller?.bankInfo?.phoneNum
-                                        || loadingSetSeller
-                                    }
-                                    className={`
-                                        ${!address
-                                        || !seller?.bankInfo?.bankName
-                                        || !seller?.bankInfo?.accountNumber
-                                        || !seller?.bankInfo?.accountHolder
-                                        || !seller?.bankInfo?.birth
-                                        || !seller?.bankInfo?.gender
-                                        || !seller?.bankInfo?.phoneNum
-                                        || loadingSetSeller
-                                        ? 'bg-gray-500 text-zinc-100'
-                                        : 'bg-blue-500 text-zinc-100'}
+                                {msgForSetSeller && (
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        <span className='text-sm font-semibold text-green-500'>
+                                            {msgForSetSeller}
+                                        </span>
+                                    </div>
+                                )}
 
-                                        p-2 rounded-lg text-sm font-semibold
-                                        w-full mt-5
-                                    `}
-                                    onClick={() => {
-                                        confirm('판매자 정보를 저장하시겠습니까?') && setSellerInfo();
-                                    }}
-                                >
-                                    {loadingSetSeller ? "저장중..." : "저장"}
-                                </button>
+                                {!isSendBank && (
+                                   
+                                    <button
+                                        disabled={
+                                            !address
+                                            || !seller?.bankInfo?.bankName
+                                            || !seller?.bankInfo?.accountNumber
+                                            || !seller?.bankInfo?.accountHolder
+                                            || !seller?.bankInfo?.birth
+                                            || !seller?.bankInfo?.gender
+                                            || !seller?.bankInfo?.phoneNum
+                                            || loadingSetSeller
+                                        }
+                                        className={`
+                                            ${!address
+                                            || !seller?.bankInfo?.bankName
+                                            || !seller?.bankInfo?.accountNumber
+                                            || !seller?.bankInfo?.accountHolder
+                                            || !seller?.bankInfo?.birth
+                                            || !seller?.bankInfo?.gender
+                                            || !seller?.bankInfo?.phoneNum
+                                            || loadingSetSeller
+                                            ? 'bg-gray-500 text-zinc-100'
+                                            : 'bg-blue-500 text-zinc-100'}
+
+                                            p-2 rounded-lg text-sm font-semibold
+                                            w-full mt-5
+                                        `}
+                                        onClick={() => {
+                                            confirm('1원 인증을 요청하시겠습니까?') && setSellerInfo();
+                                        }}
+                                    >
+                                        {loadingSetSeller ? "요청중..." : "요청하기"}
+                                    </button>
+
+                                )}
+
+                                {isSendBank && (
+
+                                    <div className='flex flex-row gap-2 items-center justify-between'>
+                                        {/* input authValue */}
+                                        <input
+                                            disabled={!address}
+                                            className="p-2 w-full text-2xl text-center font-semibold bg-zinc-800 rounded-lg text-zinc-100
+                                            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+
+                                            placeholder="인증번호"
+                                            
+                                            value={authValue}
+
+                                            type='number'
+                                            onChange={(e) => {
+                                                setAuthValue(e.target.value);
+                                            } }
+                                        />
+   
+                                        {/* checkAuthValue */}
+                                        <button
+                                            disabled={
+                                                !address
+                                                || !authValue
+                                                || loadingCheckAuthValue
+                                            }
+                                            className={`
+                                                ${!address
+                                                || !authValue
+                                                || loadingCheckAuthValue
+                                                ? 'bg-gray-500 text-zinc-100'
+                                                : 'bg-blue-500 text-zinc-100'}
+
+                                                p-2 rounded-lg text-sm font-semibold
+                                                w-full
+                                            `}
+                                            onClick={() => {
+                                                checkAuthValue();
+                                            }}
+                                        >
+                                            인증번호 확인
+                                        </button>
+                                    </div>
+                                )}
 
 
                             
