@@ -233,6 +233,8 @@ export async function POST(request: NextRequest) {
   SKEY_MID : 1af341df9c61c3af0a0e12c02faf22
   */
 
+  // natvno : random number
+  const natvno = Math.floor(Math.random() * 10000000).toString();
   
   const bodyData = {
     MID: 'stadiumC',
@@ -243,7 +245,9 @@ export async function POST(request: NextRequest) {
     C_ACCNTNO: bankAccount,
     C_ACNMNO: dob,
     M_PTST_TXT: "PUB",
+
     T_NATVNO: "TRA23052500012231322",
+    //T_NATVNO: natvno,
     
     T_BANKCD: recvBankCd,
 

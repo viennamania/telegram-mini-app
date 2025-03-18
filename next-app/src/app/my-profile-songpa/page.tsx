@@ -96,7 +96,7 @@ function ProfilePage() {
   
   
     // test address
-    /////const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
     
     //const address = "0xe38A3D8786924E2c1C427a4CA5269e6C9D37BC9C";
   
@@ -1280,7 +1280,7 @@ function ProfilePage() {
                                 {user?.sntVirtualAccount ? (
                                     <div className='flex flex-col gap-2 items-center justify-between'>
                                       
-                                        <span className='text-sm font-semibold text-gray-200'>
+                                        <span className='text-lg font-semibold text-gray-200'>
                                             은행: 농협
                                         </span>
                                         <span className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
