@@ -24,7 +24,7 @@ export async function insertOne(data: any) {
   // check if latest data is within 30 seconds
   // then return waiting message
 
-  // // within 30 seconds
+  // // within 120 seconds
 
   const latestData = await collection.findOne({ walletAddress: data.walletAddress }, { sort: { createdAt: -1 } });
 
@@ -42,15 +42,15 @@ export async function insertOne(data: any) {
     }
 
 
-    // within 60 seconds
+    // within 120 seconds
     if (
       //isWithinOneMinute(latestData.createdAt)
-      new Date().getTime() - new Date(latestData.createdAt).getTime() < 60000
+      new Date().getTime() - new Date(latestData.createdAt).getTime() < 120000
     ) {
   
       return {
         status: "waiting",
-        waitingTime: 60 - Math.floor((new Date().getTime() - new Date(latestData.createdAt).getTime()) / 1000),
+        waitingTime: 120 - Math.floor((new Date().getTime() - new Date(latestData.createdAt).getTime()) / 1000),
         data: latestData
 
       };
@@ -416,7 +416,7 @@ export async function insertOneRaceGame(data: any) {
   // check if latest data is within 30 seconds
   // then return waiting message
 
-  // // within 30 seconds
+  // // within 120 seconds
 
   const latestData = await collection.findOne({ walletAddress: data.walletAddress }, { sort: { createdAt: -1 } });
 
