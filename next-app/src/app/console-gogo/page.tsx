@@ -1277,6 +1277,7 @@ function HomeContent() {
                     <table className="w-full">
                         <thead>
                             <tr className="bg-zinc-800 text-zinc-100">
+                                <th className="p-2">Owner</th>
                                 <th className="p-2">회원아이디</th>
                                 <th className="p-2">등록일</th>
                                 <th className="p-2">TID</th>
@@ -1287,12 +1288,30 @@ function HomeContent() {
                                 
                             </tr>
                         </thead>
+
+                        {/* if walletAddress is 0x75aC3a6364F963e1C72D194f5EfC0e160E9459e0, then tr bg-green-500 */}
+
                         <tbody>
                             {users.map((user, index) => (
+                                
+                                
+                                
                                 <tr
                                   key={index}
-                                  className={`${selectUser === user?.walletAddress ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}`}
+                                  //className={`${selectUser === user?.walletAddress ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}`}
+                                
+                                  className={`
+                                    ${user?.walletAddress === "0x75aC3a6364F963e1C72D194f5EfC0e160E9459e0" ? "bg-green-500 text-zinc-100" : "bg-zinc-800 text-zinc-100"}
+                                  `}
                                 >
+                                    <td className="p-2">
+
+                                      {user?.walletAddress === "0x75aC3a6364F963e1C72D194f5EfC0e160E9459e0" && (
+                                        <span className="text-white font-semibold bg-green-500 p-1 rounded">
+                                          O
+                                        </span>
+                                      )}
+                                    </td>
 
                                     <td className="p-2">
                                       
