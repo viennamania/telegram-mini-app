@@ -267,6 +267,9 @@ function HomeContent() {
 
   const [granderbyNft, setGranderbyNft] = useState([] as any[]);
 
+  const [noahNft, setNoahNft] = useState([] as any[]);
+  const [loadingNoahNft, setLoadingNoahNft] = useState(false);
+
 
   useEffect(() => {
 
@@ -340,27 +343,43 @@ function HomeContent() {
 
         const data = await response.json();
 
-        //console.log("getAgentNft data", data);
-        /*
-        [
-          {
-
-              "name": "미자부자다",
-              "tokenUri": "https://alchemy.mypinata.cloud/ipfs/QmPdQJ5HjqvVSbqqsMno5HrAatopNw8UEBRSdg7cqEPdGu/0",
-              "image": {
-                  "thumbnailUrl": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/matic-mainnet/c0dfa75257307f42ad3d6467ba13563a",
-              },
-          },
-
-      ]
-        */
-
         setGranderbyNft(data.result.ownedNfts);
 
 
         setLoadingAgentNft(false);
 
     };
+
+    const fetchNoahNfts = async () => {
+
+      setLoadingNoahNft(true);
+
+
+      const response = await fetch("/api/noah/getAgentNFTByWalletAddress", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              walletAddress: selectUser,
+          }),
+      });
+
+      if (!response.ok) {
+          console.error("Error fetching agentNft");
+          setLoadingNoahNft(false);
+          return;
+      }
+
+      const data = await response.json();
+
+      setNoahNft(data.result.ownedNfts);
+
+
+      setLoadingNoahNft(false);
+
+    };
+
 
 
 
@@ -405,6 +424,8 @@ function HomeContent() {
         fetchNfts();
 
         fetchGranderbyNfts();
+
+        fetchNoahNfts();
 
         //fetchApplication();
 
@@ -1298,7 +1319,9 @@ function HomeContent() {
                                 <th className="p-2">TID</th>
                                 <th className="p-2">지갑주소</th>
                                 <th className="p-2">레퍼럴코드</th>
+                                {/*
                                 <th className="p-2">센터장</th>
+                                */}
                                 <th className="p-2">NFT</th>
                                 
                             </tr>
@@ -1434,6 +1457,7 @@ function HomeContent() {
 
                                     </td>
 
+                                    {/*
                                     <td className="p-2 text-center">
                                       {user?.centerOwner && (
                                         <span className="text-white font-semibold bg-green-500 p-1 rounded">
@@ -1441,6 +1465,8 @@ function HomeContent() {
                                         </span>
                                       )}
                                     </td>
+                                    */}
+
                                     <td className="p-2 text-center">
                                       <input
                                         type="radio"
@@ -1675,6 +1701,98 @@ function HomeContent() {
 
                   )}
 
+
+                  {/* NOAH NFT 목록 */}
+                  {loadingNoahNft ? (
+                    <div className="mt-5 flex flex-col items-center justify-center">
+                        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
+                    </div>
+                  ) : (
+                    
+                    <div className="mt-5 w-full flex flex-col gap-2 items-start justify-between">
+                        <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                            NOAH NFT 목록
+                        </div>
+                        <div className="w-full grid grid-cols-8 gap-2 items-start justify-between">
+
+                            {noahNft && noahNft.length === 0 && (
+                                <div className="w-full flex flex-col items-center justify-center">
+                                    <span className="text-sm text-gray-400">
+                                        NFT가 없습니다.
+                                    </span>
+                                </div>
+                            )}
+
+                            {noahNft && noahNft.map((nft : any, index : number) => (
+                                <div
+                                    key={index}
+                                    className="flex flex-row gap-2 items-center justify-between"
+                                >
+                                    <div className="
+                                      border border-gray-300 p-4 rounded-lg
+                                      flex flex-col gap-1 items-center justify-start">
+
+                                        <div className="flex flex-col gap-2 items-start justify-between">
+                                          {/* tokenId */}
+                                          <span className="text-sm">
+                                            번호: #{nft.tokenId}
+                                          </span>
+                                          <span className="text-sm">
+                                            {nft.name}
+                                          </span>
+                                          <span className="text-sm text-gray-400">
+                                            {nft.description && nft.description?.slice(0, 10) + "..."}
+                                          </span>
+                                        </div>
+
+                                        {/* image */}
+                                        <div className="flex flex-row gap-2 items-center justify-start">
+                                          <Image
+                                            src={nft?.image?.thumbnailUrl || "/icon-nft.png"}
+                                            alt={nft?.name}
+                                            width={100}
+                                            height={100}
+                                            className="rounded w-10 h-10"
+                                          /> 
+
+                                          <Button
+                                            onClick={() => {
+                                                (window as any).Telegram.WebApp.openLink(
+                                                  "https://opensea.io/assets/matic/" + nft.contract.address + "/" + nft.tokenId
+                                                );
+                                            }}
+                                            className="
+                                            inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                            "
+                                          >
+                                            <div className="flex flex-row gap-2 items-center justify-start">
+                                              <Image
+                                                src="/logo-opensea.png"
+                                                alt="OpenSea"
+                                                width={20}
+                                                height={20}
+                                                className="rounded"
+                                              />
+                                            </div>
+                                          </Button>
+                                        </div>
+
+                                        {/* 수량 balance */}
+                                        <div className="flex flex-row gap-2 items-center justify-start">
+                                          <span className="text-sm">
+                                            수량:
+                                          </span>
+                                          <span className="text-lg text-green-500 font-semibold bg-green-100 p-2 rounded">
+                                            {nft.balance}
+                                          </span>
+                                        </div>
+
+                                      </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                  )}
 
 
 
