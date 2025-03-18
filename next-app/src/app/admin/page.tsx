@@ -6,15 +6,18 @@ import { shortenAddress } from "thirdweb/utils";
 import { Button } from "@headlessui/react";
 import { client, wallet } from "../constants";
 
-import {
-  AutoConnect,
-  ConnectButton,
-} from "thirdweb/react";
+
 
 import Link from "next/link";
 import { useEffect, useState, Suspense } from "react";
 
 import { useSearchParams } from "next/navigation";
+
+import {
+  AutoConnect,
+  ConnectButton,
+  useActiveWallet,
+} from "thirdweb/react";
 
 import {
   polygon,
@@ -26,10 +29,24 @@ import {
   getContract,
 } from "thirdweb";
 
+import { inAppWallet } from "thirdweb/wallets";
+
+
+
 import { balanceOf, transfer } from "thirdweb/extensions/erc20";
 import { add } from "thirdweb/extensions/thirdweb";
  
 
+
+const wallets = [
+  inAppWallet({
+    auth: {
+      options: [
+        "phone",
+      ],
+    },
+  }),
+];
 
 
 const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
@@ -48,7 +65,10 @@ function HomeContent() {
 
 
   
-  const account = useActiveAccount();
+  //const account = useActiveAccount();
+
+  const activeWallet = useActiveWallet();
+  
 
   const contract = getContract({
     client,
@@ -739,7 +759,7 @@ function HomeContent() {
    
     <main
       className="
-        p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-xl mx-auto
+        p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-xl mx-auto
         bg-cover bg-center bg-no-repeat
         "
     >
@@ -754,6 +774,77 @@ function HomeContent() {
           timeout={15000}
         />
         */}
+
+          {/*
+          <div className="flex flex-row gap-2 items-center justify-between">
+            {!address && (
+
+                <div className="w-full flex flex-col justify-center items-start gap-2 p-2">
+
+                    <ConnectButton
+                        client={client}
+                        wallets={wallets}
+                        accountAbstraction={{
+                          chain: polygon,
+                          sponsorGas: true
+                        }}
+                        theme={"light"}
+                        connectButton={{
+                        label: "지갑 연결",
+                        }}
+                        connectModal={{
+                        size: "wide", 
+                        titleIcon: "https://shinemywinter.vercel.app/verified.png",                       
+                        showThirdwebBranding: false,
+
+                        }}
+                        locale={"ko_KR"}
+                        //locale={"en_US"}
+                    />
+
+                </div>
+
+            )}
+
+            {address && (
+                <div className="w-full flex items-center justify-between gap-5">
+                    <Image
+                        src="/icon-wallet-live.gif"
+                        alt="Wallet"
+                        width={65}
+                        height={25}
+                        className="rounded"
+                    />
+
+                    <div className="flex flex-col gap-2
+                    bg-zinc-800 bg-opacity-90
+                    p-4 rounded-lg
+                    ">
+                        <span className="text-sm font-semibold text-gray-500">
+                            지갑주소
+                        </span>
+                        <span className="text-sm font-semibold text-gray-200">
+                            {shortenAddress(address)}
+                        </span>
+                    </div>
+                    <div className="flex flex-col gap-2">
+  
+                        <button
+                            onClick={() => {
+                                confirm("지갑 연결을 해제하시겠습니까?") && activeWallet?.disconnect();
+                            }}
+                            className="bg-zinc-800 text-white p-2 rounded-lg"
+                        >
+                        지갑 연결 해제
+                        </button>
+                    </div>
+
+                </div>
+            )}
+          </div>
+          */}
+
+
 
         
         {/*

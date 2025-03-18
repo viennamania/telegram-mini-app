@@ -1419,7 +1419,10 @@ function HomeContent() {
                                     </td>
 
                                     <td className="p-2 text-center">
-                                      {user?.centerOwner && (
+
+                                      {/* if referralCode is 0x0276aE1b0768bBfe47d3Dd34493A225405aDB6AA_73, then centerOwner */}
+                                      {user?.referralCode === "0x0276aE1b0768bBfe47d3Dd34493A225405aDB6AA_73" && (
+
                                         <span className="text-white font-semibold bg-green-500 p-1 rounded">
                                           O
                                         </span>

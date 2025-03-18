@@ -695,32 +695,32 @@ function ProfilePage() {
 
 
 
-                {!address && (
+                    {!address && (
 
-                    <div className="w-full flex flex-col justify-center items-start gap-2 p-2">
+                        <div className="w-full flex flex-col justify-center items-start gap-2 p-2">
 
-                        <ConnectButton
-                            client={clientForWeb3}
-                            wallets={wallets}
-                            accountAbstraction={{
-                            chain: polygon,
-                            sponsorGas: true
-                            }}
-                            theme={"light"}
-                            connectButton={{
-                            label: "지갑 연결",
-                            }}
-                            connectModal={{
-                            size: "wide", 
-                            titleIcon: "https://shinemywinter.vercel.app/verified.png",                       
-                            showThirdwebBranding: false,
+                            <ConnectButton
+                                client={clientForWeb3}
+                                wallets={wallets}
+                                accountAbstraction={{
+                                chain: polygon,
+                                sponsorGas: true
+                                }}
+                                theme={"light"}
+                                connectButton={{
+                                label: "지갑 연결",
+                                }}
+                                connectModal={{
+                                size: "wide", 
+                                titleIcon: "https://shinemywinter.vercel.app/verified.png",                       
+                                showThirdwebBranding: false,
 
-                            }}
-                            locale={"ko_KR"}
-                            //locale={"en_US"}
-                        />
+                                }}
+                                locale={"ko_KR"}
+                                //locale={"en_US"}
+                            />
 
-                    </div>
+                        </div>
 
                     )}
 
@@ -733,7 +733,6 @@ function ProfilePage() {
                                 height={25}
                                 className="rounded"
                             />
-                            {/* wallet address */}
                             <div className="flex flex-col gap-2
                             bg-zinc-800 bg-opacity-90
                             p-4 rounded-lg
