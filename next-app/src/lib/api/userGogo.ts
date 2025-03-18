@@ -612,7 +612,7 @@ export async function getAllUsersTelegramIdByCenter(
         // search by nickname
 
 
-        //nickname: { $regex: searchNickname, $options: 'i' },
+        nickname: { $regex: searchNickname, $options: 'i' },
       }
     },
 

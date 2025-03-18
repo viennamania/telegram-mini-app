@@ -267,6 +267,8 @@ function HomeContent() {
 
   const [granderbyNft, setGranderbyNft] = useState([] as any[]);
 
+  const [weGogoNft, setWeGogoNft] = useState([] as any[]);
+  const [loadingWeGogoNft, setLoadingWeGogoNft] = useState(false);
 
   useEffect(() => {
 
@@ -364,6 +366,41 @@ function HomeContent() {
 
 
 
+    const fetchWeGogoNfts = async () => {
+
+      setLoadingWeGogoNft(true);
+
+
+      const response = await fetch("/api/wegogo/getAgentNFTByWalletAddress", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              walletAddress: selectUser,
+          }),
+      });
+
+      if (!response.ok) {
+          console.error("Error fetching agentNft");
+          setLoadingWeGogoNft(false);
+          return;
+      }
+
+      const data = await response.json();
+
+      setWeGogoNft(data.result.ownedNfts);
+
+
+      setLoadingWeGogoNft(false);
+
+    };
+
+
+
+
+
+
       // fetch one application by walletAddress
       /*
       const fetchApplication = async () => {
@@ -406,6 +443,8 @@ function HomeContent() {
 
         fetchGranderbyNfts();
 
+        fetchWeGogoNfts();
+
         //fetchApplication();
 
       }
@@ -435,7 +474,7 @@ function HomeContent() {
                   limit: 100,
                   page: 0,
                   center: selectCenter,
-                  //searchNickname: searchNickname,
+                  searchNickname: searchNickname,
               }),
           });
 
@@ -676,7 +715,7 @@ function HomeContent() {
    
     <main
       className="
-        p-4 pb-10 min-h-[100vh] flex items-center justify-center container max-w-screen-xl mx-auto
+        p-4 pb-10 min-h-[100vh] flex items-start justify-center container max-w-screen-xl mx-auto
         bg-cover bg-center bg-no-repeat
         "
     >
@@ -867,14 +906,17 @@ function HomeContent() {
 
         {/* center list and select center */}
         {/* radio checkboxes */}
+        {/*
         <div className='mb-10 w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
             
+          
             <div className="flex flex-row gap-2 items-center justify-between">
               <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
                   텔레그램 센터 선택
               </div>
 
             </div>
+      
             
             <div className='w-full flex flex-col gap-2 items-start justify-between'>
                 {loadingCenters ? (
@@ -918,7 +960,7 @@ function HomeContent() {
                               </div>
 
                               <div className="flex flex-col xl:flex-col gap-2 items-start justify-start">
-                                {/* link to telegram */}
+  
                                 <Button
                                   onClick={() => (window as any).Telegram.WebApp.openLink(`https://t.me/${center._id}`)}
                                   className="
@@ -928,7 +970,7 @@ function HomeContent() {
                                   텔레그램
                                 </Button>
 
-                                {/* copy telegram link */}
+           
                                 <Button
                                   onClick={() => {
                                     navigator.clipboard.writeText(`https://t.me/${center._id}`);
@@ -950,7 +992,8 @@ function HomeContent() {
 
 
         </div>
-      
+        */}
+
 
         {/* send to user telegramId */}
         {/* input amountSend */}
@@ -1109,7 +1152,7 @@ function HomeContent() {
 
                     const fetchData = async () => {
                       setLoadingUsers(true);
-                      const response = await fetch("/api/user/getAllUsersTelegramIdByCenter", {
+                      const response = await fetch("/api/userGogo/getAllUsersTelegramIdByCenter", {
                           method: "POST",
                           headers: {
                               "Content-Type": "application/json",
@@ -1118,7 +1161,7 @@ function HomeContent() {
                               limit: 100,
                               page: 0,
                               center: selectCenter,
-                              searchNickname,
+                              searchNickname: searchNickname,
                           }),
                       });
 
@@ -1521,6 +1564,108 @@ function HomeContent() {
 
 
                   )}
+
+
+
+
+
+
+                  {/* wegogo NFT */}
+                  {loadingWeGogoNft ? (
+                    <div className="mt-5 flex flex-col items-center justify-center">
+                        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
+                    </div>
+                  ) : (
+                    
+                    <div className="mt-5 w-full flex flex-col gap-2 items-start justify-between">
+                        <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                            WeGogo NFT 목록
+                        </div>
+                        <div className="w-full grid grid-cols-8 gap-2 items-start justify-between">
+
+                            {weGogoNft && weGogoNft.length === 0 && (
+                                <div className="w-full flex flex-col items-center justify-center">
+                                    <span className="text-sm text-gray-400">
+                                        NFT가 없습니다.
+                                    </span>
+                                </div>
+                            )}
+
+                            {weGogoNft && weGogoNft.map((nft : any, index : number) => (
+                                <div
+                                    key={index}
+                                    className="flex flex-row gap-2 items-center justify-between"
+                                >
+                                    <div className="
+                                      border border-gray-300 p-4 rounded-lg
+                                      flex flex-col gap-1 items-center justify-start">
+
+                                        <div className="flex flex-col gap-2 items-start justify-between">
+                                          {/* tokenId */}
+                                          <span className="text-sm">
+                                            번호: #{nft.tokenId}
+                                          </span>
+                                          <span className="text-sm">
+                                            {nft.name}
+                                          </span>
+                                          <span className="text-sm text-gray-400">
+                                            {nft.description && nft.description?.slice(0, 10) + "..."}
+                                          </span>
+                                        </div>
+
+                                        {/* image */}
+                                        <div className="flex flex-row gap-2 items-center justify-start">
+                                          <Image
+                                            src={nft?.image?.thumbnailUrl || "/icon-nft.png"}
+                                            alt={nft?.name}
+                                            width={100}
+                                            height={100}
+                                            className="rounded w-10 h-10"
+                                          /> 
+
+                                          <Button
+                                            onClick={() => {
+                                                (window as any).Telegram.WebApp.openLink(
+                                                  "https://opensea.io/assets/matic/" + nft.contract.address + "/" + nft.tokenId
+                                                );
+                                            }}
+                                            className="
+                                            inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                            "
+                                          >
+                                            <div className="flex flex-row gap-2 items-center justify-start">
+                                              <Image
+                                                src="/logo-opensea.png"
+                                                alt="OpenSea"
+                                                width={20}
+                                                height={20}
+                                                className="rounded"
+                                              />
+                                            </div>
+                                          </Button>
+                                        </div>
+
+                                        {/* 수량 balance */}
+                                        <div className="flex flex-row gap-2 items-center justify-start">
+                                          <span className="text-sm">
+                                            수량:
+                                          </span>
+                                          <span className="text-lg text-green-500 font-semibold bg-green-100 p-2 rounded">
+                                            {nft.balance}
+                                          </span>
+                                        </div>
+
+                                      </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                  )}
+
+
+
+
+
 
 
 
