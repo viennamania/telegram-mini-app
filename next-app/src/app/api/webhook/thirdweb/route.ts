@@ -16,6 +16,10 @@ import {
   insertOne,
 } from '@lib/api/transfer';
 
+import {
+  insertOne as insertOneTransferGogo,
+} from '@lib/api/transferGogo';
+
 
 
 export async function POST(request: NextRequest) {
@@ -162,6 +166,18 @@ export async function POST(request: NextRequest) {
   ///console.log("insertOne", result);
 
   
+  const resultTransferGogo = insertOneTransferGogo({
+    contractAddress,
+    transactionHash,
+    transactionIndex,
+    fromAddress,
+    toAddress,
+    value,
+    timestamp,
+  });
+
+
+
 
   return NextResponse.json({
     result: "ok",

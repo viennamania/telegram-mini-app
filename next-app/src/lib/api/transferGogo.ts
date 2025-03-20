@@ -41,11 +41,11 @@ export async function insertOne(data: any) {
     // if toAddress is user wallet address, then insert into userTransfers collection
 
 
-    const collectionUsers = client.db('shinemywinter').collection('users');
+    const collectionUsers = client.db('shinemywinter').collection('usersGogo');
 
-    const collectionUserTransfers = client.db('shinemywinter').collection('userTransfers');
+    const collectionUserTransfers = client.db('shinemywinter').collection('userGogoTransfers');
 
-    const collection = client.db('shinemywinter').collection('transfers');
+    //const collection = client.db('shinemywinter').collection('transfers');
 
 
     
@@ -60,24 +60,7 @@ export async function insertOne(data: any) {
     }
 
     
-    
 
-    const result = await collection.insertOne(transferData);
-
-    // if error, then return
-    if (!result) {
-        return null;
-    }
-
-
-    ////const userFromAddress = await collectionUsers.findOne({ walletAddress: data.fromAddress });
-    /*
-    const userFromAddress = collectionUsers
-    .aggregate([
-        { $match: { walletAddress: data.fromAddress } },
-        { $project: { _id: 1, telegramId: 1, walletAddress: 1 } }
-    ])
-    */
     const userFromAddress = await collectionUsers.findOne(
         { walletAddress: data.fromAddress },
         //{ projection: { telegramId: 1, walletAddress: 1 } }
