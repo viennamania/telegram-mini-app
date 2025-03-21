@@ -54,9 +54,9 @@ export async function GET(request: NextRequest) {
   const randomNumber = Math.floor(Math.random() * 100) + 1;
 
   if (randomNumber % 3 == 0) {
-    selectedOddOrEven = "odd";
-  } else {
     selectedOddOrEven = "even";
+  } else {
+    selectedOddOrEven = "odd";
   }
 
 
