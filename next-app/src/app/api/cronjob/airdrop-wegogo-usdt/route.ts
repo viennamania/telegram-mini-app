@@ -65,6 +65,7 @@ import {
   totalSupply,
   
 } from "thirdweb/extensions/erc1155";
+import { parse } from "path";
 
 
 ///import { Network, Alchemy } from 'alchemy-sdk';
@@ -543,9 +544,9 @@ export async function GET(request: NextRequest) {
           //const shareTotalAmount = 1.0 * balance;
 
     
-          masterAmount = 10;
-          agentAmount = 3.4;
-          centerAmount = 1.7;
+          masterAmount = 10 * parseFloat(balance.toString());
+          agentAmount = 3.4 * parseFloat(balance.toString());
+          centerAmount = 1.7 * parseFloat(balance.toString());
 
           //platformAmount = 0;
 
