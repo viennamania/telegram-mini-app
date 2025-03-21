@@ -409,6 +409,30 @@ export async function getOneByWalletAddress(
 }
 
 
+
+
+
+// getReferralCodeByTelegramId
+export async function getReferralCodeByTelegramId(
+  telegramId: string,
+) {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('referrals');
+
+  const results = await collection.findOne<any>(
+    { telegramId: telegramId },
+  );
+
+  if (results) {
+    return results.referralCode;
+  } else {
+    return null;
+  }
+
+}
+
+
 // getOneByTelegramId
 export async function getOneByTelegramId(
   telegramId: string,
@@ -487,6 +511,176 @@ export async function getOneByReferralCode(
 
 }
  
+
+
+// getReferredMembers
+// join user telegramId, referrals telegramId
+export async function getReferredMembers(
+  referralCode: string,
+): Promise<any> {
+
+  const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('referrals');
+
+  // join user telegramId, referrals telegramId
+
+  const results = await collection.aggregate<any>([
+    {
+      $match: { referralCode: referralCode }
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'telegramId',
+        foreignField: 'telegramId',
+        as: 'user'
+      }
+    },
+    {
+      $unwind: '$user'
+    },
+    {
+      $project: {
+        _id: 0,
+        referralCode: 1,
+        telegramId: 1,
+        user: {
+          id: 1,
+          nickname: 1,
+          email: 1,
+          avatar: 1,
+          center: 1,
+          walletAddress: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          deletedAt: 1,
+          loginedAt: 1,
+          followers: 1,
+          emailVerified: 1,
+          bio: 1,
+        }
+      }
+    }
+  ]).toArray();
+
+  return results;
+}
+
+
+
+
+// getReferredMembersByCenter
+// join user telegramId, referrals telegramId
+
+export async function getReferredMembersByCenter(
+  referralCode: string,
+  center: string,
+): Promise<any> {
+
+  const client = await clientPromise;
+
+  if (center === 'owin_eagle_bot'
+    || center === 'we_gogo_bot'
+  ) {
+
+    const collection = client.db('shinemywinter').collection('referrals_center');
+
+    // join user telegramId, referrals telegramId
+
+    const results = await collection.aggregate<any>([
+      {
+        $match: { referralCode: referralCode, center: center }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'telegramId',
+          foreignField: 'telegramId',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $project: {
+          _id: 0,
+          referralCode: 1,
+          telegramId: 1,
+          user: {
+            id: 1,
+            nickname: 1,
+            email: 1,
+            avatar: 1,
+            center: 1,
+            walletAddress: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            deletedAt: 1,
+            loginedAt: 1,
+            followers: 1,
+            emailVerified: 1,
+            bio: 1,
+          }
+        }
+      }
+    ]).toArray();
+
+    return results;
+
+  } else {
+    const collection = client.db('shinemywinter').collection('referrals');
+
+    // join user telegramId, referrals telegramId
+
+    const results = await collection.aggregate<any>([
+      {
+        $match: { referralCode: referralCode }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'telegramId',
+          foreignField: 'telegramId',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $project: {
+          _id: 0,
+          referralCode: 1,
+          telegramId: 1,
+          user: {
+            id: 1,
+            nickname: 1,
+            email: 1,
+            avatar: 1,
+            center: 1,
+            walletAddress: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            deletedAt: 1,
+            loginedAt: 1,
+            followers: 1,
+            emailVerified: 1,
+            bio: 1,
+          }
+        }
+      }
+    ]).toArray();
+
+
+    return results;
+
+  }
+
+}
+
+
+
 
 
 

@@ -402,7 +402,7 @@ export async function GET(request: NextRequest) {
           }
           */
 
-          const referralCode = await getReferralCodeByTelegramId( telegramId );
+          const referralCode = await getReferralCodeByTelegramId( telegramId ) as string;
 
           if (!referralCode) {
 

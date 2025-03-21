@@ -628,7 +628,7 @@ export async function GET(request: NextRequest) {
 
 
 
-      /*
+      
       try {
 
         const batchOptions: SendBatchTransactionOptions = {
@@ -668,7 +668,7 @@ export async function GET(request: NextRequest) {
         });
 
       }
-      */
+      
 
 
 
