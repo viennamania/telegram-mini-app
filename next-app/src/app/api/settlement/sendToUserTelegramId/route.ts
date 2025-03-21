@@ -129,7 +129,12 @@ export async function POST(request: NextRequest) {
     }
   );
 
+  
+  
   const claimWalletPrivateKey = process.env.CLAIM_WALLET_PRIVATE_KEY || "";
+
+  ///const claimWalletPrivateKey = process.env.GAME_WALLET_PRIVATE_KEY || "";
+
 
   const personalAccount = privateKeyToAccount({
     client,
