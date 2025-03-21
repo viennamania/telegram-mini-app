@@ -450,1067 +450,171 @@ export async function getOneByTelegramId(
 }
 
 
-
-
-
-export async function getOneByNickname(
-  nickname: string,
-): Promise<UserProps | null> {
-
-  const client = await clientPromise;
-
-  const collection = client.db('shinemywinter').collection('referrals');
-
-  const results = await collection.findOne<UserProps>(
-    { nickname: nickname },
-  );
-
-  return results;
-
-}
-
-
-
-
-export async function getOneByContractAddress(
-  erc721ContractAddress: string,
-): Promise<UserProps | null> {
-
-  console.log('getOneByContractAddress erc721ContractAddress: ' + erc721ContractAddress);
-
-  const client = await clientPromise;
-
-  const collection = client.db('shinemywinter').collection('referrals');
-
-
-
-  ///console.log('getOneByWalletAddress walletAddress: ' + walletAddress);
-
-  // id is number
-
-  const results = await collection.findOne<UserProps>(
-    { erc721ContractAddress: erc721ContractAddress },
-  );
-
-
-  return results;
-
-}
-
-
-export async function getOneByTronWalletAddress(
-  tronWalletAddress: string,
+// getOneByReferralCode
+export async function getOneByReferralCode(
+  referralCode: string,
+  center: string,
 ): Promise<UserProps | null> {
 
   //console.log('getOneByWalletAddress walletAddress: ' + walletAddress);
 
   const client = await clientPromise;
 
-  const collection = client.db('shinemywinter').collection('referrals');
+  if (center === 'owin_eagle_bot'
+    || center === 'we_gogo_bot'
+  ) {
 
+    const collection = client.db('shinemywinter').collection('referrals_center');
 
-
-  ///console.log('getOneByWalletAddress walletAddress: ' + walletAddress);
-
-  // id is number
-
-  const results = await collection.findOne<UserProps>(
-    { tronWalletAddress: tronWalletAddress },
-  );
-
-
-  //console.log('getOneByWalletAddress results: ' + results);
-
-  return results;
-
-}
-
-
-
-
-
-export async function getAllUsers(
-  {
-    limit,
-    page,
-  }: {
-    limit: number;
-    page: number;
-  }
-): Promise<any> {
-
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-
-  console.log('limit: ' + limit);
-  console.log('page: ' + page);
-
-  // walletAddress is not empty and not null
-  // order by nickname asc
-
-
-  const users = await collection
-    .find<UserProps>(
+    const results = await collection.findOne<UserProps>(
       {
-
-
-        walletAddress: { $exists: true, $ne: null},
-        verified: true,
-
-        
-        
-
-      },
-      {
-        limit: limit,
-        skip: page * limit,
-      },
-      
-    )
-    .sort({ nickname: 1 })
-    .toArray();
-
-
-  // user info
-  // walletAddress, nickname, mobile, email, tronWalletAddress
-
-  const resultUsers = users.map((user) => {
-    return {
-      walletAddress: user.walletAddress,
-      nickname: user.nickname,
-      mobile: user.mobile,
-      email: user.email,
-      tronWalletAddress: user.tronWalletAddress,
-    };
-  } );
-
-  const totalCount = await collection.countDocuments(
-    {
-      walletAddress: { $exists: true, $ne: null },
-      verified: true,
-    }
-  );
-
-  return {
-    totalCount,
-    users: resultUsers,
-  };
-
-  
-}
-
-
-// get all users telegram id by center
-export async function getAllUsersTelegramIdByCenter(
-  {
-    limit,
-    page,
-    center,
-  }: {
-    limit: number;
-    page: number;
-    center: string;
-  }
-): Promise<any> {
-
-  if (!center) {
-    return null;
-  }
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-
-  //console.log('limit: ' + limit);
-
-  // telegramId is not empty and not null and not empty string
-
-
-  const users = await collection
-    .find<UserProps>(
-      {
+        referralCode: referralCode,
         center: center,
-        telegramId: { $exists: true, $ne: '' },
       },
-      {
-        limit: limit,
-        skip: page * limit,
-      }, 
-    ).toArray();
+    );
 
-    return users;
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-export async function getBestSellers(
-  {
-    limit,
-    page,
-  }: {
-    limit: number;
-    page: number;
-  }
-): Promise<ResultProps> {
-
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-
-  console.log('limit: ' + limit);
-  console.log('page: ' + page);
-
-  // walletAddress is not empty and not null
-
-  const users = await collection
-    .find<UserProps>(
-      {
-
-
-        // seller is exist and seller status is 'confirmed'
-
-        seller: { $exists: true },
-        
-
-      },
-      {
-        limit: limit,
-        skip: page * limit,
-      },
-      
-    )
-    .sort({ _id: -1 })
-    .toArray();
-
-
-  const totalCount = await collection.countDocuments(
-    {
-      seller: { $exists: true },
-    }
-  );
-
-  return {
-    totalCount,
-    users,
-  };
-
-  
-}
-
-
-
-
-
-
-
-
-
-
-export async function getUserWalletPrivateKeyByWalletAddress(
-  walletAddress: string,
-): Promise<string | null> {
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-  const results = await collection.findOne<UserProps>(
-    { walletAddress },
-    { projection: { _id: 0, emailVerified: 0 } }
-  ) as any;
-
-  console.log('getUserWalletPrivateKeyByWalletAddress results: ' + results);
-
-  if (results) {
-    return results.walletPrivateKey;
-  } else {
-    return null;
-  }
-
-}
-
-
-export async function getUserByEmail(
-  email: string,
-): Promise<UserProps | null> {
-
-  console.log('getUser email: ' + email);
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-
-  return await collection.findOne<UserProps>(
-    { email },
-    { projection: { _id: 0, emailVerified: 0 } }
-  );
-
-}
-
-
-export async function checkUserByEmail(
-  email: string,
-  password: string,
-): Promise<UserProps | null> {
-
-  console.log('getUser email: ' + email);
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-
-  const results = await collection.findOne<UserProps>(
-    {
-      email,
-      password,
-    },
-    { projection: { _id: 0, emailVerified: 0 } }
-  );
-
-  ///console.log('getUser results: ' + results);
-
-  if (results) {
-    return {
-      ...results,
-      ///bioMdx: await getMdxSource(results.bio || placeholderBio)
-    };
-  } else {
-    return null;
-  }
-
-}
-
-
-export async function loginUserByEmail(
-  email: string,
-  password: string,
-): Promise<UserProps | null> {
-
-  console.log('getUser email: ' + email);
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-
-  const results = await collection.findOne<UserProps>(
-    {
-      email,
-      password,
-    },
-    { projection: { _id: 0, emailVerified: 0 } }
-  );
-
-  if (results) {
-    
-    // user_login_sesson
-    const sessionCollection = client.db('shinemywinter').collection('user_login_sessions');
-    const sessionResults = await sessionCollection.insertOne({
-      id: results.id,
-      email: results.email,
-      loginedAt: new Date().toISOString(),
-    });
-
-    console.log('sessionResults: ' + sessionResults);
-
-    return {
-      ...results,
-      ...sessionResults,
-      ///bioMdx: await getMdxSource(results.bio || placeholderBio)
-    }
+    return results;
 
   } else {
-    return null;
-  }
+    const collection = client.db('shinemywinter').collection('referrals');
 
+    const results = await collection.findOne<UserProps>(
+      { referralCode: referralCode },
+    );
 
-}
-
-
-
-
-
-
-
-
-
-export async function searchUser(query: string): Promise<UserProps[]> {
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-  
-  return await collection
-    .aggregate<UserProps>([
-      {
-        $search: {
-          index: 'name-index',
-          /* 
-          name-index is a search index as follows:
-
-          {
-            "mappings": {
-              "fields": {
-                "followers": {
-                  "type": "number"
-                },
-                "name": {
-                  "analyzer": "lucene.whitespace",
-                  "searchAnalyzer": "lucene.whitespace",
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-
-          */
-          text: {
-            query: query,
-            path: {
-              wildcard: '*' // match on both name and username
-            },
-            fuzzy: {},
-            score: {
-              // search ranking algorithm: multiply relevance score by the log1p of follower count
-              function: {
-                multiply: [
-                  {
-                    score: 'relevance'
-                  },
-                  {
-                    log1p: {
-                      path: {
-                        value: 'followers'
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        }
-      },
-      {
-        // filter out users that are not verified
-        $match: {
-          verified: true
-        }
-      },
-      // limit to 10 results
-      {
-        $limit: 10
-      },
-      {
-        $project: {
-          _id: 0,
-          emailVerified: 0,
-          score: {
-            $meta: 'searchScore'
-          }
-        }
-      }
-    ])
-    .toArray();
-}
-
-export async function getUserCount(): Promise<number> {
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-  return await collection.countDocuments();
-}
-
-
-
-export async function updateUser(username: string, bio: string) {
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-
-  // check dupplicated nickname
-
-
-
-
-  return await collection.updateOne({ username }, { $set: { bio } });
-}
-
-
-
-
-export async function checkUser(id: string, password: string): Promise<UserProps | null> {
-  
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-  const results = await collection.findOne<UserProps>(
-    {
-      id,
-      password,
-    },
-    { projection: { _id: 0, emailVerified: 0 } }
-  );
-  if (results) {
-    return {
-      ...results,
-      //bioMdx: await getMdxSource(results.bio || placeholderBio)
-    };
-  } else {
-    return null;
-  }
-}
-
-
-
-// get user 
-
-
-
-export async function getAllUsersForSettlement(
-  limit: number,
-  page: number,
-): Promise<ResultProps> {
-
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-
-  console.log('limit: ' + limit);
-  console.log('page: ' + page);
-
-  // walletAddress is not empty and not null
-
-  const users = await collection
-    .find<UserProps>(
-      {
-        walletAddress: { $exists: true, $ne: null },
-        walletPrivateKey: { $exists: true, $ne: null },
-
-      },
-      {
-        limit: limit,
-        skip: page * limit,
-      },
-      
-    )
-    .sort({ _id: -1 })
-    .toArray();
-
-
-  const totalCount = await collection.countDocuments(
-    {
-      walletAddress: { $exists: true, $ne: null },
-      walletPrivateKey: { $exists: true, $ne: null },
-    }
-  );
-
-  return {
-    totalCount,
-    users,
-  };
-
-}
-
-
-
-
-export async function getAllUsersForSettlementOfStore(
-  limit: number,
-  page: number,
-): Promise<ResultProps> {
-
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-
-  console.log('limit: ' + limit);
-  console.log('page: ' + page);
-
-  // walletAddress is not empty and not null
-
-  const users = await collection
-    .find<UserProps>(
-      {
-
-
-        walletAddress: { $exists: true, $ne: null },
-        walletPrivateKey: { $exists: true, $ne: null },
-
-        // when settlementAmountOfFee is exist, check settlementAmountOfFee is 0
-
-        settlementAmountOfFee: {
-          $exists: true,
-          $eq: "0"
-        }, 
-
-      },
-      {
-        limit: limit,
-        skip: page * limit,
-      },
-      
-    )
-    .sort({ _id: -1 })
-    .toArray();
-
-
-  const totalCount = await collection.countDocuments(
-    {
-      walletAddress: { $exists: true, $ne: null },
-      walletPrivateKey: { $exists: true, $ne: null },
-    }
-  );
-
-  return {
-    totalCount,
-    users,
-  };
-
-}
-
-
-
-
-// update settlementAmountOfFee for User collection
-export async function updateSettlementAmountOfFee(
-  walletAddress: string,
-  settlementAmountOfFee: string,
-) {
-
-  console.log('updateSettlementAmountOfFee walletAddress: ' + walletAddress + ' settlementAmountOfFee: ' + settlementAmountOfFee);
-  
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-  return await collection.updateOne(
-    { walletAddress },
-    {
-      $set: {
-        settlementAmountOfFee,
-      }
-    }
-  );
-  
-  }
-
-// getAllUsersForSettlementOfFee
-
-export async function getAllUsersForSettlementOfFee(
-  limit: number,
-  page: number,
-): Promise<ResultProps> {
-
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-
-  console.log('limit: ' + limit);
-  console.log('page: ' + page);
-
-  // walletAddress is not empty and not null
-
-  const users = await collection
-    .find<UserProps>(
-      {
-
-
-        walletAddress: { $exists: true, $ne: null },
-        walletPrivateKey: { $exists: true, $ne: null },
-
-        // when settlementAmountOfFee is exist, check convert settlementAmountOfFee to float number and check settlementAmountOfFee is greater than 0
-
-        settlementAmountOfFee: {
-          $exists: true,
-          $ne: "0"
-        }, 
-
-      },
-      {
-        limit: limit,
-        skip: page * limit,
-      },
-      
-    )
-    .sort({ _id: -1 })
-    .toArray();
-
-
-  const totalCount = await collection.countDocuments(
-    {
-      walletAddress: { $exists: true, $ne: null },
-      walletPrivateKey: { $exists: true, $ne: null },
-    }
-  );
-
-  return {
-    totalCount,
-    users,
-  };
-
-}
-
-
-// setEscrowWalletAddressByWalletAddress
-export async function setEscrowWalletAddressByWalletAddress(
-  walletAddress: string,
-  escrowWalletAddress: string,
-  escrowWalletPrivateKey: string,
-) {
-
-
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-  return await collection.updateOne(
-    { walletAddress },
-    {
-      $set: {
-        escrowWalletAddress,
-        escrowWalletPrivateKey,
-      }
-    }
-  );
-  
-}
-
-
-
-// setTronWalletAddressByWalletAddress
-export async function setTronWalletAddressByWalletAddress(
-  walletAddress: string,
-  tronWalletAddress: string,
-  tronWalletPrivateKey: string,
-) {
-
-
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-  return await collection.updateOne(
-    { walletAddress },
-    {
-      $set: {
-        tronWalletAddress,
-        tronWalletPrivateKey,
-      }
-    }
-  );
-  
-}
-
-
-
-export async function setErc721ContractAddressByWalletAddress(
-  walletAddress: string,
-  erc721ContractAddress: string,
-) {
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-  return await collection.updateOne(
-    { walletAddress },
-    {
-      $set: {
-        walletAddress: walletAddress,
-        erc721ContractAddress: erc721ContractAddress,
-      }
-    }
-  );
-  
-}
-
-
-
-
-export async function setMasterBotContractAddressByWalletAddress(
-  walletAddress: string,
-  masterBotContractAddress: string,
-) {
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-  return await collection.updateOne(
-    { walletAddress },
-    {
-      $set: {
-        walletAddress: walletAddress,
-        masterBotContractAddress: masterBotContractAddress,
-      }
-    }
-  );
-  
-}
-
-
-
-
-
-
-
-
-
-export async function getAllAgents(
-  {
-    limit = 100,
-    page = 0,
-  }: {
-    limit: number;
-    page: number;
-  }
-): Promise<any> {
-
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-
-  console.log('limit: ' + limit);
-  console.log('page: ' + page);
-
-  // walletAddress is not empty and not null
-  // order by nickname asc
-
-  // where erc721ContractAddress is not empty and not null
-
-
-    // exclude nickname is 'solongos'
-
-
-
-  const users = await collection
-    .find<UserProps>(
-      {
-
-
-        walletAddress: { $exists: true, $ne: null},
-        verified: true,
-
-        
-        erc721ContractAddress: { $exists: true, $ne: null },
-        
-        // exclude nickname is 'solongos'
-        nickname: { $ne: 'solongos' },
-
-      },
-      {
-        limit: limit,
-        skip: page * limit,
-      },
-      
-    )
-    .sort({ nickname: 1 })
-    .toArray();
-
-
-  // user info
-  // walletAddress, nickname, mobile, email, tronWalletAddress
-
-  const resultUsers = users.map((user) => {
-    return {
-      walletAddress: user.walletAddress,
-      nickname: user.nickname,
-      avatar: user.avatar,
-      mobile: user.mobile,
-      email: user.email,
-      tronWalletAddress: user.tronWalletAddress,
-      erc721ContractAddress: user.erc721ContractAddress,
-    };
-  } );
-
-  const totalCount = await collection.countDocuments(
-    {
-      walletAddress: { $exists: true, $ne: null },
-      verified: true,
-      erc721ContractAddress: { $exists: true, $ne: null },
-    }
-  );
-
-  return {
-    totalCount,
-    users: resultUsers,
-  };
-
-  
-}
-
-
-// get all ercy721ContractAddress from users collection
-export async function getAllErc721ContractAddresses(): Promise<string[]> {
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-  const results = await collection.distinct('erc721ContractAddress');
-
-  return results;
-
-}
-
-
-
-
-
-// get referralCode by telegramId
-export async function getReferralCodeByTelegramId(
-  telegramId: string,
-): Promise<string | null> {
-
-  const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('referrals');
-
-  const results = await collection.findOne<UserProps>(
-    { telegramId },
-    { projection: { _id: 0, referralCode: 1 } }
-  );
-
-  if (results) {
-    return results.referralCode;
-  } else {
-    return null;
+    return results;
   }
 
 }
+ 
 
 
 
-// getReferredMembers
+
+
+/*/
+masterWalletAddress, masterAmount
+agentWalletAddress, agentAmount);
+centerWalletAddress, centerAmount);
+*/
 /*
-{
-  "_id": {
-    "$oid": "6784f741446987cf583c8073"
-  },
-  "telegramId": "843042431",
-  "referralCode": "0x0276aE1b0768bBfe47d3Dd34493A225405aDB6AA_0"
-}
-  referrals collection where referralCode 
-
-  join with users collection where telegramId
+referral_rewards collection
 */
 
+// daily rewards
 
 
-export async function getReferredMembers(
-  referralCode: string,
-): Promise<any> {
+export async function insertReferralRewards(data: any) {
+
+  if (!data.masterWalletAddress || !data.agentWalletAddress || !data.centerWalletAddress) {
+    return null;
+  }
 
   const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('referral_rewards');
 
-  // join referrals collection with users collection
 
-  const collection = client.db('shinemywinter').collection('referrals');
-  
-  const results = await collection.aggregate([
+  // collection for check duplicat date day
+
+  const collectionDay = client.db('shinemywinter').collection('referral_rewards_day');
+
+  // check duplicat date day and masterWalletAddress
+
+  const checkDate = await collectionDay.findOne<any>(
     {
-      $match: {
-        referralCode: referralCode,
-      }
-    },
-    {
-      $lookup: {
-        from: 'users',
-        localField: 'telegramId',
-        foreignField: 'telegramId',
-        as: 'user',
-      }
-    },
-    {
-      $unwind: '$user'
-    },
-    {
-      $project: {
-        _id: 0,
-        telegramId: 1,
-        referralCode: 1,
-        user: {
-          id: 1,
-          avatar: 1,
-          nickname: 1,
-          center: 1,
-          mobile: 1,
-          email: 1,
-        }
-      }
+      createdAtDay: new Date().toISOString().slice(0, 10),
+      masterWalletAddress: data.masterWalletAddress,
     }
-  ]).toArray();
+  );
 
-  return results;
+  if (checkDate) {
+    return null;
+  }
+
+
+
+
+
+
+  // insert and return inserted user
+
+  const result = await collection.insertOne(
+    {
+      walletAddress: data.masterWalletAddress,
+      amount: data.masterAmount,
+      category: "master",
+      createdAt: new Date().toISOString(),
+    }
+  );
+
+  const result2 = await collection.insertOne(
+    {
+      walletAddress: data.agentWalletAddress,
+      amount: data.agentAmount,
+      category: "agent",
+      createdAt: new Date().toISOString(),
+    }
+  );
+
+  const result3 = await collection.insertOne(
+    {
+      walletAddress: data.centerWalletAddress,
+      amount: data.centerAmount,
+      category: "center",
+      createdAt: new Date().toISOString(),
+    }
+  );
+
+  if (result && result2 && result3) {
+
+
+
+    // insert day
+
+    const resultDay = await collectionDay.insertOne(
+      {
+        createdAtDay: new Date().toISOString().slice(0, 10),
+        masterWalletAddress: data.masterWalletAddress,
+      }
+    );
+
+
+
+    return {
+
+      masterWalletAddress: data.masterWalletAddress,
+      masterAmount: data.masterAmount,
+
+      agentWalletAddress: data.agentWalletAddress,
+      agentAmount: data.agentAmount,
+
+      centerWalletAddress: data.centerWalletAddress,
+      centerAmount: data.centerAmount,
+
+    };
+  } else {
+    return null;
+  }
 
 }
 
 
 
 
-
-
-export async function getReferredMembersByCenter(
-  referralCode: string,
-  center: string,
+// getRewardsByWalletAddress
+export async function getRewardsByWalletAddress(
+  walletAddress: string,
 ): Promise<any> {
 
   const client = await clientPromise;
+  const collection = client.db('shinemywinter').collection('referral_rewards');
 
-  // join referrals collection with users collection
+  const results = await collection.find<UserProps>(
+    { walletAddress: walletAddress },
+  ).toArray();
 
-  const collection = client.db('shinemywinter').collection('referrals_center');
-  
-  const results = await collection.aggregate([
-    {
-      $match: {
-        referralCode: referralCode,
-        center: center,
-      }
-    },
-    {
-      $lookup: {
-        from: 'userGogo',
-        localField: 'telegramId',
-        foreignField: 'telegramId',
-        as: 'user',
-      }
-    },
-    {
-      $unwind: '$user'
-    },
-    {
-      $project: {
-        _id: 0,
-        telegramId: 1,
-        referralCode: 1,
-        user: {
-          id: 1,
-          walletAddress: 1,
-          avatar: 1,
-          nickname: 1,
-          center: 1,
-          mobile: 1,
-          email: 1,
-        }
-      }
-    }
-  ]).toArray();
-
-  return results;
-
+  return {
+    totalCount: results.length,
+    rewards: results,
+  };
 }
-
-
-

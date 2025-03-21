@@ -94,8 +94,8 @@ function ProfilePage() {
     const address = account?.address;
 
     // test address
-    ///const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
-  
+    //const address = "0x542197103Ca1398db86026Be0a85bc8DcE83e440";
+    //const address = "0x75aC3a6364F963e1C72D194f5EfC0e160E9459e0";
 
 
 
@@ -602,7 +602,7 @@ function ProfilePage() {
 
             setLoadingTransfers(true);
             
-            const response = await fetch("/api/wallet/getTransfersNoahsByWalletAddress", {
+            const response = await fetch("/api/referral/getRewardsByWalletAddress", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -621,11 +621,11 @@ function ProfilePage() {
 
             const data = await response.json();
 
-            console.log("getTransfers data", data);
+            console.log("getRewardsByWalletAddress data", data);
 
 
             if (data.result) {
-                setTransfers(data.result.transfers);
+                setTransfers(data.result.rewards);
             } else {
                 setTransfers([]);
             }
@@ -639,6 +639,16 @@ function ProfilePage() {
         }
 
     } , [address]);
+
+    /*
+    {
+        "_id": "67dcb63ccca0d7e1a35e02ce",
+        "walletAddress": "0x542197103Ca1398db86026Be0a85bc8DcE83e440",
+        "amount": 10,
+        "category": "master",
+        "createdAt": "2025-03-21T00:43:40.311Z"
+    }
+    */
     
 
 
@@ -669,109 +679,6 @@ function ProfilePage() {
         }
 
     } , [telegramId]);
-
-
-    const [toWalletAddress, setToWalletAddress] = useState("");
-    const [sendAmount, setSendAmount] = useState('');
-    const [sending, setSending] = useState(false);
-
-
-
-    const sendUsdt = async () => {
-        if (sending) {
-            return;
-        }
-
-        if (!address) {
-            alert('Please connect wallet');
-            return;
-        }
-
-        if (!sendAmount) {
-            alert('Please enter amount');
-            return;
-        }
-
-        setSending(true);
-
-        try {
-
-
-            // send NOAHS
-            // Call the extension function to prepare the transaction
-            const transaction = transfer({
-                contract: contract,
-                to: toWalletAddress,
-                amount: sendAmount,
-            });
-            
-            const { transactionHash } = await sendTransaction({
-                account: account as any,
-                transaction,
-            });
-
-            
-            if (transactionHash) {
-
-                alert('NOAHS를 성공적으로 보냈습니다');
-
-                setSendAmount('');
-
-                const result = await balanceOf({
-                    contract,
-                    address: address,
-                });
-
-                //console.log(result);
-
-                setBalance( Number(result) / 10 ** 18 );
-
-                // reload the transfers
-                const response = await fetch("/api/wallet/getTransfersNoahsByWalletAddress", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        limit: 10,
-                        page: 0,
-                        walletAddress: address,
-                    }),
-                });
-
-                if (!response.ok) {
-                    return;
-                }
-
-                const data = await response.json();
-
-                //console.log("getTransfers data", data);
-
-                if (data.result) {
-                    setTransfers(data.result.transfers);
-                } else {
-                    setTransfers([]);
-                }
-
-
-
-            } else {
-
-                alert('Failed to send NOAHS');
-
-            }  
-
-
-        } catch (error) {
-            
-            console.error("error", error);
-
-            alert('Failed to send NOAHS');
-        }
-
-        setSending(false);
-    };
-
 
 
 
@@ -880,271 +787,7 @@ function ProfilePage() {
                         </div>
                     )}
 
-                    <div className='w-full flex flex-col gap-4 items-start justify-center'>
 
-
-                        {address && (
-
-                            <div className='w-full flex flex-col gap-4 items-start justify-center'>
-
-                                <div className='w-full flex flex-row gap-2 items-center justify-between
-                                    border border-gray-800
-                                    p-4 rounded-lg'>
-
-                                    <Image
-                                        src="/logo-noahs-erc20.png"
-                                        alt="NOAHS"
-                                        width={30}
-                                        height={30}
-                                        className="rounded"
-                                    />                                
-
-
-                                    <div className="flex flex-row gap-2 items-center justify-between">
-
-                                        <span className="p-2 text-green-500 text-4xl font-semibold"> 
-                                            {// 3 ditit , comma separated, not currency
-
-                                                //Number(balance).toFixed(0)
-
-                                                Number(balance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-
-
-
-
-
-                                            }
-                                        </span>
-                                        <span className="p-2 text-gray-500 text-lg font-semibold">NOAHS</span>
-
-                                    </div>
-                                </div>
-
-                                {/* send NOAHS */}
-
-                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
-                                    bg-yellow-500 bg-opacity-50'>
-                                    
-                                    {/*
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        NOAHS 보내기
-                                    </div>
-                                    */}
-                                    <div className="flex flex-row gap-2 items-center justify-between">
-
-                                        {/* dot */}
-                                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                        {/* text */}                             
-                                        <span className="text-lg font-semibold">
-                                            NOAHS 보내기
-                                        </span>
-
-                                    </div>
-
-                                    <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
-                                        
-                                        <div className="w-full flex flex-col gap-2 items-end justify-between">
-
-                                            <input
-                                                disabled={sending}
-                                                
-                                                //className="flex p-2 text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
-
-                                                className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-2xl font-semibold"
-
-                                                placeholder="0"
-                                                type='number'
-
-                                                value={
-
-                                                    sendAmount
-                                                    
-                                                }
-
-                                                onChange={(e) => {
-
-
-                                                    if (isNaN(Number(e.target.value))) {
-                                                        alert('숫자만 입력해주세요');
-                                                        return;
-                                                    }
-
-                                                    if (Number(e.target.value) < 0) {
-                                                        alert('0보다 작은 숫자는 입력할 수 없습니다');
-                                                        return;
-                                                    }
-
-
-
-                                                    //setSendAmount(Number(e.target.value));
-
-                                                    // check floating point is less than 6
-
-                                                    // check input number less than balance
-
-                                                    if (Number(e.target.value) > balance) {
-                                                        alert('잔액보다 많은 금액을 보낼 수 없습니다');
-                                                        return;
-                                                    }
-
-
-                                                    setSendAmount(
-                                                        //parseFloat(e.target.value)
-                                                        //Number(e.target.value)
-                                                        e.target.value
-                                                    );
-
-                                                }}
-                                            />
-
-                                            {/* balance max button */}
-                                            <button
-                                                disabled={sending}
-                                                onClick={() => {
-                                                    setSendAmount(balance.toString());
-                                                }}
-                                                className="flex p-2 bg-blue-500 text-zinc-100 rounded">
-                                            
-                                                <span className="text-lg font-semibold">
-                                                    최대
-                                                </span>
-                                            </button>
-
-
-                                        </div>
-
-
-                                        <input
-                                            disabled={sending}
-                                            className="p-2 w-full text-zinc-100 bg-zinc-800 rounded text-sm font-semibold"
-                                            placeholder="받는 사람 지갑주소(0x로 시작)"
-                                            type='text'
-                                            onChange={(e) => {
-                                                // cheack prefix is "0x"
-
-                                                setToWalletAddress(e.target.value);
-                                            }}
-                                        />
-
-                                        <div className="mt-5 w-full flex flex-row gap-2 items-center justify-end">
-                                            <button
-                                                disabled={sending || !sendAmount || !toWalletAddress}
-                                                onClick={() => {
-                                                    confirm('NOAHS를 보내시겠습니까?') &&
-                                                    sendUsdt();
-                                                }}
-                                                className={`p-2 bg-blue-500 text-zinc-100 rounded
-                                                    ${sending || !sendAmount || !toWalletAddress
-                                                     ? 'opacity-50' : ''}`
-                                                }
-                                            >
-                                                <div className='flex flex-row gap-2 items-center justify-between'>
-                                                    {sending && (
-                                                        <Image
-                                                            src="/loading.png"
-                                                            alt="Send"
-                                                            width={25}
-                                                            height={25}
-                                                            className="animate-spin"
-                                                        />
-                                                    )}
-                                                    <span className='text-lg font-semibold'>
-                                                        보내기
-                                                    </span>
-                                                </div>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-
-
-
-
-                                {/*
-                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        {Send_NOAHS}
-                                    </div>
-                                    <div className='flex flex-col xl:flex-row gap-2 items-start justify-between'>
-                                        <input
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                            placeholder="0.00"
-                                            type='number'
-                                            onChange={(e) => {
-                                                setAmount(Number(e.target.value));
-                                            }}
-                                        />
-                                        <input
-                                            className="p-2 w-64 text-zinc-100 bg-zinc-800 rounded text-lg font-semibold"
-                                            placeholder="받는 사람 지갑주소"
-                                            type='text'
-                                            onChange={(e) => {
-                                                setRecipient({
-                                                    ...recipient,
-                                                    walletAddress: e.target.value,
-                                                });
-                                            }}
-                                        />
-                                        <button
-                                            disabled={sending}
-                                            onClick={() => {
-                                                sendUsdt();
-                                            }}
-                                            className={`p-2 bg-blue-500 text-zinc-100 rounded ${sending ? 'opacity-50' : ''}`}
-                                        >
-                                            <div className='flex flex-row gap-2 items-center justify-between'>
-                                                {sending && (
-                                                    <Image
-                                                        src="/loading.png"
-                                                        alt="Send"
-                                                        width={25}
-                                                        height={25}
-                                                        className="animate-spin"
-                                                    />
-                                                )}
-                                                <span className='text-lg font-semibold'>
-                                                    보내기
-                                                </span>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div>
-                                */}
-                                
-                                {/* wallet address and copy button */}
-                                {/*
-                                <div className='w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg'>
-                                    <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                        입금용 지갑주소(Polygon)
-                                    </div>
-                                    <div className='flex flex-row gap-2 items-center justify-between'>
-                                        <div className="p-2 bg-zinc-800 rounded text-zinc-100 text-xl font-semibold">
-                                            {address.substring(0, 6)}...{address.substring(address.length - 4, address.length)}
-                                        </div>
-                                        <button
-                                            onClick={() => {
-                                                navigator.clipboard.writeText(address);
-                                                
-                                                //toast.success('지갑주소가 복사되었습니다');
-
-                                            }}
-                                            className="p-2 bg-blue-500 text-zinc-100 rounded"
-                                        >
-                                            Copy
-                                        </button>
-                                    </div>
-                                </div>
-                                */}
-
-
-                            </div>
-
-                        )}
-                        
-                    </div>
 
                     {/* 거래 내역 보기 */}
                     {/* polygon scan */}
@@ -1184,7 +827,7 @@ function ProfilePage() {
                         <div className="w-full flex flex-col gap-2 items-start justify-between border border-gray-300 p-4 rounded-lg
                             bg-yellow-500 bg-opacity-50">
                             <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
-                                거래내역 로딩중...
+                                보상내역 로딩중...
                             </div>
                         </div>
                     )}
@@ -1198,7 +841,7 @@ function ProfilePage() {
                                 <div className="flex flex-row gap-2 items-center justify-between">
                                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                     <span className="text-lg font-semibold">
-                                        거래내역
+                                        보상내역
                                     </span>
                                 </div>
                                 {/* reload transfers button */}
@@ -1208,7 +851,7 @@ function ProfilePage() {
 
                                             setLoadingTransfers(true);
                                             
-                                            const response = await fetch("/api/wallet/getTransfersNoahsByWalletAddress", {
+                                            const response = await fetch("/api/referral/getRewardsByWalletAddress", {
                                                 method: "POST",
                                                 headers: {
                                                     "Content-Type": "application/json",
@@ -1227,11 +870,11 @@ function ProfilePage() {
 
                                             const data = await response.json();
 
-                                            console.log("getTransfers data", data);
+                                            //console.log("getTransfers data", data);
 
 
                                             if (data.result) {
-                                                setTransfers(data.result.transfers);
+                                                setTransfers(data.result.rewards);
                                             } else {
                                                 setTransfers([]);
                                             }
@@ -1274,12 +917,7 @@ function ProfilePage() {
                             <table className="w-full">
                                 <thead>
                                     <tr>
-                                    <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">
-                                            {/*+/-*/}
-                                            {/* + is color green, - is color red */}
-                                            <span className="text-green-500">+</span> / <span className="text-red-500">-</span>
-                                        </th>
-                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">지갑주소</th>
+                                        <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">보상항목</th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">수량</th>
                                         <th className="p-2 bg-zinc-800 text-zinc-100 text-sm font-semibold">시간</th>
                                     </tr>
@@ -1298,46 +936,21 @@ function ProfilePage() {
                                                 className="p-2 text-2xl text-zinc-800 font-semibold">
 
 
-                                                {/*transfer.sendOrReceive === "send" ? "-" : "+"*/}
-                                                {/* + is color green, - is color red */}
-
-                                                {transfer.sendOrReceive === "send" ? (
-                                                    <span className="text-red-500">-</span>
+                                                {transfer.category === "master" ? (
+                                                    <span className="text-green-500">보유자</span>
+                                                ) : (transfer.category === "agent" ? (
+                                                    <span className="text-green-500">추천인</span>
+                                                ) : (transfer.category === "center" ? (
+                                                    <span className="text-green-500">지점장</span>
                                                 ) : (
-                                                    <span className="text-green-500">+</span>
-                                                )}
+                                                    <span className="text-green-500">-</span>
+                                                )))}
+
+
 
                                             </td>
 
-                                            {transfer.sendOrReceive === "send" ? (
-                                                <td className="p-2">
-                                                    <div className="flex flex-col gap-1">
-                                                        <span className="text-xs text-red-500">       
-                                                            {shortenAddress(transfer.transferData.toAddress)}
-                                                        </span>
-                                                    </div>
-                                                    {/* nickname */}
-                                                    <div className="flex flex-col gap-1">
-                                                        <span className="text-lg text-red-500">       
-                                                            {transfer?.otherUser?.nickname}
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                            ) : (
-                                                <td className="p-2">
-                                                    <div className="flex flex-col gap-1">
-                                                        <span className="text-xs text-green-500">       
-                                                            {shortenAddress(transfer.transferData.fromAddress)}
-                                                        </span>
-                                                    </div>
-                                                    {/* nickname */}
-                                                    <div className="flex flex-col gap-1">
-                                                        <span className="text-lg text-green-500">       
-                                                            {transfer?.otherUser?.nickname}
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                            )}
+  
 
                                             {/* monospace font */}
                                             <td className="p-2 text-xl text-blue-500 text-right"
@@ -1347,7 +960,7 @@ function ProfilePage() {
                                             >
                                                 {
                                                     //Number(transfer.transferData.value / 10 ** 18).toFixed(0)
-                                                    Number(transfer.transferData.value / 10 ** 18).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                                    Number(transfer.amount).toFixed(2)
                                                 }
 
                                             </td>
@@ -1356,50 +969,7 @@ function ProfilePage() {
 
                                                 {
 
-
-                                                    (
-                                                        new Date().getTime() - transfer.transferData.timestamp
-                                                    ) < 60000 ? "방금 전" : (
-                                                        (
-                                                            new Date().getTime() - transfer.transferData.timestamp
-                                                        ) < 3600000 ? 
-                                                        Math.floor(
-                                                            (new Date().getTime() - transfer.transferData.timestamp) / 60000
-                                                        ) + "분 전" : (
-                                                            (
-                                                                new Date().getTime() - transfer.transferData.timestamp
-                                                            ) < 86400000 ? 
-                                                            Math.floor(
-                                                                (new Date().getTime() - transfer.transferData.timestamp) / 3600000
-                                                            ) + "시간 전" : (
-                                                                (
-                                                                    new Date().getTime() - transfer.transferData.timestamp
-                                                                ) < 604800000 ? 
-                                                                Math.floor(
-                                                                    (new Date().getTime() - transfer.transferData.timestamp) / 86400000
-                                                                ) + "일 전" : (
-                                                                    (
-                                                                        new Date().getTime() - transfer.transferData.timestamp
-                                                                    ) < 2592000000 ? 
-                                                                    Math.floor(
-                                                                        (new Date().getTime() - transfer.transferData.timestamp) / 604800000
-                                                                    ) + "주 전" : (
-                                                                        (
-                                                                            new Date().getTime() - transfer.transferData.timestamp
-                                                                        ) < 31536000000 ? 
-                                                                        Math.floor(
-                                                                            (new Date().getTime() - transfer.transferData.timestamp) / 2592000000
-                                                                        ) + "달 전" : (
-                                                                            Math.floor(
-                                                                                (new Date().getTime() - transfer.transferData.timestamp) / 31536000000
-                                                                            ) + "년 전"
-                                                                        )
-                                                                    )
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-
+                                                    new Date(transfer.createdAt).toLocaleString()
 
                                                 }
                                                 
