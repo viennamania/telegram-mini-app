@@ -143,16 +143,7 @@ export async function GET(request: NextRequest) {
 
 
 
-      const games = await getAllGamesSettlement();
 
-      //console.log("games: ", games);
-
-
-      if (!games) {
-        return NextResponse.json({
-          result: "no data found",
-        });
-      }
 
 
     
@@ -168,7 +159,7 @@ export async function GET(request: NextRequest) {
       };
       */
       
-      const contractUSDT = getContract(
+      const contractCEBIEN = getContract(
         //contractOptions
         {
           client: client,
@@ -206,6 +197,18 @@ export async function GET(request: NextRequest) {
       //console.log("members: ", members);
 
 
+      const games = await getAllGamesSettlement();
+
+      //console.log("games: ", games);
+
+
+      if (!games) {
+        return NextResponse.json({
+          result: "no data found",
+        });
+      }
+
+
     
       let transactions = [] as any;
 
@@ -230,14 +233,14 @@ export async function GET(request: NextRequest) {
         ///const amount = game.krwAmount;
 
               // send amount is 0.00001 to 0.001
-        //const sendAmount = Number(Math.random() * (0.001 - 0.00001) + 0.00001).toFixed(6);
+        //const sendAmount = Number(Math.random() * (0.001 - 0.00001) + 0.00001).toFixed(2);
 
         //const sendAmount = game.settlement;
 
         const sendAmount = game.winPrize;
 
         const transaction = transfer({
-          contract: contractUSDT,
+          contract: contractCEBIEN,
           to: toWalletAddress,
           amount: sendAmount,
         });
@@ -307,7 +310,7 @@ export async function GET(request: NextRequest) {
             console.log("ownerWalletAddress: ", ownerWalletAddress );
 
 
-            ownerAmount = Number(parseFloat(sendAmount) * 0.1).toFixed(6);
+            ownerAmount = Number(parseFloat(sendAmount) * 0.1).toFixed(2);
 
             console.log("ownerAmount: ", ownerAmount );
 
@@ -315,7 +318,7 @@ export async function GET(request: NextRequest) {
             if (ownerWalletAddress) {
 
               const ownerTransaction = transfer({
-                contract: contractUSDT,
+                contract: contractCEBIEN,
                 to: ownerWalletAddress,
                 amount: ownerAmount,
               });
@@ -371,7 +374,7 @@ export async function GET(request: NextRequest) {
             console.log("ownerOwnerWalletAddress: ", ownerOwnerWalletAddress );
 
 
-            const ownerOwnerAmount = Number(parseFloat(sendAmount) * 0.05).toFixed(6);
+            const ownerOwnerAmount = Number(parseFloat(sendAmount) * 0.05).toFixed(2);
 
             console.log("ownerOwnerAmount: ", ownerOwnerAmount );
 
@@ -379,7 +382,7 @@ export async function GET(request: NextRequest) {
             if (ownerOwnerWalletAddress) {
 
               const ownerOwnerTransaction = transfer({
-                contract: contractUSDT,
+                contract: contractCEBIEN,
                 to: ownerOwnerWalletAddress,
                 amount: ownerOwnerAmount,
               });
