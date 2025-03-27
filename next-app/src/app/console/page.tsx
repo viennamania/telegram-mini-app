@@ -584,9 +584,46 @@ function HomeContent() {
 
 
 
-
-
   // send roulette game to all users
+  const [sendingCebienGameAll, setSendingCebienGameAll] = useState(false);
+  const sendCebienGameAll = async () => {
+    
+    setSendingCebienGameAll(true);
+      // api call sendToUserTelegramId
+      const response = await fetch("/api/game-cebien/sendRouletteAll", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            center: selectCenter,
+          }),
+      });
+
+
+
+      if (!response.ok) {
+          console.error("Error sending");
+          alert("전송에 실패했습니다.");
+          setSendingCebienGameAll(false);
+          return;
+      }
+
+      const data = await response.json();
+
+      //console.log("send data", data);
+
+
+      alert("전송이 완료되었습니다.");
+
+
+      setSendingCebienGameAll(false);
+
+  }
+
+
+
+  // send race game to all users
   const [sendingRaceGameAll, setSendingRaceGameAll] = useState(false);
   const sendRaceGameAll = async () => {
     
@@ -1213,7 +1250,22 @@ function HomeContent() {
                 }}
                 className={`${sendingRouletteAll ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
               >
-                {sendingRouletteAll ? "전송중..." : "전체회원에게 게임 보내기"}
+                {sendingRouletteAll ? "전송중..." : "전체회원에게 USDT 홀짝게임 보내기"}
+              </Button>
+            </div>
+
+
+            {/* 전체회원에게 CEBIEN 홀짝게임 보내기 */}
+            <div className="w-full flex flex-row gap-2 items-start justify-end">
+              <Button
+                disabled={sendingCebienGameAll}
+                onClick={() => {
+                  // send
+                  confirm("전송하시겠습니까?") && sendCebienGameAll();
+                }}
+                className={`${sendingCebienGameAll ? "bg-gray-400" : "bg-green-500"} text-zinc-100 p-2 rounded`}
+              >
+                {sendingCebienGameAll ? "전송중..." : "전체회원에게 CEBIEN 홀짝게임 보내기"}
               </Button>
             </div>
 
