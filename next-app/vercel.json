@@ -22,6 +22,10 @@
             "schedule": "* * * * *"
         },
         {
+            "path": "/api/cronjob/gameCebien",
+            "schedule": "* * * * *"
+        },
+        {
             "path": "/api/cronjob/raceGame",
             "schedule": "* * * * *"
         },
