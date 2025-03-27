@@ -796,6 +796,8 @@ export async function insertReferralRewards(data: any) {
 
 
 // getRewardsByWalletAddress
+// order by createdAt desc
+
 export async function getRewardsByWalletAddress(
   walletAddress: string,
 ): Promise<any> {
@@ -805,7 +807,9 @@ export async function getRewardsByWalletAddress(
 
   const results = await collection.find<UserProps>(
     { walletAddress: walletAddress },
-  ).toArray();
+  )
+  .sort({ createdAt: -1 })
+  .toArray();
 
   return {
     totalCount: results.length,
