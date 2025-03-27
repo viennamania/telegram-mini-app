@@ -126,9 +126,9 @@ export async function insertOne(data: any) {
     if (userToAddress && userToAddress.walletAddress) {
 
 
-        // if data.fromAddress is escrow.walletAddress of ordersNoahk collection
+        // if data.fromAddress is escrow.walletAddress of ordersCebien collection
 
-        const collectionOrders = client.db('shinemywinter').collection('ordersNoahk');
+        const collectionOrders = client.db('shinemywinter').collection('ordersCebien');
 
         const sellOrder = await collectionOrders.findOne(
             { "escrow.walletAddress": data.fromAddress },
@@ -164,7 +164,7 @@ export async function insertOne(data: any) {
                 const amount = parseFloat(data.value) / 1e18;
 
                 ///const message = "You have received " + Number(amount).toFixed(6) + " USDT";
-                const message = Number(amount).toFixed(2) + " NOAHS 를 받았습니다";
+                const message = Number(amount).toFixed(2) + " CEBIEN 를 받았습니다";
 
                 const collectionTelegramMessages = client.db('shinemywinter').collection('telegramMessages');
 
@@ -196,8 +196,8 @@ export async function insertOne(data: any) {
 
 
 
-    // ordersNoahk collection
-    const collectionOrders = client.db('shinemywinter').collection('ordersNoahk');
+    // ordersCebien collection
+    const collectionOrders = client.db('shinemywinter').collection('ordersCebien');
 
 
     // if escrow.walletAddress is fromAddress
