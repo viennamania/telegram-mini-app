@@ -66,7 +66,7 @@ export async function insertOne(data: any) {
       //const winPrize = Number(Math.random() * (0.1 - 0.00001) + 0.00001).toFixed(6);
 
       // winPrice is 1 to 100
-      const winPrize = Math.floor(Math.random() * 100) + 1
+      const winPrize = Math.floor(Math.random() * 10) + 1
 
 
       const result = await collection.insertOne(
@@ -130,7 +130,7 @@ export async function insertOne(data: any) {
   }
 
   //const winPrize = Number(Math.random() * (0.1 - 0.00001) + 0.00001).toFixed(6);
-  const winPrize = Math.floor(Math.random() * 100) + 1;
+  const winPrize = Math.floor(Math.random() * 10) + 1;
 
 
   const result = await collection.insertOne(
