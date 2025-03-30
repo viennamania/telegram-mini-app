@@ -1397,6 +1397,7 @@ function AgentPage() {
                                 >
                                     <div className='flex flex-row gap-2 items-center justify-center'>
                                         {/* rotating icon */}
+
                                         {mintingAgentNft ? (
                                             <Image
                                                 src="/loading.png"
@@ -1412,17 +1413,6 @@ function AgentPage() {
                                                 width={30}
                                                 height={30}
                                                 className="rounded-lg"
-                                            />
-                                        )}
-
-
-                                        {mintingAgentNft && (
-                                            <Image
-                                                src="/loading.png"
-                                                alt="loding"
-                                                width={30}
-                                                height={30}
-                                                className='animate-spin'
                                             />
                                         )}
                                         {mintingAgentNft && 'NFT 발행중...'}
