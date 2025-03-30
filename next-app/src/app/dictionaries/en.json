@@ -72,7 +72,9 @@
     "Me": "Me",
 
     "Buy_USDT": "Buy USDT",
+    "Buy_CEBIEN": "Buy CEBIEN",
     "Sell_USDT": "Sell USDT",
+    "Sell_CEBIEN": "Sell CEBIEN",
 
     "Send_USDT": "Send USDT",
     "Pay_USDT": "Pay USDT",

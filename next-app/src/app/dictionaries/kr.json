@@ -51,7 +51,9 @@
     "Me": "나",
 
     "Buy_USDT": "USDT 구매하기",
+    "Buy_CEBIEN": "CEBIEN 구매하기",
     "Sell_USDT": "USDT 판매하기",
+    "Sell_CEBIEN": "CEBIEN 판매하기",
 
     "Send_USDT": "USDT 보내기",
     "Pay_USDT": "USDT 지불하기",
