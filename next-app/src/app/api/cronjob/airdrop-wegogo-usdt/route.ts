@@ -137,6 +137,8 @@ export async function GET(request: NextRequest) {
   
     const weGogoWalletPrivateKey = process.env.WEGOGO_WALLET_PRIVATE_KEY || "";
   
+ 
+
     const personalAccount = privateKeyToAccount({
       client,
       privateKey: weGogoWalletPrivateKey,
@@ -608,6 +610,8 @@ export async function GET(request: NextRequest) {
             timestamp: moment().unix(),
           };
 
+
+
           const result = await insertReferralRewards(data);
 
           console.log("insertReferralRewards result: ", result);
@@ -623,7 +627,7 @@ export async function GET(request: NextRequest) {
 
 
 
-      ///console.log("transactions: ", transactions);
+      //console.log("transactions: ", transactions);
 
 
 
@@ -632,10 +636,29 @@ export async function GET(request: NextRequest) {
       
       try {
 
+        
         const batchOptions: SendBatchTransactionOptions = {
           account: account,
           transactions: transactions,
         };
+        
+
+
+        /*
+        let transactionsAAA = [] as any;
+
+        const transactionCenter = transfer({
+          contract: contractUSDT,
+          to: "0x542197103Ca1398db86026Be0a85bc8DcE83e440",
+          amount: 90
+        });
+        transactionsAAA.push(transactionCenter);
+
+        const batchOptions: SendBatchTransactionOptions = {
+          account: account,
+          transactions: transactionsAAA,
+        };
+        */
   
 
 
