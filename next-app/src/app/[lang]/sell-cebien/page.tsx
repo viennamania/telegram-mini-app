@@ -435,7 +435,7 @@ export default function Index({ params }: any) {
           setLoadingSellOrders(true);
 
           // api call
-          const response = await fetch('/api/order/getAllSellOrders', {
+          const response = await fetch('/api/orderCebien/getAllSellOrders', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -580,7 +580,7 @@ export default function Index({ params }: any) {
 
       
 
-      const response = await fetch('/api/order/setSellOrder', {
+      const response = await fetch('/api/orderCebien/setSellOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -615,7 +615,7 @@ export default function Index({ params }: any) {
 
 
         setLoadingSellOrders(true);
-        await fetch('/api/order/getAllSellOrders', {
+        await fetch('/api/orderCebien/getAllSellOrders', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -667,7 +667,7 @@ export default function Index({ params }: any) {
 
       setCancellings(cancellings.map((item, i) => i === index ? true : item));
 
-      const response = await fetch('/api/order/cancelSellOrder', {
+      const response = await fetch('/api/orderCebien/cancelSellOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -700,7 +700,7 @@ export default function Index({ params }: any) {
 
 
       setLoadingSellOrders(true);
-      await fetch('/api/order/getAllSellOrders', {
+      await fetch('/api/orderCebien/getAllSellOrders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -791,7 +791,7 @@ export default function Index({ params }: any) {
         if (transactionResult) {
 
           // api/requestPayment
-          const response = await fetch('/api/order/requestPayment', {
+          const response = await fetch('/api/orderCebien/requestPayment', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -865,7 +865,7 @@ export default function Index({ params }: any) {
       setConfirmingPaymentList(confirmingPaymentList.map((item, i) => i === index ? true : item));
 
       // api/confirmPayment
-      const response = await fetch('/api/order/confirmPayment', {
+      const response = await fetch('/api/orderCebien/confirmPayment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -1659,7 +1659,7 @@ export default function Index({ params }: any) {
                       className="text-sm text-white bg-gray-800 px-2 py-1 rounded-md"
                       onClick={() => {
                         setLoadingSellOrders(true);
-                        fetch('/api/order/getAllSellOrders', {
+                        fetch('/api/orderCebien/getAllSellOrders', {
                           method: 'POST',
                           headers: {
                             'Content-Type': 'application/json'
