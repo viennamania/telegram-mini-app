@@ -576,7 +576,7 @@ export default function Index({ params }: any) {
 
       if (sellAmount > balance) {
         //toast.error('Insufficient balance');
-        alert('판매할수 있는 USDT가 부족합니다.');
+        alert('판매할수 있는 CEBIEN 이 부족합니다.');
         return;
       }
 
@@ -816,16 +816,16 @@ export default function Index({ params }: any) {
 
 
             //toast.success('Payment requested');
-            alert('판매자 지갑에서 에스크로 지갑으로 USDT가 전송되었고 구매자에게 결제 요청을 하였습니다.');
+            alert('판매자 지갑에서 에스크로 지갑으로 CEBIEN 이 전송되었고 구매자에게 결제 요청을 하였습니다.');
             
           } else {
             //toast.error('Payment request failed');
-            alert('에스크로 지갑으로 USDT 전송이 실패했습니다.');
+            alert('에스크로 지갑으로 CEBIEN 전송이 실패했습니다.');
           }
 
         } else {
 
-          alert('에스크로 지갑으로 USDT 전송이 실패했습니다.');
+          alert('에스크로 지갑으로 CEBIEN 전송이 실패했습니다.');
 
         }
 
@@ -833,7 +833,7 @@ export default function Index({ params }: any) {
         
         //console.log('error', error);
 
-        alert('에스크로 지갑으로 USDT 전송이 실패했습니다.' + '-' + error);
+        alert('에스크로 지갑으로 CEBIEN 전송이 실패했습니다.' + '-' + error);
 
       }
 
@@ -1552,7 +1552,7 @@ export default function Index({ params }: any) {
                                     disabled={sellAmount === 0 || agreementPlaceOrder === false}
                                     className={`text-lg text-white px-4 py-2 rounded-md ${sellAmount === 0 || agreementPlaceOrder === false ? 'bg-gray-500' : 'bg-green-500'}`}
                                     onClick={() => {
-                                        console.log('Sell USDT');
+                                        console.log('Sell CEBIEN');
                                         // open trade detail
                                         // open modal of trade detail
                                         ///openModal();
@@ -1981,7 +1981,7 @@ export default function Index({ params }: any) {
                                 <div className="flex flex-row items-center gap-2">
 
                                   <p className="text-2xl font-semibold text-green-500">
-                                    {item.sellAmount} USDT
+                                    {item.sellAmount} CEBIEN
                                   </p>
 
                                   <p className="text-lg font-semibold text-white">{Rate}: {
@@ -2397,7 +2397,7 @@ export default function Index({ params }: any) {
                                       </span>
                                       */}
                                       <span className="text-lg text-blue-500 font-semibold">
-                                      {item.sellAmount} USDT 를 에스크로에 예치해야 합니다.
+                                      {item.sellAmount} CEBIEN 을 에스크로에 예치해야 합니다.
                                       </span>
 
                                       <span className="text-sm text-zinc-400">
@@ -2500,7 +2500,7 @@ export default function Index({ params }: any) {
                                       />
                                       <div className="flex flex-col gap-2 items-start">
                                         <span className="text-lg text-blue-500 font-semibold">
-                                          에스크로: {item.sellAmount} USDT
+                                          에스크로: {item.sellAmount} CEBIEN
                                         </span>
                                       </div>
                                       
@@ -2577,7 +2577,7 @@ export default function Index({ params }: any) {
                                             }
                                             onClick={() => {
                                               // confirm payment
-                                              confirm('거래를 완료하면 에스크로에서 USDT가 구매자에게 전송됩니다. 거래를 완료하시겠습니까?') &&
+                                              confirm('거래를 완료하면 에스크로에서 CEBIEN 이 구매자에게 전송됩니다. 거래를 완료하시겠습니까?') &&
                                               confirmPayment(index);
                                             }}
                                           >
