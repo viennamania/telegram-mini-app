@@ -1123,7 +1123,7 @@ function AgentPage() {
 
                     {/* title */}
                     <div className="text-2xl font-semibold text-zinc-100">
-                        추천코드 관리
+                        SMW NFT 관리
                     </div>
                 </div>
         
@@ -1340,34 +1340,6 @@ function AgentPage() {
 
                             </div>
 
-                            
-                            
-                            <div className='w-full flex flex-col gap-2 items-start justify-between'>
-
-                                {/*
-                                <div className="flex flex-row items-center justify-start gap-5">
-                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                                    <span className="text-sm xl:text-lg font-semibold">
-                                        추천코드로 회원가입을 유치하면 가입보상으로 1 USDT를 받습니다.
-                                    </span>
-                                </div>
-                                <div className="flex flex-row items-center justify-start gap-5">
-                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                                    <span className="text-sm xl:text-lg font-semibold">
-                                        가입한 회원의 채굴보상에서 28%를 채굴보상으로 받습니다.
-                                    </span>
-                                </div>
-                                */}
-                                <div className="flex flex-row items-center justify-start gap-5">
-                                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                                    <span className="text-sm xl:text-lg font-semibold">
-                                        NFT 소유권을 이전하면 이전한 이후부터 채굴보상은 이전 받은 소유자에게 지급됩니다.
-                                    </span>
-                                </div>
-
-                            </div>
-                            
-
 
 
 
@@ -1381,7 +1353,7 @@ function AgentPage() {
                                     {/* dot */}
                                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                                     <span className='text-lg font-semibold'>
-                                        추천코드 발행
+                                        발행할 NFT의 이름을 입력하세요.
                                     </span>
                                 </div>
 
@@ -1425,6 +1397,25 @@ function AgentPage() {
                                 >
                                     <div className='flex flex-row gap-2 items-center justify-center'>
                                         {/* rotating icon */}
+                                        {mintingAgentNft ? (
+                                            <Image
+                                                src="/loading.png"
+                                                alt="loding"
+                                                width={30}
+                                                height={30}
+                                                className='animate-spin'
+                                            />
+                                        ) : (
+                                            <Image
+                                                src="/logo-oepnsea.png"
+                                                alt="AI Agent"
+                                                width={30}
+                                                height={30}
+                                                className="rounded-lg"
+                                            />
+                                        )}
+
+
                                         {mintingAgentNft && (
                                             <Image
                                                 src="/loading.png"
@@ -1621,28 +1612,7 @@ function AgentPage() {
                                                 </button>
 
 
-                                                {/* referral link button */}
-                                                
-                                                <button
-                                                    onClick={() => {
-                                                        navigator.clipboard.writeText(
-                                                            /*
-                                                            referralUrl + '/?center=' + center +
-                                                            '&agent=' + nft.contract.address + 
-                                                            '&tokenId=' + nft.tokenId
-                                                            */
-                                                            //'t.me/ppump_orry_bot?start=' + nft.contract.address + '_' + nft.tokenId
 
-                                                            't.me/' + userCenter + '?start=' + nft.contract.address + '_' + nft.tokenId
-                                                        );
-                                                        //toast.success('추천코드 URL 복사 완료');
-                                                        alert('추천코드 복사되었습니다.');
-                                                    }}
-                                                    className="p-2 bg-blue-500 text-zinc-100 rounded
-                                                    hover:bg-blue-600 text-lg font-semibold"
-                                                >
-                                                    추천코드 복사하기
-                                                </button>
 
                                             </div>
    
