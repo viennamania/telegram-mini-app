@@ -587,9 +587,9 @@ function AgentPage() {
                 */
 
 
-                // api /api/agent/getAgentNFTByWalletAddress
+                // api /api/smw/getAgentNFTByWalletAddress
                 
-                const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
+                const response = await fetch("/api/smw/getAgentNFTByWalletAddress", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -863,7 +863,7 @@ function AgentPage() {
 
 
             // fetch the NFTs again
-            const responseNft = await fetch("/api/agent/getAgentNFTByWalletAddress", {
+            const responseNft = await fetch("/api/smw/getAgentNFTByWalletAddress", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -1031,7 +1031,7 @@ function AgentPage() {
 
 
             // fetch the NFTs again
-            const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
+            const response = await fetch("/api/smw/getAgentNFTByWalletAddress", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -1478,7 +1478,7 @@ function AgentPage() {
                                         {/* dot */}
                                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                         <span className="text-lg font-semibold">
-                                            추천코드
+                                            SMW NFT 목록
                                         </span>
                                     </div>
 
@@ -1490,7 +1490,7 @@ function AgentPage() {
 
                                                     setLoadingMyNfts(true);
                                                     try {
-                                                        const response = await fetch("/api/agent/getAgentNFTByWalletAddress", {
+                                                        const response = await fetch("/api/smw/getAgentNFTByWalletAddress", {
                                                             method: "POST",
                                                             headers: {
                                                                 "Content-Type": "application/json",
