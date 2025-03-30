@@ -835,7 +835,7 @@ export default function Index({ params }: any) {
 
                           <span className="p-2 text-green-500 text-4xl font-semibold"> 
                               {
-                                  Number(balance).toFixed(6)
+                                  Number(balance).toFixed(2)
                               }
                           </span>
                           <span className="p-2 text-gray-500 text-lg font-semibold">USDT</span>

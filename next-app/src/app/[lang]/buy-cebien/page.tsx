@@ -93,10 +93,10 @@ interface SellOrder {
 
 
 
-const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+//const contractAddress = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
 const contractAddressArbitrum = "0x2f2a2543B76A4166549F7aab2e75Bef0aefC5B0f"; // USDT on Arbitrum
 
-
+const contractAddress = '0x04a4B27d8221A57b4051AbAc170d4ac5Abdc6aBd'; // CEBIEN on Polygon
 
 
 export default function Index({ params }: any) {
@@ -333,26 +333,9 @@ export default function Index({ params }: any) {
   
       //console.log(result);
   
-      setBalance( Number(result) / 10 ** 6 );
+      //setBalance( Number(result) / 10 ** 6 );
 
-      /*
-      await fetch('/api/user/getBalanceByWalletAddress', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          chain: params.chain,
-          walletAddress: address,
-        }),
-      })
-
-      .then(response => response.json())
-
-      .then(data => {
-          setNativeBalance(data.result?.displayValue);
-      });
-      */
+      setBalance( Number(result) / 10 ** 18 );
 
 
 
@@ -835,7 +818,7 @@ export default function Index({ params }: any) {
 
                           <span className="p-2 text-green-500 text-4xl font-semibold"> 
                               {
-                                  Number(balance).toFixed(6)
+                                  Number(balance).toFixed(2)
                               }
                           </span>
                           <span className="p-2 text-gray-500 text-lg font-semibold">CEBIEN</span>
