@@ -418,7 +418,7 @@ export async function setGamesSettlementByWalletAddressAndSequence(
 // insertOneRaceGame
 export async function insertOneRaceGame(data: any) {
   const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('raceGames');
+  const collection = client.db('shinemywinter').collection('cebienRaceGames');
 
 
   // check if latest data is within 30 seconds
@@ -463,7 +463,11 @@ export async function insertOneRaceGame(data: any) {
 
       const sequence = latestData.sequence + 1;
 
-      const winPrize = Number(Math.random() * (2.0 - 0.00001) + 0.00001).toFixed(6);
+      
+      //const winPrize = Number(Math.random() * (2.0 - 0.00001) + 0.00001).toFixed(6);
+
+      // winPrice is 1 to 10
+      const winPrize = Math.floor(Math.random() * 10) + 1
 
 
       const result = await collection.insertOne(
@@ -527,7 +531,10 @@ export async function insertOneRaceGame(data: any) {
     sequence = findSequence[0].sequence + 1;
   }
 
-  const winPrize = Number(Math.random() * (1.0 - 0.00001) + 0.00001).toFixed(6);
+  //const winPrize = Number(Math.random() * (1.0 - 0.00001) + 0.00001).toFixed(6);
+
+  // winPrice is 1 to 10
+  const winPrize = Math.floor(Math.random() * 10) + 1;
 
 
   const result = await collection.insertOne(
@@ -564,7 +571,7 @@ export async function insertOneRaceGame(data: any) {
 // getOneRaceGameByWalletAddressAndSequence
 export async function getOneRaceGameByWalletAddressAndSequence(walletAddress: string, sequence: string) {
   const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('raceGames');
+  const collection = client.db('shinemywinter').collection('cebienRaceGames');
 
   const result = await collection.findOne(
     {
@@ -605,7 +612,7 @@ export async function updateRaceGameResultByWalletAddressAndSequence(
 ) {
 
   const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('raceGames');
+  const collection = client.db('shinemywinter').collection('cebienRaceGames');
 
   // finde one
   // sequence is integer
@@ -720,7 +727,7 @@ export async function updateRaceGameResultByWalletAddressAndSequence(
 // getAllRaceGamesSettlement
 export async function getAllRaceGamesSettlement() {
   const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('raceGames');
+  const collection = client.db('shinemywinter').collection('cebienRaceGames');
 
   const result = await collection.find(
     {
@@ -744,7 +751,7 @@ export async function setRaceGamesSettlementByWalletAddressAndSequence(
 ) {
 
   const client = await clientPromise;
-  const collection = client.db('shinemywinter').collection('raceGames');
+  const collection = client.db('shinemywinter').collection('cebienRaceGames');
 
   // finde one and updaate
   // sequence is integer
