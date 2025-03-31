@@ -24,32 +24,39 @@ balanceOf,
 
 totalSupply,
 
+ownerOf,
+
 ///getTotalClaimedSupply,
 
 } from "thirdweb/extensions/erc721";
 
 
+import {
+  getOneByWalletAddress,
+} from '@lib/api/user';
 
+import {
+  insertMessage
+} from '@lib/api/telegram';
 
-
-
-
+/*
 export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
   const { walletAddress } = body;
 
-
+*/
 // test
-/*
+
 export async function GET(request: NextRequest) {
 
   const walletAddress = "0x542197103Ca1398db86026Be0a85bc8DcE83e440"
 
   console.log("walletAddress", walletAddress);
-*/
 
+
+  const center = "ppump_songpa_bot";
 
   //console.log("walletAddress", walletAddress);
 
@@ -151,8 +158,10 @@ export async function GET(request: NextRequest) {
         tokenId: randomNumber,
         nft: nft,
       });
+
     }
   }
+
 
 
 
@@ -166,6 +175,47 @@ export async function GET(request: NextRequest) {
     krwAmount: 0,
     rate: 0,
   });
+
+  if (result) {
+
+    horses.map(async (horse) => {
+      const tokenId = horse.tokenId;
+      
+      const owner = await ownerOf({
+        contract: contractErc721,
+        tokenId: BigInt(tokenId),
+      });
+      const ownerAddress = owner.toString();
+      console.log("ownerAddress=======>", ownerAddress);
+  
+      if (ownerAddress != walletAddress) {
+        
+        // send message to telegram bot
+  
+        const user = await getOneByWalletAddress(ownerAddress);
+        const telegramId = user?.telegramId;
+  
+        console.log("telegramId=======>", telegramId);
+  
+        const message = `당신의 말(#${tokenId})이 경주에 출전하였습니다.`;
+  
+        if (telegramId) {
+  
+          await insertMessage({
+            center,
+            category: "racegame",
+            telegramId,
+            message,
+          } );
+  
+        }
+  
+      }
+  
+  
+    });
+
+  }
 
 
  
