@@ -922,7 +922,8 @@ function AgentPage() {
 
         setMintingAgentNft(false);
 
-        setAgentImage("");
+        //setAgentImage("");
+
 
     }
 
