@@ -688,16 +688,17 @@ function AgentPage() {
             return;
         }
 
-        /*
+        
         if (agentName.length < 5 || agentName.length > 15) {
             //toast.error('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
-            setMessageMintingAgentNft('에이전트 이름은 5자 이상 15자 이하로 입력해주세요');
+            setMessageMintingAgentNft('NFT 이름은 5자 이상 15자 이하로 입력해주세요');
             return;
         }
 
+        /*
         if (agentDescription.length < 5 || agentDescription.length > 100) {
             //toast.error('에이전트 설명은 5자 이상 100자 이하로 입력해주세요');
-            setMessageMintingAgentNft('에이전트 설명은 5자 이상 100자 이하로 입력해주세요');
+            setMessageMintingAgentNft('NFT 설명은 5자 이상 100자 이하로 입력해주세요');
             return;
         }
         */
