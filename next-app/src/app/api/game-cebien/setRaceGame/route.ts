@@ -77,14 +77,14 @@ export async function POST(request: NextRequest) {
 
 
   // get total supply of the contract
-  
+  /*
   const contractTotalSupply = await totalSupply({
     contract: contractErc721,
   });
 
   const totalSupplyNumber = Number(contractTotalSupply);
   console.log("totalSupplyNumber=======>", totalSupplyNumber);
-
+  */
 
   const totalSupply = 20; // total supply of the contract
 
