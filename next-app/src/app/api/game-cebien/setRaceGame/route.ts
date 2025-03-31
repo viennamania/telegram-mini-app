@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
   */
 
 
-
+  /*
   const totalClaimedSupply = await getTotalClaimedSupply({
     contract: contractErc721,
   });
@@ -101,8 +101,11 @@ export async function POST(request: NextRequest) {
   console.log("totalClaimedSupplyNumber=======>", totalClaimedSupplyNumber);
 
 
-
   const totalSupply = totalClaimedSupplyNumber; // total supply of the contract
+  */
+
+
+  const totalSupply = 30; // total supply of the contract
 
   const horses = [];
   const randomNumbers = [] as number[];
