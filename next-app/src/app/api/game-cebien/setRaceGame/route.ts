@@ -39,22 +39,22 @@ import {
   insertMessage
 } from '@lib/api/telegram';
 
-/*
+
 export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
   const { walletAddress } = body;
 
-*/
-// test
 
+// test
+/*
 export async function GET(request: NextRequest) {
 
   const walletAddress = "0x542197103Ca1398db86026Be0a85bc8DcE83e440"
 
   console.log("walletAddress", walletAddress);
-
+*/
 
   const center = "ppump_songpa_bot";
 
@@ -178,6 +178,7 @@ export async function GET(request: NextRequest) {
 
   if (result) {
 
+    
     horses.map(async (horse) => {
       const tokenId = horse.tokenId;
       
@@ -214,6 +215,7 @@ export async function GET(request: NextRequest) {
   
   
     });
+    
 
   }
 
