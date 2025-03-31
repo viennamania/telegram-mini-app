@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
     omitMetadata: false, // // Flag to omit metadata
 
     //smw nft contract address
-    contractAddresses: ["0x812e1F6EA563a079958f8210B1DF76Be27862039"], // contractAddresses: [erc721ContractAddress],
+    contractAddresses: ["0xb3f4f5396075c4141148B02D43bF54C5Da6525dD"], // contractAddresses: [erc721ContractAddress],
 
   });
 
