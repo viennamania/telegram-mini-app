@@ -1598,7 +1598,7 @@ function AgentPage() {
 
                                                 <button
                                                     onClick={() => {
-                                                        router.push('/nft-racing/' + nft.contract.address + '/' + nft.tokenId);
+                                                        router.push('/my-nft-smw/' + nft.contract.address + '/' + nft.tokenId);
                                                     }}
                                                     className="p-2 bg-blue-500 text-zinc-100 rounded
                                                     hover:bg-blue-600 text-lg font-semibold"
