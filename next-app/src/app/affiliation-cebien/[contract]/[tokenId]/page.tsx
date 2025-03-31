@@ -635,7 +635,6 @@ export default function AgentPage({ params }: any) {
                       backdrop-blur-md
                       p-4 rounded-lg
                       border border-gray-300
-
                     '>
 
                         <div className='w-full flex flex-col items-start justify-between gap-2'>

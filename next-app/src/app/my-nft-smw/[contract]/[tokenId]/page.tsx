@@ -630,8 +630,11 @@ export default function AgentPage({ params }: any) {
 
 
 
-                    <div className='w-full flex flex-row items-start justify-between gap-2
-                      border-b border-gray-300 pb-2
+                    <div className='w-full flex flex-col xl:flex-row items-start justify-between gap-2
+                      bg-gray-800 bg-opacity-90
+                      backdrop-blur-md
+                      p-4 rounded-lg
+                      border border-gray-300
                     '>
 
                         <div className='w-full flex flex-col items-start justify-between gap-2'>
@@ -640,7 +643,7 @@ export default function AgentPage({ params }: any) {
                                 <span className='text-sm text-yellow-500'>
                                     NFT 이름
                                 </span>
-                                <span className='text-xl font-semibold text-gray-800'>
+                                <span className='text-xl font-semibold text-gray-200'>
                                     {agent.name}
                                 </span>
                             </div>
@@ -649,13 +652,13 @@ export default function AgentPage({ params }: any) {
                                 <span className='text-sm text-yellow-500'>
                                     NFT 설명
                                 </span>
-                                <span className='text-xs text-gray-800'>
+                                <span className='text-sm text-gray-200'>
                                     {agent.description}
                                 </span>
                             </div>
                         </div>
 
-                        <div className='flex flex-col items-start justify-start gap-2'>
+                        <div className='w-full flex flex-col items-start justify-start gap-2'>
                             {!animationUrl && agent.image && (
                                 <Image
                                     //src={agent?.image?.thumbnailUrl}
