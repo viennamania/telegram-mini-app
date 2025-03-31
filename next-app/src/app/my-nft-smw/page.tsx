@@ -899,6 +899,7 @@ function AgentPage() {
             ///toast.success('AI 에이전트 NFT 발행 완료');
 
 
+            setMessageMintingAgentNft('NFT 발행 완료');
 
 
         } catch (error) {

@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
 
 
   // place 8 horses
-  const contractAddress = "0x41FBA0bd9f4DC9a968a10aEBb792af6A09969F60";
+  //const contractAddress = "0x41FBA0bd9f4DC9a968a10aEBb792af6A09969F60";
   // tokenId 0 to 9999
   // select 8 horses from 0 to 9999
 
@@ -50,6 +50,10 @@ export async function POST(request: NextRequest) {
   // 2. place 8 horses with the random numbers
   // non duplicate random numbers
 
+  const contractAddress = "0xb3f4f5396075c4141148B02D43bF54C5Da6525dD";
+  const totalSupply = 10; // total supply of the contract
+  // tokenId 0 to 9
+  // select 8 horses from 0 to 9
 
 
   const client = createThirdwebClient({
@@ -75,7 +79,9 @@ export async function POST(request: NextRequest) {
   const horses = [];
   const randomNumbers = [] as number[];
   while (randomNumbers.length < 8) {
-    const randomNumber = Math.floor(Math.random() * 10000);
+    
+    const randomNumber = Math.floor(Math.random() * totalSupply);
+
     if (!randomNumbers.includes(randomNumber)) {
 
       randomNumbers.push(randomNumber);
