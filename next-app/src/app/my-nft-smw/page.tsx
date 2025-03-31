@@ -1127,7 +1127,7 @@ function AgentPage() {
 
                     {/* title */}
                     <div className="text-2xl font-semibold text-zinc-100">
-                        SMW NFT 관리
+                        CEBIEN HORSE NFT 관리
                     </div>
                 </div>
         
@@ -1483,7 +1483,7 @@ function AgentPage() {
                                         {/* dot */}
                                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                                         <span className="text-lg font-semibold">
-                                            SMW NFT 목록
+                                            NFT 목록
                                         </span>
                                     </div>
 
