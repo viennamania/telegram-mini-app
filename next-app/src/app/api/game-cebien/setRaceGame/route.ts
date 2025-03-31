@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
   // non duplicate random numbers
 
   const contractAddress = "0xb3f4f5396075c4141148B02D43bF54C5Da6525dD";
-  const totalSupply = 10; // total supply of the contract
+  //const totalSupply = 10; // total supply of the contract
   // tokenId 0 to 9
   // select 8 horses from 0 to 9
 
@@ -67,13 +67,26 @@ export async function POST(request: NextRequest) {
   }
 
 
-    const contractErc721 = getContract(
-      {
-        client: client,
-        chain: polygon,
-        address: contractAddress,
-      }
-    );
+  const contractErc721 = getContract(
+    {
+      client: client,
+      chain: polygon,
+      address: contractAddress,
+    }
+  );
+
+
+  // get total supply of the contract
+  
+  const contractTotalSupply = await totalSupply({
+    contract: contractErc721,
+  });
+
+  const totalSupplyNumber = Number(contractTotalSupply);
+  console.log("totalSupplyNumber=======>", totalSupplyNumber);
+
+
+  const totalSupply = 20; // total supply of the contract
 
 
   const horses = [];
