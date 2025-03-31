@@ -24,6 +24,8 @@ balanceOf,
 
 totalSupply,
 
+getTotalClaimedSupply,
+
 } from "thirdweb/extensions/erc721";
 
 
@@ -86,8 +88,21 @@ export async function POST(request: NextRequest) {
   console.log("totalSupplyNumber=======>", totalSupplyNumber);
   */
 
-  const totalSupply = 20; // total supply of the contract
 
+
+  const totalClaimedSupply = await getTotalClaimedSupply({
+    contract: contractErc721,
+  });
+
+  // totalClaimedSupply is bigint
+  // convert to number
+
+  const totalClaimedSupplyNumber = Number(totalClaimedSupply.toString());
+  console.log("totalClaimedSupplyNumber=======>", totalClaimedSupplyNumber);
+
+
+
+  const totalSupply = totalClaimedSupplyNumber; // total supply of the contract
 
   const horses = [];
   const randomNumbers = [] as number[];
