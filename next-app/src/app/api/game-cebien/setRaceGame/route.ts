@@ -24,7 +24,7 @@ balanceOf,
 
 totalSupply,
 
-getTotalClaimedSupply,
+///getTotalClaimedSupply,
 
 } from "thirdweb/extensions/erc721";
 
@@ -39,6 +39,17 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
 
   const { walletAddress } = body;
+
+
+// test
+/*
+export async function GET(request: NextRequest) {
+
+  const walletAddress = "0x542197103Ca1398db86026Be0a85bc8DcE83e440"
+
+  console.log("walletAddress", walletAddress);
+*/
+
 
   //console.log("walletAddress", walletAddress);
 
@@ -89,29 +100,40 @@ export async function POST(request: NextRequest) {
   */
 
 
-  /*
-  const totalClaimedSupply = await getTotalClaimedSupply({
-    contract: contractErc721,
-  });
-
-  // totalClaimedSupply is bigint
-  // convert to number
-
-  const totalClaimedSupplyNumber = Number(totalClaimedSupply.toString());
-  console.log("totalClaimedSupplyNumber=======>", totalClaimedSupplyNumber);
 
 
-  const totalSupply = totalClaimedSupplyNumber; // total supply of the contract
-  */
+    /*
+    const totalClaimedSupply = await getTotalClaimedSupply({
+      contract: contractErc721,
+    });
+    
+
+    // totalClaimedSupply is bigint
+    // convert to number
+
+    const totalClaimedSupplyNumber = Number(totalClaimedSupply.toString());
+    console.log("totalClaimedSupplyNumber=======>", totalClaimedSupplyNumber);
+    */
+
+    const resultTotalSupply = await totalSupply({
+      contract: contractErc721,
+    });
+
+    const totalSupplyNumber = Number(resultTotalSupply.toString());
+    console.log("totalSupplyNumber=======>", totalSupplyNumber);
 
 
-  const totalSupply = 30; // total supply of the contract
+  //const totalSupply = totalClaimedSupplyNumber; // total supply of the contract
+  
+
+
+  //const totalSupply = 30; // total supply of the contract
 
   const horses = [];
   const randomNumbers = [] as number[];
   while (randomNumbers.length < 8) {
     
-    const randomNumber = Math.floor(Math.random() * totalSupply);
+    const randomNumber = Math.floor(Math.random() * totalSupplyNumber);
 
     if (!randomNumbers.includes(randomNumber)) {
 
