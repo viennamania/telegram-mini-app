@@ -179,7 +179,7 @@ export async function GET(request: NextRequest) {
   if (result) {
 
     
-    horses.map(async (horse) => {
+    horses.map(async (horse: any) => {
       const tokenId = horse.tokenId;
       
       const owner = await ownerOf({
@@ -207,6 +207,7 @@ export async function GET(request: NextRequest) {
             category: "racegame",
             telegramId,
             message,
+            //nftInfo: horse.nft,
           } );
   
         }
