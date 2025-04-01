@@ -198,7 +198,7 @@ export async function GET(request: NextRequest) {
   
         console.log("telegramId=======>", telegramId);
   
-        const message = `당신의 말(#${tokenId})이 경주에 출전하였습니다.`;
+        const message = `당신의 말 ${horse.nft.metadata.name}이(가) 경주에 출전하였습니다.`;
   
         if (telegramId) {
   

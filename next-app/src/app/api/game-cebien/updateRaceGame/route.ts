@@ -369,7 +369,7 @@ export async function POST(request: NextRequest) {
 
             if (telegramId) {
 
-              const message = `당신의 말(#${tokenId})이 경주에서 ${ranking}등으로 도착했습니다.`;
+              const message = `당신의 말 ${horse.nft.metadata.name} 이(가) 경주에서 ${ranking}등으로 도착했습니다.`;
 
               await insertMessage({
                 center,
