@@ -284,6 +284,7 @@ function HomeContent() {
 
   const [applicationData, setApplicationData] = useState(null);
 
+  const [cebienNft, setCebienNft] = useState([] as any[]);
 
   const [granderbyNft, setGranderbyNft] = useState([] as any[]);
 
@@ -338,6 +339,36 @@ function HomeContent() {
 
       };
 
+
+      const fetchCebienNfts = async () => {
+
+        setLoadingAgentNft(true);
+
+        const response = await fetch("/api/cebien/getAgentNFTByWalletAddress", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                walletAddress: selectUser,
+            }),
+        });
+
+        if (!response.ok) {
+            console.error("Error fetching agentNft");
+            setLoadingAgentNft(false);
+            return;
+        }
+
+        const data = await response.json();
+
+        setCebienNft(data.result.ownedNfts);
+
+        setLoadingAgentNft(false);
+
+      }
+
+        
 
 
       const fetchGranderbyNfts = async () => {
@@ -442,6 +473,8 @@ function HomeContent() {
       if (selectUser) {
 
         fetchNfts();
+
+        fetchCebienNfts();
 
         fetchGranderbyNfts();
 
@@ -1700,6 +1733,97 @@ function HomeContent() {
 
 
 
+
+                  {loadingAgentNft ? (
+                    <div className="mt-5 flex flex-col items-center justify-center">
+                        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
+                    </div>
+                  ) : (
+
+
+                    <div className="mt-5 w-full flex flex-col gap-2 items-start justify-between">
+                        <div className="bg-green-500 text-sm text-zinc-100 p-2 rounded">
+                            CEBIEN NFT 목록
+                        </div>
+                        <div className="w-full grid grid-cols-8 gap-2 items-start justify-between">
+
+                            {cebienNft && cebienNft.length === 0 && (
+                                <div className="w-full flex flex-col items-center justify-center">
+                                    <span className="text-sm text-gray-400">
+                                        NFT가 없습니다.
+                                    </span>
+                                </div>
+                            )}
+
+                            {cebienNft && cebienNft.map((nft : any, index : number) => (
+                                <div
+                                    key={index}
+                                    className="flex flex-row gap-2 items-center justify-between"
+                                >
+                                    <div className="
+                                      border border-gray-300 p-4 rounded-lg
+                                      flex flex-col gap-1 items-center justify-start">
+
+                                        <div className="flex flex-col gap-2 items-start justify-between">
+                                          {/* tokenId */}
+                                          <span className="text-sm">
+                                            번호: #{nft.tokenId}
+                                          </span>
+                                          <span className="text-sm">
+                                            {nft.name && nft.name?.slice(0, 10) + "..."}
+                                          </span>
+                                          <span className="text-sm text-gray-400">
+                                            {nft.description && nft.description?.slice(0, 10) + "..."}
+                                          </span>
+                                        </div>
+
+                                        <div className="flex flex-row gap-2 items-center justify-start">
+
+
+                                          <Image
+                                            src={nft?.image?.thumbnailUrl || "/icon-nft.png"}
+                                            alt={nft?.name}
+                                            width={100}
+                                            height={100}
+                                            className="rounded w-10 h-10"
+                                          />
+                                        
+                                          <Button
+                                            onClick={() => {
+                                                (window as any).Telegram.WebApp.openLink(
+                                                  "https://opensea.io/assets/matic/" + nft.contract.address + "/" + nft.tokenId
+                                                );
+                                            }}
+                                            className="
+                                            inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white
+                                            "
+                                          >
+                                            <div className="flex flex-row gap-2 items-center justify-start">
+                                              <Image
+                                                src="/logo-opensea.png"
+                                                alt="OpenSea"
+                                                width={20}
+                                                height={20}
+                                                className="rounded"
+                                              />
+                                            </div>
+                                          </Button>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            ))}
+
+                        </div>
+                    </div>
+
+
+                  )}
+
+
                   {loadingAgentNft ? (
                     <div className="mt-5 flex flex-col items-center justify-center">
                         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-300"></div>
@@ -1785,9 +1909,6 @@ function HomeContent() {
 
                         </div>
                     </div>
-
-
-
 
 
                   )}
