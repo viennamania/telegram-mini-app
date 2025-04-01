@@ -179,7 +179,11 @@ export async function GET(request: NextRequest) {
   if (result) {
 
     
-    horses.map(async (horse: any) => {
+    //horses.map(async (horse: any) => {
+
+    horses.forEach(async (horse: any) => {
+
+
       const tokenId = horse.tokenId;
       
       const owner = await ownerOf({

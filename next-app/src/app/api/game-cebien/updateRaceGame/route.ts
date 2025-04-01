@@ -346,7 +346,10 @@ export async function POST(request: NextRequest) {
 
 
         let index = 0;
-        horses.map(async (horse: any) => {
+        //horses.map(async (horse: any) => {
+
+        horses.forEach(async (horse: any) => {
+
           const tokenId = horse.tokenId;
 
           const ranking = horseRanking[index];
