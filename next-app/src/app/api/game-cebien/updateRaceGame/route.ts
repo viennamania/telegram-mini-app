@@ -363,8 +363,8 @@ export async function POST(request: NextRequest) {
           if (ownerAddress != walletAddress) {
 
             // get user info
-            const userInfo = await getOneByWalletAddress(walletAddress);
-            const telegramId = userInfo?.telegramId;
+            const user = await getOneByWalletAddress(ownerAddress);
+            const telegramId = user?.telegramId;
             console.log("telegramId=======>", telegramId);
 
             if (telegramId) {
