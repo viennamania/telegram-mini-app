@@ -238,6 +238,7 @@ export async function POST(request: NextRequest) {
 }
   */
 
+  /*
   const response2 = await fetch('https://na.winglobalpay.com/api/v1/vactFcs', {
     method: 'POST',
     headers: {
@@ -264,7 +265,16 @@ export async function POST(request: NextRequest) {
   });
 
   const response2Json = await response2.json();
-  
+  */
+  const response2Json = {
+    result: {
+      resultCd: '0000',
+      advanceMsg: '정상처리',
+    },
+    vact: {
+      account: '111122223333',
+    },
+  };
 
   ///console.log("response2Json: ", response2Json);
 

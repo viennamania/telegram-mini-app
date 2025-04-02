@@ -107,6 +107,7 @@ API KEY : pk_096e-0d7e93-200-a34f0
     034:광주은행, 039:경남은행
   */
 
+  /*
   const response2 = await fetch('https://na.winglobalpay.com/api/v1/reqUserAccountInfo', {
     method: 'POST',
     headers: {
@@ -120,6 +121,7 @@ API KEY : pk_096e-0d7e93-200-a34f0
   });
 
   const response2Json = await response2.json();
+  */
 
 
   //console.log("response2Json: ", response2Json);
