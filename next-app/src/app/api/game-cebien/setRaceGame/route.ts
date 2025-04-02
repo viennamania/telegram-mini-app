@@ -202,7 +202,13 @@ export async function GET(request: NextRequest) {
   
         console.log("telegramId=======>", telegramId);
   
-        const message = `당신의 말 ${horse.nft.metadata.name} 이(가) 경주에 출전하였습니다.`;
+        // https://shinemywinter.vercel.app/my-nft-smw/0xb3f4f5396075c4141148B02D43bF54C5Da6525dD/1
+
+        const message = `당신의 말 ${horse.nft.metadata.name} 이(가) 경주에 출전하였습니다. \n\n` +
+        `경주에 출전한 말의 정보는 아래 링크를 클릭하세요. \n\n` +
+        `https://shinemywinter.vercel.app/my-nft-smw/${contractAddress}/${tokenId} \n\n`;
+
+        
   
         if (telegramId) {
   
