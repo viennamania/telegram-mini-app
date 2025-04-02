@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     // gold, silver, blue, red, green, black, white, yellow, orange, pink, purple, brown, gray, cyan, magenta
     const robotColors = ["gold", "silver", "blue", "red", "green", "black", "white", "yellow", "orange", "pink", "purple", "brown", "gray", "cyan", "magenta"];
 
-    const randomColor = Math.floor(Math.random() * robotColors.length);
+    const randomColor = robotColors[Math.floor(Math.random() * robotColors.length)];
 
     //const englishPrompt = "One cute and " + randomColor + " color metallic robot character with shiny skin in Japanese anime style with a sign AGENT. transparent background.";
 
@@ -49,8 +49,8 @@ export async function POST(request: NextRequest) {
         output_quality: 90,
 
         //image_size: "square",
-        image_size: "square",
-        //image_size: "square_hd",
+        //image_size: "square",
+        image_size: "square_hd",
 
         disable_safety_checker: true,
 
