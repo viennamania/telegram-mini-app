@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     /*
     Draw a cute and metallic robot horse character in the style of Kyoto Animation. The body is secured with bolts, and the screen prominently displays the text “CEBIEN” in large letters.
     */
-    const englishPrompt = "A cute and metallic robot racing horse character in the style of Kyoto Animation. The body is secured with bolts, and the screen prominently displays the text “CEBIEN” in large letters on the horse body. The horse is running. transparent background.";
+    const englishPrompt = "One cute and " + randomColor + " color metallic robot racing horse character in the style of Kyoto Animation. The body is secured with bolts, and the screen prominently displays the text “CEBIEN” in large letters on the horse body. The horse is running. transparent background.";
 
 
     const negative_prompt = "easynegative,ng_deepnegative_v1_75t,((monochrome)),((grayscale)),bad-picture-chill-75v, (worst quality, low quality:1.4), monochrome, grayscale, sketches, paintings, lowres, normalres, blurry, acnes on face, {{sperm}}, {{bra}}";
@@ -89,7 +89,11 @@ export async function POST(request: NextRequest) {
     //model = "fal-ai/flux-realism";
 
     hosting = "replicate";
-    model = "black-forest-labs/flux-dev";
+    
+    //model = "black-forest-labs/flux-dev";
+
+    model = "bytedance/sdxl-lightning-4step:5f24084160c9089501c1b3545d9be3c27883ae2239b6f412990e82d4a6210f8f";
+
 
 
     try {
