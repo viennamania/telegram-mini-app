@@ -29,14 +29,23 @@ export async function POST(request: NextRequest) {
     // gold, silver, blue, red, green, black, white, yellow, orange, pink, purple, brown, gray, cyan, magenta
     const robotColors = ["gold", "silver", "blue", "red", "green", "black", "white", "yellow", "orange", "pink", "purple", "brown", "gray", "cyan", "magenta"];
 
-    const randomColor = Math.floor(Math.random() * robotColors.length);
+    //const randomColor = Math.floor(Math.random() * robotColors.length);
+
+    // get random color from robotColors
+    const randomColor = robotColors[Math.floor(Math.random() * robotColors.length)];
 
     //const englishPrompt = "One cute and " + randomColor + " color metallic robot character with shiny skin in Japanese anime style with a sign AGENT. transparent background.";
 
     /*
     Draw a cute and metallic robot horse character in the style of Kyoto Animation. The body is secured with bolts, and the screen prominently displays the text “CEBIEN” in large letters.
     */
-    const englishPrompt = "One cute and " + randomColor + " color metallic robot racing horse character in the style of Kyoto Animation. The body is secured with bolts, and the screen prominently displays the text “CEBIEN” in large letters on the horse body. The horse is running. transparent background.";
+
+    const robotStyles = ["cute", "sexy", "beautiful", "handsome", "cool", "funny", "cute and sexy", "cute and beautiful", "cute and handsome", "cute and cool", "cute and funny"];
+    const randomStyle = robotStyles[Math.floor(Math.random() * robotStyles.length)];
+
+
+
+    const englishPrompt = "One " + randomStyle + " style and " + randomColor + " color metallic robot racing horse character in the style of Kyoto Animation. The body is secured with bolts, and the screen prominently displays the text “CEBIEN” in large letters on the horse body. The horse is running. transparent background.";
 
 
     const negative_prompt = "easynegative,ng_deepnegative_v1_75t,((monochrome)),((grayscale)),bad-picture-chill-75v, (worst quality, low quality:1.4), monochrome, grayscale, sketches, paintings, lowres, normalres, blurry, acnes on face, {{sperm}}, {{bra}}";
