@@ -1463,7 +1463,7 @@ async function sendMessages() {
         //+ '\n\n' + '👇 Press the button below to go to My Wallet.';
 
 
-        ////const photo = nftInfo?.image?.pngUrl ? nftInfo.image.pngUrl
+        ////const photo = nftInfo?.image?.originalUrl ? nftInfo.image.originalUrl
         const photo = nftInfo?.image?.originalUrl ? nftInfo.image.originalUrl
         : `${process.env.FRONTEND_APP_ORIGIN}/banner-nft.png`;
 
@@ -1559,7 +1559,7 @@ async function sendMessages() {
         const tokenId = message.tokenId;
         const agentBotNft = message?.agentBotNft;
 
-        const agentBotImageUrl = agentBotNft ? agentBotNft?.image?.pngUrl : '';
+        const agentBotImageUrl = agentBotNft ? agentBotNft?.image?.originalUrl : '';
         const agentBotName = agentBotNft ? agentBotNft?.name : '';
         const agnetbotDescription = agentBotNft ? agentBotNft?.description : '';
 

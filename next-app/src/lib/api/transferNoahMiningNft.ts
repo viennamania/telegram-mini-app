@@ -273,7 +273,7 @@ export async function getTransferByWalletAddress(data: any) {
       "image": {
         "cachedUrl": "https://nft-cdn.alchemy.com/matic-mainnet/5d0477ce1ab50a09375075472bb2108b",
         "thumbnailUrl": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/matic-mainnet/5d0477ce1ab50a09375075472bb2108b",
-        "pngUrl": "https://res.cloudinary.com/alchemyapi/image/upload/convert-png/matic-mainnet/5d0477ce1ab50a09375075472bb2108b",
+        "originalUrl": "https://res.cloudinary.com/alchemyapi/image/upload/convert-png/matic-mainnet/5d0477ce1ab50a09375075472bb2108b",
         "contentType": "image/png",
         "size": 2767046,
         "originalUrl": "https://ipfs.io/ipfs/QmcCLL23zDwsEMwCTnLYmzPCEAhjn9Bp9Ckh7Wkpn4sHZi/1.png"

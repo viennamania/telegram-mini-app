@@ -2104,7 +2104,7 @@ function HomeContent() {
                                                     <div className='grid grid-cols-2 gap-2'>
                                                         {/* masterbot image */}
                                                         <Image
-                                                            src={myAgentNFT?.image?.pngUrl || "/logo-masterbot100.png"}
+                                                            src={myAgentNFT?.image?.originalUrl || "/logo-masterbot100.png"}
                                                             alt="masterbot"
                                                             width={200}
                                                             height={200}

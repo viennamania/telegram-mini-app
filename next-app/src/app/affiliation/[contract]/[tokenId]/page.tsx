@@ -659,7 +659,7 @@ export default function AgentPage({ params }: any) {
                             {!animationUrl && agent.image && (
                                 <Image
                                     //src={agent?.image?.thumbnailUrl}
-                                    src={agent?.image?.pngUrl || '/logo-masterbot.png'}
+                                    src={agent?.image?.originalUrl || '/logo-masterbot.png'}
                                     width={200}
                                     height={200}
                                     alt={agent.name}

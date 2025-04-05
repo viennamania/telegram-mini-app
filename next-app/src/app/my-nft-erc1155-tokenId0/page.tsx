@@ -1652,7 +1652,7 @@ function AgentPage() {
                                                 </div>
                                             ) : (
                                                 <Image
-                                                    src={nft?.image?.pngUrl}
+                                                    src={nft?.image?.originalUrl}
                                                     alt="NFT"
                                                     width={500}
                                                     height={500}
