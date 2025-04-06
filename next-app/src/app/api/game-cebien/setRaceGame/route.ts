@@ -44,7 +44,10 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
 
-  const { walletAddress } = body;
+  const {
+    walletAddress,
+    center,
+  } = body;
 
 
 // test
@@ -56,7 +59,7 @@ export async function GET(request: NextRequest) {
   console.log("walletAddress", walletAddress);
 */
 
-  const center = "ppump_songpa_bot";
+  //const center = "ppump_songpa_bot";
 
   //console.log("walletAddress", walletAddress);
 

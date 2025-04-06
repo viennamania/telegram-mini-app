@@ -49,6 +49,7 @@ export async function POST(request: NextRequest) {
 
   const {
     walletAddress,
+    center,
     sequence,
     selectedNumber,
     horseRanking,
@@ -311,7 +312,8 @@ export async function POST(request: NextRequest) {
 
     if (result2) {
       // send telegram message
-      const center = "ppump_songpa_bot";
+      //const center = "ppump_songpa_bot";
+
       //const message = `updateRaceGameResultByWalletAddressAndSequence: ${JSON.stringify(result2)}`;
 
       const horses = result2.horses;
