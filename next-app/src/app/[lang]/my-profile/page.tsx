@@ -374,6 +374,12 @@ function ProfilePage() {
                 }),
             });
 
+            if (!response.ok) {
+                alert('Failed to set user data');
+                setLoadingSetUserData(false);
+                return;
+            }
+
             const data = await response.json();
 
             //console.log("data", data);
