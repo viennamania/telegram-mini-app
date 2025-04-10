@@ -1590,7 +1590,7 @@ function AgentPage() {
                                                     onClick={() => {
                                                         window.open('https://opensea.io/assets/matic/' + nft.contract.address + '/' + nft.tokenId);
                                                     }}
-                                                    className="p-2 bg-blue-500 text-zinc-100 rounded
+                                                    className="p-2 bg-blue-500 text-zinc-100 rounded-full
                                                     hover:bg-blue-600
                                                     " 
                                                 >
@@ -1656,14 +1656,10 @@ function AgentPage() {
                                                 </div>
 
                                                 <div className='flex flex-col gap-2 items-start justify-between'>
-                                                    {/* contract address */}
-                                                    <div className='text-sm font-semibold text-yellow-500'>
-                                                        계약주소: {nft?.contract?.address && nft.contract.address.substring(0, 6) + '...' + nft.contract.address.substring(nft.contract.address.length - 4)}
-                                                    </div>
                                                     <div className='text-xl font-semibold text-yellow-500'>
                                                         계약번호: #{nft?.tokenId?.length > 10 ? nft.tokenId.slice(0, 10) + '...' : nft.tokenId}
                                                     </div>
-                                                    <div className='text-lg font-semibold text-green-500'>
+                                                    <div className='text-lg font-semibold text-yellow-500'>
                                                         이름: {nft?.name}
                                                     </div>
                                                     {/*
