@@ -600,15 +600,8 @@ export default function AgentPage({ params }: any) {
                     </button>
 
                   <div className='w-full flex flex-col xl:flex-row items-start justify-start gap-2'>
-                      <div className='flex flex-col items-start justify-between gap-2'>
-                        <span className='text-sm text-yellow-500'>
-                            NFT 계약주소
-                        </span>
-                        <span className='text-sm text-gray-800 font-semibold'>
-                            {agentContractAddress.slice(0, 10) + '...' + agentContractAddress.slice(-10)}
-                        </span>
-                      </div>
-                      <div className='flex flex-col items-center justify-between gap-2'>
+
+                      <div className='flex flex-row items-center justify-between gap-2'>
                         <span className='text-sm text-yellow-500'>
                             NFT 계약번호
                         </span>
@@ -639,7 +632,7 @@ export default function AgentPage({ params }: any) {
 
                         <div className='w-full flex flex-col items-start justify-between gap-2'>
 
-                            <div className='flex flex-col items-start justify-between gap-2'>
+                            <div className='flex flex-row items-start justify-between gap-2'>
                                 <span className='text-sm text-yellow-500'>
                                     NFT 이름
                                 </span>
@@ -647,15 +640,7 @@ export default function AgentPage({ params }: any) {
                                     {agent.name}
                                 </span>
                             </div>
-                    
-                            <div className='flex flex-col items-start justify-between gap-2'>
-                                <span className='text-sm text-yellow-500'>
-                                    NFT 설명
-                                </span>
-                                <span className='text-sm text-gray-200'>
-                                    {agent.description}
-                                </span>
-                            </div>
+
                         </div>
 
                         <div className='w-full flex flex-col items-start justify-start gap-2'>
