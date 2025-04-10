@@ -99,6 +99,7 @@ export async function POST(request: NextRequest) {
   });
 
 
+  /*
   const user = await getOneByTelegramId(telegramId, center);
 
   if (user) {
@@ -118,14 +119,6 @@ export async function POST(request: NextRequest) {
     );
 
     ///console.log("owner: ", owner);
-
-
-    /*
-    {
-      owners: [ '0xAcDb8a6c00718597106F8cDa389Aac68973558B3' ],
-      pageKey: null
-    }
-    */
 
     const ownerWalletAddress = owner.owners[0];
 
@@ -196,7 +189,10 @@ export async function POST(request: NextRequest) {
     }
 
 
+
+
   }
+  */
   
 
 
