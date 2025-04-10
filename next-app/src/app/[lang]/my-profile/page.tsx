@@ -375,7 +375,14 @@ function ProfilePage() {
             });
 
             if (!response.ok) {
-                alert('Failed to set user data');
+                alert('Failed to set user data'
+                    + 'walletAddress: ' + address
+                    + 'nickname: ' + editedNickname
+                    + 'telegramId: ' + telegramId
+                    + 'center: ' + center
+                );
+                console.error('Failed to set user data', response);
+                
                 setLoadingSetUserData(false);
                 return;
             }
