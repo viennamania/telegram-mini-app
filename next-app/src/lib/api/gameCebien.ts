@@ -67,7 +67,7 @@ export async function insertOne(data: any) {
 
       // winPrice is 1 to 3
 
-      const winPrize =  Number(Math.random() * 3) + 1;
+      const winPrize =  (Number(Math.random() * 3) + 1).toFixed(0);
 
       ///const winPrize = Math.floor(Math.random() * 10) + 1
 
@@ -135,7 +135,7 @@ export async function insertOne(data: any) {
   //const winPrize = Number(Math.random() * (0.1 - 0.00001) + 0.00001).toFixed(6);
   //const winPrize = Math.floor(Math.random() * 10) + 1;
   // winPrice is 1 to 3
-  const winPrize =  Number(Math.random() * 3) + 1;
+  const winPrize =  (Number(Math.random() * 3) + 1).toFixed(0);
 
 
   const result = await collection.insertOne(
@@ -472,7 +472,7 @@ export async function insertOneRaceGame(data: any) {
       //const winPrize = Number(Math.random() * (2.0 - 0.00001) + 0.00001).toFixed(6);
 
       // winPrice is 1 to 5
-      const winPrize = Math.floor(Math.random() * 5) + 1
+      const winPrize = (Math.floor(Math.random() * 5) + 1).toFixed(0);
 
 
       const result = await collection.insertOne(
@@ -539,7 +539,7 @@ export async function insertOneRaceGame(data: any) {
   //const winPrize = Number(Math.random() * (1.0 - 0.00001) + 0.00001).toFixed(6);
 
   // winPrice is 1 to 5
-  const winPrize = Math.floor(Math.random() * 5) + 1;
+  const winPrize = (Math.floor(Math.random() * 5) + 1).toFixed(0);
 
 
   const result = await collection.insertOne(
