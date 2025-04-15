@@ -65,7 +65,10 @@ import {
 const chain = polygon;
 
 // USDT Token (USDT)
-const tokenContractAddressUSDT = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
+//const tokenContractAddressUSDT = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
+
+const tokenContractAddressCEBIEN = "0x04a4B27d8221A57b4051AbAc170d4ac5Abdc6aBd"; // CEBIEN on Polygon
+
 
 
 export const maxDuration = 300; // This function can run for a maximum of 300 seconds
@@ -99,8 +102,10 @@ export async function POST(request: NextRequest) {
   });
 
 
-  /*
+  
   const user = await getOneByTelegramId(telegramId, center);
+
+  
 
   if (user) {
     const referralCode = user.referralCode;
@@ -135,11 +140,13 @@ export async function POST(request: NextRequest) {
         {
           client: client,
           chain: chain,
-          address: tokenContractAddressUSDT,
+          address: tokenContractAddressCEBIEN,
         }
       );
     
-      const claimWalletPrivateKey = process.env.CLAIM_WALLET_PRIVATE_KEY || "";
+      //const claimWalletPrivateKey = process.env.CLAIM_WALLET_PRIVATE_KEY || "";
+      // GAME_CEBIEN_WALLET_PRIVATE_KEY
+      const claimWalletPrivateKey = process.env.GAME_CEBIEN_WALLET_PRIVATE_KEY || "";
     
       const personalAccount = privateKeyToAccount({
         client,
@@ -192,7 +199,7 @@ export async function POST(request: NextRequest) {
 
 
   }
-  */
+  
   
 
 
