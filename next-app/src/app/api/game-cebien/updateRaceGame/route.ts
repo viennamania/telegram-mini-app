@@ -322,8 +322,8 @@ export async function POST(request: NextRequest) {
       //const winHorse = horses[resultNumber - 1];
       //const tokenId = winHorse.tokenId;
 
-
-      const contractAddress = "0xb3f4f5396075c4141148B02D43bF54C5Da6525dD";
+      // smw contract address
+      const contractAddressSMW = "0xb3f4f5396075c4141148B02D43bF54C5Da6525dD";
       //const totalSupply = 10; // total supply of the contract
       // tokenId 0 to 9
       // select 8 horses from 0 to 9
@@ -338,11 +338,13 @@ export async function POST(request: NextRequest) {
     
       if (client) {
 
+
+
         const contractErc721 = getContract(
           {
             client: client,
             chain: polygon,
-            address: contractAddress,
+            address: contractAddressSMW,
           }
         );
 
@@ -365,7 +367,7 @@ export async function POST(request: NextRequest) {
           const ownerAddress = owner.toString();
           console.log("ownerAddress=======>", ownerAddress);
       
-          if (ownerAddress != walletAddress) {
+          if (ownerAddress !== walletAddress) {
 
             // get user info
             const user = await getOneByWalletAddress(ownerAddress);

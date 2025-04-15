@@ -43,6 +43,15 @@ import {
   
 } from "thirdweb/extensions/erc20";
 
+
+// owner of erc721
+import {
+    getNFT,
+    ///getTotalClaimedSupply,
+    ownerOf,
+} from "thirdweb/extensions/erc721";
+
+
 import {
   getAllRaceGamesSettlement,
   setRaceGamesSettlementByWalletAddressAndSequence,
@@ -80,7 +89,12 @@ const chain = polygon;
 // USDT Token (USDT)
 //const tokenContractAddressCEBIEN = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
 
+// CEBIEN Token (CEBIEN)
 const tokenContractAddressCEBIEN = '0x04a4B27d8221A57b4051AbAc170d4ac5Abdc6aBd';
+
+
+// smw contract address
+const contractAddressSMW = "0xb3f4f5396075c4141148B02D43bF54C5Da6525dD";
 
 
 
@@ -242,6 +256,49 @@ export async function GET(request: NextRequest) {
         });
     
         transactions.push(transaction);
+
+
+
+        // find owner wallet address of horse of ranking 1, 
+        // then send 10% of winPrice CEBEIN to the owner wallet address
+
+        // find ranking 1 horse
+        const reaultNumber = game.resultNumber;
+        const ranking1Horse = game.horses[reaultNumber - 1];
+        const tokenId = ranking1Horse.tokenId;
+        console.log("tokenId: ", tokenId);
+
+        const contractErc721 = getContract(
+          {
+            client: client,
+            chain: polygon,
+            address: contractAddressSMW,
+          }
+        );
+
+        const owner = await ownerOf({
+          contract: contractErc721,
+          tokenId: BigInt(tokenId),
+        });
+
+        const ownerAddress = owner.toString();
+        console.log("ownerAddress=======>", ownerAddress);
+
+        const ownerSendAmount = Number(parseFloat(sendAmount) * 0.1).toFixed(2);
+
+        const transaction2 = transfer({
+          contract: contractCEBIEN,
+          to: ownerAddress,
+          amount: ownerSendAmount,
+        });
+        transactions.push(transaction2);
+
+
+
+
+
+
+
 
 
         // update game settlement
