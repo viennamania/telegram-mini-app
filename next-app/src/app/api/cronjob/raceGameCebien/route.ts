@@ -451,7 +451,12 @@ export async function GET(request: NextRequest) {
 
 
     
-    
+
+      if (transactions.length === 0) {
+        return NextResponse.json({
+          result: "no transactions found",
+        });
+      }
 
     
       const batchOptions: SendBatchTransactionOptions = {
