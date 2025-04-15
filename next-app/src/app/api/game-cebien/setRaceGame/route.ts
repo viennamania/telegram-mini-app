@@ -73,6 +73,7 @@ export async function GET(request: NextRequest) {
   // 2. place 8 horses with the random numbers
   // non duplicate random numbers
 
+  // smw nft contract
   const contractAddress = "0xb3f4f5396075c4141148B02D43bF54C5Da6525dD";
   //const totalSupply = 10; // total supply of the contract
   // tokenId 0 to 9
@@ -145,24 +146,46 @@ export async function GET(request: NextRequest) {
     
     const randomNumber = Math.floor(Math.random() * totalSupplyNumber);
 
+
+
     if (!randomNumbers.includes(randomNumber)) {
 
-      randomNumbers.push(randomNumber);
 
-
-      // getnft contractAddress and tokenId
-
-      const nft = await getNFT({
+      // check if the random number (tokenId) is owned by the user,
+      // then continue to next iteration
+      // ownerOf
+      const owner = await ownerOf({
         contract: contractErc721,
         tokenId: BigInt(randomNumber),
       });
 
-      horses.push({
-        tokenId: randomNumber,
-        nft: nft,
-      });
+      const ownerAddress = owner.toString();
+      console.log("ownerAddress=======>", ownerAddress);
+      if (ownerAddress !== walletAddress) {
+
+
+        randomNumbers.push(randomNumber);
+
+
+        // getnft contractAddress and tokenId
+
+        const nft = await getNFT({
+          contract: contractErc721,
+          tokenId: BigInt(randomNumber),
+        });
+
+        horses.push({
+          tokenId: randomNumber,
+          nft: nft,
+        });
+
+
+      }
+
+
 
     }
+
   }
 
 
