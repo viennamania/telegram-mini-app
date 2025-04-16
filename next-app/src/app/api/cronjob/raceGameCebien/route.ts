@@ -261,6 +261,46 @@ export async function GET(request: NextRequest) {
           transactions.push(transaction);
 
         }
+
+
+
+        // send 0.01 CEBEIN to all owners of horses
+        // find all horses of game
+        for (let j = 0; j < game.horses.length; j++) {
+          const horse = game.horses[j];
+
+          //console.log("horse: ", horse);
+
+          const tokenId = horse.tokenId;
+
+          console.log("tokenId: ", tokenId);
+
+          const contractErc721 = getContract(
+            {
+              client: client,
+              chain: polygon,
+              address: contractAddressSMW,
+            }
+          );
+
+          const owner = await ownerOf({
+            contract: contractErc721,
+            tokenId: BigInt(tokenId),
+          });
+
+          const ownerAddress = owner.toString();
+          console.log("ownerAddress=======>", ownerAddress);
+
+          const sendAmount = Number(0.01).toFixed(2);
+
+          const transaction1 = transfer({
+            contract: contractCEBIEN,
+            to: ownerAddress,
+            amount: sendAmount,
+          });
+          transactions.push(transaction1);
+        }
+
         
 
 
