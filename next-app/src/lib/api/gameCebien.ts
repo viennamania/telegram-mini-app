@@ -486,6 +486,7 @@ export async function insertOneRaceGame(data: any) {
           krwAmount: data.krwAmount,
           rate: data.rate,
           createdAt: new Date().toISOString(),
+          settlementStatus: false,
         }
       );
 
@@ -553,6 +554,7 @@ export async function insertOneRaceGame(data: any) {
       krwAmount: data.krwAmount,
       rate: data.rate,
       createdAt: new Date().toISOString(),
+      settlementStatus: false,
     }
   );
 
@@ -734,10 +736,13 @@ export async function getAllRaceGamesSettlement() {
   const client = await clientPromise;
   const collection = client.db('shinemywinter').collection('cebienRaceGames');
 
+  // status is closed and settlementStatus is false
   const result = await collection.find(
     {
+      status: "closed",
       settlementStatus: false,
     }
+  ).sort({ createdAt: -1 }
   ).toArray();
 
   return result;

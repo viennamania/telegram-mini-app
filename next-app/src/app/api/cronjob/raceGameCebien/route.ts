@@ -238,24 +238,30 @@ export async function GET(request: NextRequest) {
         const game = games[i];
 
 
-        const toWalletAddress = game.walletAddress;
+        // if win is true, then send amount to wallet address
+        if (game.win) {
+        
+          const toWalletAddress = game.walletAddress;
 
-        ///const amount = game.krwAmount;
+          ///const amount = game.krwAmount;
 
-              // send amount is 0.00001 to 0.001
-        //const sendAmount = Number(Math.random() * (0.001 - 0.00001) + 0.00001).toFixed(6);
+                // send amount is 0.00001 to 0.001
+          //const sendAmount = Number(Math.random() * (0.001 - 0.00001) + 0.00001).toFixed(6);
 
-        //const sendAmount = game.settlement;
+          //const sendAmount = game.settlement;
 
-        const sendAmount = game.winPrize;
+          const sendAmount = game.winPrize;
 
-        const transaction = transfer({
-          contract: contractCEBIEN,
-          to: toWalletAddress,
-          amount: sendAmount,
-        });
-    
-        transactions.push(transaction);
+          const transaction = transfer({
+            contract: contractCEBIEN,
+            to: toWalletAddress,
+            amount: sendAmount,
+          });
+      
+          transactions.push(transaction);
+
+        }
+        
 
 
 
@@ -284,7 +290,8 @@ export async function GET(request: NextRequest) {
         const ownerAddress = owner.toString();
         console.log("ownerAddress=======>", ownerAddress);
 
-        const ownerSendAmount = Number(parseFloat(sendAmount) * 0.1).toFixed(2);
+
+        const ownerSendAmount = Number(parseFloat(game.winPrize) * 0.1).toFixed(2);
 
         const transaction2 = transfer({
           contract: contractCEBIEN,
@@ -303,11 +310,12 @@ export async function GET(request: NextRequest) {
 
         // update game settlement
         const sequence = game.sequence;
+        const gameWalletAddress = game.walletAddress;
 
         ///const settlement = sendAmount.toString();
 
         const result = await setRaceGamesSettlementByWalletAddressAndSequence({
-          walletAddress: toWalletAddress,
+          walletAddress: gameWalletAddress,
           sequence: sequence,
         });
 
@@ -320,7 +328,7 @@ export async function GET(request: NextRequest) {
         let ownerWalletAddress = "";
         let ownerAmount = "";
    
-        const user = await getOneByWalletAddress(toWalletAddress);
+        const user = await getOneByWalletAddress(gameWalletAddress);
 
         //console.log("user: ", user);
 
@@ -358,7 +366,7 @@ export async function GET(request: NextRequest) {
             console.log("ownerWalletAddress: ", ownerWalletAddress );
 
 
-            ownerAmount = Number(parseFloat(sendAmount) * 0.1).toFixed(6);
+            ownerAmount = Number(parseFloat(game.winPrize) * 0.1).toFixed(6);
 
             console.log("ownerAmount: ", ownerAmount );
 
@@ -422,7 +430,7 @@ export async function GET(request: NextRequest) {
             console.log("ownerOwnerWalletAddress: ", ownerOwnerWalletAddress );
 
 
-            const ownerOwnerAmount = Number(parseFloat(sendAmount) * 0.05).toFixed(6);
+            const ownerOwnerAmount = Number(parseFloat(game.winPrize) * 0.05).toFixed(6);
 
             console.log("ownerOwnerAmount: ", ownerOwnerAmount );
 
