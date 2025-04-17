@@ -506,7 +506,7 @@ function HomeContent() {
                   "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                  limit: 100,
+                  limit: 1000,
                   page: 0,
                   center: selectCenter,
                   //searchNickname: searchNickname,
