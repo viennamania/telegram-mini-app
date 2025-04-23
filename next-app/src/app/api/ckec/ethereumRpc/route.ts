@@ -28,28 +28,33 @@ export async function POST(request: NextRequest) {
 
   const url = "http://52.78.186.199:8080";
 
-  const result = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: body,
-  })
-    .then((res) => res.json())
-    .catch((err) => {
-      console.log("err", err);
-      
-      return {
-        error: err,
-      };
+  try {
+
+    const result = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: body,
+    })
+
+    const json = await result.json();
+    console.log("json", json);
+    if (!result.ok) {
+      throw new Error(json.error.message);
+    }
+    console.log("result", result);
+    return NextResponse.json({
+      result: json,
     });
 
-  console.log("result", result);
+  } catch (err) {
+    console.log("err", err);
+    return NextResponse.json({
+      error: err,
+    });
+  }
 
-  
-  return NextResponse.json({
-    result,
-  });
 
   
 }
