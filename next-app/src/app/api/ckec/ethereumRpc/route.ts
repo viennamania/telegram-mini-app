@@ -8,7 +8,23 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest, response: NextResponse) {
+
+
+  /*
+    res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    // Handle preflight request
+    res.status(200).end();
+    return;
+  }
+  */
+
+
+
 
 
 
@@ -48,15 +64,31 @@ export async function POST(request: NextRequest) {
 
 
     
-    return NextResponse.json({
-      result: json,
-    });
+    // Add CORS headers to the response
+    return NextResponse.json(
+      { result: json },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      }
+    );
+
 
   } catch (err) {
     console.log("err", err);
-    return NextResponse.json({
-      error: err,
-    });
+    return NextResponse.json(
+      { error: err },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      }
+    );
   }
 
 
