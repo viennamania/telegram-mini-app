@@ -53,15 +53,17 @@ export async function GET(request: NextRequest) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: body,
+      body: JSON.stringify(body),
     })
 
     const json = await result.json();
     console.log("json", json);
+
+    
     if (!result.ok) {
       throw new Error(json.error.message);
     }
-    console.log("result", result);
+
     return NextResponse.json({
       result: json,
     });
