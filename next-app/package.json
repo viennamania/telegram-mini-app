@@ -30,7 +30,8 @@
     "replicate": "^1.0.1",
     "sharp": "^0.33.5",
     "thirdweb": "^5.52.0",
-    "twilio": "^5.3.6"
+    "twilio": "^5.3.6",
+    "web3": "^4.16.0"
   },
   "devDependencies": {
     "@types/node": "^20",

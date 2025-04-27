@@ -490,6 +490,29 @@ export async function insertOneRaceGame(data: any) {
         }
       );
 
+      if (!result) {
+        return null;
+      }
+
+
+
+      const collectionHorses = client.db('shinemywinter').collection('cebienRaceHorses');
+      // upsert horse, status
+      for (const horse of data.horses) {
+        await collectionHorses.updateOne(
+          { tokenId: horse.tokenId },
+          {
+            $set: {
+              nft: horse.nft,
+              startDate: new Date().toISOString(),
+            }
+          },
+          { upsert: true }
+        );
+      }
+
+
+
       const insertedId = result.insertedId;
 
       const insertedData = await collection.findOne({ _id: insertedId });
