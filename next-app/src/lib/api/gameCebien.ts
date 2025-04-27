@@ -504,8 +504,12 @@ export async function insertOneRaceGame(data: any) {
           {
             $set: {
               nft: horse.nft,
-              startDate: new Date().toISOString(),
-            }
+              startDate: new Date().toISOString(), 
+            },
+            // update count
+            $inc: {
+              placeCount: 1
+            },
           },
           { upsert: true }
         );
