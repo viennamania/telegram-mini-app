@@ -503,6 +503,7 @@ export async function insertOneRaceGame(data: any) {
           { tokenId: horse.tokenId },
           {
             $set: {
+              owner: data.walletAddress,
               nft: horse.nft,
               startDate: new Date().toISOString(), 
             },
