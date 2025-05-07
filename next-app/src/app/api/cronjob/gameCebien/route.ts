@@ -224,7 +224,15 @@ export async function GET(request: NextRequest) {
 
       //games.forEach(async (game : any) => {
       // sync
+
+      let j = 0;
+
       for (let i = 0; i < games.length; i++) {
+
+        if (j > 50) {
+          break;
+        }
+        j++;
 
         const game = games[i];
 
@@ -286,6 +294,8 @@ export async function GET(request: NextRequest) {
 
             const referralCode = response.referralCode;
 
+            
+
             // get contract address and tokenId from referralCode
             const referralCodeArray = referralCode.split("_");
             const contractAddress = referralCodeArray[0];
@@ -295,37 +305,47 @@ export async function GET(request: NextRequest) {
             console.log("contractAddress: ", contractAddress);
             console.log("tokenId: ", tokenId);
 
-            // Get owner of NFT
-            const owner = await alchemy.nft.getOwnersForNft(
-              contractAddress,
-              tokenId
-            );
+            if (contractAddress && tokenId) {
 
-            console.log("owner: ", owner);
+              // Get owner of NFT
+              const owner = await alchemy.nft.getOwnersForNft(
+                contractAddress,
+                tokenId
+              );
 
-
-
-            ownerWalletAddress = owner?.owners?.[0];
-
-            console.log("ownerWalletAddress: ", ownerWalletAddress );
+              console.log("owner: ", owner);
 
 
-            ownerAmount = Number(parseFloat(sendAmount) * 0.1).toFixed(2);
 
-            console.log("ownerAmount: ", ownerAmount );
+              ownerWalletAddress = owner?.owners?.[0];
+
+              console.log("ownerWalletAddress: ", ownerWalletAddress );
 
 
-            if (ownerWalletAddress) {
+              ownerAmount = Number(parseFloat(sendAmount) * 0.1).toFixed(2);
 
-              const ownerTransaction = transfer({
-                contract: contractCEBIEN,
-                to: ownerWalletAddress,
-                amount: ownerAmount,
-              });
+              console.log("ownerAmount: ", ownerAmount );
 
-              transactions.push(ownerTransaction);
 
+              if (ownerWalletAddress) {
+
+                const ownerTransaction = transfer({
+                  contract: contractCEBIEN,
+                  to: ownerWalletAddress,
+                  amount: ownerAmount,
+                });
+
+                transactions.push(ownerTransaction);
+
+              }
+
+            } else {
+              console.log("referralCode: ", referralCode);
+              console.log("contractAddress or tokenId is empty");
             }
+
+
+          
 
             
           }
@@ -361,34 +381,42 @@ export async function GET(request: NextRequest) {
             console.log("contractAddress: ", contractAddress);
             console.log("tokenId: ", tokenId);
 
-            // Get owner of NFT
-            const ownerOwner = await alchemy.nft.getOwnersForNft(
-              contractAddress,
-              tokenId
-            );
+
+            if (contractAddress && tokenId) {
+
+              // Get owner of NFT
+              const ownerOwner = await alchemy.nft.getOwnersForNft(
+                contractAddress,
+                tokenId
+              );
 
 
 
-            const ownerOwnerWalletAddress = ownerOwner?.owners?.[0];
+              const ownerOwnerWalletAddress = ownerOwner?.owners?.[0];
 
-            console.log("ownerOwnerWalletAddress: ", ownerOwnerWalletAddress );
-
-
-            const ownerOwnerAmount = Number(parseFloat(sendAmount) * 0.05).toFixed(2);
-
-            console.log("ownerOwnerAmount: ", ownerOwnerAmount );
+              console.log("ownerOwnerWalletAddress: ", ownerOwnerWalletAddress );
 
 
-            if (ownerOwnerWalletAddress) {
+              const ownerOwnerAmount = Number(parseFloat(sendAmount) * 0.05).toFixed(2);
 
-              const ownerOwnerTransaction = transfer({
-                contract: contractCEBIEN,
-                to: ownerOwnerWalletAddress,
-                amount: ownerOwnerAmount,
-              });
+              console.log("ownerOwnerAmount: ", ownerOwnerAmount );
 
-              transactions.push(ownerOwnerTransaction);
 
+              if (ownerOwnerWalletAddress) {
+
+                const ownerOwnerTransaction = transfer({
+                  contract: contractCEBIEN,
+                  to: ownerOwnerWalletAddress,
+                  amount: ownerOwnerAmount,
+                });
+
+                transactions.push(ownerOwnerTransaction);
+
+              }
+
+            } else {
+              console.log("referralCode: ", referralCode);
+              console.log("contractAddress or tokenId is empty");
             }
 
             

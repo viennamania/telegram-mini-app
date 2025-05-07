@@ -1,22 +1,7 @@
 {
     "crons": [
 
-        {
-            "path": "/api/cronjob/airdrop?center=owin_anawin_bot",
-            "schedule": "*/40 * * * *"
-        },
-        {
-            "path": "/api/cronjob/airdrop?center=ppump_orry_bot",
-            "schedule": "*/40 * * * *"
-        },
-        {
-            "path": "/api/cronjob/airdrop?center=exms_aaa_bot",
-            "schedule": "*/40 * * * *"
-        },
-        {
-            "path": "/api/cronjob/airdrop?center=ppump_reco_bot",
-            "schedule": "*/40 * * * *"
-        },
+
         {
             "path": "/api/cronjob/game",
             "schedule": "* * * * *"
@@ -32,11 +17,8 @@
         {
             "path": "/api/cronjob/raceGameCebien",
             "schedule": "* * * * *"
-        },
-        {
-            "path": "/api/cronjob/poll?sequence=1",
-            "schedule": "*/1 * * * *"
         }
+ 
 
 
 

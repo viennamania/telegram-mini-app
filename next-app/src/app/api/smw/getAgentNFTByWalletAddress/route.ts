@@ -104,51 +104,62 @@ export async function POST(request: NextRequest) {
 
   let finalResult: any = [];
 
-  const response = await alchemy.nft.getNftsForOwner(
-    walletAddress, {
-    omitMetadata: false, // // Flag to omit metadata
-
-    //smw nft contract address
-    contractAddresses: ["0xb3f4f5396075c4141148B02D43bF54C5Da6525dD"], // contractAddresses: [erc721ContractAddress],
-
-  });
-
-  ///console.log("response?.ownedNfts", response?.ownedNfts);
 
 
-  // get tokenType is 'ERC721' from the response
+  try {
 
-  response?.ownedNfts?.map((nft) => {
+    const response = await alchemy.nft.getNftsForOwner(
+      walletAddress,
+      {
+        omitMetadata: false, // // Flag to omit metadata
+        //smw nft contract address
+        contractAddresses: ["0xb3f4f5396075c4141148B02D43bF54C5Da6525dD"], // contractAddresses: [erc721ContractAddress],
+      }
+    );
 
-    //console.log("nft", nft);
-    /*
-    const agentContractAddress = nft.contract.address;
-    const agentNumber = nft.tokenId;
 
-    // api call to get application count for the agent
-    */
+    ///console.log("response?.ownedNfts", response?.ownedNfts);
 
-    /*
-    if (nft.tokenType === 'ERC721') {
 
-      // granderby horse nft
-      if (nft.contract.address === "0x41FBA0bd9f4DC9a968a10aEBb792af6A09969F60") {
+    // get tokenType is 'ERC721' from the response
+
+    response?.ownedNfts?.map((nft) => {
+
+      //console.log("nft", nft);
+      /*
+      const agentContractAddress = nft.contract.address;
+      const agentNumber = nft.tokenId;
+
+      // api call to get application count for the agent
+      */
+
+      /*
+      if (nft.tokenType === 'ERC721') {
+
+        // granderby horse nft
+        if (nft.contract.address === "0x41FBA0bd9f4DC9a968a10aEBb792af6A09969F60") {
+          finalResult.push(nft);
+          return;
+        }
+
+        if (nft.contract.isSpam === true) {
+          return;
+        }
+
         finalResult.push(nft);
-        return;
-      }
 
-      if (nft.contract.isSpam === true) {
-        return;
       }
+      */
 
       finalResult.push(nft);
 
-    }
-    */
+    });
 
-    finalResult.push(nft);
+  } catch (error) {
+    console.log("error", error);
+  }
 
-  });
+
 
 
  
